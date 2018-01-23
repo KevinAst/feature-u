@@ -5,3 +5,7 @@
 
 ----
 * Bla Bla Bla ...
+
+----
+* [API Reference](api.md)
+  * details here
