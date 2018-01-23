@@ -9,3 +9,6 @@
 ----
 * [API Reference](api.md)
   * details here
+
+----
+* [Revision History](history.md)
