@@ -1,5 +1,5 @@
 // ?? STUB OUT
-import createFeature from '../createFeature'; // module under test ?? use tooling/ModuleUnderTest.js
+import { createFeature } from '../../../tooling/ModuleUnderTest';
 
 describe('feature-u createFeature() tests', () => {
 
