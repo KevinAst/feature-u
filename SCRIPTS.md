@@ -9,9 +9,9 @@ DEVELOPMENT
 start ... convenience alias to 'dev' (that launches continous dev process)
 
 dev ...... launch development process (continuous integration)
-           NOTE: Currently this is an alias to test:lib:watch
+           NOTE: Currently this is an alias to test:all:watch
                  Other options to consider: 
-                  - npm run test:all:watch
+                  - npm run test:lib:watch
                   - npm-run-all --parallel build:watch test:lib:watch
                     ... advantage of continuous build is that auto-linting is performed
 
@@ -48,10 +48,10 @@ test ................... run ALL unit tests on master src (same as 'test:all' or
 
                          Following runs SELECTED tests ON master src
                          ===========================================
-test:lib ............... run unit tests that are part of our published library
-test:lib:watch ......... ditto (continuously)
-test:samples ........... run unit tests from our sample code (in the Dev Guide)
-test:samples:watch ..... ditto (continuously)
+test:lib ............... run unit tests that are part of our published library  TODO: NOT yet in feature-u
+test:lib:watch ......... ditto (continuously)                                   TODO: NOT yet in feature-u
+test:samples ........... run unit tests from our sample code (in the Dev Guide) TODO: NOT yet in feature-u
+test:samples:watch ..... ditto (continuously)                                   TODO: NOT yet in feature-u
 test:all ............... run ALL our unit tests
 test:all:watch ......... ditto (continuously)
 
