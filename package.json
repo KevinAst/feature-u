@@ -31,7 +31,7 @@
     "build:plat:es":         "cross-env BABEL_ENV=es       babel src --out-dir es  --ignore spec,reduxAPI.js",
     "build:plat:lib":        "cross-env BABEL_ENV=commonjs babel src --out-dir lib --ignore spec,reduxAPI.js",
     "build:watch":           "npm run build -- --watch",
-    "check":                 "npm-run-all lint pkgReview cov",
+    "check":                 "npm-run-all lint pkgReview",
     "clean":                 "npm-run-all build:clean docs:clean cov:clean",
     "cov":                   "cross-env NODE_ENV=test nyc --reporter=lcov --reporter=text mocha --compilers js:babel-core/register --colors \"src/**/*.spec.js\"",
     "cov:clean":             "rimraf coverage",
@@ -50,7 +50,7 @@
     "docs:clean":            "rimraf _book",
     "lint":                  "echo '*** Verify code quality (lint):' && eslint src",
     "pkgReview":             "echo '*** Showing outdated installed packages:' && npm outdated --long || true",
-    "prepublish":            "npm-run-all lint pkgReview clean build:plat:all test:plat:all docs cov",
+    "prepublish":            "npm-run-all lint pkgReview clean build:plat:all test:plat:all docs",
     "start":                 "npm run dev",
     "test":                  "jest src",
     "test:all":              "npm run test         --",
@@ -128,6 +128,7 @@
     "webpack": "^2.4.1"
   },
   "dependencies": {
+    "gitbook-plugin-toolbar": "^0.5.5",
     "lodash.isfunction": "^3.0.8"
   }
 }
