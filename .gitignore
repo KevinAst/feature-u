@@ -1,0 +1,28 @@
+# node dependencies (defined via "npm install")
+/node_modules/
+
+# bundled distribution (generated via "npm run build")
+/dist/
+/lib/
+/es/
+
+# documentation (machine generated from GitBook)
+/_book/
+
+# api documentation (machine generated from jsdoc2md)
+# ... hmmm: cannot ignore it (even though it is machine generated), because gitbook ignores it too :-(
+# /docs/api.md
+
+# code coverage reports
+/.nyc_output/
+/coverage/
+
+# logs
+logs
+*.log
+npm-debug.log*
+
+# runtime data
+pids
+*.pid
+*.seed

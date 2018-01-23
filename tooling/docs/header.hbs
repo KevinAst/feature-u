@@ -1,0 +1,31 @@
+{{!-- 
+
+ORIGINAL: node_modules/dmd/partials/all-docs/docs/header.hbs
+
+ENHANCEMENTS:
+============
+  - make indexable using markdown #section
+      CHANGE: name=
+      TO:     id=
+
+  - protect anchor ids with special characters (via escapeAnchor)
+    ... a limitation of GitBook
+
+  - more distinct section header
+    * with bordered h5 tag
+      ... use neutral color that is OK in any of the user-selectable colors
+          (White, Sepia, Night)
+          * OK: grey, or #704214
+          * ACTUALLY, leaving color alone uses "inherit" which works great!
+    * bit more spacing (with br tags)
+      ... using br tags in separate paragraph above index point
+      ... SO THAT: when indexed, eliminate prior entry visual
+--}}
+
+<br/><br/><br/>
+
+<a id="{{{escapeAnchor (anchorName)}}}"></a>
+
+<h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
+  {{>sig-name}}
+</h5>

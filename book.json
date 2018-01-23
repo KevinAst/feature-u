@@ -1,0 +1,86 @@
+{ 
+  "gitbook":     "3.2.2",
+  "root":        "./docs",
+  "title":       "feature-u",
+  "description": "Feature Based Project Organization for React",
+  "author":      "Kevin J. Bridges <kevinast@gmail.com> (https://github.com/KevinAst)",
+  "structure": { 
+    "readme":  "intro.md",
+    "summary": "toc.md" 
+  },
+  "plugins": ["-livereload", "toolbar"],
+  "pluginsConfig": {
+    "sharing": {
+      "facebook":   false,
+      "twitter":    false,
+      "google":     false,
+      "weibo":      false,
+      "instapaper": false,
+      "vk":         false,
+      "all": ["twitter", "facebook", "google"]
+    },
+    "toolbar": {
+        "buttons": [
+          {
+            "label": "GitHub",
+            "icon": "fa fa-github",
+            "url": "https://github.com/KevinAst/feature-u"
+          },
+          {
+            "label": "NPM",
+            "icon": "fa fa-bullseye",
+            "url": "https://www.npmjs.com/package/feature-u"
+          }
+        ]
+    }
+  },
+  "variables": { 
+    "guide": {
+      "devGuide":               "[**Dev Guide**](/index.html)",
+
+      "start":                  "[`Getting Started`](/start.md)",
+
+      "basics":                 "[`Basics`](/basics.md)",
+      "formalTypes":            "[`A Closer Look`](/formalTypes.md)",
+      "shapes":                 "[`ActionStruct Shapes`](/shapes.md)",
+      "validation":             "[`Parameter Validation`](/validation.md)",
+      "default":                "[`Defaulting Parameters`](/default.md)",
+      "thunks":                 "[`Thunk Action Creators`](/thunks.md)",
+
+      "promotion":              "[`Action Promotion`](/promotion.md)",
+      "actionDoc":              "[`Action Documentation`](/actionDoc.md)",
+
+      "dist":                   "[`Distribution`](/dist.md)",
+      "why":                    "[`Why feature-u?`](/why.md)",
+      "history":                "[`Revision History`](/history.md)",
+      "LICENSE":                "[`MIT License`](/LICENSE.md)"
+    },
+
+    "api": {
+      "ref":                    "[`API Reference`](/api.md)",
+
+      "generateActions":        "[`generateActions()`](/api.md#generateActions)",
+      "generateActionsDOTroot": "[`generateActions.root()`](/api.md#generateActions_root)",
+
+      "ActionGenesis":          "[`ActionGenesis`](/api.md#ActionGenesis)",
+      "actionGenesis":          "[`actionGenesis`](/api.md#ActionGenesis)",
+      "ActionMeta":             "[`ActionMeta`](/api.md#ActionMeta)",
+      "actionMeta":             "[`actionMeta`](/api.md#ActionMeta)",
+      "actionMetaDOTtraits":    "[`actionMeta.traits`](/api.md#ActionMeta)",
+      "actionMetaDOTratify":    "[`actionMeta.ratify`](/api.md#ActionMeta)",
+      "actionMetaDOTthunk":     "[`actionMeta.thunk`](/api.md#ActionMeta)",
+      "ratifyFn":               "[`ratifyFn()`](/api.md#ratifyFn)",
+
+      "ActionStruct":           "[`ActionStruct`](/api.md#ActionStruct)",
+      "ActionNode":             "[`ActionNode`](/api.md#ActionNode)",
+      "ActionNodes":            "[`ActionNodes`](/api.md#ActionNode)"
+    },
+
+    "ext": {
+      "redux":                  "[`redux`](http://redux.js.org/)",
+      "actions":                "[`actions`](http://redux.js.org/docs/basics/Actions.html)",
+      "actionCreator":          "[`action creator`](http://redux.js.org/docs/basics/Actions.html#action-creators)",
+      "actionCreators":         "[`action creators`](http://redux.js.org/docs/basics/Actions.html#action-creators)"
+    }
+  }
+}
