@@ -21,14 +21,14 @@ Release           | What                                   | *When*
 
 
 <br/><br/>
-### Details ...
+### Detail ...
 
 
 <!-- ************************************************************* -->
-<br/><br/>
-<a id="v0_2_0"></a>
+<a id="v0_2_0"></a><br/>
 ***
 **v0.2.0 - Added thunk support _(May 30, 2017)_**
+***
 
 [GitHub Release](https://github.com/KevinAst/action-u/releases/tag/v0.2.0)
 &bull;
@@ -49,10 +49,10 @@ Release           | What                                   | *When*
 
 
 <!-- ************************************************************* -->
-<br/><br/>
-<h3 id="v0_1_0" style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
-  v0.1.0 - Initial Release <i>(May 24, 2017)</i>
-</h3>
+<a id="v0_1_0"></a><br/>
+***
+**v0.1.0 - Initial Release _(May 24, 2017)_**
+***
 
 [GitHub Release](https://github.com/KevinAst/action-u/releases/tag/v0.1.0)
 &bull;
@@ -60,5 +60,4 @@ Release           | What                                   | *When*
 &bull;
 [GitHub Docs Content](https://github.com/KevinAst/action-u/tree/v0.1.0-docs)
 
-1. **This is where it all began ...**
-
+1. **_This is where it all began ..._**
