@@ -26,9 +26,9 @@ Release           | What                                   | *When*
 
 <!-- ************************************************************* -->
 <br/><br/>
-<h3 id="v0_2_0" style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
-  v0.2.0 - Added thunk support <i>(May 30, 2017)</i>
-</h3>
+<a id="v0_2_0"></a>
+***
+**v0.2.0 - Added thunk support _(May 30, 2017)_**
 
 [GitHub Release](https://github.com/KevinAst/action-u/releases/tag/v0.2.0)
 &bull;
@@ -45,6 +45,7 @@ Release           | What                                   | *When*
 
 1. The {{book.guide.dist}} section now highlights how our docs are
    produced.
+
 
 
 <!-- ************************************************************* -->
