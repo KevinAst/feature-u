@@ -8,6 +8,7 @@
 
 # documentation (machine generated from GitBook)
 /_book/
+/_docs/cur/
 
 # api documentation (machine generated from jsdoc2md)
 # ... hmmm: cannot ignore it (even though it is machine generated), because gitbook ignores it too :-(
