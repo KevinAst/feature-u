@@ -82,13 +82,24 @@ switch (MODULE_PLATFORM) {
 //*** mimic same exports as ../index.js
 //***
 
-// TODO: ?? retrofit to include ALL feature-u modules (not just createFeature)
-const createFeature = moduleUnderTest.createFeature;
+const {createFeature,
+       managedExpansion,
+       launchApp,
+       createAspect,
+       addBuiltInFeatureKeyword} = moduleUnderTest;
 
 export {
   createFeature,
+  managedExpansion,
+  launchApp,
+  createAspect,
+  addBuiltInFeatureKeyword,
 };
 
 export default {
   createFeature,
+  managedExpansion,
+  launchApp,
+  createAspect,
+  addBuiltInFeatureKeyword,
 };

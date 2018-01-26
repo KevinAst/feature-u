@@ -1,4 +1,9 @@
-// ?? STUB OUT
+import verify      from '../util/verify';
+import isString    from 'lodash.isstring';
+import isFunction  from 'lodash.isfunction';
+
+// our default no-op function
+const noOp = () => null;
 
 /**
  * @function createFeature
@@ -50,6 +55,137 @@
  * @return {Feature} a new Feature object (to be consumed by feature-u
  * launchApp()).
  */
-export default function createFeature() {
-  return '?? STUB OUT';
+export default function createFeature({name,
+                                       enabled=true,
+
+                                       publicFace={}, // default to empty object, providing a consistent indicator in app object (that the feature is present/enabled)
+
+                                       appWillStart=noOp,
+                                       appDidStart=noOp,
+
+                                       ...pluggableAspects}={}) {
+
+  // validate createFeature() parameters
+  const check = verify.prefix('createFeature() parameter violation: ');
+
+  // ... name
+  check(name,            'name is required');
+  check(isString(name),  'name must be a string');
+
+  // ... enabled
+  check(enabled===true || enabled===false, 'enabled must be a boolean');
+
+  // ... publicFace: nothing to validate (it can be anything, INCLUDING a .managedExpansion function)
+
+  // ... appWillStart
+  check(isFunction(appWillStart), 'appWillStart (when supplied) must be a function');
+
+  // ... appDidStart
+  check(isFunction(appDidStart), 'appDidStart (when supplied) must be a function');
+
+  // ... pluggableAspects
+  //     ... this validation occurs by the Aspect itself (via launchApp())
+
+  // create/return our new Feature object
+  return {
+    name,
+    enabled,
+
+    publicFace,
+
+    appWillStart,
+    appDidStart,
+
+    ...pluggableAspects,
+  };
 }
+
+const builtInFeatureKeywords = {
+  name:         true,
+  enabled:      true,
+  publicFace:   true,
+  appWillStart: true,
+  appDidStart:  true,
+};
+
+/**
+ * @private
+ * 
+ * Return indicator as to whether the supplied keyword is a built-in
+ * Feature keyword.
+ *
+ * @param {string} keyword the keyword name to check.
+ *
+ * @param {boolean} true: is keyword, false: is NOT keyword
+ */
+export function isBuiltInFeatureKeyword(keyword) {
+  return builtInFeatureKeywords[keyword] || false;
+}
+
+/**
+ * Add additional Feature keyword (typically used by Aspect extensions
+ * to Feature).
+ *
+ * @param {string} keyword the keyword name to add.
+ */
+export function addBuiltInFeatureKeyword(keyword) {
+  builtInFeatureKeywords[keyword] = true;
+}
+
+
+//***
+//*** Specification: appWillStartCB
+//***
+
+/**
+ * An optional app life-cycle hook invoked one time, just before the
+ * app starts up.
+ *
+ * This life-cycle hook can do any type of initialization. For
+ * example: initialize FireBase.
+ *
+ * In addition, it can optionally supplement the app's top-level root
+ * element (i.e. react component instance).  Any significant return
+ * (truthy) is interpreted as the app's new rootAppElm.
+ * **IMPORTANT**: When this is used, the supplied curRootAppElm MUST
+ * be included as part of this definition (accommodating the
+ * accumulative process of other feature injections)!
+ *
+ * **Please Note** `appWillStart()` utilizes named parameters.
+ *
+ * @callback appWillStartCB
+ * 
+ * @param {App} app the App object used in feature cross-communication.
+ * 
+ * @param {reactElm} curRootAppElm - the current react app element
+ * root.
+ *
+ * @return {reactElm} optionally, new top-level content (which in turn
+ * must contain the supplied curRootAppElm), or falsy for unchanged.
+ */
+
+
+//***
+//*** Specification: appDidStartCB
+//***
+
+/**
+ * An optional app life-cycle hook invoked one time, immediately after
+ * the app has started.
+ *
+ * Because the app is up-and-running at this time, you have access to
+ * the appState and dispatch() function ... assuming you are using
+ * redux (when detected by feature-u's plugable aspects).
+ *
+ * **Please Note** `appDidStart()` utilizes named parameters.
+ *
+ * @callback appDidStartCB
+ * 
+ * @param {App} app the App object used in feature cross-communication.
+ * 
+ * @param {Any} [appState] - the redux top-level app state (when redux
+ * is in use).
+ * 
+ * @param {function} [dispatch] - the redux dispatch() function (when
+ * redux is in use).
+ */

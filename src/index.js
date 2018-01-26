@@ -1,11 +1,8 @@
-// ?? STUB OUT (barely)
-import createFeature from './core/createFeature';
-// import createAspect               from './extend/createAspect';
-// import createFeature,
-//        {addBuiltInFeatureKeyword} from './core/createFeature';
-// import launchApp                  from './core/launchApp';
-// import managedExpansion           from './core/managedExpansion';
-
+import createAspect               from './extend/createAspect';
+import createFeature,
+       {addBuiltInFeatureKeyword} from './core/createFeature';
+import launchApp                  from './core/launchApp';
+import managedExpansion           from './core/managedExpansion';
 
 //*** 
 //*** Promote all feature-u utilities through a centralized module.
@@ -18,10 +15,10 @@ import createFeature from './core/createFeature';
 //         import * as FeatureU from 'feature-u';
 export {
   createFeature,
-//managedExpansion,
-//launchApp,
-//createAspect,
-//addBuiltInFeatureKeyword,
+  managedExpansion,
+  launchApp,
+  createAspect,
+  addBuiltInFeatureKeyword,
 };
 
 // NOTE: This default export supports CommonJS modules (otherwise Babel does NOT promote them).
@@ -31,9 +28,9 @@ export {
 //         const FeatureU   = require('feature-u');
 export default {
   createFeature,
-//managedExpansion,
-//launchApp,
-//createAspect,
-//addBuiltInFeatureKeyword,
+  managedExpansion,
+  launchApp,
+  createAspect,
+  addBuiltInFeatureKeyword,
 };
 

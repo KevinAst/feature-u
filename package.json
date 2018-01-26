@@ -127,6 +127,7 @@
     "webpack": "^2.4.1"
   },
   "dependencies": {
-    "lodash.isfunction": "^3.0.8"
+    "lodash.isfunction": "^3.0.8",
+    "lodash.isstring": "^4.0.1"
   }
 }
