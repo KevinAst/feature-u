@@ -98,18 +98,13 @@ docs:prepare ... install gitbook/plugins/dependencies (run once and whenever a p
 docs:build ..... alias to docs script (minus docs:prepare)
 docs:serve ..... build/serve docs (http://localhost:4000/), continuously watching for changes
 
-docs:publish ......... publish docs, tagged with 'vn.n.n-docs' (n.n.n from package.json)
-                       NOTE: If re-publishing an existing release (i.e. the 'vn.n.n-docs'
-                             tag pre-exists), you must FIRST manually delete the tag:
-                             - from github
-                             - purge node_modules/gh-pages/.cache (to remove cached tag info)
-docs:publish:patch ... same as publish, except NO tag
-                       NOTE: Use this sparingly, as it is not traceable to a specific release!
+docs:publish ......... publish docs to gh-pages branch (from _docs/)
+                       NOTE: make sure to copy _book/ to _docs/cur/
 
 docs:jsdoc2md:help ... show jsdoc2md command-line help (convenience)
 docs:gitbook:help .... show GitBook command-line help (convenience)
 
-docs:clean ... clean the machine-generated docs (_book/)
+docs:clean ... clean the machine-generated docs (_book/ and _docs/cur/)
 
 
 
