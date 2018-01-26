@@ -2,11 +2,11 @@
 
 ?? RETROFIT THIS FROM: action-u TO: feature-u
 
-This project adheres to [Semantic Versioning](http://semver.org/).
-Each release, along with migration instructions, is documented on this
+The **feature-u** project adheres to [Semantic
+Versioning](http://semver.org/).  Each release is documented on this
 page *(in addition to the [Github Release
-Notes](https://github.com/KevinAst/action-u/releases))*.
-
+Notes](https://github.com/KevinAst/action-u/releases))*, and
+**contains migration instructions**.
 
 <!--- Badges for CI Builds ---> 
 [![Build Status](https://travis-ci.org/KevinAst/action-u.svg?branch=master)](https://travis-ci.org/KevinAst/action-u)
@@ -14,6 +14,18 @@ Notes](https://github.com/KevinAst/action-u/releases))*.
 [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/ab82e305bb24440281337ca3a1a732c0)](https://www.codacy.com/app/KevinAst/action-u?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=KevinAst/action-u&amp;utm_campaign=Badge_Coverage)
 [![Known Vulnerabilities](https://snyk.io/test/github/kevinast/action-u/badge.svg)](https://snyk.io/test/github/kevinast/action-u)
 [![NPM Version Badge](https://img.shields.io/npm/v/action-u.svg)](https://www.npmjs.com/package/action-u)
+
+
+## Versioned Docs
+
+**feature-u** maintains version-specific documentation for all of it's
+releases _(linked below)_ ... ex: https://feature-u.js.org/0.1.0/.
+This allows you to match the correct documentation to the specific
+version you are using.
+For your convenience the base https://feature-u.js.org/ will always
+reference the most current release.
+
+
 
 <!-- 
 *-----------------------------------------------
@@ -62,7 +74,8 @@ Release           | What                                   | *When*
 
 
 
-## Details ...
+<br/><br/><br/>
+## Details:
 
 
 <!-- ************************************************************* -->
