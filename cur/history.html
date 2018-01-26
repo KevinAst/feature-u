@@ -241,21 +241,59 @@
                                 
                                 <h1 id="revision-history">Revision History</h1>
 <p>?? RETROFIT THIS FROM: action-u TO: feature-u</p>
-<p><a href="api.html#createFeature">3 Base Link (working in any dir)</a></p>
-<p><a href="api.html#createFeature">3 Lateral Link</a></p>
-<p><a href="../cur/api.html#createFeature">3 Relative Link</a></p>
-<p><a href="https://feature-u.js.org/cur/api.html#createFeature" target="_blank">3 Absolute Link</a></p>
-<p>This project adheres to <a href="http://semver.org/" target="_blank">Semantic Versioning</a>.
-Each release, along with migration instructions, is documented on this
+<p>The <strong>feature-u</strong> project adheres to <a href="http://semver.org/" target="_blank">Semantic
+Versioning</a>.  Each release is documented on this
 page <em>(in addition to the <a href="https://github.com/KevinAst/action-u/releases" target="_blank">Github Release
-Notes</a>)</em>.</p>
+Notes</a>)</em>, and
+<strong>contains migration instructions</strong>.</p>
 <!--- Badges for CI Builds ---> 
 <p><a href="https://travis-ci.org/KevinAst/action-u" target="_blank"><img src="https://travis-ci.org/KevinAst/action-u.svg?branch=master" alt="Build Status"></a>
 <a href="https://www.codacy.com/app/KevinAst/action-u?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=KevinAst/action-u&amp;utm_campaign=Badge_Grade" target="_blank"><img src="https://api.codacy.com/project/badge/Grade/ab82e305bb24440281337ca3a1a732c0" alt="Codacy Badge"></a>
 <a href="https://www.codacy.com/app/KevinAst/action-u?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=KevinAst/action-u&amp;utm_campaign=Badge_Coverage" target="_blank"><img src="https://api.codacy.com/project/badge/Coverage/ab82e305bb24440281337ca3a1a732c0" alt="Codacy Badge"></a>
 <a href="https://snyk.io/test/github/kevinast/action-u" target="_blank"><img src="https://snyk.io/test/github/kevinast/action-u/badge.svg" alt="Known Vulnerabilities"></a>
 <a href="https://www.npmjs.com/package/action-u" target="_blank"><img src="https://img.shields.io/npm/v/action-u.svg" alt="NPM Version Badge"></a></p>
-<!-- ONLY activated when there are MULTIPLE versions -->
+<h2 id="versioned-docs">Versioned Docs</h2>
+<p><strong>feature-u</strong> maintains version-specific documentation for all of it&apos;s
+releases <em>(linked below)</em> ... ex: <a href="https://feature-u.js.org/0.1.0/" target="_blank">https://feature-u.js.org/0.1.0/</a>.
+This allows you to match the correct documentation to the specific
+version you are using.
+For your convenience the base <a href="https://feature-u.js.org/" target="_blank">https://feature-u.js.org/</a> will always
+reference the most current release.</p>
+<!-- 
+*-----------------------------------------------
+* PROCEDURE for maintaining LINKS in history.md
+*-----------------------------------------------
+
+1. for latest running work-in-progress: it is OK to use the gitbook templates
+   - EX:       bla bla 
+   - template: bla bla [`createFeature()`](/api.md#createFeature)
+   - gens:     bla bla <a href="api.html#createFeature"><code>createFeature()</code></a>
+   - NOTES:
+     a) clicking link STAYS ON SAME PAGE (as for all links of this type)
+
+2. for RELEASE: expand them in-line using a VERSION RELATIVE SYNTAX:
+   - EX:       bla bla [`createFeature()`](../v.v.v/api.md#createFeature)
+               NOTES:
+                - start with template definition
+                - pre-pend ../v.v.v/
+   - gens:     bla bla <a href="../v.v.v/api.html#createFeature"><code>createFeature()</code></a>
+   - NOTES:
+     a) clicking link STAYS ON SAME PAGE
+     b) because these notes are copied to all release history.md, 
+        thy MUST reference the appropriate version
+        so they will be guaranteed the reference has not been removed/changed
+
+3. for GITHUB release page (when copying these notes), fully qualify the VERSIONED relative references
+   - EX:       bla bla [`createFeature()`](https://feature-u.js.org/v.v.v/api.html#createFeature)
+               NOTES:
+                - from prior rendition
+                - REPLACE ../v.v.v WITH https://feature-u.js.org/v.v.v
+                - change .md TO .html
+   - NOTES:
+     a) this allows it to stand alone (in the external github page)
+     b) because these notes reference a versioned site
+        they will be guaranteed the reference has not been removed/changed
+-->
 <h2 id="summary">Summary:</h2>
 <table>
 <thead>
@@ -278,7 +316,8 @@ Notes</a>)</em>.</p>
 </tr>
 </tbody>
 </table>
-<h2 id="details-">Details ...</h2>
+<p><br><br><br></p>
+<h2 id="details">Details:</h2>
 <!-- ************************************************************* -->
 <p><br><br><br></p>
 <p></p><h3 id="v0_2_0" style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
@@ -349,7 +388,7 @@ produced.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Revision History","level":"4.1","depth":1,"previous":{"title":"details here","level":"3.1.1","depth":2,"ref":"","articles":[]},"dir":"ltr"},"config":{"plugins":["-livereload","toolbar"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"sharing":{"facebook":false,"twitter":false,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["twitter","facebook","google","weibo","instapaper"]},"toolbar":{"buttons":[{"label":"GitHub","icon":"fa fa-github","url":"https://github.com/KevinAst/feature-u"},{"label":"NPM","icon":"fa fa-bullseye","url":"https://www.npmjs.com/package/feature-u"}]},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Kevin J. Bridges <kevinast@gmail.com> (https://github.com/KevinAst)","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"intro.md","glossary":"GLOSSARY.md","summary":"toc.md"},"variables":{"guide":{"LICENSE":"[`MIT License`](/LICENSE.md)","default":"[`Defaulting Parameters`](/default.md)","start":"[`Getting Started`](/start.md)","actionDoc":"[`Action Documentation`](/actionDoc.md)","promotion":"[`Action Promotion`](/promotion.md)","basics":"[`Basics`](/basics.md)","dist":"[`Distribution`](/dist.md)","devGuide":"[**Dev Guide**](/index.html)","why":"[`Why feature-u?`](/why.md)","formalTypes":"[`A Closer Look`](/formalTypes.md)","shapes":"[`ActionStruct Shapes`](/shapes.md)","history":"[`Revision History`](/history.md)","thunks":"[`Thunk Action Creators`](/thunks.md)","validation":"[`Parameter Validation`](/validation.md)"},"api":{"generateActionsDOTroot":"[`generateActions.root()`](/api.md#generateActions_root)","actionMetaDOTratify":"[`actionMeta.ratify`](/api.md#ActionMeta)","generateActions":"[`generateActions()`](/api.md#generateActions)","ActionStruct":"[`ActionStruct`](/api.md#ActionStruct)","actionMetaDOTthunk":"[`actionMeta.thunk`](/api.md#ActionMeta)","ActionGenesis":"[`ActionGenesis`](/api.md#ActionGenesis)","actionGenesis":"[`actionGenesis`](/api.md#ActionGenesis)","ref":"[`API Reference`](/api.md)","actionMetaDOTtraits":"[`actionMeta.traits`](/api.md#ActionMeta)","ActionNode":"[`ActionNode`](/api.md#ActionNode)","actionMeta":"[`actionMeta`](/api.md#ActionMeta)","ActionMeta":"[`ActionMeta`](/api.md#ActionMeta)","ActionNodes":"[`ActionNodes`](/api.md#ActionNode)","ratifyFn":"[`ratifyFn()`](/api.md#ratifyFn)"},"ext":{"redux":"[`redux`](http://redux.js.org/)","actions":"[`actions`](http://redux.js.org/docs/basics/Actions.html)","actionCreator":"[`action creator`](http://redux.js.org/docs/basics/Actions.html#action-creators)","actionCreators":"[`action creators`](http://redux.js.org/docs/basics/Actions.html#action-creators)"}},"title":"feature-u","gitbook":"3.2.2","description":"Feature Based Project Organization for React"},"file":{"path":"history.md","mtime":"2018-01-26T10:45:31.213Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2018-01-26T10:45:53.757Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Revision History","level":"4.1","depth":1,"previous":{"title":"details here","level":"3.1.1","depth":2,"ref":"","articles":[]},"dir":"ltr"},"config":{"plugins":["-livereload","toolbar"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"sharing":{"facebook":false,"twitter":false,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["twitter","facebook","google","weibo","instapaper"]},"toolbar":{"buttons":[{"label":"GitHub","icon":"fa fa-github","url":"https://github.com/KevinAst/feature-u"},{"label":"NPM","icon":"fa fa-bullseye","url":"https://www.npmjs.com/package/feature-u"}]},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Kevin J. Bridges <kevinast@gmail.com> (https://github.com/KevinAst)","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"intro.md","glossary":"GLOSSARY.md","summary":"toc.md"},"variables":{"guide":{"LICENSE":"[`MIT License`](/LICENSE.md)","default":"[`Defaulting Parameters`](/default.md)","start":"[`Getting Started`](/start.md)","actionDoc":"[`Action Documentation`](/actionDoc.md)","promotion":"[`Action Promotion`](/promotion.md)","basics":"[`Basics`](/basics.md)","dist":"[`Distribution`](/dist.md)","devGuide":"[**Dev Guide**](/index.html)","why":"[`Why feature-u?`](/why.md)","formalTypes":"[`A Closer Look`](/formalTypes.md)","shapes":"[`ActionStruct Shapes`](/shapes.md)","history":"[`Revision History`](/history.md)","thunks":"[`Thunk Action Creators`](/thunks.md)","validation":"[`Parameter Validation`](/validation.md)"},"api":{"generateActionsDOTroot":"[`generateActions.root()`](/api.md#generateActions_root)","actionMetaDOTratify":"[`actionMeta.ratify`](/api.md#ActionMeta)","generateActions":"[`generateActions()`](/api.md#generateActions)","ActionStruct":"[`ActionStruct`](/api.md#ActionStruct)","actionMetaDOTthunk":"[`actionMeta.thunk`](/api.md#ActionMeta)","ActionGenesis":"[`ActionGenesis`](/api.md#ActionGenesis)","actionGenesis":"[`actionGenesis`](/api.md#ActionGenesis)","ref":"[`API Reference`](/api.md)","actionMetaDOTtraits":"[`actionMeta.traits`](/api.md#ActionMeta)","ActionNode":"[`ActionNode`](/api.md#ActionNode)","actionMeta":"[`actionMeta`](/api.md#ActionMeta)","ActionMeta":"[`ActionMeta`](/api.md#ActionMeta)","ActionNodes":"[`ActionNodes`](/api.md#ActionNode)","ratifyFn":"[`ratifyFn()`](/api.md#ratifyFn)"},"ext":{"redux":"[`redux`](http://redux.js.org/)","actions":"[`actions`](http://redux.js.org/docs/basics/Actions.html)","actionCreator":"[`action creator`](http://redux.js.org/docs/basics/Actions.html#action-creators)","actionCreators":"[`action creators`](http://redux.js.org/docs/basics/Actions.html#action-creators)"}},"title":"feature-u","gitbook":"3.2.2","description":"Feature Based Project Organization for React"},"file":{"path":"history.md","mtime":"2018-01-26T12:22:23.923Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2018-01-26T12:25:54.578Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
