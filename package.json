@@ -127,7 +127,6 @@
     "webpack": "^2.4.1"
   },
   "dependencies": {
-    "gitbook-plugin-toolbar": "^0.5.5",
     "lodash.isfunction": "^3.0.8"
   }
 }
