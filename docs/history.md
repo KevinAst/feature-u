@@ -15,7 +15,44 @@ Notes](https://github.com/KevinAst/action-u/releases))*.
 [![Known Vulnerabilities](https://snyk.io/test/github/kevinast/action-u/badge.svg)](https://snyk.io/test/github/kevinast/action-u)
 [![NPM Version Badge](https://img.shields.io/npm/v/action-u.svg)](https://www.npmjs.com/package/action-u)
 
-<!-- ONLY activated when there are MULTIPLE versions -->
+<!-- 
+*-----------------------------------------------
+* PROCEDURE for maintaining LINKS in history.md
+*-----------------------------------------------
+
+1. for latest running work-in-progress: it is OK to use the gitbook templates
+   - EX:       bla bla {{book.api.createFeature}}
+   - template: bla bla [`createFeature()`](/api.md#createFeature)
+   - gens:     bla bla <a href="api.html#createFeature"><code>createFeature()</code></a>
+   - NOTES:
+     a) clicking link STAYS ON SAME PAGE (as for all links of this type)
+ 
+2. for RELEASE: expand them in-line using a VERSION RELATIVE SYNTAX:
+   - EX:       bla bla [`createFeature()`](../v.v.v/api.md#createFeature)
+               NOTES:
+                - start with template definition
+                - pre-pend ../v.v.v/
+   - gens:     bla bla <a href="../v.v.v/api.html#createFeature"><code>createFeature()</code></a>
+   - NOTES:
+     a) clicking link STAYS ON SAME PAGE
+     b) because these notes are copied to all release history.md, 
+        thy MUST reference the appropriate version
+        so they will be guaranteed the reference has not been removed/changed
+ 
+3. for GITHUB release page (when copying these notes), fully qualify the VERSIONED relative references
+   - EX:       bla bla [`createFeature()`](https://feature-u.js.org/v.v.v/api.html#createFeature)
+               NOTES:
+                - from prior rendition
+                - REPLACE ../v.v.v WITH https://feature-u.js.org/v.v.v
+                - change .md TO .html
+   - NOTES:
+     a) this allows it to stand alone (in the external github page)
+     b) because these notes reference a versioned site
+        they will be guaranteed the reference has not been removed/changed
+-->
+
+
+
 ## Summary:
 
 Release           | What                                   | *When*
