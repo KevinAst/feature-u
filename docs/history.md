@@ -86,4 +86,4 @@ Release           | What                                   | *When*
 &bull;
 [GitHub Content](https://github.com/KevinAst/feature-u/tree/v0.1.0)
 
-1. Holy Guacamole Batman! ... This commit has no parents!!
+1. Holy Guacamole Batman! ... _This commit has no parents!!_
