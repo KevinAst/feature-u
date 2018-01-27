@@ -49,7 +49,7 @@ const noOp = () => null;
  * detected by feature-u's plugable aspects) _(please refer to:
  * [appDidStart](#appdidstart))_.
  * 
- * @param {Aspect} [pluggableAspects] additional aspects, as defined
+ * @param {AspectContent} [extendedAspect] additional aspects, as defined
  * by the feature-u's pluggable Aspect extension.
  *
  * @return {Feature} a new Feature object (to be consumed by feature-u
@@ -63,7 +63,7 @@ export default function createFeature({name,
                                        appWillStart=noOp,
                                        appDidStart=noOp,
 
-                                       ...pluggableAspects}={}) {
+                                       ...extendedAspect}={}) {
 
   // validate createFeature() parameters
   const check = verify.prefix('createFeature() parameter violation: ');
@@ -83,7 +83,7 @@ export default function createFeature({name,
   // ... appDidStart
   check(isFunction(appDidStart), 'appDidStart (when supplied) must be a function');
 
-  // ... pluggableAspects
+  // ... extendedAspect
   //     ... this validation occurs by the Aspect itself (via launchApp())
 
   // create/return our new Feature object
@@ -96,7 +96,7 @@ export default function createFeature({name,
     appWillStart,
     appDidStart,
 
-    ...pluggableAspects,
+    ...extendedAspect,
   };
 }
 
@@ -131,6 +131,18 @@ export function isBuiltInFeatureKeyword(keyword) {
 export function addBuiltInFeatureKeyword(keyword) {
   builtInFeatureKeywords[keyword] = true;
 }
+
+
+
+//***
+//*** Specification: Feature
+//***
+
+/**
+ * @typedef {Object} Feature
+ *
+ * Feature objects (emitted from `createFeature()`) are used ?? bla bla
+ */
 
 
 //***
