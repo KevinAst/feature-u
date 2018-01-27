@@ -36,7 +36,7 @@
   },
   "variables": { 
     "sym": {
-      "feature_u":               "**feature-u**"
+      "featureDu":               "**feature-u**"
     },
     "guide": {
 
@@ -99,8 +99,19 @@
     },
 
     "ext": {
+      "react":            "[`react`](https://reactjs.org/)",
+      "reactDnative":     "[`react-native`](https://facebook.github.io/react-native/)",
+      "reduxDlogic":      "[`redux-logic`](https://github.com/jeffbski/redux-logic)",
+      "eateryDnod":       "[`eatery-nod`](https://github.com/KevinAst/eatery-nod)",
+      "expo":             "[`expo`](https://expo.io/)",
+      "redux":            "[`redux`](http://redux.js.org/)",
+      "actionDu":         "[`action-u`](https://action-u.js.org/)",
+      "reduxDactions":    "[`redux-actions`](https://www.npmjs.com/package/redux-actions)",
+      "astxDreduxDutil":  "[`astx-redux-util`](https://astx-redux-util.js.org/)",
+
+
+
       "TODO":                   "?? copied freom action-u ... currently unused",
-      "redux":                  "[`redux`](http://redux.js.org/)",
       "actions":                "[`actions`](http://redux.js.org/docs/basics/Actions.html)",
       "actionCreator":          "[`action creator`](http://redux.js.org/docs/basics/Actions.html#action-creators)",
       "actionCreators":         "[`action creators`](http://redux.js.org/docs/basics/Actions.html#action-creators)"

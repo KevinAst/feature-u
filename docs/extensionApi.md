@@ -1,6 +1,6 @@
 # Extension API
 
-The main function you will use to extend {{book.sym.feature_u}} is
+The main function you will use to extend {{book.sym.featureDu}} is
 {{book.api.createAspect}}.
 
 The following list summarizes the **Extension API**.  _For your

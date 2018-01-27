@@ -1,6 +1,6 @@
 # Core API
 
-The two primary functions you will use in {{book.sym.feature_u}} are
+The two primary functions you will use in {{book.sym.featureDu}} are
 {{book.api.createFeature}} and {{book.api.launchApp}}.
 
 The following list summarizes the **Core API**.  _For your convenience

@@ -3,7 +3,7 @@
 ## Install
 
 ```shell
-npm install --save feature-u~
+npm install --save feature-u
 ```
 
 
@@ -12,41 +12,39 @@ npm install --save feature-u~
 All functions are exposed through [UMD](https://github.com/umdjs/umd),
 and therefore accessable through any one of the following techniques ...
 
-?? retrofit to feature-u!!!
-
 - **ES6 Import (Native JS)**
   
   ```js
-  import { generateActions }  from 'feature-u';
+  import { createFeature }  from 'feature-u';
   -OR-
-  import * as ActionU from 'feature-u';
+  import * as FeatureU from 'feature-u';
   -OR-
-  import ActionU from 'feature-u';
+  import FeatureU from 'feature-u';
   
-  generateActions(...)
+  createFeature(...)
   -OR-
-  ActionU.generateActions(...)
+  FeatureU.createFeature(...)
   ```
   
   
 - **CommonJS**
   
   ```js
-  const { generateActions } = require('feature-u');
+  const { createFeature } = require('feature-u');
   -OR-
-  const ActionU = require('feature-u');
+  const FeatureU = require('feature-u');
   
-  generateActions(...)
+  createFeature(...)
   -OR-
-  ActionU.generateActions(...)
+  FeatureU.createFeature(...)
   ```
   
   
 - **AMD**
   
   ```js
-  define(['feature-u', 'otherModule'], function(ActionU, otherModule) {
-    ActionU.generateActions(...)
+  define(['feature-u', 'otherModule'], function(FeatureU, otherModule) {
+    FeatureU.createFeature(...)
   });
   ```
   
@@ -57,6 +55,6 @@ and therefore accessable through any one of the following techniques ...
   <script src="https://unpkg.com/feature-u/dist/feature-u.min.js"></script>
   
   <script>
-    ActionU.generateActions(...)
+    FeatureU.createFeature(...)
   </script>
   ```
