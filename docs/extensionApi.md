@@ -1,12 +1,24 @@
 # Extension API
 
-* [`createAspect({see-docs}): Aspect`](api.md#createAspect)
-  * [`validateConfigurationMeth(): string`](api.md#validateConfigurationMeth)
-  * [`expandFeatureContentMeth(app, feature): string`](api.md#expandFeatureContentMeth)
-  * [`validateFeatureContentMeth(feature): string`](api.md#validateFeatureContentMeth)
-  * [`assembleFeatureContentMeth(app, activeFeatures): void`](api.md#assembleFeatureContentMeth)
-  * [`assembleAspectResourcesMeth(app, aspects): void`](api.md#assembleAspectResourcesMeth)
-  * [`injectRootAppElmMeth(app, activeFeatures, curRootAppElm): reactElm`](api.md#injectRootAppElmMeth)
+The main function you will use to extend {{book.sym.feature_u}} is
+{{book.api.createAspect}}.
+
+The following list summarizes the **Extension API**.  _For your
+convenience this list:_
+
+1. summarizes the functional API signatures
+1. includes related callback/hooks _(in an indented form)_
+1. links to more detail
+
+## Extension API Summary
+
+* {{book.api.createAspect$}}
+  * {{book.api.validateConfigurationMeth$}}
+  * {{book.api.expandFeatureContentMeth$}}
+  * {{book.api.validateFeatureContentMeth$}}
+  * {{book.api.assembleFeatureContentMeth$}}
+  * {{book.api.assembleAspectResourcesMeth$}}
+  * {{book.api.injectRootAppElmMeth$}}
 
 
-* [`addBuiltInFeatureKeyword(keyword): void`](api.md#addBuiltInFeatureKeyword)
+* {{book.api.addBuiltInFeatureKeyword$}}

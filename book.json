@@ -35,7 +35,12 @@
     }
   },
   "variables": { 
+    "sym": {
+      "feature_u":               "**feature-u**"
+    },
     "guide": {
+
+      "TODO":                   "?? copied freom action-u ... currently unused",
       "devGuide":               "[**Dev Guide**](/index.html)",
 
       "start":                  "[`Getting Started`](/start.md)",
@@ -57,26 +62,44 @@
     },
 
     "api": {
-      "ref":                    "[`API Reference`](/api.md)",
 
-      "generateActions":        "[`generateActions()`](/api.md#generateActions)",
-      "generateActionsDOTroot": "[`generateActions.root()`](/api.md#generateActions_root)",
+      "coreApi":                    "[`Core API`](/coreApi.md)",
+        "createFeature":            "[`createFeature()`](/api.md#createFeature)",
+        "createFeature$":           "[`createFeature({name, [enabled], [publicFace], [appWillStart], [appDidStart], [pluggableAspects]}): Feature`](/api.md#createFeature)",
+          "appWillStartCB":         "[`appWillStartCB()`](/api.md#appWillStartCB)",
+          "appWillStartCB$":        "[`appWillStartCB({app, curRootAppElm}): rootAppElm || null`](/api.md#appWillStartCB)",
+          "appDidStartCB":          "[`appDidStartCB()`](/api.md#appDidStartCB)",
+          "appDidStartCB$":         "[`appDidStartCB({app, [appState], [dispatch]}): void`](/api.md#appDidStartCB)",
+        "launchApp":                "[`launchApp()`](/api.md#launchApp)",
+        "launchApp$":               "[`launchApp({[aspects], features, registerRootAppElm}): App`](/api.md#launchApp)",
+          "registerRootAppElmCB":   "[`registerRootAppElmCB()`](/api.md#registerRootAppElmCB)",
+          "registerRootAppElmCB$":  "[`registerRootAppElmCB(rootAppElm): void`](/api.md#registerRootAppElmCB)",
+        "managedExpansion":         "[`managedExpansion()`](/api.md#managedExpansion)",
+        "managedExpansion$":        "[`managedExpansion(managedExpansionCB): managedExpansionCB`](/api.md#managedExpansion)",
+          "managedExpansionCB":     "[`managedExpansionCB()`](/api.md#managedExpansionCB)",
+          "managedExpansionCB$":    "[`managedExpansionCB(app): AspectContent`](/api.md#managedExpansionCB)",
 
-      "ActionGenesis":          "[`ActionGenesis`](/api.md#ActionGenesis)",
-      "actionGenesis":          "[`actionGenesis`](/api.md#ActionGenesis)",
-      "ActionMeta":             "[`ActionMeta`](/api.md#ActionMeta)",
-      "actionMeta":             "[`actionMeta`](/api.md#ActionMeta)",
-      "actionMetaDOTtraits":    "[`actionMeta.traits`](/api.md#ActionMeta)",
-      "actionMetaDOTratify":    "[`actionMeta.ratify`](/api.md#ActionMeta)",
-      "actionMetaDOTthunk":     "[`actionMeta.thunk`](/api.md#ActionMeta)",
-      "ratifyFn":               "[`ratifyFn()`](/api.md#ratifyFn)",
-
-      "ActionStruct":           "[`ActionStruct`](/api.md#ActionStruct)",
-      "ActionNode":             "[`ActionNode`](/api.md#ActionNode)",
-      "ActionNodes":            "[`ActionNodes`](/api.md#ActionNode)"
+      "extensionApi":                      "[`Extension API`](/extensionApi.md)",
+        "createAspect":                    "[`createAspect()`](/api.md#createAspect)",
+        "createAspect$":                   "[`createAspect({see-docs}): Aspect`](/api.md#createAspect)",
+          "validateConfigurationMeth":     "[`validateConfigurationMeth()`](/api.md#validateConfigurationMeth)",
+          "validateConfigurationMeth$":    "[`validateConfigurationMeth(): string`](/api.md#validateConfigurationMeth)",
+          "expandFeatureContentMeth":      "[`expandFeatureContentMeth()`](/api.md#expandFeatureContentMeth)",
+          "expandFeatureContentMeth$":     "[`expandFeatureContentMeth(app, feature): string`](/api.md#expandFeatureContentMeth)",
+          "validateFeatureContentMeth":    "[`validateFeatureContentMeth()`](/api.md#validateFeatureContentMeth)",
+          "validateFeatureContentMeth$":   "[`validateFeatureContentMeth(feature): string`](/api.md#validateFeatureContentMeth)",
+          "assembleFeatureContentMeth":    "[`assembleFeatureContentMeth()`](/api.md#assembleFeatureContentMeth)",
+          "assembleFeatureContentMeth$":   "[`assembleFeatureContentMeth(app, activeFeatures): void`](/api.md#assembleFeatureContentMeth)",
+          "assembleAspectResourcesMeth":   "[`assembleAspectResourcesMeth()`](/api.md#assembleAspectResourcesMeth)",
+          "assembleAspectResourcesMeth$":  "[`assembleAspectResourcesMeth(app, aspects): void`](/api.md#assembleAspectResourcesMeth)",
+          "injectRootAppElmMeth":          "[`injectRootAppElmMeth()`](/api.md#injectRootAppElmMeth)",
+          "injectRootAppElmMeth$":         "[`injectRootAppElmMeth(app, activeFeatures, curRootAppElm): reactElm`](/api.md#injectRootAppElmMeth)",
+        "addBuiltInFeatureKeyword":        "[`addBuiltInFeatureKeyword()`](/api.md#addBuiltInFeatureKeyword)",
+        "addBuiltInFeatureKeyword$":       "[`addBuiltInFeatureKeyword(keyword): void`](/api.md#addBuiltInFeatureKeyword)"
     },
 
     "ext": {
+      "TODO":                   "?? copied freom action-u ... currently unused",
       "redux":                  "[`redux`](http://redux.js.org/)",
       "actions":                "[`actions`](http://redux.js.org/docs/basics/Actions.html)",
       "actionCreator":          "[`action creator`](http://redux.js.org/docs/basics/Actions.html#action-creators)",
