@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Revision History · feature-u</title>
+        <title>Usage · feature-u</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -59,10 +59,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="LICENSE.html" />
+    <link rel="next" href="usage.html" />
     
     
-    <link rel="prev" href="why.html" />
+    <link rel="prev" href="basics.html" />
     
 
     </head>
@@ -152,7 +152,7 @@
             
         </li>
     
-        <li class="chapter " data-level="2.3" data-path="usage.html">
+        <li class="chapter active" data-level="2.3" data-path="usage.html">
             
                 <a href="usage.html">
             
@@ -759,7 +759,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="6.3" data-path="history.html">
+        <li class="chapter " data-level="6.3" data-path="history.html">
             
                 <a href="history.html">
             
@@ -815,7 +815,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >Revision History</a>
+        <a href="." >Usage</a>
     </h1>
 </div>
 
@@ -830,93 +830,171 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="revision-history">Revision History</h1>
-<p>The <strong>feature-u</strong> project adheres to <a href="http://semver.org/" target="_blank">Semantic
-Versioning</a>.  Each release is documented on this
-page <em>(in addition to the <a href="https://github.com/KevinAst/feature-u/releases" target="_blank">Github Release
-Notes</a>)</em>, and
-<strong>contains migration instructions</strong>.</p>
-<!--- Badges for CI Builds ?? TODO: THESE ARE action-u badges ---> 
-<p><a href="https://travis-ci.org/KevinAst/action-u" target="_blank"><img src="https://travis-ci.org/KevinAst/action-u.svg?branch=master" alt="Build Status"></a>
-<a href="https://www.codacy.com/app/KevinAst/action-u?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=KevinAst/action-u&amp;utm_campaign=Badge_Grade" target="_blank"><img src="https://api.codacy.com/project/badge/Grade/ab82e305bb24440281337ca3a1a732c0" alt="Codacy Badge"></a>
-<a href="https://www.codacy.com/app/KevinAst/action-u?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=KevinAst/action-u&amp;utm_campaign=Badge_Coverage" target="_blank"><img src="https://api.codacy.com/project/badge/Coverage/ab82e305bb24440281337ca3a1a732c0" alt="Codacy Badge"></a>
-<a href="https://snyk.io/test/github/kevinast/action-u" target="_blank"><img src="https://snyk.io/test/github/kevinast/action-u/badge.svg" alt="Known Vulnerabilities"></a>
-<a href="https://www.npmjs.com/package/action-u" target="_blank"><img src="https://img.shields.io/npm/v/action-u.svg" alt="NPM Version Badge"></a></p>
-<h2 id="versioned-docs">Versioned Docs</h2>
-<p><strong>feature-u</strong> maintains version-specific documentation for all of it&apos;s
-releases <em>(linked below)</em> ... ex: <a href="https://feature-u.js.org/0.1.0/" target="_blank">https://feature-u.js.org/0.1.0/</a>.
-This allows you to match the correct documentation to the specific
-version you are using.
-For your convenience the base <a href="https://feature-u.js.org/" target="_blank">https://feature-u.js.org/</a> will always
-reference the most current release.</p>
-<!-- 
-*-----------------------------------------------
-* PROCEDURE for maintaining LINKS in history.md
-*-----------------------------------------------
-
-1. for latest running work-in-progress: it is OK to use the gitbook templates
-   - EX:       bla bla [`createFeature()`](/api.md#createFeature)
-   - template: bla bla [`createFeature()`](/api.md#createFeature)
-   - gens:     bla bla <a href="api.html#createFeature"><code>createFeature()</code></a>
-   - NOTES:
-     a) clicking link STAYS ON SAME PAGE (as for all links of this type)
-
-2. for RELEASE: expand them in-line using a VERSION RELATIVE SYNTAX:
-   - EX:       bla bla [`createFeature()`](../v.v.v/api.md#createFeature)
-               NOTES:
-                - start with template definition
-                - pre-pend ../v.v.v/
-   - gens:     bla bla <a href="../v.v.v/api.html#createFeature"><code>createFeature()</code></a>
-   - NOTES:
-     a) clicking link STAYS ON SAME PAGE
-     b) because these notes are copied to all release history.md, 
-        thy MUST reference the appropriate version
-        so they will be guaranteed the reference has not been removed/changed
-
-3. for GITHUB release page (when copying these notes), fully qualify the VERSIONED relative references
-   - EX:       bla bla [`createFeature()`](https://feature-u.js.org/v.v.v/api.html#createFeature)
-               NOTES:
-                - from prior rendition
-                - REPLACE ../v.v.v WITH https://feature-u.js.org/v.v.v
-                - change .md TO .html
-   - NOTES:
-     a) this allows it to stand alone (in the external github page)
-     b) because these notes reference a versioned site
-        they will be guaranteed the reference has not been removed/changed
--->
-<h2 id="summary">Summary:</h2>
-<table>
-<thead>
-<tr>
-<th>Release</th>
-<th>What</th>
-<th><em>When</em></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="#v0_1_0">v0.1.0</a></td>
-<td>Initial Release</td>
-<td><em>?Month ?day, 2018</em></td>
-</tr>
-</tbody>
-</table>
-<p><br><br><br></p>
-<h2 id="details">Details:</h2>
-<!-- ************************************************************* -->
-<p><br><br><br></p>
-<h3 id="v0_1_0" style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
-  v0.1.0 - Initial Release <i>(?Month ?day, 2018)</i>
-</h3>
-
-<p><a href="https://feature-u.js.org/0.1.0/" target="_blank">Full Docs</a>
-&#x2022;
-<a href="https://github.com/KevinAst/feature-u/releases/tag/v0.1.0" target="_blank">GitHub Release</a>
-&#x2022;
-<a href="https://github.com/KevinAst/feature-u/tree/v0.1.0" target="_blank">GitHub Content</a></p>
+                                <h1 id="usage">Usage</h1>
+<p>?? TODO: refine words from ARTICLE</p>
+<p>The basic usage pattern of feature-u is to:</p>
 <ol>
-<li>Holy Guacamole Batman! ... <em>This commit has no parents!!</em></li>
+<li><p>Determine the Aspects that you will be using, based on your
+frameworks in use (i.e. your run-time stack).  This determines the
+extended aspects accepted by the Feature object (for example:
+<code>Feature.reducer</code> for [redux], and <code>Feature.logic</code> for [redux-logic]).</p>
+<p>Typically these Aspects are packaged seperatly in NPM, although you
+can create your own Aspects (if needed).</p>
+</li>
+<li><p>Organize your app into features.</p>
+<ul>
+<li><p>Each feature should be located in it&apos;s own directory.</p>
+</li>
+<li><p>How you break your app up into features will take some time and
+throught.  There are many ways to approach this from a design
+perspective.</p>
+</li>
+<li><p>Each feature promotes it&apos;s aspects through a formal Feature
+object (using <code>createFeature()</code>).</p>
+</li>
+</ul>
+</li>
+<li><p>Your mainline starts the app by invoking <code>launchApp()</code>, passing all
+Aspects and Features.  <strong>Easy Peasy!!</strong></p>
+</li>
 </ol>
+<h2 id="directory-structure">Directory Structure</h2>
+<p>Here is a sample directory structure of an app that uses <strong>feature-u</strong>:</p>
+<pre><code>src/
+  app.js              ... launches app using launchApp()
+
+  feature/
+    index.js          ... accumulate/promote all app features
+
+    featureA/         ... an app feature
+      actions.js
+      appDidStart.js
+      appWillStart.js
+      comp/
+        ScreenA1.js
+        ScreenA2.js
+      index.js        ... promotes featureA object using createFeature()
+      logic.js
+      reducer.js
+      route.js
+
+    featureB/         ... another app feature
+      ...
+
+  util/               ... common utilities used across all features
+    ...
+</code></pre><p>Each feature is located in it&apos;s own directory, containing it&apos;s aspects
+(actions, reducers, components, routes, logic, etc.).</p>
+<h2 id="feature-object">Feature Object</h2>
+<p>Each feature promotes it&apos;s aspects through a Feature object (using
+<code>createFeature()</code>).</p>
+<p><strong><code>src/feature/featureA/index.js</code></strong></p>
+<pre><code class="lang-js"><span class="hljs-keyword">import</span> {createFeature}  <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;feature-u&apos;</span>;
+<span class="hljs-keyword">import</span> reducer          <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;./state&apos;</span>;
+<span class="hljs-keyword">import</span> logic            <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;./logic&apos;</span>;
+<span class="hljs-keyword">import</span> route            <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;./route&apos;</span>;
+<span class="hljs-keyword">import</span> appWillStart     <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;./appWillStart&apos;</span>;
+<span class="hljs-keyword">import</span> appDidStart      <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;./appDidStart&apos;</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> createFeature({
+  name:     <span class="hljs-string">&apos;featureA&apos;</span>,
+  enabled:  <span class="hljs-literal">true</span>,
+
+  publicFace: {
+    api: {
+      open:  () =&gt; ... implementation omitted,
+      close: () =&gt; ... implementation omitted,
+    },
+  },
+
+  reducer,
+  logic,
+  route,
+
+  appWillStart,
+  appDidStart,
+});
+</code></pre>
+<p>We will fill in more detail a bit later, but for now notice that
+featureA defines reducers, logic modules, routes, and does some type
+of initialization (appWillStart/appDidStart).  It also promotes a
+publicFace (open/close) to other features.</p>
+<h2 id="launchapp">launchApp()</h2>
+<p>The <strong>application mainline</strong>, merely collects all aspects and
+features, and starts the app by invoking <code>launchApp()</code>:</p>
+<p><strong><code>src/app.js</code></strong></p>
+<pre><code class="lang-js"><span class="hljs-keyword">import</span> React             <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;react&apos;</span>;
+<span class="hljs-keyword">import</span> ReactDOM          <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;react-dom&apos;</span>;
+<span class="hljs-keyword">import</span> {routeAspect}     <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;./util/feature-u/aspect/feature-router&apos;</span>;
+<span class="hljs-keyword">import</span> {reducerAspect}   <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;./util/feature-u/aspect/feature-redux&apos;</span>;
+<span class="hljs-keyword">import</span> {logicAspect}     <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;./util/feature-u/aspect/feature-redux-logic&apos;</span>;
+<span class="hljs-keyword">import</span> {launchApp}       <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;./util/feature-u&apos;</span>;
+<span class="hljs-keyword">import</span> SplashScreen      <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;./util/comp/SplashScreen&apos;</span>;
+<span class="hljs-keyword">import</span> features          <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;./feature&apos;</span>; <span class="hljs-comment">// the set of features that comprise this application</span>
+
+
+<span class="hljs-comment">// define our set of &quot;plugable&quot; feature-u Aspects, conforming to our app&apos;s run-time stack</span>
+<span class="hljs-keyword">const</span> aspects = [
+  routeAspect,   <span class="hljs-comment">// StateRouter ... order: early, because &lt;StateRouter&gt; DOM injection does NOT support children</span>
+  reducerAspect, <span class="hljs-comment">// redux       ... order: later, because &lt;Provider&gt; DOM injection should be on top</span>
+  logicAspect,   <span class="hljs-comment">// redux-logic ... order: N/A,   because NO DOM injection</span>
+];
+
+
+<span class="hljs-comment">// configure our Aspects (as needed)</span>
+<span class="hljs-comment">// ... StateRouter fallback screen (when no routes are in effect)</span>
+routeAspect.fallbackElm = <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">SplashScreen</span> <span class="hljs-attr">msg</span>=<span class="hljs-string">&quot;I&apos;m trying to think but it hurts!&quot;</span>/&gt;</span>;
+
+
+// launch our app, exposing the feature-u App object (facilitating cross-feature communication)!
+export default launchApp({
+  aspects,
+  features,
+  registerRootAppElm(rootAppElm) {
+    ReactDOM.render(rootAppElm,
+                    getElementById(&apos;myAppRoot&apos;));
+  }
+});
+</span></code></pre>
+<p><strong>NOTE:</strong> The returned App object accumulates the publicFace of all
+features (in named feature nodes), and is exported in order to support
+cross-communication between features (<em>please refer to</em> <a href="#accessing-the-app-object">Accessing the
+App Object</a>):</p>
+<pre><code class="lang-js">app: {
+  featureA: {
+    api: {
+      open(),
+      close(),
+    },
+  },
+  featureB: {
+    ...
+  },
+}
+</code></pre>
+<p><strong>Also NOTE:</strong> In the example above you can see that <code>launchApp()</code>
+uses a <code>registerRootAppElm()</code> callback hook to register the supplied
+<code>rootAppElm</code> to the specific React framework in use.  Because this
+registration is accomplished by app-specific code, <strong>feature-u</strong> can
+operate in any of the React flavors, such as: React Web, React Native,
+Expo, etc. (<em>please refer to:</em> <a href="#react-registration">React
+Registration</a>).</p>
+<p>Hopefully this gives you the basic idea of how <strong>feature-u</strong> operates.
+The following sections develop a more thorough understanding! <em>Go
+forth and compute!!</em></p>
+<h2 id="real-example">Real Example</h2>
+<p>Want to see a real <strong>feature-u</strong> app?</p>
+<p><a href="https://github.com/KevinAst/eatery-nod" target="_blank">eatery-nod</a> is the
+application <em>where <strong>feature-u</strong> was conceived</em>.  It is a
+<a href="https://facebook.github.io/react-native/" target="_blank">react-native</a>
+<a href="https://expo.io/" target="_blank">Expo</a> mobile app, and is one of my sandbox
+applications that I use to test frameworks.  <em>I like to develop apps
+that I can use, but have enough real-world requirements to make it
+interesting.</em></p>
+<p><strong>eatery-nod</strong> randomly selects a &quot;date night&quot; restaurant from a pool
+of favorites.  <em>My wife and I have a steady &quot;date night&quot;, and we are
+always indecisive on which of our favorite restaurants to frequent
+:-)</em> So <strong>eatery-nod</strong> provides the spinning wheel!</p>
 
                                 
                                 </section>
@@ -944,12 +1022,12 @@ reference the most current release.</p>
 
             
                 
-                <a href="why.html" class="navigation navigation-prev " aria-label="Previous page: Why feature-u?">
+                <a href="basics.html" class="navigation navigation-prev " aria-label="Previous page: Basic Concepts">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="LICENSE.html" class="navigation navigation-next " aria-label="Next page: MIT License">
+                <a href="usage.html#directory-structure" class="navigation navigation-next " aria-label="Next page: Directory Structure">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -960,7 +1038,7 @@ reference the most current release.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Revision History","level":"6.3","depth":1,"next":{"title":"MIT License","level":"6.4","depth":1,"path":"LICENSE.md","ref":"LICENSE.md","articles":[]},"previous":{"title":"Why feature-u?","level":"6.2","depth":1,"path":"why.md","ref":"why.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-livereload","toolbar","livereload"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"sharing":{"facebook":false,"twitter":false,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["twitter","facebook","google","weibo","instapaper"]},"toolbar":{"buttons":[{"label":"GitHub","icon":"fa fa-github","url":"https://github.com/KevinAst/feature-u"},{"label":"NPM","icon":"fa fa-bullseye","url":"https://www.npmjs.com/package/feature-u"}]},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Kevin J. Bridges <kevinast@gmail.com> (https://github.com/KevinAst)","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"intro.md","glossary":"GLOSSARY.md","summary":"toc.md"},"variables":{"sym":{"featureDu":"**feature-u**"},"guide":{"LICENSE":"[`MIT License`](/LICENSE.md)","default":"[`Defaulting Parameters`](/default.md)","start":"[`Getting Started`](/start.md)","actionDoc":"[`Action Documentation`](/actionDoc.md)","promotion":"[`Action Promotion`](/promotion.md)","basics":"[`Basics`](/basics.md)","TODO":"?? copied freom action-u ... currently unused","dist":"[`Distribution`](/dist.md)","devGuide":"[**Dev Guide**](/index.html)","why":"[`Why feature-u?`](/why.md)","formalTypes":"[`A Closer Look`](/formalTypes.md)","shapes":"[`ActionStruct Shapes`](/shapes.md)","history":"[`Revision History`](/history.md)","thunks":"[`Thunk Action Creators`](/thunks.md)","validation":"[`Parameter Validation`](/validation.md)"},"api":{"injectRootAppElmMeth$":"[`injectRootAppElmMeth(app, activeFeatures, curRootAppElm): reactElm`](/api.md#injectRootAppElmMeth)","managedExpansion":"[`managedExpansion()`](/api.md#managedExpansion)","appDidStartCB$":"[`appDidStartCB({app, [appState], [dispatch]}): void`](/api.md#appDidStartCB)","assembleFeatureContentMeth":"[`assembleFeatureContentMeth()`](/api.md#assembleFeatureContentMeth)","assembleFeatureContentMeth$":"[`assembleFeatureContentMeth(app, activeFeatures): void`](/api.md#assembleFeatureContentMeth)","appDidStartCB":"[`appDidStartCB()`](/api.md#appDidStartCB)","managedExpansion$":"[`managedExpansion(managedExpansionCB): managedExpansionCB`](/api.md#managedExpansion)","injectRootAppElmMeth":"[`injectRootAppElmMeth()`](/api.md#injectRootAppElmMeth)","validateFeatureContentMeth":"[`validateFeatureContentMeth()`](/api.md#validateFeatureContentMeth)","managedExpansionCB$":"[`managedExpansionCB(app): AspectContent`](/api.md#managedExpansionCB)","assembleAspectResourcesMeth":"[`assembleAspectResourcesMeth()`](/api.md#assembleAspectResourcesMeth)","expandFeatureContentMeth":"[`expandFeatureContentMeth()`](/api.md#expandFeatureContentMeth)","registerRootAppElmCB":"[`registerRootAppElmCB()`](/api.md#registerRootAppElmCB)","createFeature$":"[`createFeature({name, [enabled], [publicFace], [appWillStart], [appDidStart], [pluggableAspects]}): Feature`](/api.md#createFeature)","validateConfigurationMeth":"[`validateConfigurationMeth()`](/api.md#validateConfigurationMeth)","launchApp":"[`launchApp()`](/api.md#launchApp)","appWillStartCB":"[`appWillStartCB()`](/api.md#appWillStartCB)","addBuiltInFeatureKeyword$":"[`addBuiltInFeatureKeyword(keyword): void`](/api.md#addBuiltInFeatureKeyword)","createAspect$":"[`createAspect({see-docs}): Aspect`](/api.md#createAspect)","createAspect":"[`createAspect()`](/api.md#createAspect)","addBuiltInFeatureKeyword":"[`addBuiltInFeatureKeyword()`](/api.md#addBuiltInFeatureKeyword)","launchApp$":"[`launchApp({[aspects], features, registerRootAppElm}): App`](/api.md#launchApp)","appWillStartCB$":"[`appWillStartCB({app, curRootAppElm}): rootAppElm || null`](/api.md#appWillStartCB)","validateConfigurationMeth$":"[`validateConfigurationMeth(): string`](/api.md#validateConfigurationMeth)","createFeature":"[`createFeature()`](/api.md#createFeature)","extensionApi":"[`Extension API`](/extensionApi.md)","coreApi":"[`Core API`](/coreApi.md)","registerRootAppElmCB$":"[`registerRootAppElmCB(rootAppElm): void`](/api.md#registerRootAppElmCB)","expandFeatureContentMeth$":"[`expandFeatureContentMeth(app, feature): string`](/api.md#expandFeatureContentMeth)","assembleAspectResourcesMeth$":"[`assembleAspectResourcesMeth(app, aspects): void`](/api.md#assembleAspectResourcesMeth)","managedExpansionCB":"[`managedExpansionCB()`](/api.md#managedExpansionCB)","validateFeatureContentMeth$":"[`validateFeatureContentMeth(feature): string`](/api.md#validateFeatureContentMeth)"},"ext":{"astxDreduxDutil":"[`astx-redux-util`](https://astx-redux-util.js.org/)","TODO":"?? copied freom action-u ... currently unused","actionDu":"[`action-u`](https://action-u.js.org/)","reduxDactions":"[`redux-actions`](https://www.npmjs.com/package/redux-actions)","reduxDlogic":"[`redux-logic`](https://github.com/jeffbski/redux-logic)","expo":"[`expo`](https://expo.io/)","eateryDnod":"[`eatery-nod`](https://github.com/KevinAst/eatery-nod)","redux":"[`redux`](http://redux.js.org/)","actionCreator":"[`action creator`](http://redux.js.org/docs/basics/Actions.html#action-creators)","reactDnative":"[`react-native`](https://facebook.github.io/react-native/)","actions":"[`actions`](http://redux.js.org/docs/basics/Actions.html)","actionCreators":"[`action creators`](http://redux.js.org/docs/basics/Actions.html#action-creators)","react":"[`react`](https://reactjs.org/)"}},"title":"feature-u","gitbook":"3.2.2","description":"Feature Based Project Organization for React"},"file":{"path":"history.md","mtime":"2018-01-26T12:50:20.589Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2018-01-27T20:45:46.181Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Usage","level":"2.3","depth":1,"next":{"title":"Directory Structure","level":"2.3.1","depth":2,"anchor":"#directory-structure","path":"usage.md","ref":"usage.md#directory-structure","articles":[]},"previous":{"title":"Basic Concepts","level":"2.2","depth":1,"path":"basics.md","ref":"basics.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-livereload","toolbar","livereload"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"sharing":{"facebook":false,"twitter":false,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["twitter","facebook","google","weibo","instapaper"]},"toolbar":{"buttons":[{"label":"GitHub","icon":"fa fa-github","url":"https://github.com/KevinAst/feature-u"},{"label":"NPM","icon":"fa fa-bullseye","url":"https://www.npmjs.com/package/feature-u"}]},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Kevin J. Bridges <kevinast@gmail.com> (https://github.com/KevinAst)","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"intro.md","glossary":"GLOSSARY.md","summary":"toc.md"},"variables":{"sym":{"featureDu":"**feature-u**"},"guide":{"LICENSE":"[`MIT License`](/LICENSE.md)","default":"[`Defaulting Parameters`](/default.md)","start":"[`Getting Started`](/start.md)","actionDoc":"[`Action Documentation`](/actionDoc.md)","promotion":"[`Action Promotion`](/promotion.md)","basics":"[`Basics`](/basics.md)","TODO":"?? copied freom action-u ... currently unused","dist":"[`Distribution`](/dist.md)","devGuide":"[**Dev Guide**](/index.html)","why":"[`Why feature-u?`](/why.md)","formalTypes":"[`A Closer Look`](/formalTypes.md)","shapes":"[`ActionStruct Shapes`](/shapes.md)","history":"[`Revision History`](/history.md)","thunks":"[`Thunk Action Creators`](/thunks.md)","validation":"[`Parameter Validation`](/validation.md)"},"api":{"injectRootAppElmMeth$":"[`injectRootAppElmMeth(app, activeFeatures, curRootAppElm): reactElm`](/api.md#injectRootAppElmMeth)","managedExpansion":"[`managedExpansion()`](/api.md#managedExpansion)","appDidStartCB$":"[`appDidStartCB({app, [appState], [dispatch]}): void`](/api.md#appDidStartCB)","assembleFeatureContentMeth":"[`assembleFeatureContentMeth()`](/api.md#assembleFeatureContentMeth)","assembleFeatureContentMeth$":"[`assembleFeatureContentMeth(app, activeFeatures): void`](/api.md#assembleFeatureContentMeth)","appDidStartCB":"[`appDidStartCB()`](/api.md#appDidStartCB)","managedExpansion$":"[`managedExpansion(managedExpansionCB): managedExpansionCB`](/api.md#managedExpansion)","injectRootAppElmMeth":"[`injectRootAppElmMeth()`](/api.md#injectRootAppElmMeth)","validateFeatureContentMeth":"[`validateFeatureContentMeth()`](/api.md#validateFeatureContentMeth)","managedExpansionCB$":"[`managedExpansionCB(app): AspectContent`](/api.md#managedExpansionCB)","assembleAspectResourcesMeth":"[`assembleAspectResourcesMeth()`](/api.md#assembleAspectResourcesMeth)","expandFeatureContentMeth":"[`expandFeatureContentMeth()`](/api.md#expandFeatureContentMeth)","registerRootAppElmCB":"[`registerRootAppElmCB()`](/api.md#registerRootAppElmCB)","createFeature$":"[`createFeature({name, [enabled], [publicFace], [appWillStart], [appDidStart], [pluggableAspects]}): Feature`](/api.md#createFeature)","validateConfigurationMeth":"[`validateConfigurationMeth()`](/api.md#validateConfigurationMeth)","launchApp":"[`launchApp()`](/api.md#launchApp)","appWillStartCB":"[`appWillStartCB()`](/api.md#appWillStartCB)","addBuiltInFeatureKeyword$":"[`addBuiltInFeatureKeyword(keyword): void`](/api.md#addBuiltInFeatureKeyword)","createAspect$":"[`createAspect({see-docs}): Aspect`](/api.md#createAspect)","createAspect":"[`createAspect()`](/api.md#createAspect)","addBuiltInFeatureKeyword":"[`addBuiltInFeatureKeyword()`](/api.md#addBuiltInFeatureKeyword)","launchApp$":"[`launchApp({[aspects], features, registerRootAppElm}): App`](/api.md#launchApp)","appWillStartCB$":"[`appWillStartCB({app, curRootAppElm}): rootAppElm || null`](/api.md#appWillStartCB)","validateConfigurationMeth$":"[`validateConfigurationMeth(): string`](/api.md#validateConfigurationMeth)","createFeature":"[`createFeature()`](/api.md#createFeature)","extensionApi":"[`Extension API`](/extensionApi.md)","coreApi":"[`Core API`](/coreApi.md)","registerRootAppElmCB$":"[`registerRootAppElmCB(rootAppElm): void`](/api.md#registerRootAppElmCB)","expandFeatureContentMeth$":"[`expandFeatureContentMeth(app, feature): string`](/api.md#expandFeatureContentMeth)","assembleAspectResourcesMeth$":"[`assembleAspectResourcesMeth(app, aspects): void`](/api.md#assembleAspectResourcesMeth)","managedExpansionCB":"[`managedExpansionCB()`](/api.md#managedExpansionCB)","validateFeatureContentMeth$":"[`validateFeatureContentMeth(feature): string`](/api.md#validateFeatureContentMeth)"},"ext":{"astxDreduxDutil":"[`astx-redux-util`](https://astx-redux-util.js.org/)","TODO":"?? copied freom action-u ... currently unused","actionDu":"[`action-u`](https://action-u.js.org/)","reduxDactions":"[`redux-actions`](https://www.npmjs.com/package/redux-actions)","reduxDlogic":"[`redux-logic`](https://github.com/jeffbski/redux-logic)","expo":"[`expo`](https://expo.io/)","eateryDnod":"[`eatery-nod`](https://github.com/KevinAst/eatery-nod)","redux":"[`redux`](http://redux.js.org/)","actionCreator":"[`action creator`](http://redux.js.org/docs/basics/Actions.html#action-creators)","reactDnative":"[`react-native`](https://facebook.github.io/react-native/)","actions":"[`actions`](http://redux.js.org/docs/basics/Actions.html)","actionCreators":"[`action creators`](http://redux.js.org/docs/basics/Actions.html#action-creators)","react":"[`react`](https://reactjs.org/)"}},"title":"feature-u","gitbook":"3.2.2","description":"Feature Based Project Organization for React"},"file":{"path":"usage.md","mtime":"2018-01-27T20:13:26.749Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2018-01-27T20:45:46.181Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

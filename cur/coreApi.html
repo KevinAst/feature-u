@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Revision History · feature-u</title>
+        <title>Core API · feature-u</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -59,10 +59,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="LICENSE.html" />
+    <link rel="next" href="api.html" />
     
     
-    <link rel="prev" href="why.html" />
+    <link rel="prev" href="truth.html" />
     
 
     </head>
@@ -564,7 +564,7 @@
         
         
     
-        <li class="chapter " data-level="3.1" data-path="coreApi.html">
+        <li class="chapter active" data-level="3.1" data-path="coreApi.html">
             
                 <a href="coreApi.html">
             
@@ -759,7 +759,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="6.3" data-path="history.html">
+        <li class="chapter " data-level="6.3" data-path="history.html">
             
                 <a href="history.html">
             
@@ -815,7 +815,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >Revision History</a>
+        <a href="." >Core API</a>
     </h1>
 </div>
 
@@ -830,93 +830,36 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="revision-history">Revision History</h1>
-<p>The <strong>feature-u</strong> project adheres to <a href="http://semver.org/" target="_blank">Semantic
-Versioning</a>.  Each release is documented on this
-page <em>(in addition to the <a href="https://github.com/KevinAst/feature-u/releases" target="_blank">Github Release
-Notes</a>)</em>, and
-<strong>contains migration instructions</strong>.</p>
-<!--- Badges for CI Builds ?? TODO: THESE ARE action-u badges ---> 
-<p><a href="https://travis-ci.org/KevinAst/action-u" target="_blank"><img src="https://travis-ci.org/KevinAst/action-u.svg?branch=master" alt="Build Status"></a>
-<a href="https://www.codacy.com/app/KevinAst/action-u?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=KevinAst/action-u&amp;utm_campaign=Badge_Grade" target="_blank"><img src="https://api.codacy.com/project/badge/Grade/ab82e305bb24440281337ca3a1a732c0" alt="Codacy Badge"></a>
-<a href="https://www.codacy.com/app/KevinAst/action-u?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=KevinAst/action-u&amp;utm_campaign=Badge_Coverage" target="_blank"><img src="https://api.codacy.com/project/badge/Coverage/ab82e305bb24440281337ca3a1a732c0" alt="Codacy Badge"></a>
-<a href="https://snyk.io/test/github/kevinast/action-u" target="_blank"><img src="https://snyk.io/test/github/kevinast/action-u/badge.svg" alt="Known Vulnerabilities"></a>
-<a href="https://www.npmjs.com/package/action-u" target="_blank"><img src="https://img.shields.io/npm/v/action-u.svg" alt="NPM Version Badge"></a></p>
-<h2 id="versioned-docs">Versioned Docs</h2>
-<p><strong>feature-u</strong> maintains version-specific documentation for all of it&apos;s
-releases <em>(linked below)</em> ... ex: <a href="https://feature-u.js.org/0.1.0/" target="_blank">https://feature-u.js.org/0.1.0/</a>.
-This allows you to match the correct documentation to the specific
-version you are using.
-For your convenience the base <a href="https://feature-u.js.org/" target="_blank">https://feature-u.js.org/</a> will always
-reference the most current release.</p>
-<!-- 
-*-----------------------------------------------
-* PROCEDURE for maintaining LINKS in history.md
-*-----------------------------------------------
-
-1. for latest running work-in-progress: it is OK to use the gitbook templates
-   - EX:       bla bla [`createFeature()`](/api.md#createFeature)
-   - template: bla bla [`createFeature()`](/api.md#createFeature)
-   - gens:     bla bla <a href="api.html#createFeature"><code>createFeature()</code></a>
-   - NOTES:
-     a) clicking link STAYS ON SAME PAGE (as for all links of this type)
-
-2. for RELEASE: expand them in-line using a VERSION RELATIVE SYNTAX:
-   - EX:       bla bla [`createFeature()`](../v.v.v/api.md#createFeature)
-               NOTES:
-                - start with template definition
-                - pre-pend ../v.v.v/
-   - gens:     bla bla <a href="../v.v.v/api.html#createFeature"><code>createFeature()</code></a>
-   - NOTES:
-     a) clicking link STAYS ON SAME PAGE
-     b) because these notes are copied to all release history.md, 
-        thy MUST reference the appropriate version
-        so they will be guaranteed the reference has not been removed/changed
-
-3. for GITHUB release page (when copying these notes), fully qualify the VERSIONED relative references
-   - EX:       bla bla [`createFeature()`](https://feature-u.js.org/v.v.v/api.html#createFeature)
-               NOTES:
-                - from prior rendition
-                - REPLACE ../v.v.v WITH https://feature-u.js.org/v.v.v
-                - change .md TO .html
-   - NOTES:
-     a) this allows it to stand alone (in the external github page)
-     b) because these notes reference a versioned site
-        they will be guaranteed the reference has not been removed/changed
--->
-<h2 id="summary">Summary:</h2>
-<table>
-<thead>
-<tr>
-<th>Release</th>
-<th>What</th>
-<th><em>When</em></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="#v0_1_0">v0.1.0</a></td>
-<td>Initial Release</td>
-<td><em>?Month ?day, 2018</em></td>
-</tr>
-</tbody>
-</table>
-<p><br><br><br></p>
-<h2 id="details">Details:</h2>
-<!-- ************************************************************* -->
-<p><br><br><br></p>
-<h3 id="v0_1_0" style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
-  v0.1.0 - Initial Release <i>(?Month ?day, 2018)</i>
-</h3>
-
-<p><a href="https://feature-u.js.org/0.1.0/" target="_blank">Full Docs</a>
-&#x2022;
-<a href="https://github.com/KevinAst/feature-u/releases/tag/v0.1.0" target="_blank">GitHub Release</a>
-&#x2022;
-<a href="https://github.com/KevinAst/feature-u/tree/v0.1.0" target="_blank">GitHub Content</a></p>
+                                <h1 id="core-api">Core API</h1>
+<p>The two primary functions you will use in <strong>feature-u</strong> are
+<a href="api.html#createFeature"><code>createFeature()</code></a> and <a href="api.html#launchApp"><code>launchApp()</code></a>.</p>
+<p>The following list summarizes the <strong>Core API</strong>.  <em>For your convenience
+this list:</em></p>
 <ol>
-<li>Holy Guacamole Batman! ... <em>This commit has no parents!!</em></li>
+<li>summarizes the functional API signatures</li>
+<li>includes related callback/hooks <em>(in an indented form)</em></li>
+<li>links to more detail</li>
 </ol>
+<h2 id="core-api-summary">Core API Summary</h2>
+<ul>
+<li><a href="api.html#createFeature"><code>createFeature({name, [enabled], [publicFace], [appWillStart], [appDidStart], [pluggableAspects]}): Feature</code></a><ul>
+<li><a href="api.html#appWillStartCB"><code>appWillStartCB({app, curRootAppElm}): rootAppElm || null</code></a></li>
+<li><a href="api.html#appDidStartCB"><code>appDidStartCB({app, [appState], [dispatch]}): void</code></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><a href="api.html#launchApp"><code>launchApp({[aspects], features, registerRootAppElm}): App</code></a><ul>
+<li><a href="api.html#registerRootAppElmCB"><code>registerRootAppElmCB(rootAppElm): void</code></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><a href="api.html#managedExpansion"><code>managedExpansion(managedExpansionCB): managedExpansionCB</code></a><ul>
+<li><a href="api.html#managedExpansionCB"><code>managedExpansionCB(app): AspectContent</code></a></li>
+</ul>
+</li>
+</ul>
 
                                 
                                 </section>
@@ -944,12 +887,12 @@ reference the most current release.</p>
 
             
                 
-                <a href="why.html" class="navigation navigation-prev " aria-label="Previous page: Why feature-u?">
+                <a href="truth.html#feature-state-location" class="navigation navigation-prev " aria-label="Previous page: Feature State Location">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="LICENSE.html" class="navigation navigation-next " aria-label="Next page: MIT License">
+                <a href="api.html#createFeature" class="navigation navigation-next " aria-label="Next page: createFeature()">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -960,7 +903,7 @@ reference the most current release.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Revision History","level":"6.3","depth":1,"next":{"title":"MIT License","level":"6.4","depth":1,"path":"LICENSE.md","ref":"LICENSE.md","articles":[]},"previous":{"title":"Why feature-u?","level":"6.2","depth":1,"path":"why.md","ref":"why.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-livereload","toolbar","livereload"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"sharing":{"facebook":false,"twitter":false,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["twitter","facebook","google","weibo","instapaper"]},"toolbar":{"buttons":[{"label":"GitHub","icon":"fa fa-github","url":"https://github.com/KevinAst/feature-u"},{"label":"NPM","icon":"fa fa-bullseye","url":"https://www.npmjs.com/package/feature-u"}]},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Kevin J. Bridges <kevinast@gmail.com> (https://github.com/KevinAst)","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"intro.md","glossary":"GLOSSARY.md","summary":"toc.md"},"variables":{"sym":{"featureDu":"**feature-u**"},"guide":{"LICENSE":"[`MIT License`](/LICENSE.md)","default":"[`Defaulting Parameters`](/default.md)","start":"[`Getting Started`](/start.md)","actionDoc":"[`Action Documentation`](/actionDoc.md)","promotion":"[`Action Promotion`](/promotion.md)","basics":"[`Basics`](/basics.md)","TODO":"?? copied freom action-u ... currently unused","dist":"[`Distribution`](/dist.md)","devGuide":"[**Dev Guide**](/index.html)","why":"[`Why feature-u?`](/why.md)","formalTypes":"[`A Closer Look`](/formalTypes.md)","shapes":"[`ActionStruct Shapes`](/shapes.md)","history":"[`Revision History`](/history.md)","thunks":"[`Thunk Action Creators`](/thunks.md)","validation":"[`Parameter Validation`](/validation.md)"},"api":{"injectRootAppElmMeth$":"[`injectRootAppElmMeth(app, activeFeatures, curRootAppElm): reactElm`](/api.md#injectRootAppElmMeth)","managedExpansion":"[`managedExpansion()`](/api.md#managedExpansion)","appDidStartCB$":"[`appDidStartCB({app, [appState], [dispatch]}): void`](/api.md#appDidStartCB)","assembleFeatureContentMeth":"[`assembleFeatureContentMeth()`](/api.md#assembleFeatureContentMeth)","assembleFeatureContentMeth$":"[`assembleFeatureContentMeth(app, activeFeatures): void`](/api.md#assembleFeatureContentMeth)","appDidStartCB":"[`appDidStartCB()`](/api.md#appDidStartCB)","managedExpansion$":"[`managedExpansion(managedExpansionCB): managedExpansionCB`](/api.md#managedExpansion)","injectRootAppElmMeth":"[`injectRootAppElmMeth()`](/api.md#injectRootAppElmMeth)","validateFeatureContentMeth":"[`validateFeatureContentMeth()`](/api.md#validateFeatureContentMeth)","managedExpansionCB$":"[`managedExpansionCB(app): AspectContent`](/api.md#managedExpansionCB)","assembleAspectResourcesMeth":"[`assembleAspectResourcesMeth()`](/api.md#assembleAspectResourcesMeth)","expandFeatureContentMeth":"[`expandFeatureContentMeth()`](/api.md#expandFeatureContentMeth)","registerRootAppElmCB":"[`registerRootAppElmCB()`](/api.md#registerRootAppElmCB)","createFeature$":"[`createFeature({name, [enabled], [publicFace], [appWillStart], [appDidStart], [pluggableAspects]}): Feature`](/api.md#createFeature)","validateConfigurationMeth":"[`validateConfigurationMeth()`](/api.md#validateConfigurationMeth)","launchApp":"[`launchApp()`](/api.md#launchApp)","appWillStartCB":"[`appWillStartCB()`](/api.md#appWillStartCB)","addBuiltInFeatureKeyword$":"[`addBuiltInFeatureKeyword(keyword): void`](/api.md#addBuiltInFeatureKeyword)","createAspect$":"[`createAspect({see-docs}): Aspect`](/api.md#createAspect)","createAspect":"[`createAspect()`](/api.md#createAspect)","addBuiltInFeatureKeyword":"[`addBuiltInFeatureKeyword()`](/api.md#addBuiltInFeatureKeyword)","launchApp$":"[`launchApp({[aspects], features, registerRootAppElm}): App`](/api.md#launchApp)","appWillStartCB$":"[`appWillStartCB({app, curRootAppElm}): rootAppElm || null`](/api.md#appWillStartCB)","validateConfigurationMeth$":"[`validateConfigurationMeth(): string`](/api.md#validateConfigurationMeth)","createFeature":"[`createFeature()`](/api.md#createFeature)","extensionApi":"[`Extension API`](/extensionApi.md)","coreApi":"[`Core API`](/coreApi.md)","registerRootAppElmCB$":"[`registerRootAppElmCB(rootAppElm): void`](/api.md#registerRootAppElmCB)","expandFeatureContentMeth$":"[`expandFeatureContentMeth(app, feature): string`](/api.md#expandFeatureContentMeth)","assembleAspectResourcesMeth$":"[`assembleAspectResourcesMeth(app, aspects): void`](/api.md#assembleAspectResourcesMeth)","managedExpansionCB":"[`managedExpansionCB()`](/api.md#managedExpansionCB)","validateFeatureContentMeth$":"[`validateFeatureContentMeth(feature): string`](/api.md#validateFeatureContentMeth)"},"ext":{"astxDreduxDutil":"[`astx-redux-util`](https://astx-redux-util.js.org/)","TODO":"?? copied freom action-u ... currently unused","actionDu":"[`action-u`](https://action-u.js.org/)","reduxDactions":"[`redux-actions`](https://www.npmjs.com/package/redux-actions)","reduxDlogic":"[`redux-logic`](https://github.com/jeffbski/redux-logic)","expo":"[`expo`](https://expo.io/)","eateryDnod":"[`eatery-nod`](https://github.com/KevinAst/eatery-nod)","redux":"[`redux`](http://redux.js.org/)","actionCreator":"[`action creator`](http://redux.js.org/docs/basics/Actions.html#action-creators)","reactDnative":"[`react-native`](https://facebook.github.io/react-native/)","actions":"[`actions`](http://redux.js.org/docs/basics/Actions.html)","actionCreators":"[`action creators`](http://redux.js.org/docs/basics/Actions.html#action-creators)","react":"[`react`](https://reactjs.org/)"}},"title":"feature-u","gitbook":"3.2.2","description":"Feature Based Project Organization for React"},"file":{"path":"history.md","mtime":"2018-01-26T12:50:20.589Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2018-01-27T20:45:46.181Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Core API","level":"3.1","depth":1,"next":{"title":"createFeature()","level":"3.1.1","depth":2,"anchor":"#createFeature","path":"api.md","ref":"api.md#createFeature","articles":[]},"previous":{"title":"Feature State Location","level":"2.8.2","depth":2,"anchor":"#feature-state-location","path":"truth.md","ref":"truth.md#feature-state-location","articles":[]},"dir":"ltr"},"config":{"plugins":["-livereload","toolbar","livereload"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"sharing":{"facebook":false,"twitter":false,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["twitter","facebook","google","weibo","instapaper"]},"toolbar":{"buttons":[{"label":"GitHub","icon":"fa fa-github","url":"https://github.com/KevinAst/feature-u"},{"label":"NPM","icon":"fa fa-bullseye","url":"https://www.npmjs.com/package/feature-u"}]},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Kevin J. Bridges <kevinast@gmail.com> (https://github.com/KevinAst)","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"intro.md","glossary":"GLOSSARY.md","summary":"toc.md"},"variables":{"sym":{"featureDu":"**feature-u**"},"guide":{"LICENSE":"[`MIT License`](/LICENSE.md)","default":"[`Defaulting Parameters`](/default.md)","start":"[`Getting Started`](/start.md)","actionDoc":"[`Action Documentation`](/actionDoc.md)","promotion":"[`Action Promotion`](/promotion.md)","basics":"[`Basics`](/basics.md)","TODO":"?? copied freom action-u ... currently unused","dist":"[`Distribution`](/dist.md)","devGuide":"[**Dev Guide**](/index.html)","why":"[`Why feature-u?`](/why.md)","formalTypes":"[`A Closer Look`](/formalTypes.md)","shapes":"[`ActionStruct Shapes`](/shapes.md)","history":"[`Revision History`](/history.md)","thunks":"[`Thunk Action Creators`](/thunks.md)","validation":"[`Parameter Validation`](/validation.md)"},"api":{"injectRootAppElmMeth$":"[`injectRootAppElmMeth(app, activeFeatures, curRootAppElm): reactElm`](/api.md#injectRootAppElmMeth)","managedExpansion":"[`managedExpansion()`](/api.md#managedExpansion)","appDidStartCB$":"[`appDidStartCB({app, [appState], [dispatch]}): void`](/api.md#appDidStartCB)","assembleFeatureContentMeth":"[`assembleFeatureContentMeth()`](/api.md#assembleFeatureContentMeth)","assembleFeatureContentMeth$":"[`assembleFeatureContentMeth(app, activeFeatures): void`](/api.md#assembleFeatureContentMeth)","appDidStartCB":"[`appDidStartCB()`](/api.md#appDidStartCB)","managedExpansion$":"[`managedExpansion(managedExpansionCB): managedExpansionCB`](/api.md#managedExpansion)","injectRootAppElmMeth":"[`injectRootAppElmMeth()`](/api.md#injectRootAppElmMeth)","validateFeatureContentMeth":"[`validateFeatureContentMeth()`](/api.md#validateFeatureContentMeth)","managedExpansionCB$":"[`managedExpansionCB(app): AspectContent`](/api.md#managedExpansionCB)","assembleAspectResourcesMeth":"[`assembleAspectResourcesMeth()`](/api.md#assembleAspectResourcesMeth)","expandFeatureContentMeth":"[`expandFeatureContentMeth()`](/api.md#expandFeatureContentMeth)","registerRootAppElmCB":"[`registerRootAppElmCB()`](/api.md#registerRootAppElmCB)","createFeature$":"[`createFeature({name, [enabled], [publicFace], [appWillStart], [appDidStart], [pluggableAspects]}): Feature`](/api.md#createFeature)","validateConfigurationMeth":"[`validateConfigurationMeth()`](/api.md#validateConfigurationMeth)","launchApp":"[`launchApp()`](/api.md#launchApp)","appWillStartCB":"[`appWillStartCB()`](/api.md#appWillStartCB)","addBuiltInFeatureKeyword$":"[`addBuiltInFeatureKeyword(keyword): void`](/api.md#addBuiltInFeatureKeyword)","createAspect$":"[`createAspect({see-docs}): Aspect`](/api.md#createAspect)","createAspect":"[`createAspect()`](/api.md#createAspect)","addBuiltInFeatureKeyword":"[`addBuiltInFeatureKeyword()`](/api.md#addBuiltInFeatureKeyword)","launchApp$":"[`launchApp({[aspects], features, registerRootAppElm}): App`](/api.md#launchApp)","appWillStartCB$":"[`appWillStartCB({app, curRootAppElm}): rootAppElm || null`](/api.md#appWillStartCB)","validateConfigurationMeth$":"[`validateConfigurationMeth(): string`](/api.md#validateConfigurationMeth)","createFeature":"[`createFeature()`](/api.md#createFeature)","extensionApi":"[`Extension API`](/extensionApi.md)","coreApi":"[`Core API`](/coreApi.md)","registerRootAppElmCB$":"[`registerRootAppElmCB(rootAppElm): void`](/api.md#registerRootAppElmCB)","expandFeatureContentMeth$":"[`expandFeatureContentMeth(app, feature): string`](/api.md#expandFeatureContentMeth)","assembleAspectResourcesMeth$":"[`assembleAspectResourcesMeth(app, aspects): void`](/api.md#assembleAspectResourcesMeth)","managedExpansionCB":"[`managedExpansionCB()`](/api.md#managedExpansionCB)","validateFeatureContentMeth$":"[`validateFeatureContentMeth(feature): string`](/api.md#validateFeatureContentMeth)"},"ext":{"astxDreduxDutil":"[`astx-redux-util`](https://astx-redux-util.js.org/)","TODO":"?? copied freom action-u ... currently unused","actionDu":"[`action-u`](https://action-u.js.org/)","reduxDactions":"[`redux-actions`](https://www.npmjs.com/package/redux-actions)","reduxDlogic":"[`redux-logic`](https://github.com/jeffbski/redux-logic)","expo":"[`expo`](https://expo.io/)","eateryDnod":"[`eatery-nod`](https://github.com/KevinAst/eatery-nod)","redux":"[`redux`](http://redux.js.org/)","actionCreator":"[`action creator`](http://redux.js.org/docs/basics/Actions.html#action-creators)","reactDnative":"[`react-native`](https://facebook.github.io/react-native/)","actions":"[`actions`](http://redux.js.org/docs/basics/Actions.html)","actionCreators":"[`action creators`](http://redux.js.org/docs/basics/Actions.html#action-creators)","react":"[`react`](https://reactjs.org/)"}},"title":"feature-u","gitbook":"3.2.2","description":"Feature Based Project Organization for React"},"file":{"path":"coreApi.md","mtime":"2018-01-27T16:37:38.470Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2018-01-27T20:45:46.181Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

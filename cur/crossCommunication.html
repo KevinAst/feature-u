@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Revision History · feature-u</title>
+        <title>Cross Feature Communication · feature-u</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -59,10 +59,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="LICENSE.html" />
+    <link rel="next" href="crossCommunication.html" />
     
     
-    <link rel="prev" href="why.html" />
+    <link rel="prev" href="enablement.html" />
     
 
     </head>
@@ -435,7 +435,7 @@
             
         </li>
     
-        <li class="chapter " data-level="2.7" data-path="crossCommunication.html">
+        <li class="chapter active" data-level="2.7" data-path="crossCommunication.html">
             
                 <a href="crossCommunication.html">
             
@@ -759,7 +759,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="6.3" data-path="history.html">
+        <li class="chapter " data-level="6.3" data-path="history.html">
             
                 <a href="history.html">
             
@@ -815,7 +815,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >Revision History</a>
+        <a href="." >Cross Feature Communication</a>
     </h1>
 </div>
 
@@ -830,93 +830,233 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="revision-history">Revision History</h1>
-<p>The <strong>feature-u</strong> project adheres to <a href="http://semver.org/" target="_blank">Semantic
-Versioning</a>.  Each release is documented on this
-page <em>(in addition to the <a href="https://github.com/KevinAst/feature-u/releases" target="_blank">Github Release
-Notes</a>)</em>, and
-<strong>contains migration instructions</strong>.</p>
-<!--- Badges for CI Builds ?? TODO: THESE ARE action-u badges ---> 
-<p><a href="https://travis-ci.org/KevinAst/action-u" target="_blank"><img src="https://travis-ci.org/KevinAst/action-u.svg?branch=master" alt="Build Status"></a>
-<a href="https://www.codacy.com/app/KevinAst/action-u?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=KevinAst/action-u&amp;utm_campaign=Badge_Grade" target="_blank"><img src="https://api.codacy.com/project/badge/Grade/ab82e305bb24440281337ca3a1a732c0" alt="Codacy Badge"></a>
-<a href="https://www.codacy.com/app/KevinAst/action-u?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=KevinAst/action-u&amp;utm_campaign=Badge_Coverage" target="_blank"><img src="https://api.codacy.com/project/badge/Coverage/ab82e305bb24440281337ca3a1a732c0" alt="Codacy Badge"></a>
-<a href="https://snyk.io/test/github/kevinast/action-u" target="_blank"><img src="https://snyk.io/test/github/kevinast/action-u/badge.svg" alt="Known Vulnerabilities"></a>
-<a href="https://www.npmjs.com/package/action-u" target="_blank"><img src="https://img.shields.io/npm/v/action-u.svg" alt="NPM Version Badge"></a></p>
-<h2 id="versioned-docs">Versioned Docs</h2>
-<p><strong>feature-u</strong> maintains version-specific documentation for all of it&apos;s
-releases <em>(linked below)</em> ... ex: <a href="https://feature-u.js.org/0.1.0/" target="_blank">https://feature-u.js.org/0.1.0/</a>.
-This allows you to match the correct documentation to the specific
-version you are using.
-For your convenience the base <a href="https://feature-u.js.org/" target="_blank">https://feature-u.js.org/</a> will always
-reference the most current release.</p>
-<!-- 
-*-----------------------------------------------
-* PROCEDURE for maintaining LINKS in history.md
-*-----------------------------------------------
+                                <h1 id="cross-feature-communication">Cross Feature Communication</h1>
+<p>Most aspects of a feature are internal to the feature&apos;s
+implementation.  For example, as a general rule, actions are created
+and consumed exclusively by logic and reducers that are internal to
+that feature.</p>
+<p>However, there are cases where a feature needs to publicly promote
+some aspects to another feature.  As an example, featureA may:</p>
+<ul>
+<li>need to know some aspect of featureB (say some state value through
+a selector),</li>
+<li>or emit/monitor one of it&apos;s actions,</li>
+<li>or in general anything (i.e. invoke some function that does xyz).</li>
+</ul>
+<p>You can think of this as the feature&apos;s Public API, and it promotes
+cross-communication between features.</p>
+<p>A <strong>best practice</strong> is to treat each of your features as isolated
+implementations.  As a result, a feature <strong>should never</strong> directly
+import resources from other features, <strong>rather</strong> they should utilize
+the public feature promotion of the App object (<em>discussed here</em>).  In
+doing this <strong>a:</strong> only the public aspects of a feature are
+exposed/used, and <strong>b:</strong> your features become truly plug-and-play.</p>
+<p>Let&apos;s see how Cross Communication is accomplished in feature-u:</p>
+<ul>
+<li><a href="#publicface-and-the-app-object">publicFace and the App Object</a></li>
+<li><a href="#accessing-the-app-object">Accessing the App Object</a><ul>
+<li><a href="#managed-code-expansion">Managed Code Expansion</a></li>
+<li><a href="#app-access-summary">App Access Summary</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="publicface-and-the-app-object">publicFace and the App Object</h2>
+<p>In feature-u, this cross-feature-communication is accomplished through
+the <code>Feature.publicFace</code> built-in aspect property.</p>
+<p>A feature can expose whatever it deems necessary through it&apos;s <code>publicFace</code>.
+There are no real constraints on this resource.  It is truly open.
+Typically it is a container of functions of some sort.</p>
+<p>Here is a suggested sampling:</p>
+<pre><code class="lang-js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> createFeature({
+  name:     <span class="hljs-string">&apos;featureA&apos;</span>,
 
-1. for latest running work-in-progress: it is OK to use the gitbook templates
-   - EX:       bla bla [`createFeature()`](/api.md#createFeature)
-   - template: bla bla [`createFeature()`](/api.md#createFeature)
-   - gens:     bla bla <a href="api.html#createFeature"><code>createFeature()</code></a>
-   - NOTES:
-     a) clicking link STAYS ON SAME PAGE (as for all links of this type)
+  publicFace: {
 
-2. for RELEASE: expand them in-line using a VERSION RELATIVE SYNTAX:
-   - EX:       bla bla [`createFeature()`](../v.v.v/api.md#createFeature)
-               NOTES:
-                - start with template definition
-                - pre-pend ../v.v.v/
-   - gens:     bla bla <a href="../v.v.v/api.html#createFeature"><code>createFeature()</code></a>
-   - NOTES:
-     a) clicking link STAYS ON SAME PAGE
-     b) because these notes are copied to all release history.md, 
-        thy MUST reference the appropriate version
-        so they will be guaranteed the reference has not been removed/changed
+    actions: {   <span class="hljs-comment">// ... JUST action creators that need public promotion (i.e. NOT ALL)</span>
+      open: actions.view.open,
+    },
 
-3. for GITHUB release page (when copying these notes), fully qualify the VERSIONED relative references
-   - EX:       bla bla [`createFeature()`](https://feature-u.js.org/v.v.v/api.html#createFeature)
-               NOTES:
-                - from prior rendition
-                - REPLACE ../v.v.v WITH https://feature-u.js.org/v.v.v
-                - change .md TO .html
-   - NOTES:
-     a) this allows it to stand alone (in the external github page)
-     b) because these notes reference a versioned site
-        they will be guaranteed the reference has not been removed/changed
--->
-<h2 id="summary">Summary:</h2>
-<table>
-<thead>
-<tr>
-<th>Release</th>
-<th>What</th>
-<th><em>When</em></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="#v0_1_0">v0.1.0</a></td>
-<td>Initial Release</td>
-<td><em>?Month ?day, 2018</em></td>
-</tr>
-</tbody>
-</table>
-<p><br><br><br></p>
-<h2 id="details">Details:</h2>
-<!-- ************************************************************* -->
-<p><br><br><br></p>
-<h3 id="v0_1_0" style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
-  v0.1.0 - Initial Release <i>(?Month ?day, 2018)</i>
-</h3>
+    sel: { <span class="hljs-comment">// ... JUST selectors that need public promotion (i.e. NOT ALL)</span>
+      currentView:   selector.currentView,
+      isDeviceReady: selector.isDeviceReady,
+    },
 
-<p><a href="https://feature-u.js.org/0.1.0/" target="_blank">Full Docs</a>
-&#x2022;
-<a href="https://github.com/KevinAst/feature-u/releases/tag/v0.1.0" target="_blank">GitHub Release</a>
-&#x2022;
-<a href="https://github.com/KevinAst/feature-u/tree/v0.1.0" target="_blank">GitHub Content</a></p>
+    api,
+
+  },
+
+  ...
+});
+</code></pre>
+<p>The <code>publicFace</code> of all features are accumulated and exposed through
+the <a href="#app-object">App Object</a> (emitted from <code>launchApp()</code>), as
+follows:</p>
+<pre><code class="lang-js">App.{featureName}.{publicFace}
+</code></pre>
+<p>As an example, the sample above can be referenced like this: </p>
+<pre><code class="lang-js">  app.featureA.sel.isDeviceReady(appState)
+</code></pre>
+<h2 id="accessing-the-app-object">Accessing the App Object</h2>
+<p>The App object can be accessed in several different ways.</p>
 <ol>
-<li>Holy Guacamole Batman! ... <em>This commit has no parents!!</em></li>
+<li><p>The simplest way to access the App object is to merely import it.</p>
+<p>Your application mainline exports the <code>launchApp()</code> return value
+... which is the App object.</p>
+<p><strong><code>src/app.js</code></strong></p>
+<pre><code class="lang-js">...
+
+<span class="hljs-comment">// launch our app, exposing the feature-u App object (facilitating cross-feature communication)!</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> launchApp({
+  ...
+});
+</code></pre>
+<p>Importing the app object is a viable technique for run-time
+functions (<em>such as UI Components</em>), where the code is
+<strong>a:</strong> <em>not under the direct control of feature-u, and</em>
+<strong>b:</strong> <em>executed after all aspect expansion has completed.</em></p>
+<p>The following example is a UI Component that displays a
+<code>deviceStatus</code> obtained from an external <code>startup</code> feature
+... <strong><em>accessing the app through an import:</em></strong></p>
+<pre><code class="lang-js"><span class="hljs-keyword">import</span> app <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;~/app&apos;</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">ScreenA</span>(<span class="hljs-params">{deviceStatus}</span>) </span>{
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Container</span>&gt;</span>
+      ...
+      <span class="hljs-tag">&lt;<span class="hljs-name">Text</span>&gt;</span>{deviceStatus}<span class="hljs-tag">&lt;/<span class="hljs-name">Text</span>&gt;</span>
+      ...
+    <span class="hljs-tag">&lt;/<span class="hljs-name">Container</span>&gt;</span></span>
+  );
+}
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> connectRedux(ScreenA, {
+  mapStateToProps(appState) {
+    <span class="hljs-keyword">return</span> {
+      deviceStatus: app.device.sel.deviceStatus(appState),
+    };
+  },
+});
+</code></pre>
+</li>
+<li><p>Another way to access the App object is through the programmatic
+APIs of feature-u, where the <code>app</code> object is supplied as a
+parameter.</p>
+<ul>
+<li><p>app life-cycle hooks:</p>
+<pre><code class="lang-js">appWillStart({app, curRootAppElm}): rootAppElm || <span class="hljs-literal">null</span>
+appDidStart({app, appState, dispatch}): <span class="hljs-keyword">void</span>
+</code></pre>
+</li>
+<li><p>route hooks (PKG: <code>feature-router</code>):</p>
+<pre><code class="lang-js">routeCB({app, appState}): rendered-component (<span class="hljs-literal">null</span> <span class="hljs-keyword">for</span> none)
+</code></pre>
+</li>
+<li><p>logic hooks (PKG: <code>feature-redux-logic</code>):</p>
+<pre><code class="lang-js">createLogic({
+  ...
+  transform({getState, action, app}, next) {
+    ...
+  },
+  process({getState, action, app}, dispatch, done) {
+    ...
+  }
+})
+</code></pre>
+</li>
+</ul>
+</li>
+<li><p>There is a third technique to access the App object, that provides
+<strong>early access</strong> <em>during code expansion time</em>, that is provided
+through <a href="#managed-code-expansion">Managed Code Expansion</a> (<em>see
+next section</em>).</p>
+</li>
 </ol>
+<h2 id="managed-code-expansion">Managed Code Expansion</h2>
+<p>In the previous discussion, we detailed two ways to access the App
+object, and referred to a third technique (<em>discussed here</em>).</p>
+<p>There are two situations that make accessing the <code>app</code> object
+problematic, which are: <strong>a:</strong> <em>in-line code expansion (where the app
+may not be fully defined)</em>, and <strong>b:</strong> <em>order dependencies (across
+features)</em>.</p>
+<p>To illustrate this, the following logic module (PKG:
+<code>feature-redux-logic</code>) is monitoring an action defined by an
+external feature (see <code>*1*</code>).  Because this <code>app</code> reference is made
+during code expansion time, the import will not work, because the
+<code>app</code> object has not yet been fully defined.  This is a timing issue.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">import</span> app <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;~/app&apos;</span>; <span class="hljs-comment">// *1*</span>
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> myLogicModule = createLogic({
+
+  name: <span class="hljs-string">&apos;myLogicModule&apos;</span>,
+  type: <span class="hljs-built_in">String</span>(app.featureB.actions.fooBar), <span class="hljs-comment">// *1* app NOT defined during in-line expansion</span>
+
+  process({getState, action}, dispatch, done) {
+    ... 
+  },
+
+});
+</code></pre>
+<p>When aspect content definitions require the <code>app</code> object at code
+expansion time, you can wrap the definition in a <code>managedExpansion()</code>
+function.  In other words, your aspect content can either be the
+actual content itself (ex: a reducer), or a function that returns the
+content.</p>
+<p>Your callback function should conform to the following signature:</p>
+<pre><code class="lang-js">API: managedExpansionCB(app): AspectContent
+</code></pre>
+<p>When this is done, feature-u will invoke the managedExpansionCB in a
+controlled way, passing the fully resolved <code>app</code> object as a
+parameter.</p>
+<p>To accomplish this, you must wrap your expansion function with the the
+<code>managedExpansion()</code> utility.  The reason for this is that feature-u
+must be able to distinguish a managedExpansionCB function from other
+functions (ex: reducers).</p>
+<p>Here is the same example (from above) that that fixes our
+problem by replacing the <code>app</code> import with managedExpansion():</p>
+<pre><code class="lang-js">                             <span class="hljs-comment">// *1* we replace app import with managedExpansion()</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> myLogicModule = managedExpansion( (app) =&gt; createLogic({
+
+  name: <span class="hljs-string">&apos;myLogicModule&apos;</span>,
+  type: <span class="hljs-built_in">String</span>(app.featureB.actions.fooBar), <span class="hljs-comment">// *1* app now is fully defined</span>
+
+  process({getState, action}, dispatch, done) {
+    ... 
+  },
+
+}) );
+</code></pre>
+<p>Because managedExpansionCB is invoked in a controlled way (by
+feature-u), the supplied <code>app</code> parameter is guaranteed to be defined
+(<em>issue <strong>a</strong></em>).  Not only that, but the supplied <code>app</code> object is
+guaranteed to have all features publicFace definitions resolved
+(<em>issue <strong>b</strong></em>).</p>
+<p><strong><em>SideBar</em></strong>: A secondary reason <code>managedExpansion()</code> may be used
+(<em>over and above app injection during code expansion</em>) is to <strong>delay
+code expansion</strong>, which can avoid issues related to (<em>legitimate but
+somewhat obscure</em>) circular dependencies.</p>
+<h2 id="app-access-summary">App Access Summary</h2>
+<p>To summarize our discussion of how to access the App object, it is
+really very simple:</p>
+<ol>
+<li><p>Simply import the app (<em>for run-time functions outside the control
+of feature-u</em>).</p>
+</li>
+<li><p>Use the app parameter supplied through feature-u&apos;s programmatic
+APIs (<em>when using route, live-cycle hooks, or logic hooks</em>).</p>
+</li>
+<li><p>Use the app parameter supplied through <code>managedExpansion()</code>
+(<em>when app is required during in-line expansion of code</em>).</p>
+</li>
+</ol>
+<p>Accessing Feature Resources in a seamless way is a <strong>rudimentary
+benefit of feature-u</strong> that alleviates a number of problems in your
+code, making your features truly plug-and-play.</p>
+<p><strong>NOTE</strong>: It is possible that a module may be using more than one of
+these techniques.  As an example a logic module may have to use
+<code>managedExpansion()</code> to access app at expansion time, but is also
+supplied app as a parameter in it&apos;s functional hook.  This is
+perfectly fine, as they will be referencing the exact same app object
+instance.</p>
 
                                 
                                 </section>
@@ -944,12 +1084,12 @@ reference the most current release.</p>
 
             
                 
-                <a href="why.html" class="navigation navigation-prev " aria-label="Previous page: Why feature-u?">
+                <a href="enablement.html" class="navigation navigation-prev " aria-label="Previous page: Feature Enablement">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="LICENSE.html" class="navigation navigation-next " aria-label="Next page: MIT License">
+                <a href="crossCommunication.html#publicface-and-the-app-object" class="navigation navigation-next " aria-label="Next page: publicFace and the App Object">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -960,7 +1100,7 @@ reference the most current release.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Revision History","level":"6.3","depth":1,"next":{"title":"MIT License","level":"6.4","depth":1,"path":"LICENSE.md","ref":"LICENSE.md","articles":[]},"previous":{"title":"Why feature-u?","level":"6.2","depth":1,"path":"why.md","ref":"why.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-livereload","toolbar","livereload"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"sharing":{"facebook":false,"twitter":false,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["twitter","facebook","google","weibo","instapaper"]},"toolbar":{"buttons":[{"label":"GitHub","icon":"fa fa-github","url":"https://github.com/KevinAst/feature-u"},{"label":"NPM","icon":"fa fa-bullseye","url":"https://www.npmjs.com/package/feature-u"}]},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Kevin J. Bridges <kevinast@gmail.com> (https://github.com/KevinAst)","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"intro.md","glossary":"GLOSSARY.md","summary":"toc.md"},"variables":{"sym":{"featureDu":"**feature-u**"},"guide":{"LICENSE":"[`MIT License`](/LICENSE.md)","default":"[`Defaulting Parameters`](/default.md)","start":"[`Getting Started`](/start.md)","actionDoc":"[`Action Documentation`](/actionDoc.md)","promotion":"[`Action Promotion`](/promotion.md)","basics":"[`Basics`](/basics.md)","TODO":"?? copied freom action-u ... currently unused","dist":"[`Distribution`](/dist.md)","devGuide":"[**Dev Guide**](/index.html)","why":"[`Why feature-u?`](/why.md)","formalTypes":"[`A Closer Look`](/formalTypes.md)","shapes":"[`ActionStruct Shapes`](/shapes.md)","history":"[`Revision History`](/history.md)","thunks":"[`Thunk Action Creators`](/thunks.md)","validation":"[`Parameter Validation`](/validation.md)"},"api":{"injectRootAppElmMeth$":"[`injectRootAppElmMeth(app, activeFeatures, curRootAppElm): reactElm`](/api.md#injectRootAppElmMeth)","managedExpansion":"[`managedExpansion()`](/api.md#managedExpansion)","appDidStartCB$":"[`appDidStartCB({app, [appState], [dispatch]}): void`](/api.md#appDidStartCB)","assembleFeatureContentMeth":"[`assembleFeatureContentMeth()`](/api.md#assembleFeatureContentMeth)","assembleFeatureContentMeth$":"[`assembleFeatureContentMeth(app, activeFeatures): void`](/api.md#assembleFeatureContentMeth)","appDidStartCB":"[`appDidStartCB()`](/api.md#appDidStartCB)","managedExpansion$":"[`managedExpansion(managedExpansionCB): managedExpansionCB`](/api.md#managedExpansion)","injectRootAppElmMeth":"[`injectRootAppElmMeth()`](/api.md#injectRootAppElmMeth)","validateFeatureContentMeth":"[`validateFeatureContentMeth()`](/api.md#validateFeatureContentMeth)","managedExpansionCB$":"[`managedExpansionCB(app): AspectContent`](/api.md#managedExpansionCB)","assembleAspectResourcesMeth":"[`assembleAspectResourcesMeth()`](/api.md#assembleAspectResourcesMeth)","expandFeatureContentMeth":"[`expandFeatureContentMeth()`](/api.md#expandFeatureContentMeth)","registerRootAppElmCB":"[`registerRootAppElmCB()`](/api.md#registerRootAppElmCB)","createFeature$":"[`createFeature({name, [enabled], [publicFace], [appWillStart], [appDidStart], [pluggableAspects]}): Feature`](/api.md#createFeature)","validateConfigurationMeth":"[`validateConfigurationMeth()`](/api.md#validateConfigurationMeth)","launchApp":"[`launchApp()`](/api.md#launchApp)","appWillStartCB":"[`appWillStartCB()`](/api.md#appWillStartCB)","addBuiltInFeatureKeyword$":"[`addBuiltInFeatureKeyword(keyword): void`](/api.md#addBuiltInFeatureKeyword)","createAspect$":"[`createAspect({see-docs}): Aspect`](/api.md#createAspect)","createAspect":"[`createAspect()`](/api.md#createAspect)","addBuiltInFeatureKeyword":"[`addBuiltInFeatureKeyword()`](/api.md#addBuiltInFeatureKeyword)","launchApp$":"[`launchApp({[aspects], features, registerRootAppElm}): App`](/api.md#launchApp)","appWillStartCB$":"[`appWillStartCB({app, curRootAppElm}): rootAppElm || null`](/api.md#appWillStartCB)","validateConfigurationMeth$":"[`validateConfigurationMeth(): string`](/api.md#validateConfigurationMeth)","createFeature":"[`createFeature()`](/api.md#createFeature)","extensionApi":"[`Extension API`](/extensionApi.md)","coreApi":"[`Core API`](/coreApi.md)","registerRootAppElmCB$":"[`registerRootAppElmCB(rootAppElm): void`](/api.md#registerRootAppElmCB)","expandFeatureContentMeth$":"[`expandFeatureContentMeth(app, feature): string`](/api.md#expandFeatureContentMeth)","assembleAspectResourcesMeth$":"[`assembleAspectResourcesMeth(app, aspects): void`](/api.md#assembleAspectResourcesMeth)","managedExpansionCB":"[`managedExpansionCB()`](/api.md#managedExpansionCB)","validateFeatureContentMeth$":"[`validateFeatureContentMeth(feature): string`](/api.md#validateFeatureContentMeth)"},"ext":{"astxDreduxDutil":"[`astx-redux-util`](https://astx-redux-util.js.org/)","TODO":"?? copied freom action-u ... currently unused","actionDu":"[`action-u`](https://action-u.js.org/)","reduxDactions":"[`redux-actions`](https://www.npmjs.com/package/redux-actions)","reduxDlogic":"[`redux-logic`](https://github.com/jeffbski/redux-logic)","expo":"[`expo`](https://expo.io/)","eateryDnod":"[`eatery-nod`](https://github.com/KevinAst/eatery-nod)","redux":"[`redux`](http://redux.js.org/)","actionCreator":"[`action creator`](http://redux.js.org/docs/basics/Actions.html#action-creators)","reactDnative":"[`react-native`](https://facebook.github.io/react-native/)","actions":"[`actions`](http://redux.js.org/docs/basics/Actions.html)","actionCreators":"[`action creators`](http://redux.js.org/docs/basics/Actions.html#action-creators)","react":"[`react`](https://reactjs.org/)"}},"title":"feature-u","gitbook":"3.2.2","description":"Feature Based Project Organization for React"},"file":{"path":"history.md","mtime":"2018-01-26T12:50:20.589Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2018-01-27T20:45:46.181Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Cross Feature Communication","level":"2.7","depth":1,"next":{"title":"publicFace and the App Object","level":"2.7.1","depth":2,"anchor":"#publicface-and-the-app-object","path":"crossCommunication.md","ref":"crossCommunication.md#publicface-and-the-app-object","articles":[]},"previous":{"title":"Feature Enablement","level":"2.6","depth":1,"path":"enablement.md","ref":"enablement.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-livereload","toolbar","livereload"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"sharing":{"facebook":false,"twitter":false,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["twitter","facebook","google","weibo","instapaper"]},"toolbar":{"buttons":[{"label":"GitHub","icon":"fa fa-github","url":"https://github.com/KevinAst/feature-u"},{"label":"NPM","icon":"fa fa-bullseye","url":"https://www.npmjs.com/package/feature-u"}]},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Kevin J. Bridges <kevinast@gmail.com> (https://github.com/KevinAst)","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"intro.md","glossary":"GLOSSARY.md","summary":"toc.md"},"variables":{"sym":{"featureDu":"**feature-u**"},"guide":{"LICENSE":"[`MIT License`](/LICENSE.md)","default":"[`Defaulting Parameters`](/default.md)","start":"[`Getting Started`](/start.md)","actionDoc":"[`Action Documentation`](/actionDoc.md)","promotion":"[`Action Promotion`](/promotion.md)","basics":"[`Basics`](/basics.md)","TODO":"?? copied freom action-u ... currently unused","dist":"[`Distribution`](/dist.md)","devGuide":"[**Dev Guide**](/index.html)","why":"[`Why feature-u?`](/why.md)","formalTypes":"[`A Closer Look`](/formalTypes.md)","shapes":"[`ActionStruct Shapes`](/shapes.md)","history":"[`Revision History`](/history.md)","thunks":"[`Thunk Action Creators`](/thunks.md)","validation":"[`Parameter Validation`](/validation.md)"},"api":{"injectRootAppElmMeth$":"[`injectRootAppElmMeth(app, activeFeatures, curRootAppElm): reactElm`](/api.md#injectRootAppElmMeth)","managedExpansion":"[`managedExpansion()`](/api.md#managedExpansion)","appDidStartCB$":"[`appDidStartCB({app, [appState], [dispatch]}): void`](/api.md#appDidStartCB)","assembleFeatureContentMeth":"[`assembleFeatureContentMeth()`](/api.md#assembleFeatureContentMeth)","assembleFeatureContentMeth$":"[`assembleFeatureContentMeth(app, activeFeatures): void`](/api.md#assembleFeatureContentMeth)","appDidStartCB":"[`appDidStartCB()`](/api.md#appDidStartCB)","managedExpansion$":"[`managedExpansion(managedExpansionCB): managedExpansionCB`](/api.md#managedExpansion)","injectRootAppElmMeth":"[`injectRootAppElmMeth()`](/api.md#injectRootAppElmMeth)","validateFeatureContentMeth":"[`validateFeatureContentMeth()`](/api.md#validateFeatureContentMeth)","managedExpansionCB$":"[`managedExpansionCB(app): AspectContent`](/api.md#managedExpansionCB)","assembleAspectResourcesMeth":"[`assembleAspectResourcesMeth()`](/api.md#assembleAspectResourcesMeth)","expandFeatureContentMeth":"[`expandFeatureContentMeth()`](/api.md#expandFeatureContentMeth)","registerRootAppElmCB":"[`registerRootAppElmCB()`](/api.md#registerRootAppElmCB)","createFeature$":"[`createFeature({name, [enabled], [publicFace], [appWillStart], [appDidStart], [pluggableAspects]}): Feature`](/api.md#createFeature)","validateConfigurationMeth":"[`validateConfigurationMeth()`](/api.md#validateConfigurationMeth)","launchApp":"[`launchApp()`](/api.md#launchApp)","appWillStartCB":"[`appWillStartCB()`](/api.md#appWillStartCB)","addBuiltInFeatureKeyword$":"[`addBuiltInFeatureKeyword(keyword): void`](/api.md#addBuiltInFeatureKeyword)","createAspect$":"[`createAspect({see-docs}): Aspect`](/api.md#createAspect)","createAspect":"[`createAspect()`](/api.md#createAspect)","addBuiltInFeatureKeyword":"[`addBuiltInFeatureKeyword()`](/api.md#addBuiltInFeatureKeyword)","launchApp$":"[`launchApp({[aspects], features, registerRootAppElm}): App`](/api.md#launchApp)","appWillStartCB$":"[`appWillStartCB({app, curRootAppElm}): rootAppElm || null`](/api.md#appWillStartCB)","validateConfigurationMeth$":"[`validateConfigurationMeth(): string`](/api.md#validateConfigurationMeth)","createFeature":"[`createFeature()`](/api.md#createFeature)","extensionApi":"[`Extension API`](/extensionApi.md)","coreApi":"[`Core API`](/coreApi.md)","registerRootAppElmCB$":"[`registerRootAppElmCB(rootAppElm): void`](/api.md#registerRootAppElmCB)","expandFeatureContentMeth$":"[`expandFeatureContentMeth(app, feature): string`](/api.md#expandFeatureContentMeth)","assembleAspectResourcesMeth$":"[`assembleAspectResourcesMeth(app, aspects): void`](/api.md#assembleAspectResourcesMeth)","managedExpansionCB":"[`managedExpansionCB()`](/api.md#managedExpansionCB)","validateFeatureContentMeth$":"[`validateFeatureContentMeth(feature): string`](/api.md#validateFeatureContentMeth)"},"ext":{"astxDreduxDutil":"[`astx-redux-util`](https://astx-redux-util.js.org/)","TODO":"?? copied freom action-u ... currently unused","actionDu":"[`action-u`](https://action-u.js.org/)","reduxDactions":"[`redux-actions`](https://www.npmjs.com/package/redux-actions)","reduxDlogic":"[`redux-logic`](https://github.com/jeffbski/redux-logic)","expo":"[`expo`](https://expo.io/)","eateryDnod":"[`eatery-nod`](https://github.com/KevinAst/eatery-nod)","redux":"[`redux`](http://redux.js.org/)","actionCreator":"[`action creator`](http://redux.js.org/docs/basics/Actions.html#action-creators)","reactDnative":"[`react-native`](https://facebook.github.io/react-native/)","actions":"[`actions`](http://redux.js.org/docs/basics/Actions.html)","actionCreators":"[`action creators`](http://redux.js.org/docs/basics/Actions.html#action-creators)","react":"[`react`](https://reactjs.org/)"}},"title":"feature-u","gitbook":"3.2.2","description":"Feature Based Project Organization for React"},"file":{"path":"crossCommunication.md","mtime":"2018-01-27T19:16:37.131Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2018-01-27T20:45:46.181Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
