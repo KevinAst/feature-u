@@ -1,15 +1,14 @@
 # Usage
 
-?? TODO: refine words from ARTICLE
-
 The basic usage pattern of feature-u is to:
 
-1. Determine the Aspects that you will be using, based on your
-   frameworks in use (i.e. your run-time stack).  This determines the
-   extended aspects accepted by the Feature object (for example:
-   `Feature.reducer` for [redux], and `Feature.logic` for [redux-logic]).
+1. Choose the Aspects that you will need, based on your selected
+   frameworks (i.e. your run-time stack).  This extends the aspect
+   properties accepted by the Feature object (for example:
+   `Feature.reducer` for [redux], or `Feature.logic` for
+   [redux-logic]).
 
-   Typically these Aspects are packaged seperatly in NPM, although you
+   Typically these Aspects are packaged separately in NPM, although you
    can create your own Aspects (if needed).
 
 1. Organize your app into features.
@@ -17,11 +16,11 @@ The basic usage pattern of feature-u is to:
    * Each feature should be located in it's own directory.
 
    * How you break your app up into features will take some time and
-     throught.  There are many ways to approach this from a design
+     thought.  There are many ways to approach this from a design
      perspective.
 
-   * Each feature promotes it's aspects through a formal Feature
-     object (using `createFeature()`).
+   * Each feature will promote it's aspects through a Feature object
+     (using `createFeature()`).
 
 1. Your mainline starts the app by invoking `launchApp()`, passing all
    Aspects and Features.  **Easy Peasy!!**
@@ -36,7 +35,7 @@ src/
   app.js              ... launches app using launchApp()
 
   feature/
-    index.js          ... accumulate/promote all app features
+    index.js          ... accumulate/promote all app Feature objects
 
     featureA/         ... an app feature
       actions.js
@@ -94,16 +93,20 @@ export default createFeature({
 });
 ```
 
-We will fill in more detail a bit later, but for now notice that
-featureA defines reducers, logic modules, routes, and does some type
-of initialization (appWillStart/appDidStart).  It also promotes a
-publicFace (open/close) to other features.
+We will fill in more detail a bit later, but for now notice that the
+feature is conveying reducers, logic modules, routes, and does some
+type of initialization (appWillStart/appDidStart).  It also promotes a
+publicFace (open/close) that can be used by other features (i.e. the
+feature's Public API).
 
 
 ## launchApp()
 
-The **application mainline**, merely collects all aspects and
-features, and starts the app by invoking `launchApp()`:
+In **feature-u** the application mainline is very simple and generic.
+There is no real app-specific code in it.  That is because we allow
+each feature to inject their own app-specific constructs.  The
+mainline merely accumulates the Aspects and Features, and starts the
+app by invoking `launchApp()`:
 
 **`src/app.js`**
 ```js
@@ -117,7 +120,7 @@ import SplashScreen      from './util/comp/SplashScreen';
 import features          from './feature'; // the set of features that comprise this application
 
 
-// define our set of "plugable" feature-u Aspects, conforming to our app's run-time stack
+// *1* define our set of "plugable" feature-u Aspects, conforming to our app's run-time stack
 const aspects = [
   routeAspect,   // StateRouter ... order: early, because <StateRouter> DOM injection does NOT support children
   reducerAspect, // redux       ... order: later, because <Provider> DOM injection should be on top
@@ -131,20 +134,37 @@ routeAspect.fallbackElm = <SplashScreen msg="I'm trying to think but it hurts!"/
 
 
 // launch our app, exposing the feature-u App object (facilitating cross-feature communication)!
-export default launchApp({
+export default launchApp({         // *3*
   aspects,
   features,
-  registerRootAppElm(rootAppElm) {
+  registerRootAppElm(rootAppElm) { // *2*
     ReactDOM.render(rootAppElm,
                     getElementById('myAppRoot'));
   }
 });
 ```
 
-**NOTE:** The returned App object accumulates the publicFace of all
-features (in named feature nodes), and is exported in order to support
-cross-communication between features (_please refer to_ [Accessing the
-App Object](#accessing-the-app-object)):
+Here are some **important points of interest** _(match `*n*` to the code
+above)_:
+
+`*1*`: the Aspect collection reflects the frameworks of our
+run-time stack _(in our example [redux], [redux-logic], and
+[feature-router])_ and extend the acceptable Feature properties
+_(`Feature.reducer`, `Feature.logic`, and `Feature.route`
+respectively)_ ... _**see:** [closer-look Extendable aspects]_
+
+`*2*`: `launchApp()` uses a `registerRootAppElm()` callback to
+catalog the supplied `rootAppElm` to the specific React platform in
+use.  Because this registration is accomplished by your app-specific
+code, **feature-u** can operate in any of the React platforms, such
+as: React Web, React Native, Expo, etc. ... _**see:** [React
+Registration](#react-registration))_
+
+`*3*`: _as a bit of a preview_, the return value of `launchApp()` is
+an App object, which promotes the accumulated Public API of all
+features.  The App object contains named feature nodes, and is
+exported to provide [Cross Feature Communication] ... _here is what
+app looks like for this example:_
 
 ```js
 app: {
@@ -160,18 +180,8 @@ app: {
 }
 ```
 
-**Also NOTE:** In the example above you can see that `launchApp()`
-uses a `registerRootAppElm()` callback hook to register the supplied
-`rootAppElm` to the specific React framework in use.  Because this
-registration is accomplished by app-specific code, **feature-u** can
-operate in any of the React flavors, such as: React Web, React Native,
-Expo, etc. (_please refer to:_ [React
-Registration](#react-registration)).
-
-
-Hopefully this gives you the basic idea of how **feature-u** operates.
-The following sections develop a more thorough understanding! _Go
-forth and compute!!_
+Hopefully this gives you a basic feel of how **feature-u** operates.
+The subsequent sections will develop a more thorough understanding!
 
 
 ## Real Example
