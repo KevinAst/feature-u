@@ -19,11 +19,13 @@ The basic usage pattern of feature-u is to:
      thought.  There are many ways to approach this from a design
      perspective.
 
-   * Each feature will promote it's aspects through a Feature object
-     (using `createFeature()`).
+   * Each feature will promote it's aspect content through a Feature
+     object (using `createFeature()`).
 
 1. Your mainline starts the app by invoking `launchApp()`, passing all
-   Aspects and Features.  **Easy Peasy!!**
+   Aspects and Features.
+
+**Easy Peasy!!**
 
 
 ## Directory Structure
@@ -61,8 +63,8 @@ Each feature is located in it's own directory, containing it's aspects
 
 ## Feature Object
 
-Each feature promotes it's aspects through a Feature object (using
-`createFeature()`).
+Each feature promotes it's aspect content through a Feature object
+(using `createFeature()`).
 
 **`src/feature/featureA/index.js`**
 ```js

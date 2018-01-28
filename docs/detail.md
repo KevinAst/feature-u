@@ -1,22 +1,27 @@
 # A Closer Look
 
-The basic process of feature-u is for each feature to promote a
-`Feature` object that relays the various aspects within that feature.
+As mentioned previously, the basic process of feature-u is that each
+feature promotes a `Feature` object that contains various aspects of
+that feature ... _things like: the feature's name, it's Public API,
+whether it is enabled, initialization constructs, and resources used
+to configure it's slice of the frameworks in use._
+
 In turn, these Feature objects are supplied to `launchApp()`, which
-configures and starts your application, and returns the App object
-which promotes the public API of each feature.
+configures and starts your application, returning an [App
+Object](#app-object) (_which promotes the public API of each
+feature_).
 
 _Let's take a closer look at this process ..._
 
 * [aspects](#aspects)
-* [Feature Object (relaying aspects)](#feature-object-relaying-aspects)
+* [Feature Object (relaying aspect content)](#feature-object-relaying-aspect-content)
   - [Built-In aspects](#built-in-aspects)
   - [Extendable aspects](#extendable-aspects)
 * [Launching Your Application](#launching-your-application)
   - [React Registration](#react-registration)
 * [App Object](#app-object)
-  - [Promoting Feature's Public API (via App)](#promoting-features-public-api-via-app)
-  - [Checking Feature Dependencies (via App)](#checking-feature-dependencies-via-app))
+  - [Feature Public API](#feature-public-api)
+  - [Does Feature Exist](#does-feature-exist)
 
 
 <!-- *** SECTION ********************************************************************************  -->
@@ -61,15 +66,15 @@ API.
 
 
 <!-- *** SECTION ********************************************************************************  -->
-## Feature Object (relaying aspects)
+## Feature Object (relaying aspect content)
 
-The Feature object is merely a container that holds the aspects that
-are of interest to feature-u.  
+The Feature object is merely a container that holds aspect content
+that is of interest to feature-u.
 
 Each feature within your application promotes a Feature object (using
 `createFeature()`) that catalogs the aspects of that feature.
 
-Ultimatly, all Feature objects are consumed by `launchApp()`. 
+Ultimately, all Feature objects are consumed by `launchApp()`. 
 
 
 ### Built-In aspects
@@ -94,12 +99,13 @@ object properties (via `createFeature()`).
 
 - `Feature.enabled`
 
-  A boolean property that determines whether it is enabled or not.
-  This indicator is typically based on a dynamic expression, allowing
-  packaged code to be dynamically enabled/disabled at run-time
-  _(please refer to: [Feature Enablement](#feature-enablement))_.
+  A boolean property that determines whether the feature is enabled or
+  not.  This indicator is typically based on a dynamic expression,
+  allowing packaged code to be dynamically enabled/disabled at
+  run-time _(please refer to: [Feature
+  Enablement](#feature-enablement))_.
 
-  
+
 - `Feature.publicFace`
   
   An optional resource object that is the feature's Public API,
@@ -108,7 +114,7 @@ object properties (via `createFeature()`).
   _(please refer to: [publicFace and the App
   Object](#publicface-and-the-app-object))_.
 
-  
+
 - `Feature.appWillStart`
   
   An optional [Application Life Cycle
@@ -117,7 +123,8 @@ object properties (via `createFeature()`).
   initialization, and/or optionally supplement the app's top-level
   content (using a non-null return) _(please refer to:
   [appWillStart](#appwillstart))_.
-  
+
+
 - `Feature.appDidStart`
   
   An optional [Application Life Cycle
@@ -137,7 +144,7 @@ management, or [redux-logic] business logic, etc.).  For this reason
 (_by in large_) **they provide the most value**, because they **fully
 integrate your features into your run-time stack!**
 
-They are packaged separately from **feature-u**, so as to not
+Extendable Aspects are packaged separately from **feature-u**, so as to not
 introduce unwanted dependencies (_because not everyone uses the same
 frameworks_).  You pick and choose them based on the framework(s) used
 in your project (_matching your project's run-time stack_).
@@ -151,10 +158,10 @@ object properties (via `createFeature()`).
 
 Because Extendable Aspects are not part of the base **feature-u**
 package, it is a bit problematic to discuss them here (_they are
-either in a seperate npm package, or self contained in your project_).
+either in a separate npm package, or self contained in your project_).
 **You should search the npm registry with the `'feature-u'` keyword**
 _to find the ones that meet your requirements_.  With that said, we
-will discuss a few of the Extendable Aspects that were created in
+will briefly discuss the Extendable Aspects that were created in
 conjunction with the initial development of **feature-u** (_just to give
 you a feel of what is possible_).
 
@@ -220,7 +227,7 @@ you a feel of what is possible_).
   application state to drive the routes!** It operates through a
   series of registered functional callback hooks, which determine the
   active screen based on an analysis of the the overall appState.
-  This is particulary useful in feature-based routing, because each
+  This is particularly useful in feature-based routing, because each
   feature can promote their own UI components in an encapsulated and
   autonomous way!  Because of this, **feature-router** is a
   preferred routing solution for **feature-u**.
@@ -243,15 +250,21 @@ This is accomplished through the `launchApp()` function.
   supplied plugable Aspects that extend **feature-u**, integrating
   external frameworks to match your specific run-time stack.
 
-- It facilitates application life-cycle methods on the Feature object,
+- It facilitates application life-cycle hooks on the Feature object,
   allowing features to manage things like: initialization and
   injecting root UI elements, etc.
 
 - It creates and promotes the App object which contains the publicFace
   of all features, facilitating a cross-communication between features.
 
-In essence, your application mainline becomes a single line of
-executable code!!
+As a result, your application mainline is very simple and generic.
+There is no real app-specific code in it.  That is because each
+feature injects their own app-specific constructs.  The mainline
+merely accumulates the Aspects and Features, and starts the app by
+invoking `launchApp()`:
+
+_This code snippet is mostly repeated from the Usage section (but is
+included here for completeness):_
 
 **`src/app.js`**
 ```js
@@ -265,7 +278,7 @@ import SplashScreen      from './util/comp/SplashScreen';
 import features          from './feature'; // the set of features that comprise this application
 
 
-// define our set of "plugable" feature-u Aspects, conforming to our app's run-time stack
+// *1* define our set of "plugable" feature-u Aspects, conforming to our app's run-time stack
 const aspects = [
   routeAspect,   // StateRouter ... order: early, because <StateRouter> DOM injection does NOT support children
   reducerAspect, // redux       ... order: later, because <Provider> DOM injection should be on top
@@ -279,30 +292,31 @@ routeAspect.fallbackElm = <SplashScreen msg="I'm trying to think but it hurts!"/
 
 
 // launch our app, exposing the feature-u App object (facilitating cross-feature communication)!
-export default launchApp({
+export default launchApp({         // *3*
   aspects,
   features,
-  registerRootAppElm(rootAppElm) {
+  registerRootAppElm(rootAppElm) { // *2*
     ReactDOM.render(rootAppElm,
                     getElementById('myAppRoot'));
   }
 });
 ```
 
-The returned App object accumulates the publicFace of all features (in
-named feature nodes), and is exported in order to support
-cross-communication between features (_please refer to_ [Accessing the
-App Object](#accessing-the-app-object)):
+The Aspect collection _(see `*1*` in `app.js` snippet above)_ reflects
+the frameworks of our run-time stack _(in our example [redux],
+[redux-logic], and [feature-router])_ and extend the acceptable
+Feature properties _(`Feature.reducer`, `Feature.logic`, and
+`Feature.route` respectively)_ ... _**see:** [closer-look Extendable
+aspects]_
 
 
 ### React Registration
 
-In the example above you can see that `launchApp()` uses a
-`registerRootAppElm()` callback hook to register the supplied
-`rootAppElm` to the specific React framework in use.  Because this
-registration is accomplished by app-specific code, **feature-u** can
-operate in any of the React flavors, such as: React Web, React Native,
-Expo, etc.
+The `launchApp()` function uses a `registerRootAppElm()` callback
+_(see `*2*` in `app.js` snippet above)_ to catalog the supplied
+`rootAppElm` to the specific React platform in use.  Because this
+registration is accomplished by your app-specific code, **feature-u**
+can operate in any of the React platforms, such as:
 
 **React Web**
 ```js
@@ -349,28 +363,31 @@ export default launchApp({
 <!-- *** SECTION ********************************************************************************  -->
 ## App Object
 
-The App object is emitted from `launchApp()` function, and promotes
-information about the Features within the app:
+An App object is emitted from the `launchApp()` function, which
+promotes the accumulated Public API of all features.
 
-- both the [feature's public API](#promoting-features-public-api-via-app)
-- and [whether a feature exists or not](#checking-feature-dependencies-via-app)
+The App object should be exported _(see `*3*` in `app.js` snippet
+above)_ so other modules can access it (providing [Cross Feature
+Communication]).  Please note that depending on the context, there are
+various techniques by which the App object can be accessed (see:
+[Accessing the App Object](#accessing-the-app-object)).
 
-### Promoting Feature's Public API (via App)
-
-The App object promotes the feature's Public API (i.e. it's
-publicFace).
-
-The project's mainline function should export the app object (i.e. the
-return of `launchApp()`), so other modules can access it.  Please note
-that depending on the context, there are various techniques by which
-the App object can be accessed (see: [Accessing the App
-Object](#accessing-the-app-object)).
-
-The App object is structured as follows:
+The App object contains named feature nodes, structured as follows:
 
 ```js
 App.{featureName}.{publicFace}
 ```
+
+The app object can be used for two distinct purposes: 
+
+1. to access a feature's Public API, and
+2. to determine whether a feature exists.
+
+
+### Feature Public API
+
+The App object promotes the feature's Public API (i.e. it's
+publicFace).
 
 As an example, an application that has two features (featureA, and
 featureB) will look like this:
@@ -392,7 +409,7 @@ You can see that featureA is promoting a couple of actions (open(),
 close()) in it's publicFace, while featureB has NO publicFace.
 
 
-### Checking Feature Dependencies (via App)
+### Does Feature Exist
 
 The App object can be used to determine if a feature is present or
 not.  If a feature does not exist, or has been disabled, the

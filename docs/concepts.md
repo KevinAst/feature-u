@@ -62,7 +62,7 @@ The **overriding goal** of **feature-u** is two fold:
 The basic process of feature-u is that each feature promotes a
 `Feature` object that contains various aspects of that feature
 ... _things like: the feature's name, it's Public API, whether it is
-enabled, initialization constructs, and resources used in configuring
+enabled, initialization constructs, and resources used to configure
 it's slice of the frameworks in use._ 
 
 In turn, these Feature objects are supplied to `launchApp()`, which
