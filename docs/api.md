@@ -46,7 +46,7 @@ Launch an app by assembling the supplied features, driving theconfiguration of 
 | --- | --- | --- |
 | [aspects] | [`Array.&lt;Aspect&gt;`](#Aspect) | the set of plugable aspects that extend feature-u, integrating other frameworks to match your specific run-time stack.  When NO aspects are supplied (an atypical case), only the very basic feature-u characteristics are in effect (like publicFace and life-cycle hooks). |
 | features | [`Array.&lt;Feature&gt;`](#Feature) | the features that comprise this application. |
-| registerRootAppElm | [`registerRootAppElmCB`](#registerRootAppElmCB) | the callback hook that registers the supplied root application element to the specific React framework used in the app.  Because this registration is accomplished by app-specific code, feature-u can operate in any of the react flavors, such as: React Web, React Native, Expo, etc. |
+| registerRootAppElm | [`registerRootAppElmCB`](#registerRootAppElmCB) | the callback hook that registers the supplied root application element to the specific React framework used in the app.  Because this registration is accomplished by app-specific code, feature-u can operate in any of the react platforms, such as: React Web, React Native, Expo, etc. |
 
 **Returns**: App - the App object used to promote featurecross-communication.  
 
@@ -153,7 +153,7 @@ An optional app life-cycle hook invoked one time, immediately afterthe app has 
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
   registerRootAppElmCB : function</h5>
-The launchApp() callback hook that registers the supplied rootapplication element to the specific React framework used in the app.Because this registration is accomplished by app-specific code,feature-u can operate in any of the React flavors, such as: ReactWeb, React Native, Expo, etc. (see: **React Registration**).**NOTE on rootAppElm:**- Typically the supplied rootAppElm will have definition, based on  the Aspects and Features that are in use.  In this case, it is the  responsibility of this callback to register this content in  some way (either directly or indirectly).- However, there are atypical isolated cases where the supplied  rootAppElm can be null.  This can happen when the app chooses NOT  to use Aspects/Features that inject any UI content.  In this case,  the callback is free to register it's own content.Please refer to the user documentation for more details andcomplete examples.
+The launchApp() callback hook that registers the supplied rootapplication element to the specific React framework used in the app.Because this registration is accomplished by app-specific code,feature-u can operate in any of the React platforms, such as: ReactWeb, React Native, Expo, etc. (see: **React Registration**).**NOTE on rootAppElm:**- Typically the supplied rootAppElm will have definition, based on  the Aspects and Features that are in use.  In this case, it is the  responsibility of this callback to register this content in  some way (either directly or indirectly).- However, there are atypical isolated cases where the supplied  rootAppElm can be null.  This can happen when the app chooses NOT  to use Aspects/Features that inject any UI content.  In this case,  the callback is free to register it's own content.Please refer to the user documentation for more details andcomplete examples.
 
 
 | Param | Type | Description |

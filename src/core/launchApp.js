@@ -41,7 +41,7 @@ import {isBuiltInFeatureKeyword} from './createFeature';
  * that registers the supplied root application element to the specific
  * React framework used in the app.  Because this registration is
  * accomplished by app-specific code, feature-u can operate in any of
- * the react flavors, such as: React Web, React Native, Expo, etc.
+ * the react platforms, such as: React Web, React Native, Expo, etc.
  *
  * @return {App} the App object used to promote feature
  * cross-communication.
@@ -244,7 +244,7 @@ export default function launchApp({aspects=[],
  * application element to the specific React framework used in the app.
  *
  * Because this registration is accomplished by app-specific code,
- * feature-u can operate in any of the React flavors, such as: React
+ * feature-u can operate in any of the React platforms, such as: React
  * Web, React Native, Expo, etc. (see: **React Registration**).
  * 
  * **NOTE on rootAppElm:**
