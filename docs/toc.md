@@ -4,8 +4,7 @@
 * [Getting Started](start.md)
 
 ----
-* [Backdrop](backdrop.md)
-* [Basic Concepts](basics.md)
+* [Basic Concepts](concepts.md)
 * [Usage](usage.md)
   * [Directory Structure](usage.md#directory-structure)
   * [Feature Object](usage.md#feature-object)
@@ -45,7 +44,6 @@
   * [Locating Extensions](extending.md#locating-extensions)
   * [Aspect Object](extending.md#aspect-object-extending-feature-u)
 
-----
 * [Extension API](extensionApi.md)
   * [createAspect()](api.md#createAspect)
   * [addBuiltInFeatureKeyword()](api.md#addBuiltInFeatureKeyword)

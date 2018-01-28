@@ -7,8 +7,8 @@ The following list summarizes the **Core API**.  _For your convenience
 this list:_
 
 1. summarizes the functional API signatures
-1. includes related callback/hooks _(in an indented form)_
-1. links to more detail
+1. includes related callback/hooks _(indented)_
+1. links to the detailed API docs
 
 ## Core API Summary
 
