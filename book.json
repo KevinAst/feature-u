@@ -132,15 +132,18 @@
     },
 
     "ext": {
-      "react":            "[`react`](https://reactjs.org/)",
-      "reactNative":      "[`react-native`](https://facebook.github.io/react-native/)",
-      "reduxLogic":       "[`redux-logic`](https://github.com/jeffbski/redux-logic)",
-      "eateryNod":        "[`eatery-nod`](https://github.com/KevinAst/eatery-nod)",
-      "expo":             "[`expo`](https://expo.io/)",
-      "redux":            "[`redux`](http://redux.js.org/)",
-      "actionU":          "[`action-u`](https://action-u.js.org/)",
-      "reduxActions":     "[`redux-actions`](https://www.npmjs.com/package/redux-actions)",
-      "astxReduxUtil":    "[`astx-redux-util`](https://astx-redux-util.js.org/)"
+      "actionU":           "[`action-u`](https://action-u.js.org/)",
+      "astxReduxUtil":     "[`astx-redux-util`](https://astx-redux-util.js.org/)",
+      "eateryNod":         "[`eatery-nod`](https://github.com/KevinAst/eatery-nod)",
+      "expo":              "[`expo`](https://expo.io/)",
+      "featureRedux":      "[`feature-redux`](https://github.com/KevinAst/feature-redux)",
+      "featureReduxLogic": "[`feature-redux-logic`](https://github.com/KevinAst/feature-redux-logic)",
+      "featureRouter":     "[`feature-router`](https://github.com/KevinAst/feature-router)",
+      "react":             "[`react`](https://reactjs.org/)",
+      "reactNative":       "[`react-native`](https://facebook.github.io/react-native/)",
+      "redux":             "[`redux`](http://redux.js.org/)",
+      "reduxActions":      "[`redux-actions`](https://www.npmjs.com/package/redux-actions)",
+      "reduxLogic":        "[`redux-logic`](https://github.com/jeffbski/redux-logic)"
     }
   }
 }

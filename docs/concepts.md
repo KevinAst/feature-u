@@ -1,6 +1,6 @@
 # Basic Concepts
 
-In order to get a high level understanding of feature-u, let's start
+In order to get a high level understanding of **feature-u**, let's start
 by chronicling a typical feature-based development quandary ...
 
 
@@ -59,16 +59,16 @@ The **overriding goal** of **feature-u** is two fold:
 
 ## feature-u Basics
 
-The basic process of feature-u is that each feature promotes a
-`Feature` object that contains various aspects of that feature
-... _things like: the feature's name, it's Public API, whether it is
-enabled, initialization constructs, and resources used to configure
-it's slice of the frameworks in use._ 
+The basic process of **feature-u** is that each feature promotes a
+{{book.api.Feature}} object that contains various aspects of that
+feature ... _things like: the feature's name, it's Public API, whether
+it is enabled, initialization constructs, and resources used to
+configure it's slice of the frameworks in use._
 
-In turn, these Feature objects are supplied to `launchApp()`, which
-configures and starts your application, returning an [App
-Object](#app-object) (_which promotes the public API of each
-feature_).
+In turn, these {{book.api.Feature}} objects are supplied to
+{{book.api.launchApp}}, which configures and starts your application,
+returning an {{book.api.App}} object (_which promotes the public API
+of each feature_).
 
 ### aspects ...
 

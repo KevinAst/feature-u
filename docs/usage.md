@@ -1,12 +1,12 @@
 # Usage
 
-The basic usage pattern of feature-u is to:
+The basic usage pattern of **feature-u** is to:
 
 1. Choose the Aspects that you will need, based on your selected
    frameworks (i.e. your run-time stack).  This extends the aspect
    properties accepted by the Feature object (for example:
-   `Feature.reducer` for [redux], or `Feature.logic` for
-   [redux-logic]).
+   `Feature.reducer` for {{book.ext.redux}}, or `Feature.logic` for
+   {{book.ext.reduxLogic}}).
 
    Typically these Aspects are packaged separately in NPM, although you
    can create your own Aspects (if needed).
@@ -20,10 +20,10 @@ The basic usage pattern of feature-u is to:
      perspective.
 
    * Each feature will promote it's aspect content through a Feature
-     object (using `createFeature()`).
+     object (using {{book.api.createFeature}}).
 
-1. Your mainline starts the app by invoking `launchApp()`, passing all
-   Aspects and Features.
+1. Your mainline starts the app by invoking {{book.api.launchApp}},
+   passing all Aspects and Features.
 
 **Easy Peasy!!**
 
@@ -63,8 +63,8 @@ Each feature is located in it's own directory, containing it's aspects
 
 ## Feature Object
 
-Each feature promotes it's aspect content through a Feature object
-(using `createFeature()`).
+Each feature promotes it's aspect content through a
+{{book.api.Feature}} object (using {{book.api.createFeature}}).
 
 **`src/feature/featureA/index.js`**
 ```js
@@ -108,7 +108,8 @@ In **feature-u** the application mainline is very simple and generic.
 There is no real app-specific code in it ... **not even any global
 initialization**!  That is because **each feature can inject their own
 app-specific constructs**!!  The mainline merely accumulates the
-Aspects and Features, and starts the app by invoking `launchApp()`:
+Aspects and Features, and starts the app by invoking
+{{book.api.launchApp}}:
 
 **`src/app.js`**
 ```js
@@ -141,27 +142,28 @@ Here are some **important points of interest** _(match the numbers to
 `*n*` in the code above)_:
 
 1. the supplied Aspects _(pulled from separate npm packages)_ reflect
-   the frameworks of our run-time stack _(in our example [redux],
-   [redux-logic], and [feature-router])_ and extend the acceptable
-   Feature properties _(`Feature.reducer`, `Feature.logic`, and
-   `Feature.route` respectively)_ ... _**see:** [closer-look
-   Extendable aspects]_
+   the frameworks of our run-time stack _(in our example [
+   {{book.ext.redux}}, {{book.ext.reduxLogic}}, and
+   {{book.ext.featureRouter}})_ and extend the acceptable Feature
+   properties _(`Feature.reducer`, `Feature.logic`, and
+   `Feature.route` respectively)_ ... _**see:**
+   {{book.guide.detail_extendableAspects}}_
 
 2. all of our app features are supplied (accumulated from the
    `features/` directory)
 
-3. a `registerRootAppElm()` callback is used to catalog the
-   supplied `rootAppElm` to the specific React platform in use.  Because
-   this registration is accomplished by your app-specific code,
-   **feature-u** can operate in any of the React platforms, such as:
-   React Web, React Native, Expo, etc. ... _**see:** [React
-   Registration](#react-registration))_
+3. a {{book.api.registerRootAppElmCB}} callback is used to catalog the
+   supplied `rootAppElm` to the specific React platform in use.
+   Because this registration is accomplished by your app-specific
+   code, **feature-u** can operate in any of the React platforms, such
+   as: React Web, React Native, Expo, etc. ... _**see:**
+   {{book.guide.detail_reactRegistration}}_
 
-4. _as a bit of a preview_, the return value of `launchApp()` is
-   an App object, which promotes the accumulated Public API of all
-   features.  The App object contains named feature nodes, and is
-   exported to provide [Cross Feature Communication] ... _here is what
-   app looks like (for this example):_
+4. _as a bit of a preview_, the return value of {{book.api.launchApp}}
+   is an {{book.api.App}} object, which promotes the accumulated
+   Public API of all features.  The App object contains named feature
+   nodes, and is exported to provide {{book.guide.crossCom}} ... _here
+   is what app looks like (for this example):_
 
    ```js
    app: {
@@ -185,17 +187,16 @@ The subsequent sections will develop a more thorough understanding!
 
 Want to see a real **feature-u** app?
 
-[eatery-nod](https://github.com/KevinAst/eatery-nod) is the
-application _where **feature-u** was conceived_.  It is a
-[react-native](https://facebook.github.io/react-native/)
-[Expo](https://expo.io/) mobile app, and is one of my sandbox
-applications that I use to test frameworks.  _I like to develop apps
-that I can use, but have enough real-world requirements to make it
-interesting._
+{{book.ext.eateryNod}} is the application _where **feature-u** was
+conceived_.  It is a {{book.ext.reactNative}} {{book.ext.expo}} mobile
+app, and is one of my sandbox applications that I use to test
+frameworks.  _I like to develop apps that I can use, but have enough
+real-world requirements to make it interesting._
 
-**eatery-nod** randomly selects a "date night" restaurant from a pool
-of favorites.  _My wife and I have a steady "date night", and we are
-always indecisive on which of our favorite restaurants to frequent
-:-)_ So **eatery-nod** provides the spinning wheel!
+**{{book.ext.eateryNod}}** randomly selects a "date night" restaurant
+from a pool of favorites.  _My wife and I have a steady "date night",
+and we are always indecisive on which of our favorite restaurants to
+frequent :-)_ So **{{book.ext.eateryNod}}** provides the spinning
+wheel!
 
 
