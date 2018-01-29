@@ -1,14 +1,14 @@
 # A Closer Look
 
-As mentioned previously, the basic process of feature-u is that each
-feature promotes a `Feature` object that contains various aspects of
-that feature ... _things like: the feature's name, it's Public API,
-whether it is enabled, initialization constructs, and resources used
-to configure it's slice of the frameworks in use._
+As mentioned previously, the basic process of **feature-u** is that
+each feature promotes a {{book.api.Feature}} object that contains
+various aspects of that feature ... _things like: the feature's name,
+it's Public API, whether it is enabled, initialization constructs, and
+resources used to configure it's slice of the frameworks in use._
 
-In turn, these Feature objects are supplied to `launchApp()`, which
-configures and starts your application, returning an [App
-Object](#app-object) (_which promotes the public API of each
+In turn, these Feature objects are supplied to {{book.api.launchApp}},
+which configures and starts your application, returning an
+{{book.api.App}} Object (_which promotes the public API of each
 feature_).
 
 _Let's take a closer look at this process ..._
@@ -27,7 +27,7 @@ _Let's take a closer look at this process ..._
 <!-- *** SECTION ********************************************************************************  -->
 ## aspects
 
-In feature-u, "aspect" is a generalized term used to refer to the various
+In **feature-u**, "aspect" is a generalized term used to refer to the various
 ingredients that (when combined) constitute your application.  Aspects
 can take on many different forms ... for example:
 
@@ -50,51 +50,50 @@ API.
 
 1. [**Built-In aspects**](#built-in-aspects):
 
-   These aspects are promoted directly by the base feature-u package.
+   These aspects are promoted directly by the base **feature-u** package.
    They provide very rudimentary capabilities, such as feature
    enablement, public API, and application life-cycle hooks.
 
 1. [**Extendable aspects**](#extendable-aspects):
 
    These aspects are promoted by external packages (_or self defined
-   in your project_).  They provide feature-u integration with other
-   frameworks (for example [redux] state management, or [redux-logic]
-   business logic, or navigational routers, etc.).  They are created
-   with feature-u's extendable API, and are packaged separately, so as
-   to not introduce unwanted dependencies.
+   in your project_).  They provide **feature-u** integration with other
+   frameworks (for example {{book.ext.redux}} state management, or
+   {{book.ext.reduxLogic}} business logic, or navigational routers,
+   etc.).  They are created with **feature-u**'s extendable API, and are
+   packaged separately, so as to not introduce unwanted dependencies.
 
 
 
 <!-- *** SECTION ********************************************************************************  -->
 ## Feature Object (relaying aspect content)
 
-The Feature object is merely a container that holds aspect content
-that is of interest to feature-u.
+The {{book.api.Feature}} object is merely a container that holds
+aspect content that is of interest to **feature-u**.
 
 Each feature within your application promotes a Feature object (using
-`createFeature()`) that catalogs the aspects of that feature.
+{{book.api.createFeature}}) that catalogs the aspects of that feature.
 
-Ultimately, all Feature objects are consumed by `launchApp()`. 
+Ultimately, all Feature objects are consumed by {{book.api.launchApp}}. 
 
 
 ### Built-In aspects
 
-Built-in aspects are promoted directly by the base feature-u package.
+Built-in aspects are promoted directly by the base **feature-u** package.
 They provide very rudimentary capabilities, such as feature
 enablement, public API, and application life-cycle hooks.
 
 Like all aspects, Built-In aspect content is relayed through Feature
-object properties (via `createFeature()`).
+object properties (via {{book.api.createFeature}}).
 
 - `Feature.name`
 
   A string property which represents the identity of the feature.
-  Feature names are used to index the [App Object](#app-object) by
-  feature _(in support of [Cross Feature
-  Communication](#cross-feature-communication))_, and are therefore
-  guaranteed to be unique.  Application code can also use [Feature
-  Name](#feature-name) in various [Single Source of
-  Truth](#single-source-of-truth) operations.
+  Feature names are used to index the {{book.api.App}} Object by
+  feature _(in support of {{book.guide.crossCom}})_, and are therefore
+  guaranteed to be unique.  Application code can also use
+  {{book.guide.truth_featureName}} in various {{book.guide.truth}}
+  operations.
 
 
 - `Feature.enabled`
@@ -110,50 +109,48 @@ object properties (via `createFeature()`).
   An optional resource object that is the feature's Public API,
   promoting cross-communication between features.  This object is
   exposed through the App object as: `app.{featureName}.{publicFace}`
-  _(please refer to: [publicFace and the App
-  Object](#publicface-and-the-app-object))_.
+  _(please refer to: {{book.guide.crossCom_publicFaceApp}} )_.
 
 
 - `Feature.appWillStart`
   
-  An optional [Application Life Cycle
-  Hook](#application-life-cycle-hooks) invoked one time, just before
-  the app starts up.  This life-cycle hook can do any type of
+  An optional {{book.guide.appLifeCycle}} invoked one time, just
+  before the app starts up.  This life-cycle hook can do any type of
   initialization, and/or optionally supplement the app's top-level
   content (using a non-null return) _(please refer to:
-  [appWillStart](#appwillstart))_.
+  {{book.guide.appWillStart}})_.
 
 
 - `Feature.appDidStart`
   
-  An optional [Application Life Cycle
-  Hook](#application-life-cycle-hooks) invoked one time, immediately
+  An optional {{book.guide.appLifeCycle}} invoked one time, immediately
   after the app has started.  Because the app is up-and-running at
   this time, you have access to the appState and the dispatch()
   function ... assuming you are using redux (when detected by
-  feature-u's plugable aspects) _(please refer to:
-  [appDidStart](#appdidstart))_.
+  **feature-u**'s plugable aspects) _(please refer to:
+  {{book.guide.appDidStart}})_.
 
 
 ### Extendable aspects
 
 **feature-u** is extendable!  Extendable Aspects provide **feature-u**
-integration with other frameworks (for example [redux] state
-management, or [redux-logic] business logic, etc.).  For this reason
-(_by in large_) **they provide the most value**, because they **fully
-integrate your features into your run-time stack!**
+integration with other frameworks (for example {{book.ext.redux}}
+state management, or {{book.ext.reduxLogic}} business logic, etc.).
+For this reason (_by in large_) **they provide the most value**,
+because they **fully integrate your features into your run-time
+stack!**
 
 Extendable Aspects are packaged separately from **feature-u**, so as to not
 introduce unwanted dependencies (_because not everyone uses the same
 frameworks_).  You pick and choose them based on the framework(s) used
 in your project (_matching your project's run-time stack_).
 
-Extendable Aspects are created with **feature-u**'s extendable API, using
-`createAspect()`.  You can define your own Aspect (_if the one you
-need doesn't already exist_)!
+Extendable Aspects are created with **feature-u**'s
+{{book.guide.extensionApi}}, using {{book.api.createAspect}}.  You can
+define your own Aspect (_if the one you need doesn't already exist_)!
 
 Like all aspects, Extendable Aspect content is relayed through Feature
-object properties (via `createFeature()`).
+object properties (via {{book.api.createFeature}}).
 
 Because Extendable Aspects are not part of the base **feature-u**
 package, it is a bit problematic to discuss them here (_they are
@@ -165,13 +162,13 @@ conjunction with the initial development of **feature-u** (_just to give
 you a feel of what is possible_).
 
 
-- `Feature.reducer` via: **feature-redux**
+- `Feature.reducer` via: **{{book.ext.featureRedux}}**
   
-  **feature-redux** is the **feature-u** integration point to
-  [redux]!
+  **{{book.ext.featureRedux}}** is the **feature-u** integration point
+  to {{book.ext.redux}}!
 
-  It configures [redux] through the `reducerAspect` (_to be
-  supplied to_ `launchApp()`), which extends the Feature object,
+  It configures {{book.ext.redux}} through the `reducerAspect` (_to be
+  supplied to_ {{book.api.launchApp}}), which extends the Feature object,
   adding support for the `Feature.reducer` property, referencing
   feature-based reducers.
 
@@ -189,17 +186,17 @@ you a feel of what is possible_).
   integration hook to other Aspects that need to inject redux
   middleware.
 
-  Please refer to the **feature-redux** documentation for complete
-  details.
-  
-  
-- `Feature.logic` via: **feature-redux-logic**
+  Please refer to the **{{book.ext.featureRedux}}** documentation for
+  complete details.
 
-  **feature-redux-logic** is the **feature-u** integration point to
-  [redux-logic]!
+ 
+- `Feature.logic` via: **{{book.ext.featureReduxLogic}}**
 
-  It configures [redux-logic] through the `logicAspect` (_to be
-  supplied to_ `launchApp()`), which extends the Feature object,
+  **{{book.ext.featureReduxLogic}}** is the **feature-u** integration
+  point to {{book.ext.reduxLogic}}!
+
+  It configures {{book.ext.reduxLogic}} through the `logicAspect` (_to be
+  supplied to_ {{book.api.launchApp}}), which extends the Feature object,
   adding support for the `Feature.logic` property, referencing
   feature-based logic modules.
 
@@ -208,17 +205,17 @@ you a feel of what is possible_).
   React-Redux
   application](https://medium.com/@jeffbski/where-do-i-put-my-business-logic-in-a-react-redux-application-9253ef91ce1).
 
-  Please refer to the **feature-redux-logic** documentation for complete
-  details.
+  Please refer to the **{{book.ext.featureReduxLogic}}** documentation
+  for complete details.
 
  
-- `Feature.route` via: **feature-router**
+- `Feature.route` via: **{{book.ext.featureRouter}}**
 
-  **feature-router** is the **feature-u** integration point to
+  **{{book.ext.featureRouter}}** is the **feature-u** integration point to
   **Feature Routes**!
 
   It configures **Feature Router** through the `routeAspect` (_to be
-  supplied to_ `launchApp()`), which extends the Feature object,
+  supplied to_ {{book.api.launchApp}}), which extends the Feature object,
   adding support for the `Feature.route` property, referencing routes
   defined through the `featureRoute()` function.
 
@@ -231,8 +228,8 @@ you a feel of what is possible_).
   autonomous way!  Because of this, **feature-router** is a
   preferred routing solution for **feature-u**.
 
-  Please refer to the **feature-router** documentation for complete
-  details.
+  Please refer to the **{{book.ext.featureRouter}}** documentation for
+  complete details.
 
 
 <!-- *** SECTION ********************************************************************************  -->
@@ -242,25 +239,26 @@ By interpreting the set of Aspects and Features that comprise an
 application, **feature-u** can actually coordinate the launch of your
 application (i.e. **start it running**)!
 
-This is accomplished through the `launchApp()` function.
+This is accomplished through the {{book.api.launchApp}} function.
 
 - It manages the setup and configuration of the frameworks in use,
-  such as [redux], [redux-logic], etc.  This is based on a set of
-  supplied plugable Aspects that extend **feature-u**, integrating
-  external frameworks to match your specific run-time stack.
+  such as {{book.ext.redux}}, {{book.ext.reduxLogic}}, etc.  This is
+  based on a set of supplied plugable Aspects that extend
+  **feature-u**, integrating external frameworks to match your
+  specific run-time stack.
 
-- It facilitates application life-cycle hooks on the Feature object,
+- It facilitates application life-cycle hooks on the {{book.api.Feature}} object,
   allowing features to manage things like: initialization and
   injecting root UI elements, etc.
 
-- It creates and promotes the App object which contains the publicFace
+- It creates and promotes the {{book.api.App}} object which contains the publicFace
   of all features, facilitating a cross-communication between features.
 
 As a result, your application mainline is very simple and generic.
 There is no real app-specific code in it ... **not even any global
 initialization**!  That is because **each feature can inject their own
 app-specific constructs**!!  The mainline merely accumulates the
-Aspects and Features, and starts the app by invoking `launchApp()`:
+Aspects and Features, and starts the app by invoking {{book.api.launchApp}}:
 
 
 **`src/app.js`**
@@ -300,12 +298,13 @@ export default launchApp({         // *4*
 ```
 
 The Aspect collection _(see `*1*` in the code snippet above)_ reflects
-the frameworks of our run-time stack _(in our example [redux],
-[redux-logic], and [feature-router])_ and extend the acceptable
-Feature properties _(`Feature.reducer`, `Feature.logic`, and
-`Feature.route` respectively)_ ... _**see:** [closer-look Extendable
-aspects]_.  In this case, all our Aspects were pulled from external
-npm packages, however you can define your own using `createAspect()`.
+the frameworks of our run-time stack _(in our example
+{{book.ext.redux}}, {{book.ext.reduxLogic}}, and
+{{book.ext.featureRouter}} )_ and extend the acceptable Feature
+properties _(`Feature.reducer`, `Feature.logic`, and `Feature.route`
+respectively)_ ... _**see:** {{book.guide.detail_extendableAspects}}_.
+In this case, all our Aspects were pulled from external npm packages,
+however you can define your own using {{book.api.createAspect}}.
 
 All of our supplied app features are accumulated from the `features/`
 directory ... _(see `*2*` in the code snippet above)_.
@@ -380,15 +379,15 @@ export default launchApp({
 <!-- *** SECTION ********************************************************************************  -->
 ## App Object
 
-An App object is emitted from the `launchApp()` function, which
-promotes the accumulated Public API of all features _(see:
-{{book.guide.crossCom_publicFaceApp}})_.
+An {{book.api.App}} object is emitted from the {{book.api.launchApp}}
+function, which promotes the accumulated Public API of all features
+_(see: {{book.guide.crossCom_publicFaceApp}})_.
 
-The App object should be exported _(see `*4*` in the code snippet
-above)_ so other modules can access it (providing [Cross Feature
-Communication]).  Please note that depending on the context, there are
-various techniques by which the App object can be accessed (see:
-[Accessing the App Object](#accessing-the-app-object)).
+The App object should be exported _(see `*4*` in the code
+snippet above)_ so other modules can access it (providing
+{{book.guide.crossCom}}).  Please note that depending on the context,
+there are various techniques by which the App object can be accessed
+(see: {{book.guide.crossCom_accessingApp}}).
 
 The App object contains named feature nodes, structured as follows:
 
@@ -404,8 +403,8 @@ The app object can be used for two distinct purposes:
 
 ### Feature Public API
 
-The App object promotes the feature's Public API (i.e. it's
-publicFace).
+The {{book.api.App}} object promotes the feature's Public API
+(i.e. it's publicFace).
 
 As an example, an application that has two features (featureA, and
 featureB) will look like this:
@@ -429,9 +428,9 @@ close()) in it's publicFace, while featureB has NO publicFace.
 
 ### Does Feature Exist
 
-The App object can be used to determine if a feature is present or
-not.  If a feature does not exist, or has been disabled, the
-corresponding `app.{featureName}` will NOT exist.
+The {{book.api.App}} object can be used to determine if a feature is
+present or not.  If a feature does not exist, or has been disabled,
+the corresponding `app.{featureName}` will NOT exist.
 
  - It could be that `featureA` will conditionally use `featureB` if it
    is present.
