@@ -238,9 +238,9 @@ you a feel of what is possible_).
 <!-- *** SECTION ********************************************************************************  -->
 ## Launching Your Application
 
-By assimilating the set of features that comprise an application,
-interpreting each feature aspect, **feature-u** can actually
-coordinate the launch of your application (i.e. start it running)!
+By interpreting the set of Aspects and Features that comprise an
+application, **feature-u** can actually coordinate the launch of your
+application (i.e. **start it running**)!
 
 This is accomplished through the `launchApp()` function.
 
@@ -257,62 +257,64 @@ This is accomplished through the `launchApp()` function.
   of all features, facilitating a cross-communication between features.
 
 As a result, your application mainline is very simple and generic.
-There is no real app-specific code in it.  That is because each
-feature injects their own app-specific constructs.  The mainline
-merely accumulates the Aspects and Features, and starts the app by
-invoking `launchApp()`:
+There is no real app-specific code in it ... **not even any global
+initialization**!  That is because **each feature can inject their own
+app-specific constructs**!!  The mainline merely accumulates the
+Aspects and Features, and starts the app by invoking `launchApp()`:
 
-_This code snippet is mostly repeated from the Usage section (but is
-included here for completeness):_
 
 **`src/app.js`**
 ```js
 import React             from 'react';
 import ReactDOM          from 'react-dom';
-import {routeAspect}     from './util/feature-u/aspect/feature-router';
-import {reducerAspect}   from './util/feature-u/aspect/feature-redux';
-import {logicAspect}     from './util/feature-u/aspect/feature-redux-logic';
-import {launchApp}       from './util/feature-u';
+import {launchApp}       from 'feature-u';
+import {routeAspect}     from 'feature-router';      // *1*
+import {reducerAspect}   from 'feature-redux';       // *1*
+import {logicAspect}     from 'feature-redux-logic'; // *1*
 import SplashScreen      from './util/comp/SplashScreen';
-import features          from './feature'; // the set of features that comprise this application
+import features          from './feature';           // *2*
 
 
-// *1* define our set of "plugable" feature-u Aspects, conforming to our app's run-time stack
-const aspects = [
-  routeAspect,   // StateRouter ... order: early, because <StateRouter> DOM injection does NOT support children
-  reducerAspect, // redux       ... order: later, because <Provider> DOM injection should be on top
-  logicAspect,   // redux-logic ... order: N/A,   because NO DOM injection
+// define our set of "plugable" feature-u Aspects, conforming to our app's run-time stack
+const aspects = [ // *1*
+  routeAspect,    // Feature Routes ... order: early - it's DOM injection does NOT support children
+  reducerAspect,  // redux          ... order: later - <Provider> DOM injection should be on top
+  logicAspect,    // redux-logic    ... order: N/A   - NO DOM injection
 ];
 
 
 // configure our Aspects (as needed)
-// ... StateRouter fallback screen (when no routes are in effect)
+// ... Feature Route fallback screen (when no routes are in effect)
 routeAspect.fallbackElm = <SplashScreen msg="I'm trying to think but it hurts!"/>;
 
 
 // launch our app, exposing the feature-u App object (facilitating cross-feature communication)!
-export default launchApp({         // *3*
-  aspects,
-  features,
-  registerRootAppElm(rootAppElm) { // *2*
+export default launchApp({         // *4*
+  aspects,                         // *1*
+  features,                        // *2*
+  registerRootAppElm(rootAppElm) { // *3*
     ReactDOM.render(rootAppElm,
                     getElementById('myAppRoot'));
   }
 });
 ```
 
-The Aspect collection _(see `*1*` in `app.js` snippet above)_ reflects
+The Aspect collection _(see `*1*` in the code snippet above)_ reflects
 the frameworks of our run-time stack _(in our example [redux],
 [redux-logic], and [feature-router])_ and extend the acceptable
 Feature properties _(`Feature.reducer`, `Feature.logic`, and
 `Feature.route` respectively)_ ... _**see:** [closer-look Extendable
-aspects]_
+aspects]_.  In this case, all our Aspects were pulled from external
+npm packages, however you can define your own using `createAspect()`.
+
+All of our supplied app features are accumulated from the `features/`
+directory ... _(see `*2*` in the code snippet above)_.
 
 
 ### React Registration
 
 The {{book.api.launchApp}} function uses a
-{{book.api.registerRootAppElmCB}} callback _(see `*2*` in `app.js`
+{{book.api.registerRootAppElmCB}} callback _(see `*3*` in the code
 snippet above)_ to catalog the supplied `rootAppElm` to the specific
 React platform in use.
 
@@ -340,7 +342,7 @@ import ReactDOM from 'react-dom';
 export default launchApp({
   aspects,
   features,
-  registerRootAppElm(rootAppElm) { // *2*
+  registerRootAppElm(rootAppElm) { // *3*
     ReactDOM.render(rootAppElm,
                     getElementById('myAppRoot'));
   }
@@ -354,7 +356,7 @@ import {AppRegistry} from 'react-native';
 export default launchApp({
   aspects,
   features,
-  registerRootAppElm(rootAppElm) { // *2*
+  registerRootAppElm(rootAppElm) { // *3*
     AppRegistry.registerComponent('myAppKey',
                                   ()=>rootAppElm); // convert rootAppElm to a React Component
   }
@@ -368,7 +370,7 @@ import Expo from 'expo';
 export default launchApp({
   aspects,
   features,
-  registerRootAppElm(rootAppElm) { // *2*
+  registerRootAppElm(rootAppElm) { // *3*
     Expo.registerRootComponent(()=>rootAppElm); // convert rootAppElm to a React Component
   }
 });
@@ -382,7 +384,7 @@ An App object is emitted from the `launchApp()` function, which
 promotes the accumulated Public API of all features _(see:
 {{book.guide.crossCom_publicFaceApp}})_.
 
-The App object should be exported _(see `*3*` in `app.js` snippet
+The App object should be exported _(see `*4*` in the code snippet
 above)_ so other modules can access it (providing [Cross Feature
 Communication]).  Please note that depending on the context, there are
 various techniques by which the App object can be accessed (see:

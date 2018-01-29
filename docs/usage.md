@@ -105,82 +105,77 @@ feature's Public API).
 ## launchApp()
 
 In **feature-u** the application mainline is very simple and generic.
-There is no real app-specific code in it.  That is because we allow
-each feature to inject their own app-specific constructs.  The
-mainline merely accumulates the Aspects and Features, and starts the
-app by invoking `launchApp()`:
+There is no real app-specific code in it ... **not even any global
+initialization**!  That is because **each feature can inject their own
+app-specific constructs**!!  The mainline merely accumulates the
+Aspects and Features, and starts the app by invoking `launchApp()`:
 
 **`src/app.js`**
 ```js
-import React             from 'react';
 import ReactDOM          from 'react-dom';
-import {routeAspect}     from './util/feature-u/aspect/feature-router';
-import {reducerAspect}   from './util/feature-u/aspect/feature-redux';
-import {logicAspect}     from './util/feature-u/aspect/feature-redux-logic';
-import {launchApp}       from './util/feature-u';
-import SplashScreen      from './util/comp/SplashScreen';
-import features          from './feature'; // the set of features that comprise this application
+import {launchApp}       from 'feature-u';
+import {routeAspect}     from 'feature-router';
+import {reducerAspect}   from 'feature-redux';
+import {logicAspect}     from 'feature-redux-logic';
+import features          from './feature';
 
+// launch our app, exposing the App object (facilitating cross-feature communication)
+export default launchApp({         // *4*
 
-// *1* define our set of "plugable" feature-u Aspects, conforming to our app's run-time stack
-const aspects = [
-  routeAspect,   // StateRouter ... order: early, because <StateRouter> DOM injection does NOT support children
-  reducerAspect, // redux       ... order: later, because <Provider> DOM injection should be on top
-  logicAspect,   // redux-logic ... order: N/A,   because NO DOM injection
-];
+  aspects: [                       // *1*
+    routeAspect,   // Feature Routes: Feature.route
+    reducerAspect, // redux:          Feature.reducer
+    logicAspect,   // redux-logic:    Feature.logic
+  ],
 
+  features,                        // *2*
 
-// configure our Aspects (as needed)
-// ... StateRouter fallback screen (when no routes are in effect)
-routeAspect.fallbackElm = <SplashScreen msg="I'm trying to think but it hurts!"/>;
-
-
-// launch our app, exposing the feature-u App object (facilitating cross-feature communication)!
-export default launchApp({         // *3*
-  aspects,
-  features,
-  registerRootAppElm(rootAppElm) { // *2*
+  registerRootAppElm(rootAppElm) { // *3*
     ReactDOM.render(rootAppElm,
                     getElementById('myAppRoot'));
   }
 });
 ```
 
-Here are some **important points of interest** _(match `*n*` to the code
-above)_:
+Here are some **important points of interest** _(match the numbers to
+`*n*` in the code above)_:
 
-`*1*`: the Aspect collection reflects the frameworks of our
-run-time stack _(in our example [redux], [redux-logic], and
-[feature-router])_ and extend the acceptable Feature properties
-_(`Feature.reducer`, `Feature.logic`, and `Feature.route`
-respectively)_ ... _**see:** [closer-look Extendable aspects]_
+1. the supplied Aspects _(pulled from separate npm packages)_ reflect
+   the frameworks of our run-time stack _(in our example [redux],
+   [redux-logic], and [feature-router])_ and extend the acceptable
+   Feature properties _(`Feature.reducer`, `Feature.logic`, and
+   `Feature.route` respectively)_ ... _**see:** [closer-look
+   Extendable aspects]_
 
-`*2*`: `launchApp()` uses a `registerRootAppElm()` callback to
-catalog the supplied `rootAppElm` to the specific React platform in
-use.  Because this registration is accomplished by your app-specific
-code, **feature-u** can operate in any of the React platforms, such
-as: React Web, React Native, Expo, etc. ... _**see:** [React
-Registration](#react-registration))_
+2. all of our app features are supplied (accumulated from the
+   `features/` directory)
 
-`*3*`: _as a bit of a preview_, the return value of `launchApp()` is
-an App object, which promotes the accumulated Public API of all
-features.  The App object contains named feature nodes, and is
-exported to provide [Cross Feature Communication] ... _here is what
-app looks like for this example:_
+3. a `registerRootAppElm()` callback is used to catalog the
+   supplied `rootAppElm` to the specific React platform in use.  Because
+   this registration is accomplished by your app-specific code,
+   **feature-u** can operate in any of the React platforms, such as:
+   React Web, React Native, Expo, etc. ... _**see:** [React
+   Registration](#react-registration))_
 
-```js
-app: {
-  featureA: {
-    api: {
-      open(),
-      close(),
-    },
-  },
-  featureB: {
-    ...
-  },
-}
-```
+4. _as a bit of a preview_, the return value of `launchApp()` is
+   an App object, which promotes the accumulated Public API of all
+   features.  The App object contains named feature nodes, and is
+   exported to provide [Cross Feature Communication] ... _here is what
+   app looks like (for this example):_
+
+   ```js
+   app: {
+     featureA: {
+       api: {
+         open(),
+         close(),
+       },
+     },
+     featureB: {
+       ...
+     },
+   }
+   ```
 
 Hopefully this gives you a basic feel of how **feature-u** operates.
 The subsequent sections will develop a more thorough understanding!
