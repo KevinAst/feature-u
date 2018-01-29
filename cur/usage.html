@@ -903,62 +903,60 @@ publicFace (open/close) that can be used by other features (i.e. the
 feature&apos;s Public API).</p>
 <h2 id="launchapp">launchApp()</h2>
 <p>In <strong>feature-u</strong> the application mainline is very simple and generic.
-There is no real app-specific code in it.  That is because we allow
-each feature to inject their own app-specific constructs.  The
-mainline merely accumulates the Aspects and Features, and starts the
-app by invoking <code>launchApp()</code>:</p>
+There is no real app-specific code in it ... <strong>not even any global
+initialization</strong>!  That is because <strong>each feature can inject their own
+app-specific constructs</strong>!!  The mainline merely accumulates the
+Aspects and Features, and starts the app by invoking <code>launchApp()</code>:</p>
 <p><strong><code>src/app.js</code></strong></p>
-<pre><code class="lang-js"><span class="hljs-keyword">import</span> React             <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;react&apos;</span>;
-<span class="hljs-keyword">import</span> ReactDOM          <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;react-dom&apos;</span>;
-<span class="hljs-keyword">import</span> {routeAspect}     <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;./util/feature-u/aspect/feature-router&apos;</span>;
-<span class="hljs-keyword">import</span> {reducerAspect}   <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;./util/feature-u/aspect/feature-redux&apos;</span>;
-<span class="hljs-keyword">import</span> {logicAspect}     <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;./util/feature-u/aspect/feature-redux-logic&apos;</span>;
-<span class="hljs-keyword">import</span> {launchApp}       <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;./util/feature-u&apos;</span>;
-<span class="hljs-keyword">import</span> SplashScreen      <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;./util/comp/SplashScreen&apos;</span>;
-<span class="hljs-keyword">import</span> features          <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;./feature&apos;</span>; <span class="hljs-comment">// the set of features that comprise this application</span>
+<pre><code class="lang-js"><span class="hljs-keyword">import</span> ReactDOM          <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;react-dom&apos;</span>;
+<span class="hljs-keyword">import</span> {launchApp}       <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;feature-u&apos;</span>;
+<span class="hljs-keyword">import</span> {routeAspect}     <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;feature-router&apos;</span>;
+<span class="hljs-keyword">import</span> {reducerAspect}   <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;feature-redux&apos;</span>;
+<span class="hljs-keyword">import</span> {logicAspect}     <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;feature-redux-logic&apos;</span>;
+<span class="hljs-keyword">import</span> features          <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;./feature&apos;</span>;
 
+<span class="hljs-comment">// launch our app, exposing the App object (facilitating cross-feature communication)</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> launchApp({         <span class="hljs-comment">// *4*</span>
 
-<span class="hljs-comment">// *1* define our set of &quot;plugable&quot; feature-u Aspects, conforming to our app&apos;s run-time stack</span>
-<span class="hljs-keyword">const</span> aspects = [
-  routeAspect,   <span class="hljs-comment">// StateRouter ... order: early, because &lt;StateRouter&gt; DOM injection does NOT support children</span>
-  reducerAspect, <span class="hljs-comment">// redux       ... order: later, because &lt;Provider&gt; DOM injection should be on top</span>
-  logicAspect,   <span class="hljs-comment">// redux-logic ... order: N/A,   because NO DOM injection</span>
-];
+  aspects: [                       <span class="hljs-comment">// *1*</span>
+    routeAspect,   <span class="hljs-comment">// Feature Routes: Feature.route</span>
+    reducerAspect, <span class="hljs-comment">// redux:          Feature.reducer</span>
+    logicAspect,   <span class="hljs-comment">// redux-logic:    Feature.logic</span>
+  ],
 
+  features,                        <span class="hljs-comment">// *2*</span>
 
-<span class="hljs-comment">// configure our Aspects (as needed)</span>
-<span class="hljs-comment">// ... StateRouter fallback screen (when no routes are in effect)</span>
-routeAspect.fallbackElm = <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">SplashScreen</span> <span class="hljs-attr">msg</span>=<span class="hljs-string">&quot;I&apos;m trying to think but it hurts!&quot;</span>/&gt;</span>;
-
-
-// launch our app, exposing the feature-u App object (facilitating cross-feature communication)!
-export default launchApp({         // *3*
-  aspects,
-  features,
-  registerRootAppElm(rootAppElm) { // *2*
+  registerRootAppElm(rootAppElm) { <span class="hljs-comment">// *3*</span>
     ReactDOM.render(rootAppElm,
-                    getElementById(&apos;myAppRoot&apos;));
+                    getElementById(<span class="hljs-string">&apos;myAppRoot&apos;</span>));
   }
 });
-</span></code></pre>
-<p>Here are some <strong>important points of interest</strong> <em>(match <code>*n*</code> to the code
-above)</em>:</p>
-<p><code>*1*</code>: the Aspect collection reflects the frameworks of our
-run-time stack <em>(in our example [redux], [redux-logic], and
-[feature-router])</em> and extend the acceptable Feature properties
-<em>(<code>Feature.reducer</code>, <code>Feature.logic</code>, and <code>Feature.route</code>
-respectively)</em> ... <em><strong>see:</strong> [closer-look Extendable aspects]</em></p>
-<p><code>*2*</code>: <code>launchApp()</code> uses a <code>registerRootAppElm()</code> callback to
-catalog the supplied <code>rootAppElm</code> to the specific React platform in
-use.  Because this registration is accomplished by your app-specific
-code, <strong>feature-u</strong> can operate in any of the React platforms, such
-as: React Web, React Native, Expo, etc. ... <em><strong>see:</strong> <a href="#react-registration">React
+</code></pre>
+<p>Here are some <strong>important points of interest</strong> <em>(match the numbers to
+<code>*n*</code> in the code above)</em>:</p>
+<ol>
+<li><p>the supplied Aspects <em>(pulled from separate npm packages)</em> reflect
+the frameworks of our run-time stack <em>(in our example [redux],
+[redux-logic], and [feature-router])</em> and extend the acceptable
+Feature properties <em>(<code>Feature.reducer</code>, <code>Feature.logic</code>, and
+<code>Feature.route</code> respectively)</em> ... <em><strong>see:</strong> [closer-look
+Extendable aspects]</em></p>
+</li>
+<li><p>all of our app features are supplied (accumulated from the
+<code>features/</code> directory)</p>
+</li>
+<li><p>a <code>registerRootAppElm()</code> callback is used to catalog the
+supplied <code>rootAppElm</code> to the specific React platform in use.  Because
+this registration is accomplished by your app-specific code,
+<strong>feature-u</strong> can operate in any of the React platforms, such as:
+React Web, React Native, Expo, etc. ... <em><strong>see:</strong> <a href="#react-registration">React
 Registration</a>)</em></p>
-<p><code>*3*</code>: <em>as a bit of a preview</em>, the return value of <code>launchApp()</code> is
+</li>
+<li><p><em>as a bit of a preview</em>, the return value of <code>launchApp()</code> is
 an App object, which promotes the accumulated Public API of all
 features.  The App object contains named feature nodes, and is
 exported to provide [Cross Feature Communication] ... <em>here is what
-app looks like for this example:</em></p>
+app looks like (for this example):</em></p>
 <pre><code class="lang-js">app: {
   featureA: {
     api: {
@@ -971,6 +969,8 @@ app looks like for this example:</em></p>
   },
 }
 </code></pre>
+</li>
+</ol>
 <p>Hopefully this gives you a basic feel of how <strong>feature-u</strong> operates.
 The subsequent sections will develop a more thorough understanding!</p>
 <h2 id="real-example">Real Example</h2>
@@ -1029,7 +1029,7 @@ always indecisive on which of our favorite restaurants to frequent
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Usage","level":"2.2","depth":1,"next":{"title":"Directory Structure","level":"2.2.1","depth":2,"anchor":"#directory-structure","path":"usage.md","ref":"usage.md#directory-structure","articles":[]},"previous":{"title":"Basic Concepts","level":"2.1","depth":1,"path":"concepts.md","ref":"concepts.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-livereload","toolbar"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"sharing":{"facebook":false,"twitter":false,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["twitter","facebook","google","weibo","instapaper"]},"toolbar":{"buttons":[{"label":"GitHub","icon":"fa fa-github","url":"https://github.com/KevinAst/feature-u"},{"label":"NPM","icon":"fa fa-bullseye","url":"https://www.npmjs.com/package/feature-u"}]},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Kevin J. Bridges <kevinast@gmail.com> (https://github.com/KevinAst)","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"intro.md","glossary":"GLOSSARY.md","summary":"toc.md"},"variables":{"sym":{"featureDu":"**feature-u**"},"guide":{"detail_launchingApp":"[`Launching Your Application`](/detail.md#launching-your-application)","LICENSE":"[`MIT License`](/LICENSE.md)","crossCom":"[`Cross Feature Communication`](/crossCommunication.md)","enablement":"[`Feature Enablement`](/enablement.md)","usage":"[`Usage`](/usage.md)","crossCom_accessingApp":"[`Accessing App`](/crossCommunication.md#accessing-the-app-object)","start":"[`Getting Started`](/start.md)","usage_realDexample":"[`Real Example`](/usage.md#real-example)","dist":"[`Distribution`](/dist.md)","detail_featureAndAspect":"[`Feature & aspect content`](/detail.md#feature-object-relaying-aspect-content)","devGuide":"[**Dev Guide**](/index.html)","extending":"[`Extending feature-u`](/extending.md)","why":"[`Why feature-u?`](/why.md)","appLifeCycle":"[`Application Life Cycle Hooks`](/appLifeCycle.md)","detail_reactRegistration":"[`React Registration`](/detail.md#react-registration)","truth":"[`Single Source of Truth`](/truth.md)","usage_featureDobject":"[`Feature Object`](/usage.md#feature-object)","detail_aspects":"[`aspects`](/detail.md#aspects)","usage_dir":"[`Directory Structure`](/usage.md#directory-structure)","extending_aspect":"[`Aspect Object`](/extending.md#aspect-object-extending-feature-u)","usage_launchapp":"[`launchApp()`](/usage.md#launchapp)","detail":"[`A Closer Look`](/detail.md)","detail_appObject":"[`App Object`](/detail.md#app-object)","history":"[`Revision History`](/history.md)","basicConcepts":"[`Basic Concepts`](/concepts.md)","extending_locatingExtensions":"[`Locating Extensions`](/extending.md#locating-extensions)","extensionApi":"[`Extension API`](/extensionApi.md)","coreApi":"[`Core API`](/coreApi.md)","crossCom_publicFaceApp":"[`publicFace & App`](/crossCommunication.md#publicface-and-the-app-object)"},"api":{"injectRootAppElmMeth$":"[`injectRootAppElmMeth(app, activeFeatures, curRootAppElm): reactElm`](/api.md#injectRootAppElmMeth)","managedExpansion":"[`managedExpansion()`](/api.md#managedExpansion)","appDidStartCB$":"[`appDidStartCB({app, [appState], [dispatch]}): void`](/api.md#appDidStartCB)","assembleFeatureContentMeth":"[`assembleFeatureContentMeth()`](/api.md#assembleFeatureContentMeth)","assembleFeatureContentMeth$":"[`assembleFeatureContentMeth(app, activeFeatures): void`](/api.md#assembleFeatureContentMeth)","appDidStartCB":"[`appDidStartCB()`](/api.md#appDidStartCB)","managedExpansion$":"[`managedExpansion(managedExpansionCB): managedExpansionCB`](/api.md#managedExpansion)","injectRootAppElmMeth":"[`injectRootAppElmMeth()`](/api.md#injectRootAppElmMeth)","validateFeatureContentMeth":"[`validateFeatureContentMeth()`](/api.md#validateFeatureContentMeth)","managedExpansionCB$":"[`managedExpansionCB(app): AspectContent`](/api.md#managedExpansionCB)","assembleAspectResourcesMeth":"[`assembleAspectResourcesMeth()`](/api.md#assembleAspectResourcesMeth)","expandFeatureContentMeth":"[`expandFeatureContentMeth()`](/api.md#expandFeatureContentMeth)","registerRootAppElmCB":"[`registerRootAppElmCB()`](/api.md#registerRootAppElmCB)","createFeature$":"[`createFeature({name, [enabled], [publicFace], [appWillStart], [appDidStart], [pluggableAspects]}): Feature`](/api.md#createFeature)","validateConfigurationMeth":"[`validateConfigurationMeth()`](/api.md#validateConfigurationMeth)","launchApp":"[`launchApp()`](/api.md#launchApp)","appWillStartCB":"[`appWillStartCB()`](/api.md#appWillStartCB)","addBuiltInFeatureKeyword$":"[`addBuiltInFeatureKeyword(keyword): void`](/api.md#addBuiltInFeatureKeyword)","createAspect$":"[`createAspect({see-docs}): Aspect`](/api.md#createAspect)","createAspect":"[`createAspect()`](/api.md#createAspect)","addBuiltInFeatureKeyword":"[`addBuiltInFeatureKeyword()`](/api.md#addBuiltInFeatureKeyword)","launchApp$":"[`launchApp({[aspects], features, registerRootAppElm}): App`](/api.md#launchApp)","appWillStartCB$":"[`appWillStartCB({app, curRootAppElm}): rootAppElm || null`](/api.md#appWillStartCB)","validateConfigurationMeth$":"[`validateConfigurationMeth(): string`](/api.md#validateConfigurationMeth)","createFeature":"[`createFeature()`](/api.md#createFeature)","extensionApi":"[`Extension API`](/extensionApi.md)","coreApi":"[`Core API`](/coreApi.md)","registerRootAppElmCB$":"[`registerRootAppElmCB(rootAppElm): void`](/api.md#registerRootAppElmCB)","expandFeatureContentMeth$":"[`expandFeatureContentMeth(app, feature): string`](/api.md#expandFeatureContentMeth)","assembleAspectResourcesMeth$":"[`assembleAspectResourcesMeth(app, aspects): void`](/api.md#assembleAspectResourcesMeth)","managedExpansionCB":"[`managedExpansionCB()`](/api.md#managedExpansionCB)","validateFeatureContentMeth$":"[`validateFeatureContentMeth(feature): string`](/api.md#validateFeatureContentMeth)"},"ext":{"astxDreduxDutil":"[`astx-redux-util`](https://astx-redux-util.js.org/)","TODO":"?? copied freom action-u ... currently unused","actionDu":"[`action-u`](https://action-u.js.org/)","reduxDactions":"[`redux-actions`](https://www.npmjs.com/package/redux-actions)","reduxDlogic":"[`redux-logic`](https://github.com/jeffbski/redux-logic)","expo":"[`expo`](https://expo.io/)","eateryDnod":"[`eatery-nod`](https://github.com/KevinAst/eatery-nod)","redux":"[`redux`](http://redux.js.org/)","actionCreator":"[`action creator`](http://redux.js.org/docs/basics/Actions.html#action-creators)","reactDnative":"[`react-native`](https://facebook.github.io/react-native/)","actions":"[`actions`](http://redux.js.org/docs/basics/Actions.html)","actionCreators":"[`action creators`](http://redux.js.org/docs/basics/Actions.html#action-creators)","react":"[`react`](https://reactjs.org/)"}},"title":"feature-u","gitbook":"3.2.2","description":"Feature Based Project Organization for React"},"file":{"path":"usage.md","mtime":"2018-01-28T17:59:04.693Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2018-01-28T21:27:33.689Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Usage","level":"2.2","depth":1,"next":{"title":"Directory Structure","level":"2.2.1","depth":2,"anchor":"#directory-structure","path":"usage.md","ref":"usage.md#directory-structure","articles":[]},"previous":{"title":"Basic Concepts","level":"2.1","depth":1,"path":"concepts.md","ref":"concepts.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-livereload","toolbar"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"sharing":{"facebook":false,"twitter":false,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["twitter","facebook","google","weibo","instapaper"]},"toolbar":{"buttons":[{"label":"GitHub","icon":"fa fa-github","url":"https://github.com/KevinAst/feature-u"},{"label":"NPM","icon":"fa fa-bullseye","url":"https://www.npmjs.com/package/feature-u"}]},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Kevin J. Bridges <kevinast@gmail.com> (https://github.com/KevinAst)","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"intro.md","glossary":"GLOSSARY.md","summary":"toc.md"},"variables":{"sym":{"featureDu":"**feature-u**"},"guide":{"detail_launchingApp":"[`Launching Your Application`](/detail.md#launching-your-application)","LICENSE":"[`MIT License`](/LICENSE.md)","crossCom":"[`Cross Feature Communication`](/crossCommunication.md)","enablement":"[`Feature Enablement`](/enablement.md)","usage":"[`Usage`](/usage.md)","crossCom_accessingApp":"[`Accessing App`](/crossCommunication.md#accessing-the-app-object)","start":"[`Getting Started`](/start.md)","usage_realDexample":"[`Real Example`](/usage.md#real-example)","dist":"[`Distribution`](/dist.md)","detail_builtInAspects":"[`Built-In aspects`](/detail.md#built-in-aspects)","detail_featureAndAspect":"[`Feature & aspect content`](/detail.md#feature-object-relaying-aspect-content)","devGuide":"[**Dev Guide**](/index.html)","detail_doesFeatureExist":"[`Does Feature Exist`](/detail.md#does-feature-exist)","extending":"[`Extending feature-u`](/extending.md)","why":"[`Why feature-u?`](/why.md)","appLifeCycle":"[`Application Life Cycle Hooks`](/appLifeCycle.md)","detail_featurePublicAPI":"[`Feature Public API`](/detail.md#feature-public-api)","detail_reactRegistration":"[`React Registration`](/detail.md#react-registration)","truth":"[`Single Source of Truth`](/truth.md)","usage_featureDobject":"[`Feature Object`](/usage.md#feature-object)","detail_aspects":"[`aspects`](/detail.md#aspects)","usage_dir":"[`Directory Structure`](/usage.md#directory-structure)","extending_aspect":"[`Aspect Object`](/extending.md#aspect-object-extending-feature-u)","usage_launchapp":"[`launchApp()`](/usage.md#launchapp)","detail":"[`A Closer Look`](/detail.md)","detail_appObject":"[`App Object`](/detail.md#app-object)","history":"[`Revision History`](/history.md)","detail_extendableAspects":"[`Extendable aspects`](/detail.md#extendable-aspects)","basicConcepts":"[`Basic Concepts`](/concepts.md)","extending_locatingExtensions":"[`Locating Extensions`](/extending.md#locating-extensions)","extensionApi":"[`Extension API`](/extensionApi.md)","coreApi":"[`Core API`](/coreApi.md)","crossCom_publicFaceApp":"[`publicFace and the App Object`](/crossCommunication.md#publicface-and-the-app-object)"},"api":{"injectRootAppElmMeth$":"[`injectRootAppElmMeth(app, activeFeatures, curRootAppElm): reactElm`](/api.md#injectRootAppElmMeth)","managedExpansion":"[`managedExpansion()`](/api.md#managedExpansion)","appDidStartCB$":"[`appDidStartCB({app, [appState], [dispatch]}): void`](/api.md#appDidStartCB)","assembleFeatureContentMeth":"[`assembleFeatureContentMeth()`](/api.md#assembleFeatureContentMeth)","assembleFeatureContentMeth$":"[`assembleFeatureContentMeth(app, activeFeatures): void`](/api.md#assembleFeatureContentMeth)","appDidStartCB":"[`appDidStartCB()`](/api.md#appDidStartCB)","managedExpansion$":"[`managedExpansion(managedExpansionCB): managedExpansionCB`](/api.md#managedExpansion)","injectRootAppElmMeth":"[`injectRootAppElmMeth()`](/api.md#injectRootAppElmMeth)","validateFeatureContentMeth":"[`validateFeatureContentMeth()`](/api.md#validateFeatureContentMeth)","managedExpansionCB$":"[`managedExpansionCB(app): AspectContent`](/api.md#managedExpansionCB)","assembleAspectResourcesMeth":"[`assembleAspectResourcesMeth()`](/api.md#assembleAspectResourcesMeth)","expandFeatureContentMeth":"[`expandFeatureContentMeth()`](/api.md#expandFeatureContentMeth)","registerRootAppElmCB":"[`registerRootAppElmCB()`](/api.md#registerRootAppElmCB)","createFeature$":"[`createFeature({name, [enabled], [publicFace], [appWillStart], [appDidStart], [pluggableAspects]}): Feature`](/api.md#createFeature)","validateConfigurationMeth":"[`validateConfigurationMeth()`](/api.md#validateConfigurationMeth)","launchApp":"[`launchApp()`](/api.md#launchApp)","appWillStartCB":"[`appWillStartCB()`](/api.md#appWillStartCB)","addBuiltInFeatureKeyword$":"[`addBuiltInFeatureKeyword(keyword): void`](/api.md#addBuiltInFeatureKeyword)","createAspect$":"[`createAspect({see-docs}): Aspect`](/api.md#createAspect)","createAspect":"[`createAspect()`](/api.md#createAspect)","addBuiltInFeatureKeyword":"[`addBuiltInFeatureKeyword()`](/api.md#addBuiltInFeatureKeyword)","launchApp$":"[`launchApp({[aspects], features, registerRootAppElm}): App`](/api.md#launchApp)","appWillStartCB$":"[`appWillStartCB({app, curRootAppElm}): rootAppElm || null`](/api.md#appWillStartCB)","validateConfigurationMeth$":"[`validateConfigurationMeth(): string`](/api.md#validateConfigurationMeth)","createFeature":"[`createFeature()`](/api.md#createFeature)","extensionApi":"[`Extension API`](/extensionApi.md)","coreApi":"[`Core API`](/coreApi.md)","registerRootAppElmCB$":"[`registerRootAppElmCB(rootAppElm): void`](/api.md#registerRootAppElmCB)","expandFeatureContentMeth$":"[`expandFeatureContentMeth(app, feature): string`](/api.md#expandFeatureContentMeth)","assembleAspectResourcesMeth$":"[`assembleAspectResourcesMeth(app, aspects): void`](/api.md#assembleAspectResourcesMeth)","managedExpansionCB":"[`managedExpansionCB()`](/api.md#managedExpansionCB)","validateFeatureContentMeth$":"[`validateFeatureContentMeth(feature): string`](/api.md#validateFeatureContentMeth)"},"ext":{"astxDreduxDutil":"[`astx-redux-util`](https://astx-redux-util.js.org/)","TODO":"?? copied freom action-u ... currently unused","actionDu":"[`action-u`](https://action-u.js.org/)","reduxDactions":"[`redux-actions`](https://www.npmjs.com/package/redux-actions)","reduxDlogic":"[`redux-logic`](https://github.com/jeffbski/redux-logic)","expo":"[`expo`](https://expo.io/)","eateryDnod":"[`eatery-nod`](https://github.com/KevinAst/eatery-nod)","redux":"[`redux`](http://redux.js.org/)","actionCreator":"[`action creator`](http://redux.js.org/docs/basics/Actions.html#action-creators)","reactDnative":"[`react-native`](https://facebook.github.io/react-native/)","actions":"[`actions`](http://redux.js.org/docs/basics/Actions.html)","actionCreators":"[`action creators`](http://redux.js.org/docs/basics/Actions.html#action-creators)","react":"[`react`](https://reactjs.org/)"}},"title":"feature-u","gitbook":"3.2.2","description":"Feature Based Project Organization for React"},"file":{"path":"usage.md","mtime":"2018-01-29T13:19:28.054Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2018-01-29T13:24:01.247Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
