@@ -1,6 +1,6 @@
 # Core API
 
-The two primary functions you will use in {{book.sym.featureDu}} are
+The two primary functions you will use in **feature-u** are
 {{book.api.createFeature}} and {{book.api.launchApp}}.
 
 The following list summarizes the **Core API**.  _For your convenience
@@ -23,3 +23,12 @@ this list:_
 
 * {{book.api.managedExpansion$}}
   * {{book.api.managedExpansionCB$}}
+
+
+
+## feature-u Objects
+
+* {{book.api.Feature}}
+* {{book.api.App}}
+* {{book.api.Aspect}}
+* {{book.api.AspectContent}}

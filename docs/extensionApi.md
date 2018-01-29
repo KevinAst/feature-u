@@ -1,6 +1,6 @@
 # Extension API
 
-The main function you will use to extend {{book.sym.featureDu}} is
+The main function you will use to extend **feature-u** is
 {{book.api.createAspect}}.
 
 The following list summarizes the **Extension API**.  _For your
@@ -22,3 +22,12 @@ convenience this list:_
 
 
 * {{book.api.addBuiltInFeatureKeyword$}}
+
+
+
+## feature-u Objects
+
+* {{book.api.Feature}}
+* {{book.api.App}}
+* {{book.api.Aspect}}
+* {{book.api.AspectContent}}

@@ -42,9 +42,9 @@ const default_injectRootAppElm = (app, activeFeatures, curRootAppElm) => curRoot
  * is documented and consumed by another Aspect.  Please refer to
  * [Aspect.additionalMethods()](#aspectadditionalmethods).
  *
- * **Please Note**: `createAspect()` accepts named parameters.  The
- * order in which these items are presented represents the same order
- * they are executed.
+ * **Please Note** this function uses named parameters.  The order in
+ * which these items are presented represents the same order they are
+ * executed.
  *
  * @param {string} name the aspect name.  This name is used to "key"
  * aspects of this type in the Feature object: `Feature.{name}: xyz`.
@@ -156,8 +156,15 @@ export default function createAspect({name,
 /**
  * @typedef {Object} Aspect
  *
- * Aspect objects (emitted from `createAspect()`) are used to extend
- * feature-u.
+ * Aspect objects (emitted from {{book.api.createAspect}}) are used to
+ * extend **feature-u**.
+ * 
+ * The Aspect object promotes a series of life-cycle methods that
+ * **feature-u** invokes in a controlled way.  This life-cycle is
+ * controlled by `launchApp()` _... it is supplied the Aspects, and it
+ * invokes their methods._
+ * 
+ * For more information, please refer to {{book.guide.extending}}.
  */
 
 
@@ -170,12 +177,17 @@ export default function createAspect({name,
  * 
  * The content (or payload) of an Aspect, specified within a Feature.
  * 
- * An Aspect accumulates appropriate information from Features, indexed
- * by the Aspect name.
+ * An {{book.api.Aspect}} object extends **feature-u** by accumulating
+ * information of interest from {{book.api.Feature}} objects _(indexed
+ * by the Aspect name)_.
  * 
- * The content type is specific to the Aspect.  For example, a redux
- * Aspect assembles reducers, while a redux-logic Aspect gathers logic
- * modules.
+ * The content type is specific to the Aspect. For example, a redux
+ * Aspect assembles reducers (via `Feature.reducer`), while a
+ * redux-logic Aspect gathers logic modules (via `Feature.logic`),
+ * etc.
+ * 
+ * For more information, please refer to
+ * {{book.guide.detail_featureAndAspect}}.
  */
 
 

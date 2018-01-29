@@ -1,9 +1,8 @@
 # feature-u
 
-{{book.sym.featureDu}} is a utility library that _facilitates
-feature-based project organization_ in your {{book.ext.react}}
-project.  It assists in organizing your project by individual
-features.  
+**feature-u** is a utility library that _facilitates feature-based
+project organization_ in your {{book.ext.react}} project.  It assists
+in organizing your project by individual features.
 
 Most software engineers would agree that organizing your project by
 feature is much preferred over type-based patterns.  Because
@@ -12,13 +11,12 @@ type simply doesn't scale, it just becomes unmanageable!  There are a
 number of good articles that discuss this topic _(with insights on
 feature-based design and structure)_.
 
-{{book.sym.featureDu}} is a utility library that manages and
-streamlines this process.  It automates some of the mundane details of
-your features and helps in promoting features that are
-**plug-and-play**.
+**feature-u** is a utility library that manages and streamlines this
+process.  It automates some of the mundane details of your features
+and helps in promoting features that are **plug-and-play**.
 
-{{book.sym.featureDu}} allows you to **focus your attention on the
-"business end" of your features!**
+**feature-u** allows you to **focus your attention on the "business
+end" of your features!**
 
 _Go forth and compute!!_
 
@@ -44,15 +42,17 @@ _Go forth and compute!!_
 
 - {{book.guide.enablement}} _... dynamically enable/disable your features_
 
-- {{book.guide.crossCom}} _... how features can interact with one another_
+- {{book.guide.crossCom}} _... how can features interact with one another_
 
 - {{book.guide.truth}} _... promote single-source-of-truth principles with your features_
 
 - {{book.guide.coreApi}} _... the detailed API_
 
-- {{book.guide.extending}} _... how can you extend **feature-u**_
+- Extending ...
 
-- {{book.guide.extensionApi}} _... the detailed Extension API_
+  - {{book.guide.extending}} _... learn how to extend **feature-u**_
+
+  - {{book.guide.extensionApi}} _... the detailed Extension API_
 
 - Misc ...
 

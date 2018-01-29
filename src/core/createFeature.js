@@ -9,10 +9,15 @@ const noOp = () => null;
  * @function createFeature
  * @description
  *
- * Create a new Feature object, accumulating Aspect content to be consumed
- * by launchApp().
+ * Create a new Feature object, accumulating Aspect content to be
+ * consumed by launchApp().  Each feature within an app promotes it's
+ * own Feature object.
  *
- * **Please Note** `createFeature()` accepts named parameters.
+ * For more information, please refer to
+ * {{book.guide.detail_featureAndAspect}}, with examples at
+ * {{book.guide.usage_featureObject}}.
+ *
+ * **Please Note** this function uses named parameters.
  *
  * @param {string} name the identity of the feature.  Feature names
  * are used to index the [App Object](#app-object) by feature _(in
@@ -52,7 +57,7 @@ const noOp = () => null;
  * @param {AspectContent} [extendedAspect] additional aspects, as defined
  * by the feature-u's pluggable Aspect extension.
  *
- * @return {Feature} a new Feature object (to be consumed by feature-u
+ * @return {Feature} a new Feature object (to be consumed by
  * launchApp()).
  */
 export default function createFeature({name,
@@ -141,7 +146,19 @@ export function addBuiltInFeatureKeyword(keyword) {
 /**
  * @typedef {Object} Feature
  *
- * Feature objects (emitted from `createFeature()`) are used ?? bla bla
+ * The Feature object is a container that holds
+ * {{book.api.AspectContent}} that is of interest to **feature-u**.
+ * 
+ * Each feature within an application promotes a Feature object (using
+ * {{book.api.createFeature}}) that catalogs the aspects of that
+ * feature.
+ * 
+ * Ultimately, all Feature objects are consumed by
+ * {{book.api.launchApp}}.
+ *
+ * For more information, please refer to
+ * {{book.guide.detail_featureAndAspect}}, with examples at
+ * {{book.guide.usage_featureObject}}.
  */
 
 
@@ -163,7 +180,10 @@ export function addBuiltInFeatureKeyword(keyword) {
  * be included as part of this definition (accommodating the
  * accumulative process of other feature injections)!
  *
- * **Please Note** `appWillStart()` utilizes named parameters.
+ * For more information _(with examples)_, please refer to the
+ * Guide's {{book.guide.appWillStart}}.
+ *
+ * **Please Note** this function uses named parameters.
  *
  * @callback appWillStartCB
  * 
@@ -189,7 +209,10 @@ export function addBuiltInFeatureKeyword(keyword) {
  * the appState and dispatch() function ... assuming you are using
  * redux (when detected by feature-u's plugable aspects).
  *
- * **Please Note** `appDidStart()` utilizes named parameters.
+ * For more info with examples, please see the Guide's
+ * {{book.guide.appDidStart}}.
+ *
+ * **Please Note** this function uses named parameters.
  *
  * @callback appDidStartCB
  * 

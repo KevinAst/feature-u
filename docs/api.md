@@ -5,7 +5,7 @@
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
   createFeature(name, [enabled], [publicFace], [appWillStart], [appDidStart], [extendedAspect]) ⇒ [`Feature`](#Feature)</h5>
-Create a new Feature object, accumulating Aspect content to be consumedby launchApp().**Please Note** `createFeature()` accepts named parameters.
+Create a new Feature object, accumulating Aspect content to beconsumed by launchApp().  Each feature within an app promotes it'sown Feature object.For more information, please refer to{{book.guide.detail_featureAndAspect}}, with examples at{{book.guide.usage_featureObject}}.**Please Note** this function uses named parameters.
 
 
 | Param | Type | Default | Description |
@@ -17,7 +17,7 @@ Create a new Feature object, accumulating Aspect content to be consumedby launc
 | [appDidStart] | [`appDidStartCB`](#appDidStartCB) |  | an optional [Application Life Cycle Hook](#application-life-cycle-hooks) invoked one time, immediately after the app has started.  Because the app is up-and-running at this time, you have access to the appState and the dispatch() function ... assuming you are using redux (when detected by feature-u's plugable aspects) _(please refer to: [appDidStart](#appdidstart))_. |
 | [extendedAspect] | [`AspectContent`](#AspectContent) |  | additional aspects, as defined by the feature-u's pluggable Aspect extension. |
 
-**Returns**: [`Feature`](#Feature) - a new Feature object (to be consumed by feature-ulaunchApp()).  
+**Returns**: [`Feature`](#Feature) - a new Feature object (to be consumed bylaunchApp()).  
 
 <br/><br/><br/>
 
@@ -38,8 +38,8 @@ Add additional Feature keyword (typically used by Aspect extensionsto Feature).
 <a id="launchApp"></a>
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
-  launchApp([aspects], features, registerRootAppElm) ⇒ App</h5>
-Launch an app by assembling the supplied features, driving theconfiguration of the frameworks in use, as orchistrated by thesupplied set of pluggable apsects.- It manages the setup and configuration of all your feature  aspects, including things like: state management, logic, routing,  etc.- It facilitates app life-cycle methods on the Feature object,  allowing features to manage things like: initialization and  inject root UI elements, etc.- It creates and promotes the App object which contains the  publicFace of all features, facilating a cross-communication  between features.Please refer to the user documenation for more details and completeexamples.**Please Note** `launchApp()` accepts named parameters.
+  launchApp([aspects], features, registerRootAppElm) ⇒ [`App`](#App)</h5>
+Launch an app by assembling the supplied features, driving theconfiguration of the frameworks in use, as orchistrated by thesupplied set of pluggable apsects.For more information _(with examples)_, please refer to{{book.guide.detail_launchingApp}}.**Please Note** this function uses named parameters.
 
 
 | Param | Type | Description |
@@ -48,7 +48,7 @@ Launch an app by assembling the supplied features, driving theconfiguration of 
 | features | [`Array.&lt;Feature&gt;`](#Feature) | the features that comprise this application. |
 | registerRootAppElm | [`registerRootAppElmCB`](#registerRootAppElmCB) | the callback hook that registers the supplied root application element to the specific React framework used in the app.  Because this registration is accomplished by app-specific code, feature-u can operate in any of the react platforms, such as: React Web, React Native, Expo, etc. |
 
-**Returns**: App - the App object used to promote featurecross-communication.  
+**Returns**: [`App`](#App) - the App object used to promote featurecross-communication.  
 
 <br/><br/><br/>
 
@@ -56,7 +56,7 @@ Launch an app by assembling the supplied features, driving theconfiguration of 
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
   managedExpansion(managedExpansionCB) ⇒ [`managedExpansionCB`](#managedExpansionCB)</h5>
-Mark the supplied managedExpansionCB as a "managed expansioncallback", distinguishing it from other functions (such as reducerfunctions).Features may communicate AspectContent directly, or through amanagedExpansionCB.  The latter: 1. supports cross-feature communication (through app object    injection), and  2. minimizes circular dependency issues (of ES6 modules).Managed Expansion Callbacks are used when a fully resolved `app`object is requried during in-line code expansion.  They are merelyfunctions that are passed the `app` object and return theexpanded AspectContent (ex: reducer, logic modules, etc.).The managedExpansionCB function should conform to the followingsignature:```jsAPI: managedExpansionCB(app): AspectContent```Example (feature-redux `reducerAspect`):```js  export default slicedReducer('foo', managedExpansion( (app) => combineReducers({...reducer-code-requiring-app...} ) ));```SideBar: For reducer aspects, slicedReducer() should always wrap         the the outer function passed to createFunction(), even         when managedExpansion() is used.Example (feature-redux-logic `logicAspect`):```js  export const startAppAuthProcess = managedExpansion( (app) => createLogic({    ...logic-code-requiring-app...  }));```Please refer to the feature-u `managedExpansion()` documentationfor more detail.
+Mark the supplied managedExpansionCB as a "managed expansioncallback", distinguishing it from other functions (such as reducerfunctions).Features may communicate AspectContent directly, or through amanagedExpansionCB.  In other words, the AspectContent can eitherbe the actual content itself _(ex: reducer, logic modules, etc.)_,or a function that returns the content.  The latter: 1. supports cross-feature communication (through app object    injection), and  2. minimizes circular dependency issues (of ES6 modules).Managed Expansion Callbacks are used when a fully resolved Appobject is requried during in-line code expansion.  They are merelyfunctions that when invoked (under the control of **feature-u**),are supplied the App object and return the expanded AspectContent_(ex: reducer, logic modules, etc.)_.The managedExpansionCB function should conform to the followingsignature:**API:** {{book.api.managedExpansionCB$}}For more information _(with examples)_, please refer to{{book.guide.crossCom_managedCodeExpansion}}.
 
 
 | Param | Type | Description |
@@ -71,7 +71,7 @@ Mark the supplied managedExpansionCB as a "managed expansioncallback", distingu
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
   createAspect(name, [validateConfiguration], [expandFeatureContent], validateFeatureContent, assembleFeatureContent, [assembleAspectResources], [injectRootAppElm], [additionalMethods]) ⇒ [`Aspect`](#Aspect)</h5>
-Create an Aspect object, used to extend feature-u.The Aspect object promotes a series of life-cycle methods that**feature-u** invokes in a controlled way.  This life-cycle iscontrolled by `launchApp()` _... it is supplied the Aspects, and itinvokes their methods._The essential characteristics of the Aspect life-cycle is to:- accumulate aspect content across all features- perform the desired setup and configuration- expose the framework in some way _(by injecting a component in the  root DOM, or some "aspect cross-communication mechanism")_Typically the Aspect object will need to retain state between theselife-cycle methods in order to do it's job.Some Aspects may rely on an "aspect cross-communication mechanism" toaccomplish it's work.  This is merely a proprietary Aspect method whichis documented and consumed by another Aspect.  Please refer to[Aspect.additionalMethods()](#aspectadditionalmethods).**Please Note**: `createAspect()` accepts named parameters.  Theorder in which these items are presented represents the same orderthey are executed.
+Create an Aspect object, used to extend feature-u.The Aspect object promotes a series of life-cycle methods that**feature-u** invokes in a controlled way.  This life-cycle iscontrolled by `launchApp()` _... it is supplied the Aspects, and itinvokes their methods._The essential characteristics of the Aspect life-cycle is to:- accumulate aspect content across all features- perform the desired setup and configuration- expose the framework in some way _(by injecting a component in the  root DOM, or some "aspect cross-communication mechanism")_Typically the Aspect object will need to retain state between theselife-cycle methods in order to do it's job.Some Aspects may rely on an "aspect cross-communication mechanism" toaccomplish it's work.  This is merely a proprietary Aspect method whichis documented and consumed by another Aspect.  Please refer to[Aspect.additionalMethods()](#aspectadditionalmethods).**Please Note** this function uses named parameters.  The order inwhich these items are presented represents the same order they areexecuted.
 
 
 | Param | Type | Description |
@@ -89,30 +89,11 @@ Create an Aspect object, used to extend feature-u.The Aspect object promotes a
 
 <br/><br/><br/>
 
-<a id="verify"></a>
-
-<h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
-  verify(condition, msg)</h5>
-A convenience assertion utility, typically used to validatepre-conditions of a routine.**Advanced**: verify.prefix(msgPrefix) returns a higher-order              verify() function where all messages are prefixed.
-
-**Throws**:
-
-- Error an Error is thrown when the supplied condition isNOT met.
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| condition | truthy | a "truthy" condition which must be satisfied. |
-| msg | string | a message clarifying the condition being checked. |
-
-
-<br/><br/><br/>
-
 <a id="Feature"></a>
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
   Feature : Object</h5>
-Feature objects (emitted from `createFeature()`) are used ?? bla bla
+The Feature object is a container that holds{{book.api.AspectContent}} that is of interest to **feature-u**.Each feature within an application promotes a Feature object (using{{book.api.createFeature}}) that catalogs the aspects of thatfeature.Ultimately, all Feature objects are consumed by{{book.api.launchApp}}.For more information, please refer to{{book.guide.detail_featureAndAspect}}, with examples at{{book.guide.usage_featureObject}}.
 
 
 <br/><br/><br/>
@@ -121,12 +102,12 @@ Feature objects (emitted from `createFeature()`) are used ?? bla bla
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
   appWillStartCB ⇒ reactElm</h5>
-An optional app life-cycle hook invoked one time, just before theapp starts up.This life-cycle hook can do any type of initialization. Forexample: initialize FireBase.In addition, it can optionally supplement the app's top-level rootelement (i.e. react component instance).  Any significant return(truthy) is interpreted as the app's new rootAppElm.**IMPORTANT**: When this is used, the supplied curRootAppElm MUSTbe included as part of this definition (accommodating theaccumulative process of other feature injections)!**Please Note** `appWillStart()` utilizes named parameters.
+An optional app life-cycle hook invoked one time, just before theapp starts up.This life-cycle hook can do any type of initialization. Forexample: initialize FireBase.In addition, it can optionally supplement the app's top-level rootelement (i.e. react component instance).  Any significant return(truthy) is interpreted as the app's new rootAppElm.**IMPORTANT**: When this is used, the supplied curRootAppElm MUSTbe included as part of this definition (accommodating theaccumulative process of other feature injections)!For more information _(with examples)_, please refer to theGuide's {{book.guide.appWillStart}}.**Please Note** this function uses named parameters.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| app | App | the App object used in feature cross-communication. |
+| app | [`App`](#App) | the App object used in feature cross-communication. |
 | curRootAppElm | reactElm | the current react app element root. |
 
 **Returns**: reactElm - optionally, new top-level content (which in turnmust contain the supplied curRootAppElm), or falsy for unchanged.  
@@ -137,12 +118,12 @@ An optional app life-cycle hook invoked one time, just before theapp starts up.
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
   appDidStartCB : function</h5>
-An optional app life-cycle hook invoked one time, immediately afterthe app has started.Because the app is up-and-running at this time, you have access tothe appState and dispatch() function ... assuming you are usingredux (when detected by feature-u's plugable aspects).**Please Note** `appDidStart()` utilizes named parameters.
+An optional app life-cycle hook invoked one time, immediately afterthe app has started.Because the app is up-and-running at this time, you have access tothe appState and dispatch() function ... assuming you are usingredux (when detected by feature-u's plugable aspects).For more info with examples, please see the Guide's{{book.guide.appDidStart}}.**Please Note** this function uses named parameters.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| app | App | the App object used in feature cross-communication. |
+| app | [`App`](#App) | the App object used in feature cross-communication. |
 | [appState] | Any | the redux top-level app state (when redux is in use). |
 | [dispatch] | function | the redux dispatch() function (when redux is in use). |
 
@@ -163,16 +144,25 @@ The launchApp() callback hook that registers the supplied rootapplication eleme
 
 <br/><br/><br/>
 
+<a id="App"></a>
+
+<h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
+  App : Object</h5>
+The App object _(emitted from {{book.api.launchApp}})_ facilitates{{book.guide.crossCom}} by accumulating the Public API of allfeatures, through named feature nodes structured as follows:```jsApp.{featureName}.{publicFace}```For more information, please refer to{{book.guide.crossCom_publicFaceApp}} and{{book.guide.detail_appObject}}.
+
+
+<br/><br/><br/>
+
 <a id="managedExpansionCB"></a>
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
   managedExpansionCB ⇒ [`AspectContent`](#AspectContent)</h5>
-A "managed expansion callback" (defined by `managedExpansion()`) thatwhen invoked (by feature-u) expands and returns the desiredAspectContent.
+A "managed expansion callback" (defined by{{book.api.managedExpansion}}) that when invoked (by **feature-u**)expands and returns the desired AspectContent.For more information _(with examples)_, please refer to{{book.guide.crossCom_managedCodeExpansion}}.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| app | App | The feature-u app object, promoting the publicFace of each feature. |
+| app | [`App`](#App) | The feature-u app object, promoting the publicFace of each feature. |
 
 **Returns**: [`AspectContent`](#AspectContent) - The desired AspectContent (ex: reducer,logic module, etc.).  
 
@@ -182,7 +172,7 @@ A "managed expansion callback" (defined by `managedExpansion()`) thatwhen invok
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
   Aspect : Object</h5>
-Aspect objects (emitted from `createAspect()`) are used to extendfeature-u.
+Aspect objects (emitted from {{book.api.createAspect}}) are used toextend **feature-u**.The Aspect object promotes a series of life-cycle methods that**feature-u** invokes in a controlled way.  This life-cycle iscontrolled by `launchApp()` _... it is supplied the Aspects, and itinvokes their methods._For more information, please refer to {{book.guide.extending}}.
 
 
 <br/><br/><br/>
@@ -191,7 +181,7 @@ Aspect objects (emitted from `createAspect()`) are used to extendfeature-u.
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
   AspectContent : Any</h5>
-The content (or payload) of an Aspect, specified within a Feature.An Aspect accumulates appropriate information from Features, indexedby the Aspect name.The content type is specific to the Aspect.  For example, a reduxAspect assembles reducers, while a redux-logic Aspect gathers logicmodules.
+The content (or payload) of an Aspect, specified within a Feature.An {{book.api.Aspect}} object extends **feature-u** by accumulatinginformation of interest from {{book.api.Feature}} objects _(indexedby the Aspect name)_.The content type is specific to the Aspect. For example, a reduxAspect assembles reducers (via `Feature.reducer`), while aredux-logic Aspect gathers logic modules (via `Feature.logic`),etc.For more information, please refer to{{book.guide.detail_featureAndAspect}}.
 
 
 <br/><br/><br/>
@@ -215,7 +205,7 @@ Expand self's AspectContent in the supplied feature, replacing thatcontent (wit
 
 | Param | Type | Description |
 | --- | --- | --- |
-| app | App | the App object used in feature cross-communication. |
+| app | [`App`](#App) | the App object used in feature cross-communication. |
 | feature | [`Feature`](#Feature) | the feature which is known to contain this aspect **and** is in need of expansion (as defined by managedExpansion()). |
 
 **Returns**: string - an optional error message when the suppliedfeature contains invalid content for this aspect (falsy whenvalid).  This is a specialized validation of the expansionfunction, over-and-above what is checked in the standardvalidateFeatureContent() hook.  
@@ -246,7 +236,7 @@ The required Aspect method that assembles content for this aspectacross all fea
 
 | Param | Type | Description |
 | --- | --- | --- |
-| app | App | the App object used in feature cross-communication. |
+| app | [`App`](#App) | the App object used in feature cross-communication. |
 | activeFeatures | [`Array.&lt;Feature&gt;`](#Feature) | The set of active (enabled) features that comprise this application. |
 
 
@@ -261,7 +251,7 @@ An optional Aspect method that assemble resources for this aspectacross all oth
 
 | Param | Type | Description |
 | --- | --- | --- |
-| app | App | the App object used in feature cross-communication. |
+| app | [`App`](#App) | the App object used in feature cross-communication. |
 | aspects | [`Array.&lt;Aspect&gt;`](#Aspect) | The set of feature-u Aspect objects used in this this application. |
 
 
@@ -276,7 +266,7 @@ An optional callback hook that promotes some characteristic of thisaspect withi
 
 | Param | Type | Description |
 | --- | --- | --- |
-| app | App | the App object used in feature cross-communication. |
+| app | [`App`](#App) | the App object used in feature cross-communication. |
 | activeFeatures | [`Array.&lt;Feature&gt;`](#Feature) | The set of active (enabled) features that comprise this application.  This can be used in an optional Aspect/Feature cross-communication.  As an example, an Xyz Aspect may define a Feature API by which a Feature can inject DOM in conjunction with the Xyz Aspect DOM injection. |
 | curRootAppElm | reactElm | the current react app element root. |
 

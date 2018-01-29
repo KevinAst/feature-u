@@ -13,6 +13,8 @@
  * 
  * @throws {Error} an Error is thrown when the supplied condition is
  * NOT met.
+ *
+ * @private
  */
 export default function verify(condition, msg) {
   if (!condition) {

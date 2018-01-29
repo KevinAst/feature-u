@@ -11,22 +11,10 @@ import {isBuiltInFeatureKeyword} from './createFeature';
  * configuration of the frameworks in use, as orchistrated by the
  * supplied set of pluggable apsects.
  *
- * - It manages the setup and configuration of all your feature
- *   aspects, including things like: state management, logic, routing,
- *   etc.
+ * For more information _(with examples)_, please refer to
+ * {{book.guide.detail_launchingApp}}.
  *
- * - It facilitates app life-cycle methods on the Feature object,
- *   allowing features to manage things like: initialization and
- *   inject root UI elements, etc.
- *
- * - It creates and promotes the App object which contains the
- *   publicFace of all features, facilating a cross-communication
- *   between features.
- *
- * Please refer to the user documenation for more details and complete
- * examples.
- *
- * **Please Note** `launchApp()` accepts named parameters.
+ * **Please Note** this function uses named parameters.
  *
  * @param {Aspect[]} [aspects] the set of plugable aspects that extend
  * feature-u, integrating other frameworks to match your specific
@@ -254,4 +242,26 @@ export default function launchApp({aspects=[],
  * 
  * @param {reactElm} rootAppElm - the root application element to be
  * registered.
+ */
+
+
+
+//***
+//*** Specification: App
+//***
+
+/**
+ * @typedef {Object} App
+ *
+ * The App object _(emitted from {{book.api.launchApp}})_ facilitates
+ * {{book.guide.crossCom}} by accumulating the Public API of all
+ * features, through named feature nodes structured as follows:
+ * 
+ * ```js
+ * App.{featureName}.{publicFace}
+ * ```
+ * 
+ * For more information, please refer to
+ * {{book.guide.crossCom_publicFaceApp}} and
+ * {{book.guide.detail_appObject}}.
  */

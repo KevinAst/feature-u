@@ -86,4 +86,6 @@ Release           | What                                   | *When*
 &bull;
 [GitHub Content](https://github.com/KevinAst/feature-u/tree/v0.1.0)
 
+**This is where it all began ...**
+
 1. Holy Guacamole Batman! ... _This commit has no parents!!_

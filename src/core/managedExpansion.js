@@ -10,42 +10,27 @@ import isFunction  from 'lodash.isfunction';
  * functions).
  *
  * Features may communicate AspectContent directly, or through a
- * managedExpansionCB.  The latter:
+ * managedExpansionCB.  In other words, the AspectContent can either
+ * be the actual content itself _(ex: reducer, logic modules, etc.)_,
+ * or a function that returns the content.  The latter:
  * 
  *  1. supports cross-feature communication (through app object
  *     injection), and 
  *  2. minimizes circular dependency issues (of ES6 modules).
  *
- * Managed Expansion Callbacks are used when a fully resolved `app`
+ * Managed Expansion Callbacks are used when a fully resolved App
  * object is requried during in-line code expansion.  They are merely
- * functions that are passed the `app` object and return the
- * expanded AspectContent (ex: reducer, logic modules, etc.).
+ * functions that when invoked (under the control of **feature-u**),
+ * are supplied the App object and return the expanded AspectContent
+ * _(ex: reducer, logic modules, etc.)_.
  *
  * The managedExpansionCB function should conform to the following
  * signature:
  *
- * ```js
- * API: managedExpansionCB(app): AspectContent
- * ```
+ * **API:** {{book.api.managedExpansionCB$}}
  *
- * Example (feature-redux `reducerAspect`):
- * ```js
- *   export default slicedReducer('foo', managedExpansion( (app) => combineReducers({...reducer-code-requiring-app...} ) ));
- * ```
- *
- * SideBar: For reducer aspects, slicedReducer() should always wrap
- *          the the outer function passed to createFunction(), even
- *          when managedExpansion() is used.
- *
- * Example (feature-redux-logic `logicAspect`):
- * ```js
- *   export const startAppAuthProcess = managedExpansion( (app) => createLogic({
- *     ...logic-code-requiring-app...
- *   }));
- * ```
- *
- * Please refer to the feature-u `managedExpansion()` documentation
- * for more detail.
+ * For more information _(with examples)_, please refer to
+ * {{book.guide.crossCom_managedCodeExpansion}}.
  *
  * @param {managedExpansionCB} managedExpansionCB the callback
  * function that when invoked (by feature-u) expands/returns the
@@ -76,9 +61,12 @@ export default function managedExpansion(managedExpansionCB) {
 //***
 
 /**
- * A "managed expansion callback" (defined by `managedExpansion()`) that
- * when invoked (by feature-u) expands and returns the desired
- * AspectContent.
+ * A "managed expansion callback" (defined by
+ * {{book.api.managedExpansion}}) that when invoked (by **feature-u**)
+ * expands and returns the desired AspectContent.
+ *
+ * For more information _(with examples)_, please refer to
+ * {{book.guide.crossCom_managedCodeExpansion}}.
  *
  * @callback managedExpansionCB
  * 
