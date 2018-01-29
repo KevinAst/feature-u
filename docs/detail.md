@@ -102,8 +102,7 @@ object properties (via `createFeature()`).
   A boolean property that determines whether the feature is enabled or
   not.  This indicator is typically based on a dynamic expression,
   allowing packaged code to be dynamically enabled/disabled at
-  run-time _(please refer to: [Feature
-  Enablement](#feature-enablement))_.
+  run-time _(please refer to: {{book.guide.enablement}})_.
 
 
 - `Feature.publicFace`
@@ -312,11 +311,27 @@ aspects]_
 
 ### React Registration
 
-The `launchApp()` function uses a `registerRootAppElm()` callback
-_(see `*2*` in `app.js` snippet above)_ to catalog the supplied
-`rootAppElm` to the specific React platform in use.  Because this
-registration is accomplished by your app-specific code, **feature-u**
-can operate in any of the React platforms, such as:
+The {{book.api.launchApp}} function uses a
+{{book.api.registerRootAppElmCB}} callback _(see `*2*` in `app.js`
+snippet above)_ to catalog the supplied `rootAppElm` to the specific
+React platform in use.
+
+**API:** {{book.api.registerRootAppElmCB$}}
+
+**NOTE** regarding the `rootAppElm`:
+
+- Typically the supplied `rootAppElm` will have definition, based on the
+  Aspects and Features that are in use.  In this case, it is the
+  responsibility of this callback to register this content in some way
+  (either directly or indirectly).
+
+- However, there are atypical isolated cases where the supplied
+  `rootAppElm` can be null.  This can happen when the app chooses NOT to
+  use Aspects/Features that inject any UI content.  In this case, the
+  callback is free to register it's own content.
+
+Because this registration is accomplished by your app-specific code,
+**feature-u** can operate in any of the React platforms, such as:
 
 **React Web**
 ```js
@@ -325,7 +340,7 @@ import ReactDOM from 'react-dom';
 export default launchApp({
   aspects,
   features,
-  registerRootAppElm(rootAppElm) {
+  registerRootAppElm(rootAppElm) { // *2*
     ReactDOM.render(rootAppElm,
                     getElementById('myAppRoot'));
   }
@@ -339,7 +354,7 @@ import {AppRegistry} from 'react-native';
 export default launchApp({
   aspects,
   features,
-  registerRootAppElm(rootAppElm) {
+  registerRootAppElm(rootAppElm) { // *2*
     AppRegistry.registerComponent('myAppKey',
                                   ()=>rootAppElm); // convert rootAppElm to a React Component
   }
@@ -353,7 +368,7 @@ import Expo from 'expo';
 export default launchApp({
   aspects,
   features,
-  registerRootAppElm(rootAppElm) {
+  registerRootAppElm(rootAppElm) { // *2*
     Expo.registerRootComponent(()=>rootAppElm); // convert rootAppElm to a React Component
   }
 });
@@ -364,7 +379,8 @@ export default launchApp({
 ## App Object
 
 An App object is emitted from the `launchApp()` function, which
-promotes the accumulated Public API of all features.
+promotes the accumulated Public API of all features _(see:
+{{book.guide.crossCom_publicFaceApp}})_.
 
 The App object should be exported _(see `*3*` in `app.js` snippet
 above)_ so other modules can access it (providing [Cross Feature

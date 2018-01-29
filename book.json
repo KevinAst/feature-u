@@ -55,16 +55,20 @@
       "detail":                   "[`A Closer Look`](/detail.md)",
       "detail_aspects":           "[`aspects`](/detail.md#aspects)",
       "detail_featureAndAspect":  "[`Feature & aspect content`](/detail.md#feature-object-relaying-aspect-content)",
+      "detail_builtInAspects":    "[`Built-In aspects`](/detail.md#built-in-aspects)",
+      "detail_extendableAspects": "[`Extendable aspects`](/detail.md#extendable-aspects)",
       "detail_launchingApp":      "[`Launching Your Application`](/detail.md#launching-your-application)",
       "detail_reactRegistration": "[`React Registration`](/detail.md#react-registration)",
       "detail_appObject":         "[`App Object`](/detail.md#app-object)",
+      "detail_featurePublicAPI":  "[`Feature Public API`](/detail.md#feature-public-api)",
+      "detail_doesFeatureExist":  "[`Does Feature Exist`](/detail.md#does-feature-exist)",
 
       "appLifeCycle":             "[`Application Life Cycle Hooks`](/appLifeCycle.md)",
 
       "enablement":               "[`Feature Enablement`](/enablement.md)",
 
       "crossCom":                 "[`Cross Feature Communication`](/crossCommunication.md)",
-      "crossCom_publicFaceApp":   "[`publicFace & App`](/crossCommunication.md#publicface-and-the-app-object)",
+      "crossCom_publicFaceApp":   "[`publicFace and the App Object`](/crossCommunication.md#publicface-and-the-app-object)",
       "crossCom_accessingApp":    "[`Accessing App`](/crossCommunication.md#accessing-the-app-object)",
 
       "truth":                    "[`Single Source of Truth`](/truth.md)",

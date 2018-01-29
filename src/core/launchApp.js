@@ -245,22 +245,10 @@ export default function launchApp({aspects=[],
  *
  * Because this registration is accomplished by app-specific code,
  * feature-u can operate in any of the React platforms, such as: React
- * Web, React Native, Expo, etc. (see: **React Registration**).
+ * Web, React Native, Expo, etc.
  * 
- * **NOTE on rootAppElm:**
- * 
- * - Typically the supplied rootAppElm will have definition, based on
- *   the Aspects and Features that are in use.  In this case, it is the
- *   responsibility of this callback to register this content in
- *   some way (either directly or indirectly).
- * 
- * - However, there are atypical isolated cases where the supplied
- *   rootAppElm can be null.  This can happen when the app chooses NOT
- *   to use Aspects/Features that inject any UI content.  In this case,
- *   the callback is free to register it's own content.
- * 
- * Please refer to the user documentation for more details and
- * complete examples.
+ * Please refer to {{book.guide.detail_reactRegistration}} for more
+ * details and complete examples.
  *
  * @callback registerRootAppElmCB
  * 

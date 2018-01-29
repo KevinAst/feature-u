@@ -1,8 +1,9 @@
 # Feature Enablement
 
 Each feature has a `Feature.enabled` boolean property that determines
-whether it is enabled or not.  This indicator is typically based on a
-dynamic expression.
+whether it is enabled or not (see
+{{book.guide.detail_builtInAspects}}).  This indicator is typically
+based on a dynamic expression.
 
 This allows packaged code to be dynamically enabled/disabled at
 run-time, and is useful in a number of different situations.  For
@@ -14,5 +15,4 @@ example:
   disabled by default
 
 If need be you can use the App object to determine if a feature is
-present or not (see: [Checking Feature Dependencies (via
-App)](#checking-feature-dependencies-via-app)).
+present or not (see: {{book.guide.detail_doesFeatureExist}}).

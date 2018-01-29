@@ -26,7 +26,7 @@ const noOp = () => null;
  * feature is enabled (true) or not (false).  When used, this
  * indicator is typically based on a dynamic expression, allowing
  * packaged code to be dynamically enabled/disabled at run-time
- * _(please refer to: [Feature Enablement](#feature-enablement))_.
+ * _(please refer to: {{book.guide.enablement}})_.
  *
  * @param {Any} [publicFace] an optional resource object that is the
  * feature's Public API, promoting cross-communication between
