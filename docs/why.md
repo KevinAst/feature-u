@@ -5,17 +5,16 @@ into separate features.  How do you encapsulate your features while
 pulling them back together so they operate as one application?
 
 This list (below) provides some considerations that formed the basis
-of why feature-u was developed!
+of why **feature-u** was developed!
 
 I hope you enjoy this effort, and comments are always welcome.
 
 **&lt;/Kevin&gt;**
 
-**P.S.** The feature-u library was pulled from a sandbox project
-[eatery-nod](https://github.com/KevinAst/eatery-nod) that I use to
-study several technologies and frameworks.  It is a
-[react-native](https://facebook.github.io/react-native/)
-[Expo](https://expo.io/) mobile app.
+**P.S.** The **feature-u** library was pulled from a sandbox project
+{{book.ext.eateryNod}} that I use to study several technologies and
+frameworks.  It is a {{book.ext.reactNative}} {{book.ext.expo}} mobile
+app.
 
 **P.P.S.** If you are wondering what the "-u" stands for, it is merely a
 succinct suffix that distinguishes a number of my published
@@ -39,7 +38,7 @@ succinct suffix that distinguishes a number of my published
    collaboration between features.  This however should be acomplished
    through a well-defined feature-based public interface.
 
-   **Solution:** [Cross Feature Communication](#cross-feature-communication)
+   **Solution:** {{book.guide.crossCom}}
 
 1. **Initialization:**
 
@@ -48,12 +47,12 @@ succinct suffix that distinguishes a number of my published
    feature should be able to spawn initialization that it depends on.
 
    This could be any number of things, such as:
-    - initialize some service API
-    - inject a utility react component at the root of the App
-    - dispatch an action that kicks off some startup process
-    - etc.
+   - initialize some service API
+   - inject a utility react component at the root of the App
+   - dispatch an action that kicks off some startup process
+   - etc.
 
-   **Solution:** [Application Life Cycle Hooks](#application-life-cycle-hooks)
+   **Solution:** {{book.guide.appLifeCycle}}
 
 1. **Feature Enablement:**
 
@@ -62,7 +61,7 @@ succinct suffix that distinguishes a number of my published
    enabled with a license upgrade, or other features may only be used for
    diagnostic purposes.
 
-   **Solution:** [Feature Enablement](#feature-enablement)
+   **Solution:** {{book.guide.enablement}}
 
 1. **Resource Resolution during Code Expansion:**
 
@@ -73,18 +72,19 @@ succinct suffix that distinguishes a number of my published
 
    **_How can this problem be minimized?_**
    
-   **Solution:** [Managed Code Expansion](#managed-code-expansion)
+   **Solution:** {{book.guide.crossCom_managedCodeExpansion}}
 
 1. **Framework Integration:**
 
    Most likely your application employs a number of different
-   frameworks (ex: redux, redux-logic, etc.).  As a result, your
-   features are typically going to rely on these same frameworks.
+   frameworks (ex: {{book.ext.redux}}, {{book.ext.reduxLogic}}, etc.).
+   As a result, your features are typically going to rely on these
+   same frameworks.
 
    How are the resources needed by these frameworks acumulated and
    configured across the many features of your app?
 
-   **Solution:** [Extendable aspects](#extendable-aspects) -and- [Launching Your Application](#launching-your-application)
+   **Solution:** {{book.guide.detail_extendableAspects}} -and- {{book.guide.detail_launchingApp}}
 
 1. **UI Component Promotion:**
 
@@ -92,14 +92,14 @@ succinct suffix that distinguishes a number of my published
    them in the overall app's GUI.  How is this acomplished in an
    autonomous way?
 
-   **Solution:** Feature Based Route Management (via the pluggable **feature-router** `routeAspect`)
+   **Solution:** Feature Based Route Management (via the pluggable {{book.ext.featureRouter}} `routeAspect`)
 
 1. **Single Source of Truth:**
 
    What are some **Best Practices** for "Single Source of Truth" as it
    relates to features, and how can **feature-u** help?
 
-   **Solution:** [Single Source of Truth](#single-source-of-truth)
+   **Solution:** {{book.guide.truth}}
 
 1. **Simplified App Startup:**
 
@@ -107,7 +107,7 @@ succinct suffix that distinguishes a number of my published
    you pull it all together, and actually start your app running?
 
    At first glance, this may seem like a daunting task.  As it
-   turns out, however, because of the structure promoted by feature-u,
+   turns out, however, because of the structure promoted by **feature-u**,
    it actually is a very simple process.
 
-   **Solution:** [Launching Your Application](#launching-your-application)
+   **Solution:** {{book.guide.detail_launchingApp}}
