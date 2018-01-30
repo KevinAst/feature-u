@@ -44,6 +44,8 @@
 
       "basicConcepts":            "[`Basic Concepts`](/concepts.md)",
 
+      "benefits":                 "[`Benefits`](/benefits.md)",
+
       "usage":                    "[`Usage`](/usage.md)",
       "usage_dir":                "[`Directory Structure`](/usage.md#directory-structure)",
       "usage_featureObject":      "[`Feature Object`](/usage.md#feature-object)",

@@ -15,7 +15,7 @@ Create a new {{book.api.Feature}} object, cataloging{{book.api.AspectContent}} 
 | [publicFace] | Any |  | an optional resource object that is the feature's Public API, promoting {{book.guide.crossCom}}.  This object is exposed through the {{book.api.App}} object as: `app.{featureName}.{publicFace}` _(please refer to: {{book.guide.crossCom_publicFaceApp}})_. |
 | [appWillStart] | [`appWillStartCB`](#appWillStartCB) |  | an optional {{book.guide.appLifeCycle}} invoked one time, just before the app starts up.  This life-cycle hook can do any type of initialization, and/or optionally supplement the app's top-level content (using a non-null return) _(please refer to: {{book.guide.appWillStart}})_. |
 | [appDidStart] | [`appDidStartCB`](#appDidStartCB) |  | an optional {{book.guide.appLifeCycle}} invoked one time, immediately after the app has started.  Because the app is up-and-running at this time, you have access to the appState and the dispatch() function ... assuming you are using redux (when detected by feature-u's plugable aspects) _(please refer to: {{book.guide.appDidStart}})_. |
-| [extendedAspect] | [`AspectContent`](#AspectContent) |  | additional aspects, as defined by the feature-u's pluggable Aspect extension _(please refer to: {{book.guide.detail_extendableAspects}} -and- {{book.guide.extending}})_. |
+| [extendedAspect] | [`AspectContent`](#AspectContent) |  | additional aspects, as defined by the feature-u's plugable Aspect extension _(please refer to: {{book.guide.detail_extendableAspects}} -and- {{book.guide.extending}})_. |
 
 **Returns**: [`Feature`](#Feature) - a new Feature object (to be consumed bylaunchApp()).  
 
@@ -39,7 +39,7 @@ Add additional Feature keyword (typically used by Aspect extensionsto Feature).
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
   launchApp([aspects], features, registerRootAppElm) ⇒ [`App`](#App)</h5>
-Launch an application by assembling the supplied features, drivingthe configuration of the frameworks in use _(as orchistrated by thesupplied set of pluggable Apsects)_.For more information _(with examples)_, please refer to{{book.guide.detail_launchingApp}}.**Please Note** this function uses named parameters.
+Launch an application by assembling the supplied features, drivingthe configuration of the frameworks in use _(as orchestrated by thesupplied set of plugable Aspects)_.For more information _(with examples)_, please refer to{{book.guide.detail_launchingApp}}.**Please Note** this function uses named parameters.
 
 
 | Param | Type | Description |
@@ -56,7 +56,7 @@ Launch an application by assembling the supplied features, drivingthe configura
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
   managedExpansion(managedExpansionCB) ⇒ [`managedExpansionCB`](#managedExpansionCB)</h5>
-Mark the supplied {{book.api.managedExpansionCB}} as a "ManagedExpansion Callback", distinguishing it from other functions _(suchas reducer functions)_.Features may communicate {{book.api.AspectContent}} directly, orthrough a {{book.api.managedExpansionCB}}.  In other words, the{{book.api.AspectContent}} can either be the actual content itself_(ex: reducer, logic modules, etc.)_, or a function that returnsthe content.  The latter: 1. supports {{book.guide.crossCom}} _(through app object    injection)_, and 2. minimizes circular dependency issues (of ES6 modules).Managed Expansion Callbacks are used when a fully resolved{{book.api.App}} object is requried during in-line code expansion.They are merely functions that when invoked _(under the control of**feature-u**)_, are supplied the {{book.api.App}} object andreturn the expanded {{book.api.AspectContent}} _(ex: reducer, logicmodules, etc.)_.**For more information _(with examples)_**, please refer to{{book.guide.crossCom_managedCodeExpansion}}.The {{book.api.managedExpansionCB}} function should conform to thefollowing signature:**API:** {{book.api.managedExpansionCB$}}
+Mark the supplied {{book.api.managedExpansionCB}} as a "ManagedExpansion Callback", distinguishing it from other functions _(suchas reducer functions)_.Features may communicate {{book.api.AspectContent}} directly, orthrough a {{book.api.managedExpansionCB}}.  In other words, the{{book.api.AspectContent}} can either be the actual content itself_(ex: reducer, logic modules, etc.)_, or a function that returnsthe content.  The latter: 1. supports {{book.guide.crossCom}} _(through app object    injection)_, and 2. minimizes circular dependency issues (of ES6 modules).Managed Expansion Callbacks are used when a fully resolved{{book.api.App}} object is required during in-line code expansion.They are merely functions that when invoked _(under the control of**feature-u**)_, are supplied the {{book.api.App}} object andreturn the expanded {{book.api.AspectContent}} _(ex: reducer, logicmodules, etc.)_.**For more information _(with examples)_**, please refer to{{book.guide.crossCom_managedCodeExpansion}}.The {{book.api.managedExpansionCB}} function should conform to thefollowing signature:**API:** {{book.api.managedExpansionCB$}}
 
 
 | Param | Type | Description |
@@ -159,7 +159,7 @@ The App object _(emitted from {{book.api.launchApp}})_ facilitates{{book.guide.
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
   managedExpansionCB ⇒ [`AspectContent`](#AspectContent)</h5>
-A "managed expansion callback" (defined by{{book.api.managedExpansion}}) that when invoked (by **feature-u**)expands and returns the desired {{book.api.AspectContent}}.For more information _(with examples)_, please refer to{{book.guide.crossCom_managedCodeExpansion}}.
+A "managed expansion callback" (defined by{{book.api.managedExpansion}}) that when invoked (by **feature-u**)expands and returns the desired {{book.api.AspectContent}}.**For more information _(with examples)_**, please refer to{{book.guide.crossCom_managedCodeExpansion}}.
 
 
 | Param | Type | Description |
@@ -194,7 +194,7 @@ The content (or payload) of an {{book.api.Aspect}}, specifiedwithin a {{book.ap
   validateConfigurationMeth ⇒ string</h5>
 A validation hook allowing this aspect to verify it's own requiredconfiguration (if any).  Some aspects may require certain settingsin self for them to operate.**API:** {{book.api.validateConfigurationMeth$}}
 
-**Returns**: string - an error message when self is in an invalid state(falsy wheni valid).  Because this validation occurs under thecontrol of {{book.api.launchApp}}, any message is prefixed with:`'launchApp() parameter violation: '`.  
+**Returns**: string - an error message when self is in an invalid state(falsy when valid).  Because this validation occurs under thecontrol of {{book.api.launchApp}}, any message is prefixed with:`'launchApp() parameter violation: '`.  
 
 <br/><br/><br/>
 

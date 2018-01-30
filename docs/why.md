@@ -23,7 +23,7 @@ succinct suffix that distinguishes a number of my published
 
 ## As promised, here is the list ...
 
-1. **Encapsolation:**
+1. **Feature Encapsulation:**
 
    Most characteristics of a feature strive to be self-sufficient and
    independent.  Where possible, they operate within their own
@@ -33,14 +33,14 @@ succinct suffix that distinguishes a number of my published
 
 1. **Feature Collaboration:**
 
-   Even though a feature's implementation is encapsolated, it still
+   Even though a feature's implementation is encapsulated, it still
    needs to interact with it's surroundings.  There is a need for
-   collaboration between features.  This however should be acomplished
+   collaboration between features.  This however should be accomplished
    through a well-defined feature-based public interface.
 
    **Solution:** {{book.guide.crossCom}}
 
-1. **Initialization:**
+1. **Feature Initialization:**
 
    Any given feature should not have to rely on an external startup
    process to perform the initialization that it needs.  Rather, the
@@ -81,7 +81,7 @@ succinct suffix that distinguishes a number of my published
    As a result, your features are typically going to rely on these
    same frameworks.
 
-   How are the resources needed by these frameworks acumulated and
+   How are the resources needed by these frameworks accumulated and
    configured across the many features of your app?
 
    **Solution:** {{book.guide.detail_extendableAspects}} -and- {{book.guide.detail_launchingApp}}
@@ -89,10 +89,10 @@ succinct suffix that distinguishes a number of my published
 1. **UI Component Promotion:**
 
    Features that maintain their own UI components need a way to promote
-   them in the overall app's GUI.  How is this acomplished in an
+   them in the overall app's GUI.  How is this accomplished in an
    autonomous way?
 
-   **Solution:** Feature Based Route Management (via the pluggable {{book.ext.featureRouter}} `routeAspect`)
+   **Solution:** Feature Based Route Management (via the plugable {{book.ext.featureRouter}} `routeAspect`)
 
 1. **Single Source of Truth:**
 

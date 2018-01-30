@@ -5,6 +5,7 @@
 
 ----
 * [Basic Concepts](concepts.md)
+* [Benefits](benefits.md)
 * [Usage](usage.md)
   * [Directory Structure](usage.md#directory-structure)
   * [Feature Object](usage.md#feature-object)
