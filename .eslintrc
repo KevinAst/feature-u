@@ -7,7 +7,10 @@
   },
   "extends": "eslint:recommended",
   "parserOptions": {
-    "sourceType": "module"
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true
+    },
   },
   "globals": {
     "before":   true, // before() is part of our unit test framework

@@ -98,7 +98,7 @@ describe('feature-u createAspect() tests', () => {
       myAspectName: managedExpansion( (app) => 'myAspectContent' ), // UNDER TEST: needs expansion
     });
 
-    const app = null; // null ok for this test ... just being passed through
+    // const app = null; // null ok for this test ... just being passed through 
 
     test('aspect.expandFeatureContent', () => {
 
