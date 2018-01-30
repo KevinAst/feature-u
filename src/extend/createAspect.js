@@ -20,21 +20,21 @@ const default_injectRootAppElm = (app, activeFeatures, curRootAppElm) => curRoot
  * @function createAspect
  * @description
  *
- * Create an Aspect object, used to extend feature-u.
+ * Create an {{book.api.Aspect}} object, used to extend **feature-u**.
  *
- * The Aspect object promotes a series of life-cycle methods that
- * **feature-u** invokes in a controlled way.  This life-cycle is
- * controlled by `launchApp()` _... it is supplied the Aspects, and it
- * invokes their methods._
+ * The {{book.api.Aspect}} object promotes a series of life-cycle
+ * methods that **feature-u** invokes in a controlled way.  This
+ * life-cycle is controlled by {{book.api.launchApp}} _... it is
+ * supplied the Aspects, and it invokes their methods._
  * 
- * The essential characteristics of the Aspect life-cycle is to:
+ * The essential characteristics of the {{book.api.Aspect}} life-cycle is to:
  * 
  * - accumulate aspect content across all features
  * - perform the desired setup and configuration
  * - expose the framework in some way _(by injecting a component in the
  *   root DOM, or some "aspect cross-communication mechanism")_
  * 
- * Typically the Aspect object will need to retain state between these
+ * Typically the {{book.api.Aspect}} object will need to retain state between these
  * life-cycle methods in order to do it's job.
  * 
  * Some Aspects may rely on an "aspect cross-communication mechanism" to
@@ -58,47 +58,55 @@ const default_injectRootAppElm = (app, activeFeatures, curRootAppElm) => curRoot
  *
  * @param {validateConfigurationMeth} [validateConfiguration] an
  * optional validation hook allowing this aspect to verify it's own
- * required configuration (if any).  Some aspects may require certain
- * settings in self for them to operate.
+ * required configuration (if any).<br/><br/>
+ * 
+ * Some aspects may require certain settings in self for them to
+ * operate.
  *
- * @param {expandFeatureContentMeth} [expandFeatureContent] an optional
- * aspect expansion hook, defaulting to the algorithm defined by
- * managedExpansion().  This function rarely needs to be overridden.
- * It provides a hook to aspects that need to transfer additional
- * content from the expansion function to the expanded content.
+ * @param {expandFeatureContentMeth} [expandFeatureContent] an
+ * optional aspect expansion hook, defaulting to the algorithm defined
+ * by {{book.api.managedExpansion}}.<br/><br/>
+ *
+ * This function rarely needs to be overridden.  It provides a hook to
+ * aspects that need to transfer additional content from the expansion
+ * function to the expanded content.
  *
  * @param {validateFeatureContentMeth} validateFeatureContent a
  * validation hook allowing this aspect to verify it's content on the
  * supplied feature (which is known to contain this aspect).
  *
  * @param {assembleFeatureContentMeth} assembleFeatureContent the
- * Aspect method that assembles content for this aspect
- * across all features, retaining needed state for subsequent ops.
+ * Aspect method that assembles content for this aspect across all
+ * features, retaining needed state for subsequent ops.<br/><br/>
+ *
  * This method is required because this is the primary task that is
  * accomplished by all aspects.
  *
  * @param {assembleAspectResourcesMeth} [assembleAspectResources] an
  * optional Aspect method that assemble resources for this aspect
  * across all other aspects, retaining needed state for subsequent
- * ops.  This hook is executed after all the aspects have assembled
- * their feature content (i.e. after `assembleFeatureContent()`).
+ * ops.<br/><br/>
+ *
+ * This hook is executed after all the aspects have assembled their
+ * feature content (i.e. after
+ * {{book.api.assembleFeatureContentMeth}}).
  *
  * @param {injectRootAppElmMeth} [injectRootAppElm] an optional callback
  * hook that promotes some characteristic of this aspect within the
  * app root element (i.e. react component instance).
  * 
  * @param {Any} [additionalMethods] additional methods (proprietary to
- * specific Aspects), supporting two different requirements:
- * <ol>
- * <li> internal Aspect helper methods, and
- * <li> APIs used in "aspect cross-communication" ... a contract
- *      between one or more aspects.  This is merely an API specified
- *      by one Aspect, and used by another Aspect, that is facilitate
- *      through the `Aspect.assembleAspectResources(app, aspects)`
- *      hook.
- * </ol>
+ * specific Aspects), supporting two different requirements:<br/><br/>
+ * 
+ * 1. internal Aspect helper methods, and<br/><br/>
+ * 
+ * 2. APIs used in "aspect cross-communication" ... a contract
+ *    between one or more aspects.  This is merely an API specified
+ *    by one Aspect, and used by another Aspect, that is facilitate
+ *    through the {{book.api.assembleAspectResourcesMeth$}}
+ *    hook.
  *
- * @return {Aspect} a new Aspect object (to be consumed by launchApp()).
+ * @return {Aspect} a new Aspect object (to be consumed by {{book.api.launchApp}}).
  */
 export default function createAspect({name,
                                       validateConfiguration=default_validateConfiguration,
@@ -166,8 +174,8 @@ export default function createAspect({name,
  * 
  * The Aspect object promotes a series of life-cycle methods that
  * **feature-u** invokes in a controlled way.  This life-cycle is
- * controlled by `launchApp()` _... it is supplied the Aspects, and it
- * invokes their methods._
+ * controlled by {{book.api.launchApp}}` _... it is supplied the
+ * Aspects, and it invokes their methods._
  * 
  * For more information, please refer to {{book.guide.extending}}.
  */
@@ -180,7 +188,8 @@ export default function createAspect({name,
 /**
  * @typedef {Any} AspectContent
  * 
- * The content (or payload) of an Aspect, specified within a Feature.
+ * The content (or payload) of an {{book.api.Aspect}}, specified
+ * within a {{book.api.Feature}}.
  * 
  * An {{book.api.Aspect}} object extends **feature-u** by accumulating
  * information of interest from {{book.api.Feature}} objects _(indexed
@@ -210,8 +219,8 @@ export default function createAspect({name,
  * @callback validateConfigurationMeth
  *
  * @return {string} an error message when self is in an invalid state
- * (falsy when valid).  Because this validation occurs under the
- * control of `launchApp()`, any message is prefixed with:
+ * (falsy wheni valid).  Because this validation occurs under the
+ * control of {{book.api.launchApp}}, any message is prefixed with:
  * `'launchApp() parameter violation: '`.
  */
 
@@ -223,13 +232,13 @@ export default function createAspect({name,
 /**
  * Expand self's {{book.api.AspectContent}} in the supplied feature,
  * replacing that content (within the feature).  Once expansion is
- * complete, feature-u will perform a delayed validation of the
+ * complete, **feature-u** will perform a delayed validation of the
  * expanded content.
  *
  * **API:** {{book.api.expandFeatureContentMeth$}}
  *
  * The default behavior simply implements the expansion algorithm
- * defined by managedExpansion():
+ * defined by {{book.api.managedExpansion}}:
  *
  * ```js
  * feature[this.name] = feature[this.name](app);
@@ -248,13 +257,13 @@ export default function createAspect({name,
  * 
  * @param {Feature} feature - the feature which is known to contain
  * this aspect **and** is in need of expansion (as defined by
- * managedExpansion()).
+ * {{book.api.managedExpansion}}).
  *
  * @return {string} an optional error message when the supplied
  * feature contains invalid content for this aspect (falsy when
  * valid).  This is a specialized validation of the expansion
  * function, over-and-above what is checked in the standard
- * validateFeatureContent() hook.
+ * {{book.api.validateFeatureContentMeth}} hook.
  */
 
 
@@ -276,8 +285,8 @@ export default function createAspect({name,
  * @return {string} an error message string when the supplied feature
  * contains invalid content for this aspect (falsy when valid).
  * Because this validation conceptually occurs under the control of
- * `createFeature()`, any message is prefixed with: `'createFeature()
- * parameter violation: '`.
+ * {{book.api.createFeature}}, any message is prefixed with:
+ * `'createFeature() parameter violation: '`.
  */
 
 
@@ -300,6 +309,8 @@ export default function createAspect({name,
  * 
  * @param {Feature[]} activeFeatures - The set of active (enabled)
  * features that comprise this application.
+ *
+ * @return void
  */
 
 
@@ -312,7 +323,8 @@ export default function createAspect({name,
  * An optional Aspect method that assemble resources for this aspect
  * across all other aspects, retaining needed state for subsequent
  * ops.  This hook is executed after all the aspects have assembled
- * their feature content (i.e. after `assembleFeatureContent()`).
+ * their feature content (i.e. after
+ * {{book.api.assembleFeatureContentMeth}}).
  *
  * **API:** {{book.api.assembleAspectResourcesMeth$}}
  *
@@ -331,8 +343,10 @@ export default function createAspect({name,
  *
  * @param {App} app the App object used in feature cross-communication.
  * 
- * @param {Aspect[]} aspects - The set of feature-u Aspect objects
+ * @param {Aspect[]} aspects - The set of **feature-u** Aspect objects
  * used in this this application.
+ *
+ * @return void
  */
 
 

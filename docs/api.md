@@ -71,21 +71,21 @@ Mark the supplied managedExpansionCB as a "managed expansioncallback", distingu
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
   createAspect(name, [validateConfiguration], [expandFeatureContent], validateFeatureContent, assembleFeatureContent, [assembleAspectResources], [injectRootAppElm], [additionalMethods]) ⇒ [`Aspect`](#Aspect)</h5>
-Create an Aspect object, used to extend feature-u.The Aspect object promotes a series of life-cycle methods that**feature-u** invokes in a controlled way.  This life-cycle iscontrolled by `launchApp()` _... it is supplied the Aspects, and itinvokes their methods._The essential characteristics of the Aspect life-cycle is to:- accumulate aspect content across all features- perform the desired setup and configuration- expose the framework in some way _(by injecting a component in the  root DOM, or some "aspect cross-communication mechanism")_Typically the Aspect object will need to retain state between theselife-cycle methods in order to do it's job.Some Aspects may rely on an "aspect cross-communication mechanism" toaccomplish it's work.  This is merely a proprietary Aspect method whichis documented and consumed by another Aspect.  Please refer to[Aspect.additionalMethods()](#aspectadditionalmethods).**Please Note** this function uses named parameters.  The order inwhich these items are presented represents the same order they areexecuted.
+Create an {{book.api.Aspect}} object, used to extend **feature-u**.The {{book.api.Aspect}} object promotes a series of life-cyclemethods that **feature-u** invokes in a controlled way.  Thislife-cycle is controlled by {{book.api.launchApp}} _... it issupplied the Aspects, and it invokes their methods._The essential characteristics of the {{book.api.Aspect}} life-cycle is to:- accumulate aspect content across all features- perform the desired setup and configuration- expose the framework in some way _(by injecting a component in the  root DOM, or some "aspect cross-communication mechanism")_Typically the {{book.api.Aspect}} object will need to retain state between theselife-cycle methods in order to do it's job.Some Aspects may rely on an "aspect cross-communication mechanism" toaccomplish it's work.  This is merely a proprietary Aspect method whichis documented and consumed by another Aspect.  Please refer to[Aspect.additionalMethods()](#aspectadditionalmethods).**Please Note** this function uses named parameters.  The order inwhich these items are presented represents the same order they areexecuted.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
 | name | string | the `Aspect.name` is used to "key" {{book.api.AspectContent}} of this type in the {{book.api.Feature}} object.<br/><br/> For example: an `Aspect.name: 'xyz'` would permit a `Feature.xyz: xyzContent` construct.<br/><br/> As a result, Aspect names cannot clash with built-in aspects, and they must be unique _(across all aspects that are in-use)_. |
-| [validateConfiguration] | [`validateConfigurationMeth`](#validateConfigurationMeth) | an optional validation hook allowing this aspect to verify it's own required configuration (if any).  Some aspects may require certain settings in self for them to operate. |
-| [expandFeatureContent] | [`expandFeatureContentMeth`](#expandFeatureContentMeth) | an optional aspect expansion hook, defaulting to the algorithm defined by managedExpansion().  This function rarely needs to be overridden. It provides a hook to aspects that need to transfer additional content from the expansion function to the expanded content. |
+| [validateConfiguration] | [`validateConfigurationMeth`](#validateConfigurationMeth) | an optional validation hook allowing this aspect to verify it's own required configuration (if any).<br/><br/> Some aspects may require certain settings in self for them to operate. |
+| [expandFeatureContent] | [`expandFeatureContentMeth`](#expandFeatureContentMeth) | an optional aspect expansion hook, defaulting to the algorithm defined by {{book.api.managedExpansion}}.<br/><br/> This function rarely needs to be overridden.  It provides a hook to aspects that need to transfer additional content from the expansion function to the expanded content. |
 | validateFeatureContent | [`validateFeatureContentMeth`](#validateFeatureContentMeth) | a validation hook allowing this aspect to verify it's content on the supplied feature (which is known to contain this aspect). |
-| assembleFeatureContent | [`assembleFeatureContentMeth`](#assembleFeatureContentMeth) | the Aspect method that assembles content for this aspect across all features, retaining needed state for subsequent ops. This method is required because this is the primary task that is accomplished by all aspects. |
-| [assembleAspectResources] | [`assembleAspectResourcesMeth`](#assembleAspectResourcesMeth) | an optional Aspect method that assemble resources for this aspect across all other aspects, retaining needed state for subsequent ops.  This hook is executed after all the aspects have assembled their feature content (i.e. after `assembleFeatureContent()`). |
+| assembleFeatureContent | [`assembleFeatureContentMeth`](#assembleFeatureContentMeth) | the Aspect method that assembles content for this aspect across all features, retaining needed state for subsequent ops.<br/><br/> This method is required because this is the primary task that is accomplished by all aspects. |
+| [assembleAspectResources] | [`assembleAspectResourcesMeth`](#assembleAspectResourcesMeth) | an optional Aspect method that assemble resources for this aspect across all other aspects, retaining needed state for subsequent ops.<br/><br/> This hook is executed after all the aspects have assembled their feature content (i.e. after {{book.api.assembleFeatureContentMeth}}). |
 | [injectRootAppElm] | [`injectRootAppElmMeth`](#injectRootAppElmMeth) | an optional callback hook that promotes some characteristic of this aspect within the app root element (i.e. react component instance). |
-| [additionalMethods] | Any | additional methods (proprietary to specific Aspects), supporting two different requirements: <ol> <li> internal Aspect helper methods, and <li> APIs used in "aspect cross-communication" ... a contract      between one or more aspects.  This is merely an API specified      by one Aspect, and used by another Aspect, that is facilitate      through the `Aspect.assembleAspectResources(app, aspects)`      hook. </ol> |
+| [additionalMethods] | Any | additional methods (proprietary to specific Aspects), supporting two different requirements:<br/><br/> 1. internal Aspect helper methods, and<br/><br/> 2. APIs used in "aspect cross-communication" ... a contract    between one or more aspects.  This is merely an API specified    by one Aspect, and used by another Aspect, that is facilitate    through the {{book.api.assembleAspectResourcesMeth$}}    hook. |
 
-**Returns**: [`Aspect`](#Aspect) - a new Aspect object (to be consumed by launchApp()).  
+**Returns**: [`Aspect`](#Aspect) - a new Aspect object (to be consumed by {{book.api.launchApp}}).  
 
 <br/><br/><br/>
 
@@ -172,7 +172,7 @@ A "managed expansion callback" (defined by{{book.api.managedExpansion}}) that w
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
   Aspect : Object</h5>
-Aspect objects (emitted from {{book.api.createAspect}}) are used toextend **feature-u**.The Aspect object promotes a series of life-cycle methods that**feature-u** invokes in a controlled way.  This life-cycle iscontrolled by `launchApp()` _... it is supplied the Aspects, and itinvokes their methods._For more information, please refer to {{book.guide.extending}}.
+Aspect objects (emitted from {{book.api.createAspect}}) are used toextend **feature-u**.The Aspect object promotes a series of life-cycle methods that**feature-u** invokes in a controlled way.  This life-cycle iscontrolled by {{book.api.launchApp}}` _... it is supplied theAspects, and it invokes their methods._For more information, please refer to {{book.guide.extending}}.
 
 
 <br/><br/><br/>
@@ -181,7 +181,7 @@ Aspect objects (emitted from {{book.api.createAspect}}) are used toextend **fea
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
   AspectContent : Any</h5>
-The content (or payload) of an Aspect, specified within a Feature.An {{book.api.Aspect}} object extends **feature-u** by accumulatinginformation of interest from {{book.api.Feature}} objects _(indexedby the Aspect name)_.The content type is specific to the Aspect. For example, a reduxAspect assembles reducers (via `Feature.reducer`), while aredux-logic Aspect gathers logic modules (via `Feature.logic`),etc.For more information, please refer to{{book.guide.detail_featureAndAspect}}.
+The content (or payload) of an {{book.api.Aspect}}, specifiedwithin a {{book.api.Feature}}.An {{book.api.Aspect}} object extends **feature-u** by accumulatinginformation of interest from {{book.api.Feature}} objects _(indexedby the Aspect name)_.The content type is specific to the Aspect. For example, a reduxAspect assembles reducers (via `Feature.reducer`), while aredux-logic Aspect gathers logic modules (via `Feature.logic`),etc.For more information, please refer to{{book.guide.detail_featureAndAspect}}.
 
 
 <br/><br/><br/>
@@ -192,7 +192,7 @@ The content (or payload) of an Aspect, specified within a Feature.An {{book.ap
   validateConfigurationMeth ⇒ string</h5>
 A validation hook allowing this aspect to verify it's own requiredconfiguration (if any).  Some aspects may require certain settingsin self for them to operate.**API:** {{book.api.validateConfigurationMeth$}}
 
-**Returns**: string - an error message when self is in an invalid state(falsy when valid).  Because this validation occurs under thecontrol of `launchApp()`, any message is prefixed with:`'launchApp() parameter violation: '`.  
+**Returns**: string - an error message when self is in an invalid state(falsy wheni valid).  Because this validation occurs under thecontrol of {{book.api.launchApp}}, any message is prefixed with:`'launchApp() parameter violation: '`.  
 
 <br/><br/><br/>
 
@@ -200,15 +200,15 @@ A validation hook allowing this aspect to verify it's own requiredconfiguration
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
   expandFeatureContentMeth ⇒ string</h5>
-Expand self's {{book.api.AspectContent}} in the supplied feature,replacing that content (within the feature).  Once expansion iscomplete, feature-u will perform a delayed validation of theexpanded content.**API:** {{book.api.expandFeatureContentMeth$}}The default behavior simply implements the expansion algorithmdefined by managedExpansion():```jsfeature[this.name] = feature[this.name](app);```This default behavior rarely needs to change.  It however providesa hook for aspects that need to transfer additional content fromthe expansion function to the expanded content.  As an example, the`reducer` aspect must transfer the slice property from theexpansion function to the expanded reducer.
+Expand self's {{book.api.AspectContent}} in the supplied feature,replacing that content (within the feature).  Once expansion iscomplete, **feature-u** will perform a delayed validation of theexpanded content.**API:** {{book.api.expandFeatureContentMeth$}}The default behavior simply implements the expansion algorithmdefined by {{book.api.managedExpansion}}:```jsfeature[this.name] = feature[this.name](app);```This default behavior rarely needs to change.  It however providesa hook for aspects that need to transfer additional content fromthe expansion function to the expanded content.  As an example, the`reducer` aspect must transfer the slice property from theexpansion function to the expanded reducer.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
 | app | [`App`](#App) | the App object used in feature cross-communication. |
-| feature | [`Feature`](#Feature) | the feature which is known to contain this aspect **and** is in need of expansion (as defined by managedExpansion()). |
+| feature | [`Feature`](#Feature) | the feature which is known to contain this aspect **and** is in need of expansion (as defined by {{book.api.managedExpansion}}). |
 
-**Returns**: string - an optional error message when the suppliedfeature contains invalid content for this aspect (falsy whenvalid).  This is a specialized validation of the expansionfunction, over-and-above what is checked in the standardvalidateFeatureContent() hook.  
+**Returns**: string - an optional error message when the suppliedfeature contains invalid content for this aspect (falsy whenvalid).  This is a specialized validation of the expansionfunction, over-and-above what is checked in the standard{{book.api.validateFeatureContentMeth}} hook.  
 
 <br/><br/><br/>
 
@@ -223,14 +223,14 @@ A validation hook allowing this aspect to verify it's content onthe supplied fe
 | --- | --- | --- |
 | feature | [`Feature`](#Feature) | the feature to validate, which is known to contain this aspect. |
 
-**Returns**: string - an error message string when the supplied featurecontains invalid content for this aspect (falsy when valid).Because this validation conceptually occurs under the control of`createFeature()`, any message is prefixed with: `'createFeature()parameter violation: '`.  
+**Returns**: string - an error message string when the supplied featurecontains invalid content for this aspect (falsy when valid).Because this validation conceptually occurs under the control of{{book.api.createFeature}}, any message is prefixed with:`'createFeature() parameter violation: '`.  
 
 <br/><br/><br/>
 
 <a id="assembleFeatureContentMeth"></a>
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
-  assembleFeatureContentMeth : function</h5>
+  assembleFeatureContentMeth ⇒</h5>
 The required Aspect method that assembles content for this aspectacross all features, retaining needed state for subsequent ops.This method is required because this is the primary task that isaccomplished by all aspects.**API:** {{book.api.assembleFeatureContentMeth$}}
 
 
@@ -239,21 +239,23 @@ The required Aspect method that assembles content for this aspectacross all fea
 | app | [`App`](#App) | the App object used in feature cross-communication. |
 | activeFeatures | [`Array.&lt;Feature&gt;`](#Feature) | The set of active (enabled) features that comprise this application. |
 
+**Returns**: void  
 
 <br/><br/><br/>
 
 <a id="assembleAspectResourcesMeth"></a>
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
-  assembleAspectResourcesMeth : function</h5>
-An optional Aspect method that assemble resources for this aspectacross all other aspects, retaining needed state for subsequentops.  This hook is executed after all the aspects have assembledtheir feature content (i.e. after `assembleFeatureContent()`).**API:** {{book.api.assembleAspectResourcesMeth$}}This is an optional second-pass (so-to-speak) of Aspect datagathering, that facilitates an "aspect cross-communication"mechanism.  It allows a given aspect to gather resources from otheraspects, through a documented API for a given Aspect (ex:Aspect.getXyz()).As an example of this, the "reducer" aspect (which manages redux),allows other aspects to inject their own redux middleware (ex:redux-logic), through it's documented Aspect.getReduxMiddleware()API.
+  assembleAspectResourcesMeth ⇒</h5>
+An optional Aspect method that assemble resources for this aspectacross all other aspects, retaining needed state for subsequentops.  This hook is executed after all the aspects have assembledtheir feature content (i.e. after{{book.api.assembleFeatureContentMeth}}).**API:** {{book.api.assembleAspectResourcesMeth$}}This is an optional second-pass (so-to-speak) of Aspect datagathering, that facilitates an "aspect cross-communication"mechanism.  It allows a given aspect to gather resources from otheraspects, through a documented API for a given Aspect (ex:Aspect.getXyz()).As an example of this, the "reducer" aspect (which manages redux),allows other aspects to inject their own redux middleware (ex:redux-logic), through it's documented Aspect.getReduxMiddleware()API.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
 | app | [`App`](#App) | the App object used in feature cross-communication. |
-| aspects | [`Array.&lt;Aspect&gt;`](#Aspect) | The set of feature-u Aspect objects used in this this application. |
+| aspects | [`Array.&lt;Aspect&gt;`](#Aspect) | The set of **feature-u** Aspect objects used in this this application. |
 
+**Returns**: void  
 
 <br/><br/><br/>
 
