@@ -39,6 +39,8 @@ _Go forth and compute!!_
 
 - {{book.guide.basicConcepts}} _... learn high-level **feature-u** concepts_
 
+- {{book.guide.benefits}} _... understand the benefits of **feature-u**_
+
 - {{book.guide.usage}} _... what is **feature-u**'s fundamental usage pattern_
 
 - {{book.guide.detail}} _... delve deeper into **feature-u** concepts_
