@@ -5,8 +5,8 @@ import {isBuiltInFeatureKeyword} from './createFeature';
 
 /**
  * Launch an application by assembling the supplied features, driving
- * the configuration of the frameworks in use _(as orchistrated by the
- * supplied set of pluggable Apsects)_.
+ * the configuration of the frameworks in use _(as orchestrated by the
+ * supplied set of plugable Aspects)_.
  *
  * For more information _(with examples)_, please refer to
  * {{book.guide.detail_launchingApp}}.

@@ -49,7 +49,7 @@ const noOp = () => null;
  * plugable aspects) _(please refer to: {{book.guide.appDidStart}})_.
  * 
  * @param {AspectContent} [extendedAspect] additional aspects, as
- * defined by the feature-u's pluggable Aspect extension _(please
+ * defined by the feature-u's plugable Aspect extension _(please
  * refer to: {{book.guide.detail_extendableAspects}} -and-
  * {{book.guide.extending}})_.
  *

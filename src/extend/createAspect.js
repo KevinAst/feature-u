@@ -222,7 +222,7 @@ export default function createAspect({name,
  * @callback validateConfigurationMeth
  *
  * @return {string} an error message when self is in an invalid state
- * (falsy wheni valid).  Because this validation occurs under the
+ * (falsy when valid).  Because this validation occurs under the
  * control of {{book.api.launchApp}}, any message is prefixed with:
  * `'launchApp() parameter violation: '`.
  */
