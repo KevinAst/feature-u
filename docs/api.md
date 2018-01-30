@@ -56,12 +56,12 @@ Launch an application by assembling the supplied features, drivingthe configura
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
   managedExpansion(managedExpansionCB) ⇒ [`managedExpansionCB`](#managedExpansionCB)</h5>
-Mark the supplied managedExpansionCB as a "managed expansioncallback", distinguishing it from other functions (such as reducerfunctions).Features may communicate AspectContent directly, or through amanagedExpansionCB.  In other words, the AspectContent can eitherbe the actual content itself _(ex: reducer, logic modules, etc.)_,or a function that returns the content.  The latter: 1. supports cross-feature communication (through app object    injection), and  2. minimizes circular dependency issues (of ES6 modules).Managed Expansion Callbacks are used when a fully resolved Appobject is requried during in-line code expansion.  They are merelyfunctions that when invoked (under the control of **feature-u**),are supplied the App object and return the expanded AspectContent_(ex: reducer, logic modules, etc.)_.The managedExpansionCB function should conform to the followingsignature:**API:** {{book.api.managedExpansionCB$}}For more information _(with examples)_, please refer to{{book.guide.crossCom_managedCodeExpansion}}.
+Mark the supplied {{book.api.managedExpansionCB}} as a "ManagedExpansion Callback", distinguishing it from other functions _(suchas reducer functions)_.Features may communicate {{book.api.AspectContent}} directly, orthrough a {{book.api.managedExpansionCB}}.  In other words, the{{book.api.AspectContent}} can either be the actual content itself_(ex: reducer, logic modules, etc.)_, or a function that returnsthe content.  The latter: 1. supports {{book.guide.crossCom}} _(through app object    injection)_, and 2. minimizes circular dependency issues (of ES6 modules).Managed Expansion Callbacks are used when a fully resolved{{book.api.App}} object is requried during in-line code expansion.They are merely functions that when invoked _(under the control of**feature-u**)_, are supplied the {{book.api.App}} object andreturn the expanded {{book.api.AspectContent}} _(ex: reducer, logicmodules, etc.)_.**For more information _(with examples)_**, please refer to{{book.guide.crossCom_managedCodeExpansion}}.The {{book.api.managedExpansionCB}} function should conform to thefollowing signature:**API:** {{book.api.managedExpansionCB$}}
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| managedExpansionCB | [`managedExpansionCB`](#managedExpansionCB) | the callback function that when invoked (by feature-u) expands/returns the desired AspectContent. |
+| managedExpansionCB | [`managedExpansionCB`](#managedExpansionCB) | the callback function that when invoked (by **feature-u**) expands/returns the desired {{book.api.AspectContent}}. |
 
 **Returns**: [`managedExpansionCB`](#managedExpansionCB) - the supplied managedExpansionCB,marked as a "managed expansion callback".  
 
@@ -159,12 +159,12 @@ The App object _(emitted from {{book.api.launchApp}})_ facilitates{{book.guide.
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
   managedExpansionCB ⇒ [`AspectContent`](#AspectContent)</h5>
-A "managed expansion callback" (defined by{{book.api.managedExpansion}}) that when invoked (by **feature-u**)expands and returns the desired AspectContent.For more information _(with examples)_, please refer to{{book.guide.crossCom_managedCodeExpansion}}.
+A "managed expansion callback" (defined by{{book.api.managedExpansion}}) that when invoked (by **feature-u**)expands and returns the desired {{book.api.AspectContent}}.For more information _(with examples)_, please refer to{{book.guide.crossCom_managedCodeExpansion}}.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| app | [`App`](#App) | The feature-u app object, promoting the publicFace of each feature. |
+| app | [`App`](#App) | The **feature-u** app object, promoting the publicFace of each feature. |
 
 **Returns**: [`AspectContent`](#AspectContent) - The desired AspectContent (ex: reducer,logic module, etc.).  
 
