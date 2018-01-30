@@ -30,6 +30,7 @@
   * [Accessing App](crossCommunication.md#accessing-the-app-object)
     * [Managed Code Expansion](crossCommunication.md#managed-code-expansion)
     * [App Access Summary](crossCommunication.md#app-access-summary)
+* [Feature Based Routes](featureRouter.md)
 * [Single Source of Truth](truth.md)
   * [Feature Name](truth.md#feature-name)
   * [Feature State Location](truth.md#feature-state-location)

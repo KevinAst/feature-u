@@ -229,6 +229,10 @@ you a feel of what is possible_).
   autonomous way!  Because of this, **feature-router** is a
   preferred routing solution for **feature-u**.
 
+  **Feature Routes** is the recommended solution for feature-based
+  navigation.  You can find more information in the
+  {{book.guide.featureRouter}} section.
+
   Please refer to the **{{book.ext.featureRouter}}** documentation for
   complete details.
 

@@ -75,6 +75,8 @@
       "crossCom_managedCodeExpansion": "[`Managed Code Expansion`](/crossCommunication.md#managed-code-expansion)",
       "crossCom_appAccessSummary":     "[`App Access Summary`](/crossCommunication.md#app-access-summary)",
 
+      "featureRouter":              "[`Feature Based Routes`](/featureRouter.md)",
+
       "truth":                      "[`Single Source of Truth`](/truth.md)",
       "truth_featureName":          "[`Feature Name`](/truth.md#feature-name)",
       "truth_featureStateLocation": "[`Feature State Location`](/truth.md#feature-state-location)",
