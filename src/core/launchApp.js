@@ -4,35 +4,40 @@ import {isBuiltInFeatureKeyword} from './createFeature';
 
 
 /**
- * @function launchApp
- * @description
- *
- * Launch an app by assembling the supplied features, driving the
- * configuration of the frameworks in use, as orchistrated by the
- * supplied set of pluggable apsects.
+ * Launch an application by assembling the supplied features, driving
+ * the configuration of the frameworks in use _(as orchistrated by the
+ * supplied set of pluggable Apsects)_.
  *
  * For more information _(with examples)_, please refer to
  * {{book.guide.detail_launchingApp}}.
  *
  * **Please Note** this function uses named parameters.
  *
- * @param {Aspect[]} [aspects] the set of plugable aspects that extend
- * feature-u, integrating other frameworks to match your specific
- * run-time stack.  When NO aspects are supplied (an atypical case),
- * only the very basic feature-u characteristics are in effect (like
- * publicFace and life-cycle hooks).
+ * @param {Aspect[]} [aspects] the set of plugable Aspects that extend
+ * **feature-u**, integrating other frameworks to match your specific
+ * run-time stack.<br/><br/>
+ * 
+ * When NO Aspects are supplied _(an atypical case)_, only the very
+ * basic **feature-u** characteristics are in effect (like publicFace
+ * and life-cycle hooks).
  *
  * @param {Feature[]} features the features that comprise this
  * application.
  *
  * @param {registerRootAppElmCB} registerRootAppElm the callback hook
  * that registers the supplied root application element to the specific
- * React framework used in the app.  Because this registration is
- * accomplished by app-specific code, feature-u can operate in any of
- * the react platforms, such as: React Web, React Native, Expo, etc.
+ * React framework used in the app.<br/><br/>
+ * 
+ * Because this registration is accomplished by app-specific code,
+ * **feature-u** can operate in any of the react platforms, such as:
+ * {{book.ext.react}} web, {{book.ext.reactNative}},
+ * {{book.ext.expo}}, etc.<br/><br/>
+ * 
+ * Please refer to {{book.guide.detail_reactRegistration}} for more
+ * details and complete examples.
  *
- * @return {App} the App object used to promote feature
- * cross-communication.
+ * @return {App} the App object used to promote
+ * {{book.guide.crossCom}}.
  */
 export default function launchApp({aspects=[],
                                    features,
@@ -228,12 +233,14 @@ export default function launchApp({aspects=[],
 //***
 
 /**
- * The launchApp() callback hook that registers the supplied root
- * application element to the specific React framework used in the app.
+ * The {{book.api.launchApp}} callback hook that registers the
+ * supplied root application element to the specific React framework
+ * used in the app.
  *
  * Because this registration is accomplished by app-specific code,
- * feature-u can operate in any of the React platforms, such as: React
- * Web, React Native, Expo, etc.
+ * **feature-u** can operate in any of the React platforms, such as:
+ * {{book.ext.react}} web, {{book.ext.reactNative}},
+ * {{book.ext.expo}}, etc.
  * 
  * Please refer to {{book.guide.detail_reactRegistration}} for more
  * details and complete examples.
@@ -242,6 +249,8 @@ export default function launchApp({aspects=[],
  * 
  * @param {reactElm} rootAppElm - the root application element to be
  * registered.
+ *
+ * @return void
  */
 
 

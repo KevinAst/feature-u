@@ -174,7 +174,13 @@ export default function createAspect({name,
  * controlled by {{book.api.launchApp}}` _... it is supplied the
  * Aspects, and it invokes their methods._
  * 
- * For more information, please refer to {{book.guide.extending}}.
+ * Typically Aspects are packaged separately _(as an external npm
+ * **feature-u** extension)_, although they can be created locally
+ * within a project _(if needed)_.
+ * 
+ * For more information, please refer to
+ * {{book.guide.detail_extendableAspects}} and
+ * {{book.guide.extending}}.
  */
 
 

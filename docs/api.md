@@ -39,16 +39,16 @@ Add additional Feature keyword (typically used by Aspect extensionsto Feature).
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
   launchApp([aspects], features, registerRootAppElm) ⇒ [`App`](#App)</h5>
-Launch an app by assembling the supplied features, driving theconfiguration of the frameworks in use, as orchistrated by thesupplied set of pluggable apsects.For more information _(with examples)_, please refer to{{book.guide.detail_launchingApp}}.**Please Note** this function uses named parameters.
+Launch an application by assembling the supplied features, drivingthe configuration of the frameworks in use _(as orchistrated by thesupplied set of pluggable Apsects)_.For more information _(with examples)_, please refer to{{book.guide.detail_launchingApp}}.**Please Note** this function uses named parameters.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| [aspects] | [`Array.&lt;Aspect&gt;`](#Aspect) | the set of plugable aspects that extend feature-u, integrating other frameworks to match your specific run-time stack.  When NO aspects are supplied (an atypical case), only the very basic feature-u characteristics are in effect (like publicFace and life-cycle hooks). |
+| [aspects] | [`Array.&lt;Aspect&gt;`](#Aspect) | the set of plugable Aspects that extend **feature-u**, integrating other frameworks to match your specific run-time stack.<br/><br/> When NO Aspects are supplied _(an atypical case)_, only the very basic **feature-u** characteristics are in effect (like publicFace and life-cycle hooks). |
 | features | [`Array.&lt;Feature&gt;`](#Feature) | the features that comprise this application. |
-| registerRootAppElm | [`registerRootAppElmCB`](#registerRootAppElmCB) | the callback hook that registers the supplied root application element to the specific React framework used in the app.  Because this registration is accomplished by app-specific code, feature-u can operate in any of the react platforms, such as: React Web, React Native, Expo, etc. |
+| registerRootAppElm | [`registerRootAppElmCB`](#registerRootAppElmCB) | the callback hook that registers the supplied root application element to the specific React framework used in the app.<br/><br/> Because this registration is accomplished by app-specific code, **feature-u** can operate in any of the react platforms, such as: {{book.ext.react}} web, {{book.ext.reactNative}}, {{book.ext.expo}}, etc.<br/><br/> Please refer to {{book.guide.detail_reactRegistration}} for more details and complete examples. |
 
-**Returns**: [`App`](#App) - the App object used to promote featurecross-communication.  
+**Returns**: [`App`](#App) - the App object used to promote{{book.guide.crossCom}}.  
 
 <br/><br/><br/>
 
@@ -134,14 +134,15 @@ An optional {{book.guide.appLifeCycle}} invoked one time,immediately after the 
 <a id="registerRootAppElmCB"></a>
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
-  registerRootAppElmCB : function</h5>
-The launchApp() callback hook that registers the supplied rootapplication element to the specific React framework used in the app.Because this registration is accomplished by app-specific code,feature-u can operate in any of the React platforms, such as: ReactWeb, React Native, Expo, etc.Please refer to {{book.guide.detail_reactRegistration}} for moredetails and complete examples.
+  registerRootAppElmCB ⇒</h5>
+The {{book.api.launchApp}} callback hook that registers thesupplied root application element to the specific React frameworkused in the app.Because this registration is accomplished by app-specific code,**feature-u** can operate in any of the React platforms, such as:{{book.ext.react}} web, {{book.ext.reactNative}},{{book.ext.expo}}, etc.Please refer to {{book.guide.detail_reactRegistration}} for moredetails and complete examples.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
 | rootAppElm | reactElm | the root application element to be registered. |
 
+**Returns**: void  
 
 <br/><br/><br/>
 
@@ -173,7 +174,7 @@ A "managed expansion callback" (defined by{{book.api.managedExpansion}}) that w
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
   Aspect : Object</h5>
-Aspect objects (emitted from {{book.api.createAspect}}) are used toextend **feature-u**.The Aspect object promotes a series of life-cycle methods that**feature-u** invokes in a controlled way.  This life-cycle iscontrolled by {{book.api.launchApp}}` _... it is supplied theAspects, and it invokes their methods._For more information, please refer to {{book.guide.extending}}.
+Aspect objects (emitted from {{book.api.createAspect}}) are used toextend **feature-u**.The Aspect object promotes a series of life-cycle methods that**feature-u** invokes in a controlled way.  This life-cycle iscontrolled by {{book.api.launchApp}}` _... it is supplied theAspects, and it invokes their methods._Typically Aspects are packaged separately _(as an external npm**feature-u** extension)_, although they can be created locallywithin a project _(if needed)_.For more information, please refer to{{book.guide.detail_extendableAspects}} and{{book.guide.extending}}.
 
 
 <br/><br/><br/>
