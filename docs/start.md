@@ -10,7 +10,7 @@ npm install --save feature-u
 ## Access
 
 All functions are exposed through [UMD](https://github.com/umdjs/umd),
-and therefore accessable through any one of the following techniques ...
+and therefore accessible through any one of the following techniques ...
 
 - **ES6 Import (Native JS)**
   

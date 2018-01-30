@@ -9,7 +9,7 @@ Two hooks are provided through the following built-in
 {{book.api.Feature}} aspects:
 
 1. [`Feature.appWillStart`](#appwillstart) - invoked one time at app startup time
-2. [`Feature.appDidStart`](#appdidstart)   - invoked one time immediatly after app has started
+2. [`Feature.appDidStart`](#appdidstart)   - invoked one time immediately after app has started
 
 
 ## appWillStart
@@ -57,7 +57,7 @@ appWillStart: ({app, curRootAppElm}) => [React.Children.toArray(curRootAppElm), 
 ## appDidStart
 
 The Feature {{book.api.appDidStartCB}} life-cycle hook is invoked one
-time immediatly after app has started.
+time immediately after app has started.
 
 **API**: {{book.api.appDidStartCB$}}
 
