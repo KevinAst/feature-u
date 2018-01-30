@@ -1,0 +1,133 @@
+{
+  "name": "feature-u",
+  "version": "0.1.0",
+  "description": "Feature Based Project Organization for React",
+  "main": "lib/index.js",
+  "browser": {
+    "main": "dist/feature-u.js"
+  },
+  "module": "es/index.js",
+  "jsnext:main": "es/index.js",
+  "files": [
+    "package.json",
+    "CHANGELOG.md",
+    "LICENSE.md",
+    "README.md",
+    "dist",
+    "es",
+    "lib",
+    "src"
+  ],
+  "scripts": {
+    "COMMENT1": "***--------------------------------------------------------------------------***",
+    "COMMENT2": "*** Please refer to SCRIPTS.md for an overview of the project's npm scripts. ***",
+    "COMMENT3": "***--------------------------------------------------------------------------***",
+    "COMMENT4": "                                                                                ",
+    "build":                 "cross-env BABEL_ENV=commonjs webpack --progress --colors",
+    "build:clean":           "rimraf dist lib es",
+    "build:plat:all":        "npm-run-all build:plat:bundle build:plat:bundle.min build:plat:lib build:plat:es",
+    "build:plat:bundle":     "cross-env NODE_ENV=development  npm run build",
+    "build:plat:bundle.min": "cross-env NODE_ENV=production   npm run build",
+    "build:plat:es":         "cross-env BABEL_ENV=es       babel src --out-dir es  --ignore spec,reduxAPI.js",
+    "build:plat:lib":        "cross-env BABEL_ENV=commonjs babel src --out-dir lib --ignore spec,reduxAPI.js",
+    "build:watch":           "npm run build -- --watch",
+    "check":                 "npm-run-all lint pkgReview",
+    "clean":                 "npm-run-all build:clean docs:clean cov:clean",
+    "cov":                   "cross-env NODE_ENV=test nyc --reporter=lcov --reporter=text mocha --compilers js:babel-core/register --colors \"src/**/*.spec.js\"",
+    "cov:clean":             "rimraf coverage",
+    "cov:publish":           "cat coverage/lcov.info | codacy-coverage --verbose",
+    "dev":                   "npm run test:all:watch",
+    "docs":                  "npm run docs:prepare && npm run docs:build",
+    "docs:api":              "jsdoc2md --configure tooling/docs/jsdoc.json --global-index-format none --helper tooling/docs/escapeAnchor.js --partial tooling/docs/header.hbs --partial tooling/docs/link.hbs --partial tooling/docs/body.hbs --files src/**/*.js > docs/api.md",
+    "docs:prepare":          "gitbook install",
+    "docs:build:COMMENT":    "NOTE: fore gitbook build/serve, add following diagnostic: --log=debug --debug",
+    "docs:build":            "npm run docs:api && gitbook build",
+    "docs:serve":            "npm run docs:api && gitbook serve",
+    "docs:publish":          "gh-pages --dist _docs",
+    "docs:jsdoc2md:help":    "jsdoc2md --help",
+    "docs:gitbook:help":     "gitbook help",
+    "docs:clean":            "rimraf _book _docs/cur",
+    "lint":                  "echo '*** Verify code quality (lint):' && eslint src",
+    "pkgReview":             "echo '*** Showing outdated installed packages:' && npm outdated --long || true",
+    "prepublish":            "npm-run-all lint pkgReview clean build:plat:all test:plat:all docs",
+    "start":                 "npm run dev",
+    "test":                  "jest src",
+    "test:all":              "npm run test         --",
+    "test:all:watch":        "npm run test:all     -- --watch",
+    "test:plat:all":         "npm-run-all test:plat:src test:plat:bundle test:plat:bundle.min test:plat:lib test:plat:es",
+    "test:plat:bundle":      "cross-env MODULE_PLATFORM=bundle     npm run test:all",
+    "test:plat:bundle.min":  "cross-env MODULE_PLATFORM=bundle.min npm run test:all",
+    "test:plat:es":          "cross-env MODULE_PLATFORM=es         npm run test:all",
+    "test:plat:lib":         "cross-env MODULE_PLATFORM=lib        npm run test:all",
+    "test:plat:src":         "cross-env MODULE_PLATFORM=src        npm run test:all"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/KevinAst/feature-u.git"
+  },
+  "keywords": [
+    "feature-u",
+    "feature",
+    "features",
+    "react",
+    "redux",
+    "redux-logic",
+    "utility",
+    "util",
+    "utils",
+    "helper",
+    "helpers",
+    "js",
+    "javascript",
+    "geeku",
+    "astx"
+  ],
+  "author": "Kevin J. Bridges <kevinast@gmail.com> (https://github.com/KevinAst)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/KevinAst/feature-u/issues"
+  },
+  "homepage": "https://github.com/KevinAst/feature-u",
+  "nyc": {
+    "include": [
+      "src/**/*.js"
+    ],
+    "exclude": [
+      "**/spec/**",
+      "**/*.spec.js"
+    ],
+    "require": [
+      "babel-register"
+    ],
+    "sourceMap": false,
+    "instrument": false
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.24.1",
+    "babel-eslint": "^7.2.3",
+    "babel-loader": "^7.0.0",
+    "babel-plugin-istanbul": "^4.1.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-1": "^6.24.1",
+    "babel-register": "^6.24.1",
+    "codacy-coverage": "^2.0.2",
+    "cross-env": "^4.0.0",
+    "cross-var": "^1.0.3",
+    "eslint": "^3.19.0",
+    "eslint-loader": "^1.7.1",
+    "gh-pages": "^0.12.0",
+    "gitbook-cli": "^2.3.0",
+    "jest": "^22.1.4",
+    "jsdoc-babel": "^0.3.0",
+    "jsdoc-to-markdown": "^3.0.0",
+    "npm-run-all": "^4.0.2",
+    "nyc": "^10.2.0",
+    "rimraf": "^2.6.1",
+    "webpack": "^2.4.1"
+  },
+  "dependencies": {
+    "lodash.isfunction": "^3.0.8",
+    "lodash.isstring": "^4.0.1"
+  }
+}

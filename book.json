@@ -1,0 +1,155 @@
+{ 
+  "gitbook":     "3.2.2",
+  "root":        "./docs",
+  "title":       "feature-u",
+  "description": "Feature Based Project Organization for React",
+  "author":      "Kevin J. Bridges <kevinast@gmail.com> (https://github.com/KevinAst)",
+  "structure": { 
+    "readme":  "intro.md",
+    "summary": "toc.md" 
+  },
+  "plugins": ["-livereload", "toolbar"],
+  "pluginsConfig": {
+    "sharing": {
+      "facebook":   false,
+      "twitter":    false,
+      "google":     false,
+      "weibo":      false,
+      "instapaper": false,
+      "vk":         false,
+      "all": ["twitter", "facebook", "google"]
+    },
+    "toolbar": {
+        "buttons": [
+          {
+            "label": "GitHub",
+            "icon": "fa fa-github",
+            "url": "https://github.com/KevinAst/feature-u"
+          },
+          {
+            "label": "NPM",
+            "icon": "fa fa-bullseye",
+            "url": "https://www.npmjs.com/package/feature-u"
+          }
+        ]
+    }
+  },
+  "variables": { 
+
+    "guide": {
+
+      "devGuide":                 "[**Dev Guide**](/index.html)",
+
+      "start":                    "[`Getting Started`](/start.md)",
+
+      "basicConcepts":            "[`Basic Concepts`](/concepts.md)",
+
+      "benefits":                 "[`Benefits`](/benefits.md)",
+
+      "usage":                    "[`Usage`](/usage.md)",
+      "usage_dir":                "[`Directory Structure`](/usage.md#directory-structure)",
+      "usage_featureObject":      "[`Feature Object`](/usage.md#feature-object)",
+      "usage_launchapp":          "[`launchApp()`](/usage.md#launchapp)",
+      "usage_realExample":        "[`Real Example`](/usage.md#real-example)",
+
+      "detail":                   "[`A Closer Look`](/detail.md)",
+      "detail_aspects":           "[`aspects`](/detail.md#aspects)",
+      "detail_featureAndAspect":  "[`Feature & aspect content`](/detail.md#feature-object-relaying-aspect-content)",
+      "detail_builtInAspects":    "[`Built-In aspects`](/detail.md#built-in-aspects)",
+      "detail_extendableAspects": "[`Extendable aspects`](/detail.md#extendable-aspects)",
+      "detail_launchingApp":      "[`Launching Your Application`](/detail.md#launching-your-application)",
+      "detail_reactRegistration": "[`React Registration`](/detail.md#react-registration)",
+      "detail_appObject":         "[`App Object`](/detail.md#app-object)",
+      "detail_featurePublicAPI":  "[`Feature Public API`](/detail.md#feature-public-api)",
+      "detail_doesFeatureExist":  "[`Does Feature Exist`](/detail.md#does-feature-exist)",
+
+      "appLifeCycle":             "[`Application Life Cycle Hook`](/appLifeCycle.md)",
+      "appWillStart":             "[`appWillStart`](/appLifeCycle.md#appwillstart)",
+      "appDidStart":              "[`appDidStart`](/appLifeCycle.md#appDidStart)",
+
+      "enablement":               "[`Feature Enablement`](/enablement.md)",
+
+      "crossCom":                 "[`Cross Feature Communication`](/crossCommunication.md)",
+      "crossCom_publicFaceApp":   "[`publicFace and the App Object`](/crossCommunication.md#publicface-and-the-app-object)",
+      "crossCom_accessingApp":    "[`Accessing App`](/crossCommunication.md#accessing-the-app-object)",
+      "crossCom_managedCodeExpansion": "[`Managed Code Expansion`](/crossCommunication.md#managed-code-expansion)",
+      "crossCom_appAccessSummary":     "[`App Access Summary`](/crossCommunication.md#app-access-summary)",
+
+      "featureRouter":              "[`Feature Based Routes`](/featureRouter.md)",
+
+      "truth":                      "[`Single Source of Truth`](/truth.md)",
+      "truth_featureName":          "[`Feature Name`](/truth.md#feature-name)",
+      "truth_featureStateLocation": "[`Feature State Location`](/truth.md#feature-state-location)",
+
+      "coreApi":                  "[`Core API`](/coreApi.md)",
+
+      "extending":                    "[`Extending feature-u`](/extending.md)",
+      "extending_locatingExtensions": "[`Locating Extensions`](/extending.md#locating-extensions)",
+      "extending_aspect":             "[`Aspect Object`](/extending.md#aspect-object-extending-feature-u)",
+
+      "extensionApi":                 "[`Extension API`](/extensionApi.md)",
+
+      "dist":                   "[`Distribution`](/dist.md)",
+      "why":                    "[`Why feature-u?`](/why.md)",
+      "history":                "[`Revision History`](/history.md)",
+      "LICENSE":                "[`MIT License`](/LICENSE.md)"
+    },
+
+    "api": {
+
+      "Feature":        "[`Feature`](/api.md#Feature)",
+      "App":            "[`App`](/api.md#App)",
+      "Aspect":         "[`Aspect`](/api.md#Aspect)",
+      "AspectContent":  "[`AspectContent`](/api.md#AspectContent)",
+
+      "coreApi":                    "[`Core API`](/coreApi.md)",
+        "createFeature":            "[`createFeature()`](/api.md#createFeature)",
+        "createFeature$":           "[`createFeature({name, [enabled], [publicFace], [appWillStart], [appDidStart], [pluggableAspects]}): Feature`](/api.md#createFeature)",
+          "appWillStartCB":         "[`appWillStartCB()`](/api.md#appWillStartCB)",
+          "appWillStartCB$":        "[`appWillStartCB({app, curRootAppElm}): rootAppElm || null`](/api.md#appWillStartCB)",
+          "appDidStartCB":          "[`appDidStartCB()`](/api.md#appDidStartCB)",
+          "appDidStartCB$":         "[`appDidStartCB({app, [appState], [dispatch]}): void`](/api.md#appDidStartCB)",
+        "launchApp":                "[`launchApp()`](/api.md#launchApp)",
+        "launchApp$":               "[`launchApp({[aspects], features, registerRootAppElm}): App`](/api.md#launchApp)",
+          "registerRootAppElmCB":   "[`registerRootAppElmCB()`](/api.md#registerRootAppElmCB)",
+          "registerRootAppElmCB$":  "[`registerRootAppElmCB(rootAppElm): void`](/api.md#registerRootAppElmCB)",
+        "managedExpansion":         "[`managedExpansion()`](/api.md#managedExpansion)",
+        "managedExpansion$":        "[`managedExpansion(managedExpansionCB): managedExpansionCB`](/api.md#managedExpansion)",
+          "managedExpansionCB":     "[`managedExpansionCB()`](/api.md#managedExpansionCB)",
+          "managedExpansionCB$":    "[`managedExpansionCB(app): AspectContent`](/api.md#managedExpansionCB)",
+
+      "extensionApi":                      "[`Extension API`](/extensionApi.md)",
+        "createAspect":                    "[`createAspect()`](/api.md#createAspect)",
+        "createAspect$":                   "[`createAspect({see-docs}): Aspect`](/api.md#createAspect)",
+          "validateConfigurationMeth":     "[`validateConfigurationMeth()`](/api.md#validateConfigurationMeth)",
+          "validateConfigurationMeth$":    "[`validateConfigurationMeth(): string`](/api.md#validateConfigurationMeth)",
+          "expandFeatureContentMeth":      "[`expandFeatureContentMeth()`](/api.md#expandFeatureContentMeth)",
+          "expandFeatureContentMeth$":     "[`expandFeatureContentMeth(app, feature): string`](/api.md#expandFeatureContentMeth)",
+          "validateFeatureContentMeth":    "[`validateFeatureContentMeth()`](/api.md#validateFeatureContentMeth)",
+          "validateFeatureContentMeth$":   "[`validateFeatureContentMeth(feature): string`](/api.md#validateFeatureContentMeth)",
+          "assembleFeatureContentMeth":    "[`assembleFeatureContentMeth()`](/api.md#assembleFeatureContentMeth)",
+          "assembleFeatureContentMeth$":   "[`assembleFeatureContentMeth(app, activeFeatures): void`](/api.md#assembleFeatureContentMeth)",
+          "assembleAspectResourcesMeth":   "[`assembleAspectResourcesMeth()`](/api.md#assembleAspectResourcesMeth)",
+          "assembleAspectResourcesMeth$":  "[`assembleAspectResourcesMeth(app, aspects): void`](/api.md#assembleAspectResourcesMeth)",
+          "injectRootAppElmMeth":          "[`injectRootAppElmMeth()`](/api.md#injectRootAppElmMeth)",
+          "injectRootAppElmMeth$":         "[`injectRootAppElmMeth(app, activeFeatures, curRootAppElm): reactElm`](/api.md#injectRootAppElmMeth)",
+        "addBuiltInFeatureKeyword":        "[`addBuiltInFeatureKeyword()`](/api.md#addBuiltInFeatureKeyword)",
+        "addBuiltInFeatureKeyword$":       "[`addBuiltInFeatureKeyword(keyword): void`](/api.md#addBuiltInFeatureKeyword)"
+    },
+
+    "ext": {
+      "actionU":           "[`action-u`](https://action-u.js.org/)",
+      "astxReduxUtil":     "[`astx-redux-util`](https://astx-redux-util.js.org/)",
+      "eateryNod":         "[`eatery-nod`](https://github.com/KevinAst/eatery-nod)",
+      "expo":              "[`expo`](https://expo.io/)",
+      "featureRedux":      "[`feature-redux`](https://github.com/KevinAst/feature-redux)",
+      "featureReduxLogic": "[`feature-redux-logic`](https://github.com/KevinAst/feature-redux-logic)",
+      "featureRouter":     "[`feature-router`](https://github.com/KevinAst/feature-router)",
+      "react":             "[`react`](https://reactjs.org/)",
+      "reactNative":       "[`react-native`](https://facebook.github.io/react-native/)",
+      "redux":             "[`redux`](http://redux.js.org/)",
+      "reduxActions":      "[`redux-actions`](https://www.npmjs.com/package/redux-actions)",
+      "reduxLogic":        "[`redux-logic`](https://github.com/jeffbski/redux-logic)"
+    }
+  }
+}

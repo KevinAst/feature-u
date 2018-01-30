@@ -1,0 +1,28 @@
+{
+  "env": {
+    "es6":     true,
+    "browser": true,
+    "node":    true,
+    "jest":    true
+  },
+  "extends": "eslint:recommended",
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true
+    },
+  },
+  "globals": {
+    "before":   true, // before() is part of our unit test framework
+    "describe": true, // describe() is part of our unit test framework
+    "it":       true  // it()       is part of our unit test framework
+  },
+  "rules": {
+    "strict":          ["error", "never"],          // ES6 Modules imply a 'use strict'; ... specifying this is redundant
+    "indent":          ["off",   2],                // allow any indentation
+    "no-unused-vars":  ["error", {"args": "none"}], // allow unsed parameter declaration 
+    "linebreak-style": "off",                       // allow both unix/windows carriage returns
+    "quotes":          "off",                       // allow single or double quotes string literals
+    "semi":            ["error", "always"]          // enforce semicolons
+  }
+}

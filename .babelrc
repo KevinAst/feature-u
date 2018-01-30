@@ -1,0 +1,20 @@
+{
+  "presets": ["es2015", "stage-1"],
+  "env": {
+    "commonjs": {
+      "plugins": [
+        ["transform-es2015-modules-commonjs", { "loose": true }]
+      ]
+    },
+    "es": {
+      "plugins": [
+      ]
+    },
+    "test": {
+      "plugins": [
+        ["transform-es2015-modules-commonjs", { "loose": true }],
+        "istanbul"
+      ]
+    }
+  }
+}
