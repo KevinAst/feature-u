@@ -46,10 +46,15 @@ const default_injectRootAppElm = (app, activeFeatures, curRootAppElm) => curRoot
  * which these items are presented represents the same order they are
  * executed.
  *
- * @param {string} name the aspect name.  This name is used to "key"
- * aspects of this type in the Feature object: `Feature.{name}: xyz`.
- * As a result, Aspect names must be unique across all aspects that
- * are in-use.
+ * @param {string} name the `Aspect.name` is used to "key"
+ * {{book.api.AspectContent}} of this type in the {{book.api.Feature}}
+ * object.<br/><br/>
+ * 
+ * For example: an `Aspect.name: 'xyz'` would permit a `Feature.xyz:
+ * xyzContent` construct.<br/><br/>
+ * 
+ * As a result, Aspect names cannot clash with built-in aspects, and
+ * they must be unique _(across all aspects that are in-use)_.
  *
  * @param {validateConfigurationMeth} [validateConfiguration] an
  * optional validation hook allowing this aspect to verify it's own
@@ -200,6 +205,8 @@ export default function createAspect({name,
  * configuration (if any).  Some aspects may require certain settings
  * in self for them to operate.
  *
+ * **API:** {{book.api.validateConfigurationMeth$}}
+ *
  * @callback validateConfigurationMeth
  *
  * @return {string} an error message when self is in an invalid state
@@ -214,10 +221,12 @@ export default function createAspect({name,
 //***
 
 /**
- * Expand self's AspectContent in the supplied feature, replacing that
- * content (within the feature).  Once expansion is complete,
- * feature-u will perform a delayed validation of the expanded
- * content.
+ * Expand self's {{book.api.AspectContent}} in the supplied feature,
+ * replacing that content (within the feature).  Once expansion is
+ * complete, feature-u will perform a delayed validation of the
+ * expanded content.
+ *
+ * **API:** {{book.api.expandFeatureContentMeth$}}
  *
  * The default behavior simply implements the expansion algorithm
  * defined by managedExpansion():
@@ -257,6 +266,8 @@ export default function createAspect({name,
  * A validation hook allowing this aspect to verify it's content on
  * the supplied feature.
  *
+ * **API:** {{book.api.validateFeatureContentMeth$}}
+ *
  * @callback validateFeatureContentMeth
  * 
  * @param {Feature} feature - the feature to validate, which is known
@@ -281,6 +292,8 @@ export default function createAspect({name,
  * This method is required because this is the primary task that is
  * accomplished by all aspects.
  *
+ * **API:** {{book.api.assembleFeatureContentMeth$}}
+ *
  * @callback assembleFeatureContentMeth
  *
  * @param {App} app the App object used in feature cross-communication.
@@ -300,6 +313,8 @@ export default function createAspect({name,
  * across all other aspects, retaining needed state for subsequent
  * ops.  This hook is executed after all the aspects have assembled
  * their feature content (i.e. after `assembleFeatureContent()`).
+ *
+ * **API:** {{book.api.assembleAspectResourcesMeth$}}
  *
  * This is an optional second-pass (so-to-speak) of Aspect data
  * gathering, that facilitates an "aspect cross-communication"
@@ -329,6 +344,8 @@ export default function createAspect({name,
 /**
  * An optional callback hook that promotes some characteristic of this
  * aspect within the app root element (i.e. react component instance).
+ * 
+ * **API:** {{book.api.injectRootAppElmMeth$}}
  * 
  * All aspects will either promote themselves through this hook, -or-
  * through some "aspect cross-communication" mechanism.
