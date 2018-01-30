@@ -6,12 +6,10 @@ import isFunction  from 'lodash.isfunction';
 const noOp = () => null;
 
 /**
- * @function createFeature
- * @description
- *
- * Create a new Feature object, accumulating Aspect content to be
- * consumed by launchApp().  Each feature within an app promotes it's
- * own Feature object.
+ * Create a new {{book.api.Feature}} object, cataloging
+ * {{book.api.AspectContent}} to be consumed by
+ * {{book.api.launchApp}}.  Each feature within an app promotes it's
+ * own {{book.api.Feature}} object.
  *
  * For more information, please refer to
  * {{book.guide.detail_featureAndAspect}}, with examples at
@@ -20,12 +18,10 @@ const noOp = () => null;
  * **Please Note** this function uses named parameters.
  *
  * @param {string} name the identity of the feature.  Feature names
- * are used to index the [App Object](#app-object) by feature _(in
- * support of [Cross Feature
- * Communication](#cross-feature-communication))_, and are therefore
- * guaranteed to be unique.  Application code can also use [Feature
- * Name](#feature-name) in various [Single Source of
- * Truth](#single-source-of-truth) operations.
+ * are used to index the {{book.api.App}} Object _(in support of
+ * {{book.guide.crossCom}})_, and are therefore guaranteed to be
+ * unique.  Application code can also use the Feature name in various
+ * {{book.guide.truth}} operations.
  * 
  * @param {boolean} [enabled=true] an indicator as to whether this
  * feature is enabled (true) or not (false).  When used, this
@@ -34,28 +30,28 @@ const noOp = () => null;
  * _(please refer to: {{book.guide.enablement}})_.
  *
  * @param {Any} [publicFace] an optional resource object that is the
- * feature's Public API, promoting cross-communication between
- * features.  This object is exposed through the App object as:
- * `app.{featureName}.{publicFace}` _(please refer to: [publicFace and
- * the App Object](#publicface-and-the-app-object))_.
+ * feature's Public API, promoting {{book.guide.crossCom}}.  This
+ * object is exposed through the {{book.api.App}} object as:
+ * `app.{featureName}.{publicFace}` _(please refer to:
+ * {{book.guide.crossCom_publicFaceApp}})_.
  *
- * @param {appWillStartCB} [appWillStart] an optional [Application
- * Life Cycle Hook](#application-life-cycle-hooks) invoked one time,
- * just before the app starts up.  This life-cycle hook can do any
- * type of initialization, and/or optionally supplement the app's
- * top-level content (using a non-null return) _(please refer to:
- * [appWillStart](#appwillstart))_.
+ * @param {appWillStartCB} [appWillStart] an optional
+ * {{book.guide.appLifeCycle}} invoked one time, just before the app
+ * starts up.  This life-cycle hook can do any type of initialization,
+ * and/or optionally supplement the app's top-level content (using a
+ * non-null return) _(please refer to: {{book.guide.appWillStart}})_.
  *
- * @param {appDidStartCB} [appDidStart] an optional [Application Life
- * Cycle Hook](#application-life-cycle-hooks) invoked one time,
- * immediately after the app has started.  Because the app is
- * up-and-running at this time, you have access to the appState and
- * the dispatch() function ... assuming you are using redux (when
- * detected by feature-u's plugable aspects) _(please refer to:
- * [appDidStart](#appdidstart))_.
+ * @param {appDidStartCB} [appDidStart] an optional
+ * {{book.guide.appLifeCycle}} invoked one time, immediately after the
+ * app has started.  Because the app is up-and-running at this time,
+ * you have access to the appState and the dispatch() function
+ * ... assuming you are using redux (when detected by feature-u's
+ * plugable aspects) _(please refer to: {{book.guide.appDidStart}})_.
  * 
- * @param {AspectContent} [extendedAspect] additional aspects, as defined
- * by the feature-u's pluggable Aspect extension.
+ * @param {AspectContent} [extendedAspect] additional aspects, as
+ * defined by the feature-u's pluggable Aspect extension _(please
+ * refer to: {{book.guide.detail_extendableAspects}} -and-
+ * {{book.guide.extending}})_.
  *
  * @return {Feature} a new Feature object (to be consumed by
  * launchApp()).
@@ -167,8 +163,8 @@ export function addBuiltInFeatureKeyword(keyword) {
 //***
 
 /**
- * An optional app life-cycle hook invoked one time, just before the
- * app starts up.
+ * An optional {{book.guide.appLifeCycle}} invoked one time, just
+ * before the app starts up.
  *
  * This life-cycle hook can do any type of initialization. For
  * example: initialize FireBase.
@@ -202,12 +198,12 @@ export function addBuiltInFeatureKeyword(keyword) {
 //***
 
 /**
- * An optional app life-cycle hook invoked one time, immediately after
- * the app has started.
+ * An optional {{book.guide.appLifeCycle}} invoked one time,
+ * immediately after the app has started.
  *
  * Because the app is up-and-running at this time, you have access to
- * the appState and dispatch() function ... assuming you are using
- * redux (when detected by feature-u's plugable aspects).
+ * the `appState` and `dispatch()` function ... assuming you are using
+ * {{book.ext.redux}} (when detected by feature-u's plugable aspects).
  *
  * For more info with examples, please see the Guide's
  * {{book.guide.appDidStart}}.
@@ -223,4 +219,6 @@ export function addBuiltInFeatureKeyword(keyword) {
  * 
  * @param {function} [dispatch] - the redux dispatch() function (when
  * redux is in use).
+ *
+ * @return void
  */

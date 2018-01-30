@@ -17,9 +17,6 @@ const default_injectRootAppElm = (app, activeFeatures, curRootAppElm) => curRoot
 
  
 /**
- * @function createAspect
- * @description
- *
  * Create an {{book.api.Aspect}} object, used to extend **feature-u**.
  *
  * The {{book.api.Aspect}} object promotes a series of life-cycle

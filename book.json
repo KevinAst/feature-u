@@ -61,7 +61,7 @@
       "detail_featurePublicAPI":  "[`Feature Public API`](/detail.md#feature-public-api)",
       "detail_doesFeatureExist":  "[`Does Feature Exist`](/detail.md#does-feature-exist)",
 
-      "appLifeCycle":             "[`Application Life Cycle Hooks`](/appLifeCycle.md)",
+      "appLifeCycle":             "[`Application Life Cycle Hook`](/appLifeCycle.md)",
       "appWillStart":             "[`appWillStart`](/appLifeCycle.md#appwillstart)",
       "appDidStart":              "[`appDidStart`](/appLifeCycle.md#appDidStart)",
 

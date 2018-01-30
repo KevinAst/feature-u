@@ -5,17 +5,17 @@
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
   createFeature(name, [enabled], [publicFace], [appWillStart], [appDidStart], [extendedAspect]) ⇒ [`Feature`](#Feature)</h5>
-Create a new Feature object, accumulating Aspect content to beconsumed by launchApp().  Each feature within an app promotes it'sown Feature object.For more information, please refer to{{book.guide.detail_featureAndAspect}}, with examples at{{book.guide.usage_featureObject}}.**Please Note** this function uses named parameters.
+Create a new {{book.api.Feature}} object, cataloging{{book.api.AspectContent}} to be consumed by{{book.api.launchApp}}.  Each feature within an app promotes it'sown {{book.api.Feature}} object.For more information, please refer to{{book.guide.detail_featureAndAspect}}, with examples at{{book.guide.usage_featureObject}}.**Please Note** this function uses named parameters.
 
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| name | string |  | the identity of the feature.  Feature names are used to index the [App Object](#app-object) by feature _(in support of [Cross Feature Communication](#cross-feature-communication))_, and are therefore guaranteed to be unique.  Application code can also use [Feature Name](#feature-name) in various [Single Source of Truth](#single-source-of-truth) operations. |
+| name | string |  | the identity of the feature.  Feature names are used to index the {{book.api.App}} Object _(in support of {{book.guide.crossCom}})_, and are therefore guaranteed to be unique.  Application code can also use the Feature name in various {{book.guide.truth}} operations. |
 | [enabled] | boolean | <code>true</code> | an indicator as to whether this feature is enabled (true) or not (false).  When used, this indicator is typically based on a dynamic expression, allowing packaged code to be dynamically enabled/disabled at run-time _(please refer to: {{book.guide.enablement}})_. |
-| [publicFace] | Any |  | an optional resource object that is the feature's Public API, promoting cross-communication between features.  This object is exposed through the App object as: `app.{featureName}.{publicFace}` _(please refer to: [publicFace and the App Object](#publicface-and-the-app-object))_. |
-| [appWillStart] | [`appWillStartCB`](#appWillStartCB) |  | an optional [Application Life Cycle Hook](#application-life-cycle-hooks) invoked one time, just before the app starts up.  This life-cycle hook can do any type of initialization, and/or optionally supplement the app's top-level content (using a non-null return) _(please refer to: [appWillStart](#appwillstart))_. |
-| [appDidStart] | [`appDidStartCB`](#appDidStartCB) |  | an optional [Application Life Cycle Hook](#application-life-cycle-hooks) invoked one time, immediately after the app has started.  Because the app is up-and-running at this time, you have access to the appState and the dispatch() function ... assuming you are using redux (when detected by feature-u's plugable aspects) _(please refer to: [appDidStart](#appdidstart))_. |
-| [extendedAspect] | [`AspectContent`](#AspectContent) |  | additional aspects, as defined by the feature-u's pluggable Aspect extension. |
+| [publicFace] | Any |  | an optional resource object that is the feature's Public API, promoting {{book.guide.crossCom}}.  This object is exposed through the {{book.api.App}} object as: `app.{featureName}.{publicFace}` _(please refer to: {{book.guide.crossCom_publicFaceApp}})_. |
+| [appWillStart] | [`appWillStartCB`](#appWillStartCB) |  | an optional {{book.guide.appLifeCycle}} invoked one time, just before the app starts up.  This life-cycle hook can do any type of initialization, and/or optionally supplement the app's top-level content (using a non-null return) _(please refer to: {{book.guide.appWillStart}})_. |
+| [appDidStart] | [`appDidStartCB`](#appDidStartCB) |  | an optional {{book.guide.appLifeCycle}} invoked one time, immediately after the app has started.  Because the app is up-and-running at this time, you have access to the appState and the dispatch() function ... assuming you are using redux (when detected by feature-u's plugable aspects) _(please refer to: {{book.guide.appDidStart}})_. |
+| [extendedAspect] | [`AspectContent`](#AspectContent) |  | additional aspects, as defined by the feature-u's pluggable Aspect extension _(please refer to: {{book.guide.detail_extendableAspects}} -and- {{book.guide.extending}})_. |
 
 **Returns**: [`Feature`](#Feature) - a new Feature object (to be consumed bylaunchApp()).  
 
@@ -102,7 +102,7 @@ The Feature object is a container that holds{{book.api.AspectContent}} that is 
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
   appWillStartCB ⇒ reactElm</h5>
-An optional app life-cycle hook invoked one time, just before theapp starts up.This life-cycle hook can do any type of initialization. Forexample: initialize FireBase.In addition, it can optionally supplement the app's top-level rootelement (i.e. react component instance).  Any significant return(truthy) is interpreted as the app's new rootAppElm.**IMPORTANT**: When this is used, the supplied curRootAppElm MUSTbe included as part of this definition (accommodating theaccumulative process of other feature injections)!For more information _(with examples)_, please refer to theGuide's {{book.guide.appWillStart}}.**Please Note** this function uses named parameters.
+An optional {{book.guide.appLifeCycle}} invoked one time, justbefore the app starts up.This life-cycle hook can do any type of initialization. Forexample: initialize FireBase.In addition, it can optionally supplement the app's top-level rootelement (i.e. react component instance).  Any significant return(truthy) is interpreted as the app's new rootAppElm.**IMPORTANT**: When this is used, the supplied curRootAppElm MUSTbe included as part of this definition (accommodating theaccumulative process of other feature injections)!For more information _(with examples)_, please refer to theGuide's {{book.guide.appWillStart}}.**Please Note** this function uses named parameters.
 
 
 | Param | Type | Description |
@@ -117,8 +117,8 @@ An optional app life-cycle hook invoked one time, just before theapp starts up.
 <a id="appDidStartCB"></a>
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
-  appDidStartCB : function</h5>
-An optional app life-cycle hook invoked one time, immediately afterthe app has started.Because the app is up-and-running at this time, you have access tothe appState and dispatch() function ... assuming you are usingredux (when detected by feature-u's plugable aspects).For more info with examples, please see the Guide's{{book.guide.appDidStart}}.**Please Note** this function uses named parameters.
+  appDidStartCB ⇒</h5>
+An optional {{book.guide.appLifeCycle}} invoked one time,immediately after the app has started.Because the app is up-and-running at this time, you have access tothe `appState` and `dispatch()` function ... assuming you are using{{book.ext.redux}} (when detected by feature-u's plugable aspects).For more info with examples, please see the Guide's{{book.guide.appDidStart}}.**Please Note** this function uses named parameters.
 
 
 | Param | Type | Description |
@@ -127,6 +127,7 @@ An optional app life-cycle hook invoked one time, immediately afterthe app has 
 | [appState] | Any | the redux top-level app state (when redux is in use). |
 | [dispatch] | function | the redux dispatch() function (when redux is in use). |
 
+**Returns**: void  
 
 <br/><br/><br/>
 

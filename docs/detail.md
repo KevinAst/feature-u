@@ -72,7 +72,8 @@ The {{book.api.Feature}} object is merely a container that holds
 aspect content that is of interest to **feature-u**.
 
 Each feature within your application promotes a Feature object (using
-{{book.api.createFeature}}) that catalogs the aspects of that feature.
+{{book.api.createFeature}}) that catalogs the
+{{book.api.AspectContent}} of that feature.
 
 Ultimately, all Feature objects are consumed by {{book.api.launchApp}}. 
 
