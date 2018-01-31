@@ -62,7 +62,7 @@
     <link rel="next" href="truth.html" />
     
     
-    <link rel="prev" href="crossCommunication.html" />
+    <link rel="prev" href="enablement.html" />
     
 
     </head>
@@ -422,20 +422,7 @@
             
         </li>
     
-        <li class="chapter " data-level="2.6" data-path="enablement.html">
-            
-                <a href="enablement.html">
-            
-                    
-                    Feature Enablement
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.7" data-path="crossCommunication.html">
+        <li class="chapter " data-level="2.6" data-path="crossCommunication.html">
             
                 <a href="crossCommunication.html">
             
@@ -449,7 +436,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="2.7.1" data-path="crossCommunication.html">
+        <li class="chapter " data-level="2.6.1" data-path="crossCommunication.html">
             
                 <a href="crossCommunication.html#publicface-and-the-app-object">
             
@@ -462,7 +449,7 @@
             
         </li>
     
-        <li class="chapter " data-level="2.7.2" data-path="crossCommunication.html">
+        <li class="chapter " data-level="2.6.2" data-path="crossCommunication.html">
             
                 <a href="crossCommunication.html#accessing-the-app-object">
             
@@ -476,7 +463,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="2.7.2.1" data-path="crossCommunication.html">
+        <li class="chapter " data-level="2.6.2.1" data-path="crossCommunication.html">
             
                 <a href="crossCommunication.html#managed-code-expansion">
             
@@ -489,7 +476,7 @@
             
         </li>
     
-        <li class="chapter " data-level="2.7.2.2" data-path="crossCommunication.html">
+        <li class="chapter " data-level="2.6.2.2" data-path="crossCommunication.html">
             
                 <a href="crossCommunication.html#app-access-summary">
             
@@ -509,6 +496,19 @@
     
 
             </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="2.7" data-path="enablement.html">
+            
+                <a href="enablement.html">
+            
+                    
+                    Feature Enablement
+            
+                </a>
+            
+
             
         </li>
     
@@ -853,7 +853,7 @@ requirements.</p>
 <li>You can even use a combination of <strong>Feature Routes</strong> routes and XYZ routes</li>
 </ul>
 <h3 id="why-feature-routes">Why Feature Routes?</h3>
-<p>The <strong>big benefit</strong> of <strong>Feature Routes</strong> (<em>should you choose to use
+<p>The <strong>big advantage</strong> of <strong>Feature Routes</strong> (<em>should you choose to use
 them</em>) is that <strong>it allows features to promote their screens in an
 encapsulated and autonomous way</strong>!</p>
 <p>A key aspect of any feature is to have the ability to inject itself
@@ -869,14 +869,17 @@ null to allow downstream routes the same opportunity.  Basically the
 first non-null return wins.</p>
 <p>In feature based routing, you will not find the typical &quot;route path to
 component&quot; mapping catalog, where (<em>for example</em>) some pseudo
-<code>route(&apos;signIn&apos;)</code> directive causes the SignIn screen to display, which
-in turn causes the system to accommodate the request by adjusting it&apos;s
-state appropriately.  Rather, the appState is analyzed, and if the
-user is NOT authenticated, the SignIn screen is automatically
-displayed ... <strong>Easy Peasy!</strong></p>
-<p>Depending on your perspective, this approach can be <strong>more natural</strong>,
-but <em>more importantly</em> (once again), <strong>it allows features to promote
-their own screens in an encapsulated and autonomous way</strong>!</p>
+<code>route(&apos;signIn&apos;)</code> directive causes the SignIn screen to display
+<em>(which in turn causes the system to accommodate the request by
+adjusting it&apos;s state)</em>.</p>
+<p>In other words, you will never see application logic that re-routes to
+a signIn screen after checking to see if the user is authenticated.
+Rather, <strong>the appState is king</strong>!  If the user is NOT authenticated
+<em>(based on the route&apos;s analysis of the appState)</em> the SignIn screen is
+automatically displayed ... <strong>Easy Peasy!</strong></p>
+<p>Depending on your perspective, this approach can be <strong>more robust and
+natural</strong>, but <em>more importantly</em> (once again), <strong>it allows features
+to promote their own screens in an encapsulated and autonomous way</strong>!</p>
 <h2 id="how-do-i-proceed">How do I proceed?</h2>
 <p>This discussion is obviously merely an introduction.  There is more to
 <strong>Feature Routes</strong> that we haven&apos;t touched on.  Should you choose to
@@ -908,7 +911,7 @@ use them, please refer to the <a href="https://github.com/KevinAst/feature-route
 
             
                 
-                <a href="crossCommunication.html#app-access-summary" class="navigation navigation-prev " aria-label="Previous page: App Access Summary">
+                <a href="enablement.html" class="navigation navigation-prev " aria-label="Previous page: Feature Enablement">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
@@ -924,7 +927,7 @@ use them, please refer to the <a href="https://github.com/KevinAst/feature-route
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Feature Based Routes","level":"2.8","depth":1,"next":{"title":"Single Source of Truth","level":"2.9","depth":1,"path":"truth.md","ref":"truth.md","articles":[{"title":"Feature Name","level":"2.9.1","depth":2,"anchor":"#feature-name","path":"truth.md","ref":"truth.md#feature-name","articles":[]},{"title":"Feature State Location","level":"2.9.2","depth":2,"anchor":"#feature-state-location","path":"truth.md","ref":"truth.md#feature-state-location","articles":[]}]},"previous":{"title":"App Access Summary","level":"2.7.2.2","depth":3,"anchor":"#app-access-summary","path":"crossCommunication.md","ref":"crossCommunication.md#app-access-summary","articles":[]},"dir":"ltr"},"config":{"plugins":["-livereload","toolbar"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"sharing":{"facebook":false,"twitter":false,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["twitter","facebook","google","weibo","instapaper"]},"toolbar":{"buttons":[{"label":"GitHub","icon":"fa fa-github","url":"https://github.com/KevinAst/feature-u"},{"label":"NPM","icon":"fa fa-bullseye","url":"https://www.npmjs.com/package/feature-u"}]},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Kevin J. Bridges <kevinast@gmail.com> (https://github.com/KevinAst)","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"intro.md","glossary":"GLOSSARY.md","summary":"toc.md"},"variables":{"guide":{"detail_launchingApp":"[`Launching Your Application`](/detail.md#launching-your-application)","LICENSE":"[`MIT License`](/LICENSE.md)","crossCom":"[`Cross Feature Communication`](/crossCommunication.md)","enablement":"[`Feature Enablement`](/enablement.md)","usage":"[`Usage`](/usage.md)","crossCom_accessingApp":"[`Accessing App`](/crossCommunication.md#accessing-the-app-object)","start":"[`Getting Started`](/start.md)","appDidStart":"[`appDidStart`](/appLifeCycle.md#appDidStart)","truth_featureStateLocation":"[`Feature State Location`](/truth.md#feature-state-location)","crossCom_publicFace":"[`publicFace`](/crossCommunication.md#publicface-and-the-app-object)","dist":"[`Distribution`](/dist.md)","detail_builtInAspects":"[`Built-In aspects`](/detail.md#built-in-aspects)","detail_featureAndAspect":"[`Feature & aspect content`](/detail.md#feature-object-relaying-aspect-content)","devGuide":"[**Dev Guide**](/index.html)","detail_doesFeatureExist":"[`Does Feature Exist`](/detail.md#does-feature-exist)","extending":"[`Extending feature-u`](/extending.md)","why":"[`Why feature-u?`](/why.md)","appLifeCycle":"[`Application Life Cycle Hook`](/appLifeCycle.md)","detail_featurePublicAPI":"[`Feature Public API`](/detail.md#feature-public-api)","detail_reactRegistration":"[`React Registration`](/detail.md#react-registration)","truth":"[`Single Source of Truth`](/truth.md)","detail_aspects":"[`aspects`](/detail.md#aspects)","truth_featureName":"[`Feature Name`](/truth.md#feature-name)","usage_realExample":"[`Real Example`](/usage.md#real-example)","usage_dir":"[`Directory Structure`](/usage.md#directory-structure)","extending_aspect":"[`Aspect Object`](/extending.md#aspect-object-extending-feature-u)","appWillStart":"[`appWillStart`](/appLifeCycle.md#appwillstart)","usage_launchapp":"[`launchApp()`](/usage.md#launchapp)","crossCom_managedCodeExpansion":"[`Managed Code Expansion`](/crossCommunication.md#managed-code-expansion)","detail":"[`A Closer Look`](/detail.md)","detail_appObject":"[`App Object`](/detail.md#app-object)","history":"[`Revision History`](/history.md)","usage_featureObject":"[`Feature Object`](/usage.md#feature-object)","detail_extendableAspects":"[`Extendable aspects`](/detail.md#extendable-aspects)","basicConcepts":"[`Basic Concepts`](/concepts.md)","extending_locatingExtensions":"[`Locating Extensions`](/extending.md#locating-extensions)","extensionApi":"[`Extension API`](/extensionApi.md)","coreApi":"[`Core API`](/coreApi.md)","benefits":"[`Benefits`](/benefits.md)","crossCom_publicFaceApp":"[`publicFace and the App Object`](/crossCommunication.md#publicface-and-the-app-object)","crossCom_appAccessSummary":"[`App Access Summary`](/crossCommunication.md#app-access-summary)","featureRouter":"[`Feature Based Routes`](/featureRouter.md)"},"api":{"injectRootAppElmMeth$":"[`injectRootAppElmMeth(app, activeFeatures, curRootAppElm): reactElm`](/api.md#injectRootAppElmMeth)","managedExpansion":"[`managedExpansion()`](/api.md#managedExpansion)","appDidStartCB$":"[`appDidStartCB({app, [appState], [dispatch]}): void`](/api.md#appDidStartCB)","AspectContent":"[`AspectContent`](/api.md#AspectContent)","App":"[`App`](/api.md#App)","assembleFeatureContentMeth":"[`assembleFeatureContentMeth()`](/api.md#assembleFeatureContentMeth)","assembleFeatureContentMeth$":"[`assembleFeatureContentMeth(app, activeFeatures): void`](/api.md#assembleFeatureContentMeth)","appDidStartCB":"[`appDidStartCB()`](/api.md#appDidStartCB)","managedExpansion$":"[`managedExpansion(managedExpansionCB): managedExpansionCB`](/api.md#managedExpansion)","injectRootAppElmMeth":"[`injectRootAppElmMeth()`](/api.md#injectRootAppElmMeth)","validateFeatureContentMeth":"[`validateFeatureContentMeth()`](/api.md#validateFeatureContentMeth)","managedExpansionCB$":"[`managedExpansionCB(app): AspectContent`](/api.md#managedExpansionCB)","assembleAspectResourcesMeth":"[`assembleAspectResourcesMeth()`](/api.md#assembleAspectResourcesMeth)","expandFeatureContentMeth":"[`expandFeatureContentMeth()`](/api.md#expandFeatureContentMeth)","registerRootAppElmCB":"[`registerRootAppElmCB()`](/api.md#registerRootAppElmCB)","createFeature$":"[`createFeature({name, [enabled], [publicFace], [appWillStart], [appDidStart], [pluggableAspects]}): Feature`](/api.md#createFeature)","validateConfigurationMeth":"[`validateConfigurationMeth()`](/api.md#validateConfigurationMeth)","launchApp":"[`launchApp()`](/api.md#launchApp)","appWillStartCB":"[`appWillStartCB()`](/api.md#appWillStartCB)","addBuiltInFeatureKeyword$":"[`addBuiltInFeatureKeyword(keyword): void`](/api.md#addBuiltInFeatureKeyword)","createAspect$":"[`createAspect({see-docs}): Aspect`](/api.md#createAspect)","createAspect":"[`createAspect()`](/api.md#createAspect)","addBuiltInFeatureKeyword":"[`addBuiltInFeatureKeyword()`](/api.md#addBuiltInFeatureKeyword)","launchApp$":"[`launchApp({[aspects], features, registerRootAppElm}): App`](/api.md#launchApp)","appWillStartCB$":"[`appWillStartCB({app, curRootAppElm}): rootAppElm || null`](/api.md#appWillStartCB)","Feature":"[`Feature`](/api.md#Feature)","Aspect":"[`Aspect`](/api.md#Aspect)","validateConfigurationMeth$":"[`validateConfigurationMeth(): string`](/api.md#validateConfigurationMeth)","createFeature":"[`createFeature()`](/api.md#createFeature)","extensionApi":"[`Extension API`](/extensionApi.md)","coreApi":"[`Core API`](/coreApi.md)","registerRootAppElmCB$":"[`registerRootAppElmCB(rootAppElm): void`](/api.md#registerRootAppElmCB)","expandFeatureContentMeth$":"[`expandFeatureContentMeth(app, feature): string`](/api.md#expandFeatureContentMeth)","assembleAspectResourcesMeth$":"[`assembleAspectResourcesMeth(app, aspects): void`](/api.md#assembleAspectResourcesMeth)","managedExpansionCB":"[`managedExpansionCB()`](/api.md#managedExpansionCB)","validateFeatureContentMeth$":"[`validateFeatureContentMeth(feature): string`](/api.md#validateFeatureContentMeth)"},"ext":{"featureReduxLogic":"[`feature-redux-logic`](https://github.com/KevinAst/feature-redux-logic)","astxReduxUtil":"[`astx-redux-util`](https://astx-redux-util.js.org/)","reduxActions":"[`redux-actions`](https://www.npmjs.com/package/redux-actions)","reduxLogic":"[`redux-logic`](https://github.com/jeffbski/redux-logic)","eateryNod":"[`eatery-nod`](https://github.com/KevinAst/eatery-nod)","expo":"[`expo`](https://expo.io/)","redux":"[`redux`](http://redux.js.org/)","reactNative":"[`react-native`](https://facebook.github.io/react-native/)","featureRedux":"[`feature-redux`](https://github.com/KevinAst/feature-redux)","actionU":"[`action-u`](https://action-u.js.org/)","react":"[`react`](https://reactjs.org/)","featureRouter":"[`feature-router`](https://github.com/KevinAst/feature-router)"}},"title":"feature-u","gitbook":"3.2.2","description":"Feature Based Project Organization for React"},"file":{"path":"featureRouter.md","mtime":"2018-01-30T21:55:56.657Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2018-01-31T14:01:46.846Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Feature Based Routes","level":"2.8","depth":1,"next":{"title":"Single Source of Truth","level":"2.9","depth":1,"path":"truth.md","ref":"truth.md","articles":[{"title":"Feature Name","level":"2.9.1","depth":2,"anchor":"#feature-name","path":"truth.md","ref":"truth.md#feature-name","articles":[]},{"title":"Feature State Location","level":"2.9.2","depth":2,"anchor":"#feature-state-location","path":"truth.md","ref":"truth.md#feature-state-location","articles":[]}]},"previous":{"title":"Feature Enablement","level":"2.7","depth":1,"path":"enablement.md","ref":"enablement.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-livereload","toolbar"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"sharing":{"facebook":false,"twitter":false,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["twitter","facebook","google","weibo","instapaper"]},"toolbar":{"buttons":[{"label":"GitHub","icon":"fa fa-github","url":"https://github.com/KevinAst/feature-u"},{"label":"NPM","icon":"fa fa-bullseye","url":"https://www.npmjs.com/package/feature-u"}]},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Kevin J. Bridges <kevinast@gmail.com> (https://github.com/KevinAst)","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"intro.md","glossary":"GLOSSARY.md","summary":"toc.md"},"variables":{"guide":{"detail_launchingApp":"[`Launching Your Application`](/detail.md#launching-your-application)","LICENSE":"[`MIT License`](/LICENSE.md)","crossCom":"[`Cross Feature Communication`](/crossCommunication.md)","enablement":"[`Feature Enablement`](/enablement.md)","usage":"[`Usage`](/usage.md)","crossCom_accessingApp":"[`Accessing App`](/crossCommunication.md#accessing-the-app-object)","start":"[`Getting Started`](/start.md)","appDidStart":"[`appDidStart`](/appLifeCycle.md#appDidStart)","truth_featureStateLocation":"[`Feature State Location`](/truth.md#feature-state-location)","crossCom_publicFace":"[`publicFace`](/crossCommunication.md#publicface-and-the-app-object)","dist":"[`Distribution`](/dist.md)","detail_builtInAspects":"[`Built-In aspects`](/detail.md#built-in-aspects)","detail_featureAndAspect":"[`Feature & aspect content`](/detail.md#feature-object-relaying-aspect-content)","devGuide":"[**Dev Guide**](/index.html)","detail_doesFeatureExist":"[`Does Feature Exist`](/detail.md#does-feature-exist)","extending":"[`Extending feature-u`](/extending.md)","why":"[`Why feature-u?`](/why.md)","appLifeCycle":"[`Application Life Cycle Hook`](/appLifeCycle.md)","detail_featurePublicAPI":"[`Feature Public API`](/detail.md#feature-public-api)","detail_reactRegistration":"[`React Registration`](/detail.md#react-registration)","truth":"[`Single Source of Truth`](/truth.md)","detail_aspects":"[`aspects`](/detail.md#aspects)","truth_featureName":"[`Feature Name`](/truth.md#feature-name)","usage_realExample":"[`Real Example`](/usage.md#real-example)","usage_dir":"[`Directory Structure`](/usage.md#directory-structure)","extending_aspect":"[`Aspect Object`](/extending.md#aspect-object-extending-feature-u)","appWillStart":"[`appWillStart`](/appLifeCycle.md#appwillstart)","usage_launchapp":"[`launchApp()`](/usage.md#launchapp)","crossCom_managedCodeExpansion":"[`Managed Code Expansion`](/crossCommunication.md#managed-code-expansion)","detail":"[`A Closer Look`](/detail.md)","detail_appObject":"[`App Object`](/detail.md#app-object)","history":"[`Revision History`](/history.md)","usage_featureObject":"[`Feature Object`](/usage.md#feature-object)","detail_extendableAspects":"[`Extendable aspects`](/detail.md#extendable-aspects)","basicConcepts":"[`Basic Concepts`](/concepts.md)","extending_locatingExtensions":"[`Locating Extensions`](/extending.md#locating-extensions)","extensionApi":"[`Extension API`](/extensionApi.md)","coreApi":"[`Core API`](/coreApi.md)","benefits":"[`Benefits`](/benefits.md)","crossCom_publicFaceApp":"[`publicFace and the App Object`](/crossCommunication.md#publicface-and-the-app-object)","crossCom_appAccessSummary":"[`App Access Summary`](/crossCommunication.md#app-access-summary)","featureRouter":"[`Feature Based Routes`](/featureRouter.md)"},"api":{"injectRootAppElmMeth$":"[`injectRootAppElmMeth(app, activeFeatures, curRootAppElm): reactElm`](/api.md#injectRootAppElmMeth)","managedExpansion":"[`managedExpansion()`](/api.md#managedExpansion)","appDidStartCB$":"[`appDidStartCB({app, [appState], [dispatch]}): void`](/api.md#appDidStartCB)","AspectContent":"[`AspectContent`](/api.md#AspectContent)","App":"[`App`](/api.md#App)","assembleFeatureContentMeth":"[`assembleFeatureContentMeth()`](/api.md#assembleFeatureContentMeth)","assembleFeatureContentMeth$":"[`assembleFeatureContentMeth(app, activeFeatures): void`](/api.md#assembleFeatureContentMeth)","appDidStartCB":"[`appDidStartCB()`](/api.md#appDidStartCB)","managedExpansion$":"[`managedExpansion(managedExpansionCB): managedExpansionCB`](/api.md#managedExpansion)","injectRootAppElmMeth":"[`injectRootAppElmMeth()`](/api.md#injectRootAppElmMeth)","validateFeatureContentMeth":"[`validateFeatureContentMeth()`](/api.md#validateFeatureContentMeth)","managedExpansionCB$":"[`managedExpansionCB(app): AspectContent`](/api.md#managedExpansionCB)","assembleAspectResourcesMeth":"[`assembleAspectResourcesMeth()`](/api.md#assembleAspectResourcesMeth)","expandFeatureContentMeth":"[`expandFeatureContentMeth()`](/api.md#expandFeatureContentMeth)","registerRootAppElmCB":"[`registerRootAppElmCB()`](/api.md#registerRootAppElmCB)","createFeature$":"[`createFeature({name, [enabled], [publicFace], [appWillStart], [appDidStart], [pluggableAspects]}): Feature`](/api.md#createFeature)","validateConfigurationMeth":"[`validateConfigurationMeth()`](/api.md#validateConfigurationMeth)","launchApp":"[`launchApp()`](/api.md#launchApp)","appWillStartCB":"[`appWillStartCB()`](/api.md#appWillStartCB)","addBuiltInFeatureKeyword$":"[`addBuiltInFeatureKeyword(keyword): void`](/api.md#addBuiltInFeatureKeyword)","createAspect$":"[`createAspect({see-docs}): Aspect`](/api.md#createAspect)","createAspect":"[`createAspect()`](/api.md#createAspect)","addBuiltInFeatureKeyword":"[`addBuiltInFeatureKeyword()`](/api.md#addBuiltInFeatureKeyword)","launchApp$":"[`launchApp({[aspects], features, registerRootAppElm}): App`](/api.md#launchApp)","appWillStartCB$":"[`appWillStartCB({app, curRootAppElm}): rootAppElm || null`](/api.md#appWillStartCB)","Feature":"[`Feature`](/api.md#Feature)","Aspect":"[`Aspect`](/api.md#Aspect)","validateConfigurationMeth$":"[`validateConfigurationMeth(): string`](/api.md#validateConfigurationMeth)","createFeature":"[`createFeature()`](/api.md#createFeature)","extensionApi":"[`Extension API`](/extensionApi.md)","coreApi":"[`Core API`](/coreApi.md)","registerRootAppElmCB$":"[`registerRootAppElmCB(rootAppElm): void`](/api.md#registerRootAppElmCB)","expandFeatureContentMeth$":"[`expandFeatureContentMeth(app, feature): string`](/api.md#expandFeatureContentMeth)","assembleAspectResourcesMeth$":"[`assembleAspectResourcesMeth(app, aspects): void`](/api.md#assembleAspectResourcesMeth)","managedExpansionCB":"[`managedExpansionCB()`](/api.md#managedExpansionCB)","validateFeatureContentMeth$":"[`validateFeatureContentMeth(feature): string`](/api.md#validateFeatureContentMeth)"},"ext":{"featureReduxLogic":"[`feature-redux-logic`](https://github.com/KevinAst/feature-redux-logic)","astxReduxUtil":"[`astx-redux-util`](https://astx-redux-util.js.org/)","reduxActions":"[`redux-actions`](https://www.npmjs.com/package/redux-actions)","reduxLogic":"[`redux-logic`](https://github.com/jeffbski/redux-logic)","eateryNod":"[`eatery-nod`](https://github.com/KevinAst/eatery-nod)","expo":"[`expo`](https://expo.io/)","redux":"[`redux`](http://redux.js.org/)","reactNative":"[`react-native`](https://facebook.github.io/react-native/)","featureRedux":"[`feature-redux`](https://github.com/KevinAst/feature-redux)","actionU":"[`action-u`](https://action-u.js.org/)","react":"[`react`](https://reactjs.org/)","featureRouter":"[`feature-router`](https://github.com/KevinAst/feature-router)"}},"title":"feature-u","gitbook":"3.2.2","description":"Feature Based Project Organization for React"},"file":{"path":"featureRouter.md","mtime":"2018-01-31T16:03:58.122Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2018-01-31T16:11:10.295Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
