@@ -67,15 +67,16 @@
       "appWillStart":             "[`appWillStart`](/appLifeCycle.md#appwillstart)",
       "appDidStart":              "[`appDidStart`](/appLifeCycle.md#appDidStart)",
 
-      "enablement":               "[`Feature Enablement`](/enablement.md)",
-
       "crossCom":                 "[`Cross Feature Communication`](/crossCommunication.md)",
       "crossCom_publicFaceApp":   "[`publicFace and the App Object`](/crossCommunication.md#publicface-and-the-app-object)",
+      "crossCom_publicFace":      "[`publicFace`](/crossCommunication.md#publicface-and-the-app-object)",
       "crossCom_accessingApp":    "[`Accessing App`](/crossCommunication.md#accessing-the-app-object)",
       "crossCom_managedCodeExpansion": "[`Managed Code Expansion`](/crossCommunication.md#managed-code-expansion)",
       "crossCom_appAccessSummary":     "[`App Access Summary`](/crossCommunication.md#app-access-summary)",
 
-      "featureRouter":              "[`Feature Based Routes`](/featureRouter.md)",
+      "featureRouter":            "[`Feature Based Routes`](/featureRouter.md)",
+
+      "enablement":               "[`Feature Enablement`](/enablement.md)",
 
       "truth":                      "[`Single Source of Truth`](/truth.md)",
       "truth_featureName":          "[`Feature Name`](/truth.md#feature-name)",

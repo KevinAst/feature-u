@@ -447,8 +447,8 @@ the corresponding `app.{featureName}` will NOT exist.
    ```
 
  - It could be that `featureC` unconditionally requires that `featureD`
-   is present.  This can be checked in the `appWillStart()` life cycle
-   hook.
+   is present.  This can be checked in the {{book.api.appWillStartCB}}
+   {{book.guide.appLifeCycle}}.
 
    ```js
    appWillStart({app, curRootAppElm}) {
