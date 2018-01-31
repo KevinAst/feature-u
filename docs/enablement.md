@@ -65,12 +65,12 @@ application.  _**I love it when a design comes together!!**_
 **Easy Peasy!**
 
 
-### Feature Dependencies and Existence
+### Feature Existence and Dependencies
 
-When your feature is completely self-contained _(i.e. it **has NO**
+When a feature is completely self-contained _(i.e. it **has NO**
 {{book.guide.crossCom_publicFace}})_, then there is no other
-consideration in disabling it ... you simply disable it and it
-disappears!
+consideration in disabling it ... you **simply disable it** and **it
+disappears!**
 
 If however one feature depends on another _(i.e. it **has a**
 {{book.guide.crossCom_publicFace}})_, then there are additional
