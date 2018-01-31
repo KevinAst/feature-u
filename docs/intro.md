@@ -52,9 +52,9 @@ TODO: Badges Here
 
 - {{book.guide.crossCom}} _... how can features interact with one another_
 
-- {{book.guide.enablement}} _... dynamically enable/disable your features_
-
 - {{book.guide.featureRouter}} _... **feature-u**'s recommendation for autonomous feature-based navigation through state analysis_
+
+- {{book.guide.enablement}} _... dynamically enable/disable your features_
 
 - {{book.guide.truth}} _... promote single-source-of-truth principles with your features_
 

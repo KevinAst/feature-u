@@ -48,7 +48,7 @@ To fully understand how this works, consider the following
 characteristics of a disabled feature _(read this table like a
 sentence ... injecting the header in front of each column)_:
 
-disabled features WITH ... | never registers the feature's ... | therefore, the feature's:
+disabled features with ... | never registers the feature's ... | therefore, the feature's:
 ---                        | ---                               | ---
 life cycle hooks           | callbacks                         | initialization code never executes
 state management           | reducers                          | state doesn't exist
