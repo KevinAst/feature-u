@@ -1,10 +1,8 @@
 # Feature Enablement
 
-By default all Features are active.  
-
-If however you wish to disable a feature, you merely set it's
-`Feature.enabled` boolean property _(part of the
-{{book.guide.detail_builtInAspects}})_:
+By default all Features are active.  If however you wish to disable a
+feature, you merely set it's `Feature.enabled` boolean property _(part
+of the {{book.guide.detail_builtInAspects}})_:
 
 ```js
 export default createFeature({
@@ -47,9 +45,10 @@ of **active** features.  It's just as though disabled features never
 existed _(logically)_.
 
 To fully understand how this works, consider the following
-characteristics of a disabled feature:
+characteristics of a disabled feature _(read this table like a
+sentence ... injecting the header in front of each column)_:
 
-disabled features WITH ... | never registers the feature's ... | soooo, the feature's:
+disabled features WITH ... | never registers the feature's ... | therefore, the feature's:
 ---                        | ---                               | ---
 life cycle hooks           | callbacks                         | initialization code never executes
 state management           | reducers                          | state doesn't exist
@@ -60,9 +59,8 @@ etc.                       | etc.                              | etc.
 The internal implementation of **Feature Enablement** is extremely
 straightforward!  The underlying reason for this simplicity is that
 **feature-u** is in charge of the setup and configuration of your
-application.  _**I love it when a design comes together!!**_
-
-**Easy Peasy!**
+application.  **Easy Peasy!** _**I love it when a design comes
+together!!**_
 
 
 ### Feature Existence and Dependencies
@@ -77,11 +75,11 @@ If however one feature depends on another _(i.e. it **has a**
 factors to consider.
 
 As you know, the {{book.api.App}} object is used to facilitate
-{{book.guide.crossCom}}.
+{{book.guide.crossCom}}.  If a feature does not exist, or has been
+disabled, the corresponding `app.{featureName}` will NOT exist.
 
-If a feature does not exist, or has been disabled, the corresponding
-`app.{featureName}` will NOT exist.  You can use this to conditionally
-determine whether a feature is present or not.
+You can use this to conditionally determine whether a feature is
+present or not.
 
 - It could be that `featureA` will conditionally use `featureB` if it
   is present.

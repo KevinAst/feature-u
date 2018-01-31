@@ -20,7 +20,7 @@ requirements.
 
 ### Why Feature Routes?
 
-The **big benefit** of **Feature Routes** (_should you choose to use
+The **big advantage** of **Feature Routes** (_should you choose to use
 them_) is that **it allows features to promote their screens in an
 encapsulated and autonomous way**!
 
@@ -42,15 +42,19 @@ first non-null return wins.
 
 In feature based routing, you will not find the typical "route path to
 component" mapping catalog, where (_for example_) some pseudo
-`route('signIn')` directive causes the SignIn screen to display, which
-in turn causes the system to accommodate the request by adjusting it's
-state appropriately.  Rather, the appState is analyzed, and if the
-user is NOT authenticated, the SignIn screen is automatically
-displayed ... **Easy Peasy!**
+`route('signIn')` directive causes the SignIn screen to display
+_(which in turn causes the system to accommodate the request by
+adjusting it's state)_.
 
-Depending on your perspective, this approach can be **more natural**,
-but _more importantly_ (once again), **it allows features to promote
-their own screens in an encapsulated and autonomous way**!
+In other words, you will never see application logic that re-routes to
+a signIn screen after checking to see if the user is authenticated.
+Rather, **the appState is king**!  If the user is NOT authenticated
+_(based on the route's analysis of the appState)_ the SignIn screen is
+automatically displayed ... **Easy Peasy!**
+
+Depending on your perspective, this approach can be **more robust and
+natural**, but _more importantly_ (once again), **it allows features
+to promote their own screens in an encapsulated and autonomous way**!
 
 
 ## How do I proceed?
