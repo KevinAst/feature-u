@@ -1,6 +1,6 @@
 # Feature Based Routes
 
-feature-u recommends that you consider using **Feature Based Routes**
+feature-u recommends that you consider using **Feature Routes**
 for your routing needs ... via the {{book.ext.featureRouter}}
 extendable Aspect _(packaged separately)_.
 
