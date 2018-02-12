@@ -129,8 +129,10 @@
     "api": {
 
       "Feature":        "[`Feature`](/api.md#Feature)",
+      "Features":       "[`Features`](/api.md#Feature)",
       "App":            "[`App`](/api.md#App)",
       "Aspect":         "[`Aspect`](/api.md#Aspect)",
+      "Aspects":        "[`Aspects`](/api.md#Aspect)",
       "AspectContent":  "[`AspectContent`](/api.md#AspectContent)",
 
       "coreApi":                    "[`Core API`](/coreApi.md)",
@@ -192,6 +194,7 @@
       "react":             "[`react`](https://reactjs.org/)",
       "reactNative":       "[`react-native`](https://facebook.github.io/react-native/)",
       "redux":             "[`redux`](http://redux.js.org/)",
+      "reduxMiddleware":   "[`redux middleware`](https://redux.js.org/docs/advanced/Middleware.html)",
       "reduxActions":      "[`redux-actions`](https://www.npmjs.com/package/redux-actions)",
       "reduxLogic":        "[`redux-logic`](https://github.com/jeffbski/redux-logic)"
     }
