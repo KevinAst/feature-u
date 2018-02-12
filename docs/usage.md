@@ -115,23 +115,23 @@ Aspects and Features, and starts the app by invoking
 ```js
 import ReactDOM          from 'react-dom';
 import {launchApp}       from 'feature-u';
-import {routeAspect}     from 'feature-router';
 import {reducerAspect}   from 'feature-redux';
 import {logicAspect}     from 'feature-redux-logic';
+import {routeAspect}     from 'feature-router';
 import features          from './feature';
 
 // launch our app, exposing the App object (facilitating cross-feature communication)
-export default launchApp({         // *4*
+export default launchApp({           // *4*
 
-  aspects: [                       // *1*
-    routeAspect,   // Feature Routes: Feature.route
-    reducerAspect, // redux:          Feature.reducer
-    logicAspect,   // redux-logic:    Feature.logic
+  aspects: [                         // *1*
+    reducerAspect, // redux          ... extending: Feature.reducer
+    logicAspect,   // redux-logic    ... extending: Feature.logic
+    routeAspect,   // Feature Routes ... extending: Feature.route
   ],
 
-  features,                        // *2*
+  features,                          // *2*
 
-  registerRootAppElm(rootAppElm) { // *3*
+  registerRootAppElm(rootAppElm) {   // *3*
     ReactDOM.render(rootAppElm,
                     getElementById('myAppRoot'));
   }
