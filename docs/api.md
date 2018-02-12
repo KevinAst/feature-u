@@ -10,7 +10,7 @@ Create a new {{book.api.Feature}} object, cataloging{{book.api.AspectContent}} 
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| name | string |  | the identity of the feature.  Feature names are used to index the {{book.api.App}} Object _(in support of {{book.guide.crossCom}})_, and are therefore guaranteed to be unique.  Application code can also use the Feature name in various {{book.guide.truth}} operations. |
+| name | string |  | the identity of the feature.  Feature names are used to index the {{book.api.App}} Object _(in support of {{book.guide.crossCom}})_, and are therefore guaranteed to be unique.  Application code can also use the Feature name in various **single-source-of-truth** operations _(see {{book.guide.bestPractices}})_. |
 | [enabled] | boolean | <code>true</code> | an indicator as to whether this feature is enabled (true) or not (false).  When used, this indicator is typically based on a dynamic expression, allowing packaged code to be dynamically enabled/disabled at run-time _(please refer to: {{book.guide.enablement}})_. |
 | [publicFace] | Any |  | an optional resource object that is the feature's Public API, promoting {{book.guide.crossCom}}.  This object is exposed through the {{book.api.App}} object as: `app.{featureName}.{publicFace}` _(please refer to: {{book.guide.crossCom_publicFaceApp}})_. |
 | [appWillStart] | [`appWillStartCB`](#appWillStartCB) |  | an optional {{book.guide.appLifeCycle}} invoked one time, just before the app starts up.  This life-cycle hook can do any type of initialization, and/or optionally supplement the app's top-level content (using a non-null return) _(please refer to: {{book.guide.appWillStart}})_. |

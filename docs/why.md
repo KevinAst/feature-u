@@ -99,7 +99,7 @@ succinct suffix that distinguishes a number of my published
    What are some **Best Practices** for "Single Source of Truth" as it
    relates to features, and how can **feature-u** help?
 
-   **Solution:** {{book.guide.truth}}
+   **Solution:** see: {{book.guide.bestPractices}}
 
 1. **Simplified App Startup:**
 

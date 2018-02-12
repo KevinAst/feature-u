@@ -21,7 +21,7 @@ const noOp = () => null;
  * are used to index the {{book.api.App}} Object _(in support of
  * {{book.guide.crossCom}})_, and are therefore guaranteed to be
  * unique.  Application code can also use the Feature name in various
- * {{book.guide.truth}} operations.
+ * **single-source-of-truth** operations _(see {{book.guide.bestPractices}})_.
  * 
  * @param {boolean} [enabled=true] an indicator as to whether this
  * feature is enabled (true) or not (false).  When used, this

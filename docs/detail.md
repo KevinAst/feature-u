@@ -93,8 +93,8 @@ object properties (via {{book.api.createFeature}}).
   Feature names are used to index the {{book.api.App}} Object by
   feature _(in support of {{book.guide.crossCom}})_, and are therefore
   guaranteed to be unique.  Application code can also use
-  {{book.guide.truth_featureName}} in various {{book.guide.truth}}
-  operations.
+  {{book.guide.bestPractices_featureName}} in various
+  **single-source-of-truth** operations.
 
 
 - `Feature.enabled`

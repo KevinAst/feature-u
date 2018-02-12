@@ -84,9 +84,8 @@
 
       "enablement":               "[`Feature Enablement`](/enablement.md)",
 
-      "truth":                      "[`Single Source of Truth`](/truth.md)",
-      "truth_featureName":          "[`Feature Name`](/truth.md#feature-name)",
-      "truth_featureStateLocation": "[`Feature State Location`](/truth.md#feature-state-location)",
+      "bestPractices":             "[`Best Practices`](/bestPractices.md)",
+      "bestPractices_featureName": "[`Feature Name`](/bestPractices.md#feature-name)",
 
       "coreApi":                  "[`Core API`](/coreApi.md)",
 

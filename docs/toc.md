@@ -31,9 +31,7 @@
     * [App Access Summary](crossCommunication.md#app-access-summary)
 * [Feature Based Routes](featureRouter.md)
 * [Feature Enablement](enablement.md)
-* [Single Source of Truth](truth.md)
-  * [Feature Name](truth.md#feature-name)
-  * [Feature State Location](truth.md#feature-state-location)
+* [Best Practices](bestPractices.md)
 
 ----
 * [Core API](coreApi.md)
