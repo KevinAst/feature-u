@@ -16,9 +16,9 @@ _because not everyone uses the same frameworks_!
    {{book.ext.featureRouter}}.
 
  - Can't find an Aspect that integrates the XYZ framework?  You can
-   create one using {{book.api.createAspect}}!  For extra credit, you
-   should publish your package, so other XYZ users can benefit from
-   your work!
+   create your own using {{book.api.createAspect}}!  For extra credit,
+   you should consider publishing your package, so other XYZ users can
+   benefit from your work!
 
 It is important to understand that **feature-u** does not alter the
 interface to these frameworks in any way.  You use them the same way
@@ -37,8 +37,8 @@ their package.
 
 During **feature-u**'s initial release (3/2018), I published the three
 Aspects mentioned above _(matching my preferred stack)_, so at that
-time there were only three.  Assuming **feature-u** gains momentum,
-hopefully other authors will contribute their work.
+time there were three plugins.  Assuming **feature-u** gains momentum,
+the hope is that other authors will contribute their work.
 
 If you create your own extension and decide to publish it, don't
 forget to include the `'feature-u'` keyword in your package, _so
@@ -47,8 +47,8 @@ others can easily locate your extension_.
 
 ## Aspect Object (extending feature-u)
 
-To extend **feature-u** you merely define an {{book.api.Aspect}}
-object (using {{book.api.createAspect}}).
+To extend **feature-u**, you merely define and promote an
+{{book.api.Aspect}} object (using {{book.api.createAspect}}).
 
 The {{book.api.Aspect}} object promotes a series of life-cycle methods
 that **feature-u** invokes in a controlled way.  This life-cycle is
@@ -61,46 +61,286 @@ to:
 - accumulate {{book.api.AspectContent}} across all features
 - perform the desired setup and configuration
 - expose the framework in some way _(by injecting a component in the
-  root DOM, or some "aspect cross-communication mechanism")_
+  root DOM, or some {{book.guide.extending_aspectCrossCommunication}}
+  mechanism)_
 
-Typically the {{book.api.Aspect}} object will need to retain state
-between these life-cycle methods in order to do it's job.
+For complete details, please refer to the section on
+{{book.guide.extending_aspectLifeCycleMethods}}.
 
-Some Aspects may rely on an "Aspect Cross-Communication" mechanism to
-accomplish it's work.  This is merely a proprietary
-{{book.api.Aspect}} method which is documented and consumed by another
-Aspect.  Please refer to the {{book.api.createAspect}}
-`additionalMethods` parameter.
 
-The following sections provide a complete description of
-{{book.api.Aspect}} properties and life-cycle methods.  **Please
-Note**: The order in which these methods are presented represents the
-same order they are executed.
+## Defining rootAppElm
+
+In **feature-u** the `rootAppElm` is the top-level react DOM that
+represents the display of the entire application.
+
+This is a non-changing omnipresent DOM that achieves it's dynamics
+through a series of both framework components and application injected
+utilities.  As an example, a typical `rootAppElm` may contain:
+
+- a navigational component **providing screen dynamics** _(through an **Aspect** Framework injection)_
+- a state promotional component **making state available to subordinates** _(through an **Aspect** Framework injection)_
+- a notification utility _(through an application **Feature** injection)_
+- a left-nav menu _(through an application **Feature** injection)_
+- etc. etc. etc.
+
+The `rootAppElm` is defined through a progressive accumulation of DOM
+injections, using a combination of both {{book.api.Aspects}} and
+{{book.api.Features}}.
+
+There are **three API's** involved and they all accept a `curRootAppElm`
+parameter, and return a new `rootAppElm` that includes the supplied
+element, _accommodating the accumulative process_.
+
+The three API's are listed here, and **are executed in this order**.
+They include life-cycle-hooks that are defined from both
+{{book.api.Aspects}} and {{book.api.Features}}.
+
+1. {{book.guide.initialRootAppElmMeth$}}
+2. {{book.guide.appWillStartCB$}}
+3. {{book.guide.injectRootAppElmMeth$}}
+
+It is important to understand that the {{book.api.Feature}} hook is
+sandwiched between the two {{book.api.Aspect}} hooks.  _Without this
+insight, you would most certainly wonder what the difference was
+between the two Aspect hooks_.
+
+A null `rootAppElm` seeds the entire process.  The first hook is used
+by any Aspect that wishes to inject itself before all others ... and
+so on.  The end result is a DOM hierarchy where the first injected
+element is manifest at the bottom of the hierarchy, and the last
+injection ends up on top.
+
+To put this in perspective, let's analyze an example where we are
+using two Aspects ({{book.ext.featureRedux}}, and
+{{book.ext.featureRouter}}), and an application Feature that manages a
+left-nav menu available throughout the application.
+
+1. The Aspect for {{book.ext.featureRouter}} (`routeAspect`) injects a
+   `<StateRouter>` component that (by design) can have no other
+   children.  Therefore it uses the first api:
+
+   **`routeAspect: Aspect.initialRootAppElm()`**
+   ```js
+   function initialRootAppElm(app, curRootAppElm) {
+     // insure we don't clobber any supplied content
+     // ... by design, <StateRouter> doesn't support children
+     if (curRootAppElm) {
+       throw new Error('*** ERROR*** Please register routeAspect (from feature-router) before other Aspects ' +
+                       'that inject content in the rootAppElm ... <StateRouter> does NOT support children.');
+     }
+
+     // seed the rootAppElm with our StateRouter
+     return <StateRouter routes={this.routes}
+                         fallbackElm={this.fallbackElm}
+                         componentWillUpdateHook={this.componentWillUpdateHook}
+                         namedDependencies={{app}}/>;
+   }
+   ```
+
+2. The `leftNav` application feature, injects it's Drawer/SideBar
+   component through the second API _(the only one available to
+   Features)_:
+
+   **`leftNav: Feature.appWillStart()`**
+   ```js
+   function appWillStart({app, curRootAppElm}) {
+     return (
+       <Drawer ref={ ref => registerDrawer(ref) }
+               content={<SideBar/>}
+               onClose={closeSideBar}>
+         {curRootAppElm}
+       </Drawer>
+     );
+   }
+   ```
+
+3. The Aspect for {{book.ext.featureRedux}} (`reducerAspect`) injects the redux
+   `<Provider>` component that must encompass all other components
+   (i.e. be on top). Therefore it uses the third API:
+
+   **`reducerAspect: Aspect.injectRootAppElm()`**
+   ```js
+   function injectRootAppElm(app, curRootAppElm) {
+     return (
+       <Provider store={this.appStore}>
+         {curRootAppElm}
+       </Provider>
+     );
+   }
+   ```
+
+The **end result** of this example generates the following DOM:
+
+```
+<Provider store={this.appStore}>
+  <Drawer ref={ ref => registerDrawer(ref) }
+          content={<SideBar/>}
+          onClose={closeSideBar}>
+    <StateRouter routes={this.routes}
+                 fallbackElm={this.fallbackElm}
+                 componentWillUpdateHook={this.componentWillUpdateHook}
+                 namedDependencies={{app}}/>
+  </Drawer>
+</Provider>
+```
+
+
+## Aspect Cross Communication
+
+Some Aspects will rely on an **Aspect Cross Communication** mechanism
+to accomplish their work _(not to be confused with
+{{book.guide.crossCom}})_.
+
+**Aspect Cross Communication** is where an **Aspect** requires
+additional information _(over and above it's
+{{book.api.AspectContent}})_ either from other {{book.api.Aspects}} or
+{{book.api.Features}}.  Therefore the extending Aspect must define
+(and use) **additional Aspect/Feature APIs**.
+
+As an example of this, consider the {{book.ext.featureRedux}} plugin.
+Because it manages {{book.ext.redux}}, it also maintains the
+{{book.ext.reduxMiddleware}}.  As a result, it must provide a way for
+other **Aspects** to inject their middleware.  It accomplishes this by
+exposing a new **Aspect API**: `Aspect.getReduxMiddleware()`.
+
+- **Do This**: An extending **Aspect** that introduces a new API
+  should **do the following**:
+  
+  1. Document the API, so the external client knows how to use it.
+  
+  1. Register the API, allowing it to pass **feature-u** validation.
+     Depending on whether this is an API for a {{book.api.Aspect}} or
+     {{book.api.Feature}}, use one of the following:
+  
+     - **API:** {{book.api.extendAspectProperty$}}
+     - **API:** {{book.api.extendFeatureProperty$}}
+  
+     This registration allows the new API (i.e. the `name` parameter)
+     to be referenced in either {{book.api.createAspect}} or
+     {{book.api.createFeature}} respectively.
+  
+     The registration should occur globally, during the in-line
+     expansion of the extending Aspect, guaranteeing the new API is
+     available during **feature-u** validation.
+  
+  1. Utilize the API in one of the
+     {{book.guide.extending_aspectLifeCycleMethods}} to gather the
+     additional information _(from other {{book.api.Aspects}} or
+     {{book.api.Features}})_.
+
+- **Example**: As a **concrete example** of this, let's look at some code snippets from
+  the aforementioned {{book.ext.featureRedux}} plugin:
+  
+  1. Here is the new API documentation:
+  
+     [feature-redux#inputs](https://github.com/KevinAst/feature-redux/tree/18987a3d7911eb4148e91089309b30bef3c7dbcd#inputs)
+  
+     - **Middleware Integration**:
+  
+       Because **feature-redux** manages {{book.ext.redux}}, other Aspects
+       can promote their {{book.ext.reduxMiddleware}} through
+       **feature-redux**'s `Aspect.getReduxMiddleware()` API (an
+       {{book.guide.extending_aspectCrossCommunication}} mechanism).  As
+       an example, the {{book.ext.featureReduxLogic}} Aspect integrates
+       **redux-logic**.
+  
+  1. Here is the new API registration:
+  
+     [feature-redux/src/reducerAspect.js](https://github.com/KevinAst/feature-redux/blob/18987a3d7911eb4148e91089309b30bef3c7dbcd/src/reducerAspect.js#L12-L17)
+     ```js
+     // register feature-redux proprietary Aspect APIs
+     // ... required to pass feature-u validation
+     // ... must occur globally (during our in-line code expansion)
+     //     guaranteeing the new API is available during feature-u validation
+     extendAspectProperty('getReduxStore');      // Aspect.getReduxStore(): store
+     extendAspectProperty('getReduxMiddleware'); // Aspect.getReduxMiddleware(): reduxMiddleware
+     ```
+  
+  1. Here is the new API usage:
+  
+     [feature-redux-logic/src/logicAspect.js](https://github.com/KevinAst/feature-redux-logic/blob/c879cad72eab5686de2f36ca59723052b88eac6c/src/logicAspect.js#L68-L78)
+     ```js
+     /**
+      * Expose our redux middleware that activates redux-logic.  
+      *
+      * This method is consumed by the feature-redux Aspect using an
+      * "aspect cross-communication".
+      *
+      * @private
+      */
+     function getReduxMiddleware() {
+       return this.logicMiddleware;
+     }
+     ```
+   
+
+## Aspect Life Cycle Methods
+
+The following list represents a complete compilation of all **Aspect
+Life Cycle Methods**.  Simply follow the link for a thorough
+discussion of each:
 
  - [`Aspect.name`](#aspectname)
- - [`Aspect.validateConfiguration(): string`](#aspectvalidateconfiguration)
- - [`Aspect.expandFeatureContent(app, feature): string`](#aspectexpandfeaturecontent)
- - [`Aspect.validateFeatureContent(feature): string`](#aspectvalidatefeaturecontent)
- - [`Aspect.assembleFeatureContent(app, activeFeatures): void`](#aspectassemblefeaturecontent)
- - [`Aspect.assembleAspectResources(app, aspects): void`](#aspectassembleaspectresources)
- - [`Aspect.injectRootAppElm(app, activeFeatures, curRootAppElm): reactElm`](#aspectinjectrootappelm)
+ - {{book.guide.validateConfigurationMeth$}}
+ - {{book.guide.expandFeatureContentMeth$}}
+ - {{book.guide.validateFeatureContentMeth$}}
+ - {{book.guide.assembleFeatureContentMeth$}}
+ - {{book.guide.assembleAspectResourcesMeth$}}
+ - {{book.guide.initialRootAppElmMeth$}}
+ - {{book.guide.injectRootAppElmMeth$}}
  - [`Aspect.additionalMethods()`](#aspectadditionalmethods)
 
-**Note on App Promotion**: You will notice that an `app` parameter is
-consistently supplied throughout the various {{book.api.Aspect}}
-life-cycle methods.  The App object is used in promoting
-cross-communication between features.  While it is most likely an
-anti-pattern to interrogate the {{book.api.App}} object directly in
-the {{book.api.Aspect}}, it is required to "pass through" to
-downstream processes (i.e. as an opaque object).  **This is the reason
-the {{book.api.App}} object is supplied**.  As examples of this:
+**Notes of Interest** ...
 
-- The `Feature.logic` aspect _({{book.ext.featureReduxLogic}})_ will
-  dependency inject (DI) the app object into the
-  {{book.ext.reduxLogic}} process.
-- The `Feature.route` aspect _({{book.ext.featureRouter}})_
-  communicates the app in it's routing callbacks.
-- etc.
+- **Execution Order**: 
+
+  The order in which these methods are presented _(above)_ represent
+  the same order they are executed.
+
+
+- **Aspect State Retention**: 
+
+  It is not uncommon for an **Aspect** to use more than one of these
+  life cycle methods to do it's work.  When this happens, there may be
+  a need to retain state _(in order to pick up in one method where it
+  left off in another)_.
+
+  These hooks are in fact methods of the **Aspect** object.  In other
+  words, **`this`** is bound to the **Aspect** object instance.  As a
+  result, you are free to use `this` for your **state retention**.
+
+  As an example, an Aspect may:
+
+   1. use {{book.guide.assembleFeatureContentMeth}} to assemble it's
+      content across all features ... **retaining the content in
+      self**
+
+   2. and then use {{book.guide.injectRootAppElmMeth}} to promote the
+      **content assembled in prior step**
+ 
+
+- **App Parameter**: 
+
+  You will notice that the `app` parameter is supplied on many of these
+  life cycle methods.  As you know the {{book.api.App}} object is used
+  in promoting {{book.guide.crossCom}}.  
+
+  While it is most likely an anti-pattern to directly interrogate the
+  **App** object within the **Aspect**, it is frequently required to
+  "pass through" to downstream processes _(as an opaque object)_.
+  **This is the reason the App object is supplied**!!
+
+  As examples of this:
+
+  - The `Feature.logic` aspect _({{book.ext.featureReduxLogic}})_ will
+    dependency inject (DI) the app object into the
+    {{book.ext.reduxLogic}} process.
+
+  - The `Feature.route` aspect _({{book.ext.featureRouter}})_
+    communicates the app in it's routing callbacks.
+
+  - etc. etc. etc.
+
 
 ### Aspect.name
 
@@ -167,16 +407,15 @@ violation: '`.
 **API:** {{book.api.expandFeatureContentMeth$}}
 
 {{book.api.expandFeatureContentMeth}} is an optional aspect expansion
-hook, defaulting to the algorithm defined by `managedExpansion()`.
-This function rarely needs to be overridden.  It provides a hook to
-aspects that need to transfer additional content from the expansion
-function to the expanded content.
+hook, defaulting to the algorithm defined by {{book.api.managedExpansion}}.
 
 This method (when used) should expand self's
 {{book.api.AspectContent}} in the supplied feature (which is known to
 contain this aspect **and** is in need of expansion), replacing that
-content (within the feature).  Once expansion is complete, **feature-u**
-will perform a delayed validation of the expanded content.
+content (within the feature).
+
+Once expansion is complete, **feature-u** will perform a delayed
+validation of the expanded content.
 
 The default behavior simply implements the expansion algorithm
 defined by {{book.api.managedExpansion}}:
@@ -228,16 +467,16 @@ accomplished by all aspects.
 **API:** {{book.api.assembleAspectResourcesMeth$}}
 
 {{book.api.assembleAspectResourcesMeth}} is an optional hook that
-assemble resources for this aspect across all other aspects, retaining
+assembles resources for this aspect across all other aspects, retaining
 needed state for subsequent ops.  This hook is executed after all the
 aspects have assembled their feature content (i.e. after
 {{book.api.assembleFeatureContentMeth}}).
 
 This is an optional second-pass (so-to-speak) of Aspect data
-gathering, that facilitates an "aspect cross-communication" mechanism.
-It allows a given aspect to gather resources from other aspects,
-through a documented API for a given {{book.api.Aspect}} (ex:
-`Aspect.getXyz()`).
+gathering, that facilitates
+{{book.guide.extending_aspectCrossCommunication}}.  It allows an
+extending aspect to gather resources from other aspects, using an
+additional API (ex: `Aspect.getXyz()`).
 
 As an example of this, consider {{book.ext.featureRedux}}.  Because it
 manages {{book.ext.redux}}, it must promote a technique by which other
@@ -246,16 +485,18 @@ through the proprietary method: `Aspect.getReduxMiddleware():
 middleware`.
 
 
-### Aspect.injectRootAppElm()
+### Aspect.initialRootAppElm()
 
-**API:** {{book.api.injectRootAppElmMeth$}}
+**API:** {{book.api.initialRootAppElmMeth$}}
 
-{{book.api.injectRootAppElmMeth}} is an optional callback hook that
-promotes some characteristic of this aspect within the app root
-element (i.e. react component instance).
+{{book.api.initialRootAppElmMeth}} is an optional callback hook that
+promotes some characteristic of this aspect within the `rootAppElm`
+... the top-level react DOM that represents the display of the entire
+application.
 
-All aspects will either promote themselves through this hook, -or-
-through some "aspect cross-communication" mechanism.
+The {{book.guide.extending_definingAppElm}} section highlights when to
+use {{book.api.initialRootAppElmMeth}} verses
+{{book.api.injectRootAppElmMeth}}.
 
 **NOTE**: When this hook is used, the supplied curRootAppElm MUST be
 included as part of this definition!
@@ -263,6 +504,28 @@ included as part of this definition!
 **RETURN**: a new react app element root (which in turn must contain
 the supplied curRootAppElm), or simply the supplied curRootAppElm (if
 no change).
+
+
+### Aspect.injectRootAppElm()
+
+**API:** {{book.api.injectRootAppElmMeth$}}
+
+{{book.api.injectRootAppElmMeth}} is an optional callback hook that
+promotes some characteristic of this aspect within the `rootAppElm`
+... the top-level react DOM that represents the display of the entire
+application.
+
+The {{book.guide.extending_definingAppElm}} section highlights when to
+use {{book.api.initialRootAppElmMeth}} verses
+{{book.api.injectRootAppElmMeth}}.
+
+**NOTE**: When this hook is used, the supplied curRootAppElm MUST be
+included as part of this definition!
+
+**RETURN**: a new react app element root (which in turn must contain
+the supplied curRootAppElm), or simply the supplied curRootAppElm (if
+no change).
+
 
 
 ### Aspect.additionalMethods()

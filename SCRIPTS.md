@@ -36,7 +36,6 @@ prepublish .............. cleanly build/test all machine generated resources,
                             - show outdated installed packages
                             - clean (delete) ALL machine generated resources
                             - build/test all bundled libraries (for publication)
-                            - build documentation
                             - generate the code coverage report
 
 
@@ -112,7 +111,7 @@ docs:clean ... clean the machine-generated docs (_book/ and _docs/cur/)
 MISC
 ====
 
-clean ... cleans ALL machine-generated directories (build, docs, and coverage)
+clean ... cleans ALL machine-generated directories (build, and coverage)
 ```
 
 

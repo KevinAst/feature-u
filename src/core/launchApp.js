@@ -1,6 +1,7 @@
-import isFunction                from 'lodash.isfunction';
-import verify                    from '../util/verify';
-import {isBuiltInFeatureKeyword} from './createFeature';
+import isFunction           from 'lodash.isfunction';
+import verify               from '../util/verify';
+import {isAspectProperty}   from '../extend/createAspect';
+import {isFeatureProperty}  from './createFeature';
 
 
 /**
@@ -80,6 +81,26 @@ export default function launchApp({aspects=[],
   check(arguments.length === 1,  'unrecognized positional parameters (only named parameters can be specified)');
 
 
+  // peform "Aspect" property validation
+  // NOTE 1: This is done here rather than createAspect(), because 
+  //         all Aspects need to be expanded (i.e. imported) for any extendAspectProperty() to be executed)
+  //         ... this will have been done by the time launchApp() is executed!!
+  // NOTE 2: The original source of this error is in createAspect(), 
+  //         so we prefix any errors as such!
+  const checkAspect = verify.prefix('createAspect() parameter violation: ');
+  aspects.forEach( aspect => {       // for each aspect
+    for (const propName in aspect) { // iterate over the aspects props
+
+      // handle unrecognized Aspect.property
+      // ... NOTE: Aspect extended propertis have already been added to this isAspectProperty() list
+      //           via extendAspectProperty() 
+      //               executed globally during the in-line expansion of the extending Aspect
+      //               SO it is in the list at this time!!
+      checkAspect(isAspectProperty(propName), `Aspect.name: '${aspect.name}' contains unrecognized property: ${propName} ... no Aspect is registered to handle this!`);
+    }
+  });
+
+
   // peform "Feature" property validation
   // NOTE 1: This is done here rather than createFeature(), because it's the aspect's
   //         responsibility, and this is the spot where we have aspect context.
@@ -88,16 +109,22 @@ export default function launchApp({aspects=[],
   const checkFeature = verify.prefix('createFeature() parameter violation: ');
   features.forEach( feature => {      // for each feature
     for (const propName in feature) { // iterate over the features props
+
       // we only validate non built-in keywords
-      // ... i.e. ones managed by our aspects
       // ... built-ins are validated by createFeature()
-      if (!isBuiltInFeatureKeyword(propName)) {
+      // ... these extra props will be processed by an Aspect
+      //     ... an error condition if if no Aspect is registered to handle it
+      // ... NOTE: Aspect extended propertis have already been added to this isFeatureProperty() list
+      //           via extendFeatureProperty() 
+      //               executed globally during the in-line expansion of the extending Aspect
+      //               SO it is in the list at this time!!
+      if (!isFeatureProperty(propName)) {
 
         // locate the aspect that will process this item
         const aspect = aspectMap[propName];
 
         // handle unrecognized aspect
-        checkFeature(aspect, `unrecognized keyword: ${propName} (no aspect is registered to handle this)!`);
+        checkFeature(aspect, `Feature.name: '${feature.name}' contains unrecognized property: ${propName} ... no Aspect is registered to handle this!`);
 
         // delay validation when expansion is needed
         // ... is accomplished in subsequent step (after expansion has occurred)
@@ -188,17 +215,26 @@ export default function launchApp({aspects=[],
     aspect.assembleAspectResources(app, aspects);
   });
 
+  // define our rootAppElm via DOM injections from a combination of Features/Aspects 
+  // -AND- ... as part of this:
   // apply Feature.appWillStart() life-cycle hook
-  // AND define our rootAppElm from a combination Features/Aspects DOM injections
-  let rootAppElm = null;
-  // ... FIRST: feature DOM injection via Feature.appWillStart() life-cycle hook
-  //            - can perform ANY initialization
-  //            - AND supplement our top-level content (using a non-null return)
-  //              ... accomplished FIRST because (in general) it is thought Aspects should inject higher in the DOM
-  rootAppElm = activeFeatures.reduce( (curRootAppElm, feature) => feature.appWillStart({app, curRootAppElm}) || curRootAppElm, rootAppElm );
+  let rootAppElm = null; // we start with nothing
 
-  // ... SECOND: aspect DOM injection via Aspect.injectRootAppElm()
-  rootAppElm = aspects.reduce( (curRootAppElm, aspect) => aspect.injectRootAppElm(app, activeFeatures, curRootAppElm), rootAppElm );
+  // ... FIRST: DOM injection via Aspect.initialRootAppElm(app, curRootAppElm)
+  rootAppElm = aspects.reduce( (curRootAppElm, aspect) => aspect.initialRootAppElm(app, curRootAppElm),
+                               rootAppElm );
+
+  // ... SECOND: DOM injection via Feature.appWillStart() life-cycle hook
+  //             - can perform ANY initialization
+  //             - AND supplement our top-level content (using a non-null return)
+  //               ... wedged between the two Aspect DOM injections (in support of various Aspect needs)
+  rootAppElm = activeFeatures.reduce( (curRootAppElm, feature) => feature.appWillStart({app, curRootAppElm}) || curRootAppElm,
+                                      rootAppElm );
+
+  // ... THIRD: DOM injection via Aspect.injectRootAppElm()
+  rootAppElm = aspects.reduce( (curRootAppElm, aspect) => aspect.injectRootAppElm(app, curRootAppElm),
+                               rootAppElm );
+
   // ... NOTE: We do NOT validate rootAppElm to insure it is non-null!
   //           - at first glance it would appear that a null rootAppElm would render NOTHING
   //           - HOWEVER, ULTIMATLY the app code (found in the registerRootAppElm() hook) 

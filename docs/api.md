@@ -5,32 +5,32 @@
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
   createFeature(name, [enabled], [publicFace], [appWillStart], [appDidStart], [extendedAspect]) ⇒ [`Feature`](#Feature)</h5>
-Create a new {{book.api.Feature}} object, cataloging{{book.api.AspectContent}} to be consumed by{{book.api.launchApp}}.  Each feature within an app promotes it'sown {{book.api.Feature}} object.For more information, please refer to{{book.guide.detail_featureAndAspect}}, with examples at{{book.guide.usage_featureObject}}.**Please Note** this function uses named parameters.
+Create a new {{book.api.Feature}} object, cataloging{{book.api.AspectContent}} to be consumed by{{book.api.launchApp}}.  Each feature within an applicationpromotes it's own {{book.api.Feature}} object.For more information, please refer to{{book.guide.detail_featureAndAspect}}, with examples at{{book.guide.usage_featureObject}}.**Please Note** this function uses named parameters.
 
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| name | string |  | the identity of the feature.  Feature names are used to index the {{book.api.App}} Object _(in support of {{book.guide.crossCom}})_, and are therefore guaranteed to be unique.  Application code can also use the Feature name in various {{book.guide.truth}} operations. |
+| name | string |  | the identity of the feature.  Feature names are used to index the {{book.api.App}} Object _(in support of {{book.guide.crossCom}})_, and are therefore guaranteed to be unique.  Application code can also use the Feature name in various **single-source-of-truth** operations _(see {{book.guide.bestPractices}})_. |
 | [enabled] | boolean | <code>true</code> | an indicator as to whether this feature is enabled (true) or not (false).  When used, this indicator is typically based on a dynamic expression, allowing packaged code to be dynamically enabled/disabled at run-time _(please refer to: {{book.guide.enablement}})_. |
 | [publicFace] | Any |  | an optional resource object that is the feature's Public API, promoting {{book.guide.crossCom}}.  This object is exposed through the {{book.api.App}} object as: `app.{featureName}.{publicFace}` _(please refer to: {{book.guide.crossCom_publicFaceApp}})_. |
 | [appWillStart] | [`appWillStartCB`](#appWillStartCB) |  | an optional {{book.guide.appLifeCycle}} invoked one time, just before the app starts up.  This life-cycle hook can do any type of initialization, and/or optionally supplement the app's top-level content (using a non-null return) _(please refer to: {{book.guide.appWillStart}})_. |
 | [appDidStart] | [`appDidStartCB`](#appDidStartCB) |  | an optional {{book.guide.appLifeCycle}} invoked one time, immediately after the app has started.  Because the app is up-and-running at this time, you have access to the appState and the dispatch() function ... assuming you are using redux (when detected by feature-u's plugable aspects) _(please refer to: {{book.guide.appDidStart}})_. |
-| [extendedAspect] | [`AspectContent`](#AspectContent) |  | additional aspects, as defined by the feature-u's plugable Aspect extension _(please refer to: {{book.guide.detail_extendableAspects}} -and- {{book.guide.extending}})_. |
+| [extendedAspect] | [`AspectContent`](#AspectContent) |  | additional aspects, as defined by the feature-u's Aspect plugins _(please refer to: {{book.guide.detail_extendableAspects}} -and- {{book.guide.extending}})_. |
 
 **Returns**: [`Feature`](#Feature) - a new Feature object (to be consumed bylaunchApp()).  
 
 <br/><br/><br/>
 
-<a id="addBuiltInFeatureKeyword"></a>
+<a id="extendFeatureProperty"></a>
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
-  addBuiltInFeatureKeyword(keyword)</h5>
-Add additional Feature keyword (typically used by Aspect extensionsto Feature).
+  extendFeatureProperty(name)</h5>
+Extend the supplied name as a Feature property.  This is used byAspects to extend Feature APIs for{{book.guide.extending_aspectCrossCommunication}}.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| keyword | string | the keyword name to add. |
+| name | string | the property name to allow. |
 
 
 <br/><br/><br/>
@@ -70,8 +70,8 @@ Mark the supplied {{book.api.managedExpansionCB}} as a "ManagedExpansion Callba
 <a id="createAspect"></a>
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
-  createAspect(name, [validateConfiguration], [expandFeatureContent], validateFeatureContent, assembleFeatureContent, [assembleAspectResources], [injectRootAppElm], [additionalMethods]) ⇒ [`Aspect`](#Aspect)</h5>
-Create an {{book.api.Aspect}} object, used to extend **feature-u**.The {{book.api.Aspect}} object promotes a series of life-cyclemethods that **feature-u** invokes in a controlled way.  Thislife-cycle is controlled by {{book.api.launchApp}} _... it issupplied the Aspects, and it invokes their methods._The essential characteristics of the {{book.api.Aspect}} life-cycle is to:- accumulate aspect content across all features- perform the desired setup and configuration- expose the framework in some way _(by injecting a component in the  root DOM, or some "aspect cross-communication mechanism")_Typically the {{book.api.Aspect}} object will need to retain state between theselife-cycle methods in order to do it's job.Some Aspects may rely on an "aspect cross-communication mechanism" toaccomplish it's work.  This is merely a proprietary Aspect method whichis documented and consumed by another Aspect.  Please refer to[Aspect.additionalMethods()](#aspectadditionalmethods).**Please Note** this function uses named parameters.  The order inwhich these items are presented represents the same order they areexecuted.
+  createAspect(name, [validateConfiguration], [expandFeatureContent], validateFeatureContent, assembleFeatureContent, [assembleAspectResources], [initialRootAppElm], [injectRootAppElm], [additionalMethods]) ⇒ [`Aspect`](#Aspect)</h5>
+Create an {{book.api.Aspect}} object, used to extend **feature-u**.The {{book.api.Aspect}} object promotes a series of life-cyclemethods that **feature-u** invokes in a controlled way.  Thislife-cycle is controlled by {{book.api.launchApp}} _... it issupplied the Aspects, and it invokes their methods._The essential characteristics of the {{book.api.Aspect}} life-cycle is to:- accumulate {{book.api.AspectContent}} across all features- perform the desired setup and configuration- expose the framework in some way _(by injecting a component in the  root DOM, or some {{book.guide.extending_aspectCrossCommunication}}  mechanism)_The {{book.guide.extending}} section provides more insight on how{{book.api.Aspect}}s are created and used.**Please Note** this function uses named parameters.  The order inwhich these items are presented represents the same order they areexecuted.
 
 
 | Param | Type | Description |
@@ -82,10 +82,25 @@ Create an {{book.api.Aspect}} object, used to extend **feature-u**.The {{book.
 | validateFeatureContent | [`validateFeatureContentMeth`](#validateFeatureContentMeth) | a validation hook allowing this aspect to verify it's content on the supplied feature (which is known to contain this aspect). |
 | assembleFeatureContent | [`assembleFeatureContentMeth`](#assembleFeatureContentMeth) | the Aspect method that assembles content for this aspect across all features, retaining needed state for subsequent ops.<br/><br/> This method is required because this is the primary task that is accomplished by all aspects. |
 | [assembleAspectResources] | [`assembleAspectResourcesMeth`](#assembleAspectResourcesMeth) | an optional Aspect method that assemble resources for this aspect across all other aspects, retaining needed state for subsequent ops.<br/><br/> This hook is executed after all the aspects have assembled their feature content (i.e. after {{book.api.assembleFeatureContentMeth}}). |
-| [injectRootAppElm] | [`injectRootAppElmMeth`](#injectRootAppElmMeth) | an optional callback hook that promotes some characteristic of this aspect within the app root element (i.e. react component instance). |
-| [additionalMethods] | Any | additional methods (proprietary to specific Aspects), supporting two different requirements:<br/><br/> 1. internal Aspect helper methods, and<br/><br/> 2. APIs used in "aspect cross-communication" ... a contract    between one or more aspects.  This is merely an API specified    by one Aspect, and used by another Aspect, that is facilitate    through the {{book.api.assembleAspectResourcesMeth$}}    hook. |
+| [initialRootAppElm] | [`initialRootAppElmMeth`](#initialRootAppElmMeth) | an optional callback hook that promotes some characteristic of this aspect within the `rootAppElm` ... the top-level react DOM that represents the display of the entire application.<br/><br/> The {{book.guide.extending_definingAppElm}} section highlights when to use {{book.api.initialRootAppElmMeth}} verses {{book.api.injectRootAppElmMeth}}. |
+| [injectRootAppElm] | [`injectRootAppElmMeth`](#injectRootAppElmMeth) | an optional callback hook that promotes some characteristic of this aspect within the `rootAppElm` ... the top-level react DOM that represents the display of the entire application.<br/><br/> The {{book.guide.extending_definingAppElm}} section highlights when to use {{book.api.initialRootAppElmMeth}} verses {{book.api.injectRootAppElmMeth}}. |
+| [additionalMethods] | Any | additional methods (proprietary to specific Aspects), supporting two different requirements:<br/><br/> 1. internal Aspect helper methods, and<br/><br/> 2. APIs used in {{book.guide.extending_aspectCrossCommunication}}    ... a contract between one or more aspects.  This is merely an    API specified by one Aspect, and used by another Aspect, that is    facilitate through the {{book.api.assembleAspectResourcesMeth$}}    hook. |
 
 **Returns**: [`Aspect`](#Aspect) - a new Aspect object (to be consumed by {{book.api.launchApp}}).  
+
+<br/><br/><br/>
+
+<a id="extendAspectProperty"></a>
+
+<h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
+  extendAspectProperty(name)</h5>
+Extend the supplied name as an Aspect property.  This is used byAspects to extend Aspect APIs for{{book.guide.extending_aspectCrossCommunication}}.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| name | string | the property name to allow. |
+
 
 <br/><br/><br/>
 
@@ -249,7 +264,7 @@ The required Aspect method that assembles content for this aspectacross all fea
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
   assembleAspectResourcesMeth ⇒</h5>
-An optional Aspect method that assemble resources for this aspectacross all other aspects, retaining needed state for subsequentops.  This hook is executed after all the aspects have assembledtheir feature content (i.e. after{{book.api.assembleFeatureContentMeth}}).**API:** {{book.api.assembleAspectResourcesMeth$}}This is an optional second-pass (so-to-speak) of Aspect datagathering, that facilitates an "aspect cross-communication"mechanism.  It allows a given aspect to gather resources from otheraspects, through a documented API for a given Aspect (ex:Aspect.getXyz()).As an example of this, the "reducer" aspect (which manages redux),allows other aspects to inject their own redux middleware (ex:redux-logic), through it's documented Aspect.getReduxMiddleware()API.
+An optional Aspect method that assembles resources for this aspectacross all other aspects, retaining needed state for subsequentops.  This hook is executed after all the aspects have assembledtheir feature content (i.e. after{{book.api.assembleFeatureContentMeth}}).**API:** {{book.api.assembleAspectResourcesMeth$}}This is an optional second-pass (so-to-speak) of Aspect datagathering, that facilitates{{book.guide.extending_aspectCrossCommunication}}.  It allows anextending aspect to gather resources from other aspects, using anadditional API (ex: `Aspect.getXyz()`).
 
 
 | Param | Type | Description |
@@ -261,17 +276,32 @@ An optional Aspect method that assemble resources for this aspectacross all oth
 
 <br/><br/><br/>
 
-<a id="injectRootAppElmMeth"></a>
+<a id="initialRootAppElmMeth"></a>
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
-  injectRootAppElmMeth ⇒ reactElm</h5>
-An optional callback hook that promotes some characteristic of thisaspect within the app root element (i.e. react component instance).**API:** {{book.api.injectRootAppElmMeth$}}All aspects will either promote themselves through this hook, -or-through some "aspect cross-communication" mechanism.**NOTE**: When this hook is used, the supplied curRootAppElm MUST beincluded as part of this definition!
+  initialRootAppElmMeth ⇒ reactElm</h5>
+An optional callback hook that promotes some characteristic of thisaspect within the `rootAppElm` ... the top-level react DOM thatrepresents the display of the entire application.**API:** {{book.api.initialRootAppElmMeth$}}The {{book.guide.extending_definingAppElm}} section highlights whento use {{book.api.initialRootAppElmMeth}} verses{{book.api.injectRootAppElmMeth}}.**NOTE**: When this hook is used, the supplied curRootAppElm MUST beincluded as part of this definition!
 
 
 | Param | Type | Description |
 | --- | --- | --- |
 | app | [`App`](#App) | the App object used in feature cross-communication. |
-| activeFeatures | [`Array.&lt;Feature&gt;`](#Feature) | The set of active (enabled) features that comprise this application.  This can be used in an optional Aspect/Feature cross-communication.  As an example, an Xyz Aspect may define a Feature API by which a Feature can inject DOM in conjunction with the Xyz Aspect DOM injection. |
+| curRootAppElm | reactElm | the current react app element root. |
+
+**Returns**: reactElm - a new react app element root (which in turn mustcontain the supplied curRootAppElm), or simply the suppliedcurRootAppElm (if no change).  
+
+<br/><br/><br/>
+
+<a id="injectRootAppElmMeth"></a>
+
+<h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
+  injectRootAppElmMeth ⇒ reactElm</h5>
+An optional callback hook that promotes some characteristic of thisaspect within the `rootAppElm` ... the top-level react DOM thatrepresents the display of the entire application.**API:** {{book.api.injectRootAppElmMeth$}}The {{book.guide.extending_definingAppElm}} section highlights whento use {{book.api.initialRootAppElmMeth}} verses{{book.api.injectRootAppElmMeth}}.**NOTE**: When this hook is used, the supplied curRootAppElm MUST beincluded as part of this definition!
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| app | [`App`](#App) | the App object used in feature cross-communication. |
 | curRootAppElm | reactElm | the current react app element root. |
 
 **Returns**: reactElm - a new react app element root (which in turn mustcontain the supplied curRootAppElm), or simply the suppliedcurRootAppElm (if no change).  

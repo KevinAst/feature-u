@@ -38,40 +38,40 @@ TODO: Badges Here
 
 ## At a Glance
 
-- {{book.guide.start}} _... installation and access_
+- {{book.guide.start}} ... _installation and access_
 
-- {{book.guide.basicConcepts}} _... learn high-level **feature-u** concepts_
+- {{book.guide.basicConcepts}} ... _learn high-level **feature-u** concepts_
 
-- {{book.guide.benefits}} _... understand the benefits of **feature-u**_
+- {{book.guide.benefits}} ... _understand the benefits of **feature-u**_
 
-- {{book.guide.usage}} _... what is **feature-u**'s fundamental usage pattern_
+- {{book.guide.usage}} ... _what is **feature-u**'s fundamental usage pattern_
 
-- {{book.guide.detail}} _... delve deeper into **feature-u** concepts_
+- {{book.guide.detail}} ... _delve deeper into **feature-u** concepts_
 
-- {{book.guide.appLifeCycle}} _... learn how features can initialize themselves_
+- {{book.guide.appLifeCycle}} ... _learn how features can initialize themselves_
 
-- {{book.guide.crossCom}} _... how can features interact with one another_
+- {{book.guide.crossCom}} ... _how can features interact with one another_
 
-- {{book.guide.featureRouter}} _... **feature-u**'s recommendation for autonomous feature-based navigation through state analysis_
+- {{book.guide.featureRouter}} ... _**feature-u**'s recommendation for autonomous feature-based navigation through state analysis_
 
-- {{book.guide.enablement}} _... dynamically enable/disable your features_
+- {{book.guide.enablement}} ... _dynamically enable/disable your features_
 
-- {{book.guide.truth}} _... promote single-source-of-truth principles with your features_
+- {{book.guide.bestPractices}} ... _what are some feature-based **best practices** and **single-source-of-truth** principles_
 
-- {{book.guide.coreApi}} _... the detailed API_
+- {{book.guide.coreApi}} ... _the detailed reference API_
 
-- Extending ...
+- _Extending_ ...
 
-  - {{book.guide.extending}} _... learn how to extend **feature-u**_
+  - {{book.guide.extending}} ... _learn how to extend **feature-u**_
 
-  - {{book.guide.extensionApi}} _... the detailed Extension API_
+  - {{book.guide.extensionApi}} ... _the detailed Extension API reference_
 
-- Misc ...
+- _Misc_ ...
 
-  - {{book.guide.dist}} _... where to find **feature-u**_
+  - {{book.guide.dist}} ... _where to find **feature-u**_
 
-  - {{book.guide.why}} _... why was **feature-u** created?_
+  - {{book.guide.why}} ... _why was **feature-u** created?_
 
-  - {{book.guide.history}} _... peruse **feature-u** various revisions_
+  - {{book.guide.history}} ... _peruse the various revisions of **feature-u**_
 
-  - {{book.guide.LICENSE}} _... legal stuff_
+  - {{book.guide.LICENSE}} ... _legal stuff_

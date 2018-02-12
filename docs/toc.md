@@ -31,9 +31,7 @@
     * [App Access Summary](crossCommunication.md#app-access-summary)
 * [Feature Based Routes](featureRouter.md)
 * [Feature Enablement](enablement.md)
-* [Single Source of Truth](truth.md)
-  * [Feature Name](truth.md#feature-name)
-  * [Feature State Location](truth.md#feature-state-location)
+* [Best Practices](bestPractices.md)
 
 ----
 * [Core API](coreApi.md)
@@ -45,10 +43,14 @@
 * [Extending feature-u](extending.md)
   * [Locating Extensions](extending.md#locating-extensions)
   * [Aspect Object](extending.md#aspect-object-extending-feature-u)
+  * [Defining rootAppElm](extending.md#defining-rootappelm)
+  * [Aspect Cross Communication](extending.md#aspect-cross-communication)
+  * [Aspect Life Cycle Methods](extending.md#aspect-life-cycle-methods)
 
-* [Extension API](extensionApi.md)
-  * [createAspect()](api.md#createAspect)
-  * [addBuiltInFeatureKeyword()](api.md#addBuiltInFeatureKeyword)
+  * [Extension API](extensionApi.md)
+    * [createAspect()](api.md#createAspect)
+    * [extendAspectProperty()](api.md#extendAspectProperty)
+    * [extendFeatureProperty()](api.md#extendFeatureProperty)
 
 ----
 * [Distribution](dist.md)

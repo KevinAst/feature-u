@@ -1,9 +1,7 @@
 # feature-u
 
-TODO: once words are finalized, **retrofit all links**
-
 **feature-u** is a utility library that _facilitates feature-based
-project organization_ in your {{book.ext.react}} project.  It assists
+project organization_ in your [`react`] project.  It assists
 in organizing your project by individual features.
 
 Most software engineers would agree that organizing your project by
@@ -18,7 +16,7 @@ process.  It automates some of the mundane details of your features
 and helps in promoting features that are **plug-and-play**.
 
 The following article is an introduction to **feature-u**, with
-examples from a real-world app: {{book.ext.eateryNod}} _(where
+examples from a real-world app: [`eatery-nod`] _(where
 **feature-u** was conceived)_: `TODO: Introducing: feature-u (Feature
 Based Project Organization for React)`
 
@@ -45,14 +43,14 @@ npm install --save feature-u
 ## feature-u Basics
 
 The basic process of **feature-u** is that each feature promotes a
-{{book.api.Feature}} object that contains various aspects of that
+[`Feature`] object that contains various aspects of that
 feature ... _things like: the feature's name, it's Public API, whether
 it is enabled, initialization constructs, and resources used to
 configure it's slice of the frameworks in use._
 
-In turn, these {{book.api.Feature}} objects are supplied to
-{{book.api.launchApp}}, which configures and starts your application,
-returning an {{book.api.App}} object (_which promotes the public API
+In turn, these [`Feature`] objects are supplied to
+[`launchApp()`], which configures and starts your application,
+returning an [`App`] object (_which promotes the public API
 of each feature_).
 
 In **feature-u**, "aspect" is a generalized term used to refer to the
@@ -79,8 +77,8 @@ The basic usage pattern of **feature-u** is to:
 1. Choose the Aspects that you will need, based on your selected
    frameworks (i.e. your run-time stack).  This extends the aspect
    properties accepted by the Feature object (for example:
-   `Feature.reducer` for {{book.ext.redux}}, or `Feature.logic` for
-   {{book.ext.reduxLogic}}).
+   `Feature.reducer` for [`redux`], or `Feature.logic` for
+   [`redux-logic`]).
 
    Typically these Aspects are packaged separately in NPM, although you
    can create your own Aspects (if needed).
@@ -94,9 +92,9 @@ The basic usage pattern of **feature-u** is to:
      perspective.
 
    * Each feature will promote it's aspect content through a Feature
-     object (using {{book.api.createFeature}}).
+     object (using [`createFeature()`]).
 
-1. Your mainline starts the app by invoking {{book.api.launchApp}},
+1. Your mainline starts the app by invoking [`launchApp()`],
    passing all Aspects and Features.
 
 **Easy Peasy!!**
@@ -138,7 +136,7 @@ Each feature is located in it's own directory, containing it's aspects
 ## Feature Object
 
 Each feature promotes it's aspect content through a
-{{book.api.Feature}} object (using {{book.api.createFeature}}).
+[`Feature`] object (using [`createFeature()`]).
 
 **`src/feature/featureA/index.js`**
 ```js
@@ -183,29 +181,29 @@ There is no real app-specific code in it ... **not even any global
 initialization**!  That is because **each feature can inject their own
 app-specific constructs**!!  The mainline merely accumulates the
 Aspects and Features, and starts the app by invoking
-{{book.api.launchApp}}:
+[`launchApp()`]:
 
 **`src/app.js`**
 ```js
 import ReactDOM          from 'react-dom';
 import {launchApp}       from 'feature-u';
-import {routeAspect}     from 'feature-router';
 import {reducerAspect}   from 'feature-redux';
 import {logicAspect}     from 'feature-redux-logic';
+import {routeAspect}     from 'feature-router';
 import features          from './feature';
 
 // launch our app, exposing the App object (facilitating cross-feature communication)
-export default launchApp({         // *4*
+export default launchApp({           // *4*
 
-  aspects: [                       // *1*
-    routeAspect,   // Feature Routes: Feature.route
-    reducerAspect, // redux:          Feature.reducer
-    logicAspect,   // redux-logic:    Feature.logic
+  aspects: [                         // *1*
+    reducerAspect, // redux          ... extending: Feature.reducer
+    logicAspect,   // redux-logic    ... extending: Feature.logic
+    routeAspect,   // Feature Routes ... extending: Feature.route
   ],
 
-  features,                        // *2*
+  features,                          // *2*
 
-  registerRootAppElm(rootAppElm) { // *3*
+  registerRootAppElm(rootAppElm) {   // *3*
     ReactDOM.render(rootAppElm,
                     getElementById('myAppRoot'));
   }
@@ -217,26 +215,26 @@ Here are some **important points of interest** _(match the numbers to
 
 1. the supplied Aspects _(pulled from separate npm packages)_ reflect
    the frameworks of our run-time stack _(in our example [
-   {{book.ext.redux}}, {{book.ext.reduxLogic}}, and
-   {{book.ext.featureRouter}})_ and extend the acceptable Feature
+   [`redux`], [`redux-logic`], and
+   [`feature-router`])_ and extend the acceptable Feature
    properties _(`Feature.reducer`, `Feature.logic`, and
    `Feature.route` respectively)_ ... _**see:**
-   {{book.guide.detail_extendableAspects}}_
+   [`Extendable aspects`]_
 
 2. all of our app features are supplied (accumulated from the
    `features/` directory)
 
-3. a {{book.api.registerRootAppElmCB}} callback is used to catalog the
+3. a [`registerRootAppElm()`] callback is used to catalog the
    supplied `rootAppElm` to the specific React platform in use.
    Because this registration is accomplished by your app-specific
    code, **feature-u** can operate in any of the React platforms, such
    as: React Web, React Native, Expo, etc. ... _**see:**
-   {{book.guide.detail_reactRegistration}}_
+   [`React Registration`]_
 
-4. _as a bit of a preview_, the return value of {{book.api.launchApp}}
-   is an {{book.api.App}} object, which promotes the accumulated
+4. _as a bit of a preview_, the return value of [`launchApp()`]
+   is an [`App`] object, which promotes the accumulated
    Public API of all features.  The App object contains named feature
-   nodes, and is exported to provide {{book.guide.crossCom}} ... _here
+   nodes, and is exported to provide [`Cross Feature Communication`] ... _here
    is what app looks like (for this example):_
 
    ```js
@@ -314,16 +312,16 @@ The benefits of using **feature-u** include:
 
 Want to see a real **feature-u** app?
 
-{{book.ext.eateryNod}} is the application _where **feature-u** was
-conceived_.  It is a {{book.ext.reactNative}} {{book.ext.expo}} mobile
+[`eatery-nod`] is the application _where **feature-u** was
+conceived_.  It is a [`react-native`] [`expo`] mobile
 app, and is one of my sandbox applications that I use to test
 frameworks.  _I like to develop apps that I can use, but have enough
 real-world requirements to make it interesting._
 
-**{{book.ext.eateryNod}}** randomly selects a "date night" restaurant
+**[`eatery-nod`]** randomly selects a "date night" restaurant
 from a pool of favorites.  _My wife and I have a steady "date night",
 and we are always indecisive on which of our favorite restaurants to
-frequent :-)_ So **{{book.ext.eateryNod}}** provides the spinning
+frequent :-)_ So **[`eatery-nod`]** provides the spinning
 wheel!
 
 
@@ -336,30 +334,18 @@ I hope you enjoy **feature-u**, and comments are always welcome.
 &lt;/Kevin&gt;
 
 
-
-<!--- TODO: ?? retrofit these links ---> 
-
-[feature-u]:               https://feature-u.js.org/
-[Getting Started]:        https://feature-u.js.org/start.html
-[Basics]:                 https://feature-u.js.org/basics.html
-[A Closer Look]:          https://feature-u.js.org/formalTypes.html
-[ActionStruct Shapes]:    https://feature-u.js.org/shapes.html
-[Parameter Validation]:   https://feature-u.js.org/validation.html
-[Defaulting Parameters]:  https://feature-u.js.org/default.html
-[Thunk Action Creators]:  https://feature-u.js.org/thunks.html
-[Action Promotion]:       https://feature-u.js.org/promotion.html
-[Action Documentation]:   https://feature-u.js.org/actionDoc.html
-[Distribution]:           https://feature-u.js.org/dist.html
-[Why feature-u?]:          https://feature-u.js.org/why.html
-[Revision History]:       https://feature-u.js.org/history.html
-[MIT License]:            https://feature-u.js.org/LICENSE.html
-[API Reference]:          https://feature-u.js.org/api.html
-[generateActions]:        https://feature-u.js.org/api.html#generateActions
-[ActionNodes]:            https://feature-u.js.org/api.html#ActionNodes
-[ActionGenesis]:          https://feature-u.js.org/api.html#ActionGenesis
-[actionMeta]:             https://feature-u.js.org/api.html#ActionMeta
-[actionMeta.traits]:      https://feature-u.js.org/api.html#ActionMeta
-[ActionStruct]:           https://feature-u.js.org/api.html#ActionStruct
-[redux]:                  http://redux.js.org/
-[actions]:                http://redux.js.org/docs/basics/Actions.html
-[action creators]:        http://redux.js.org/docs/basics/Actions.html#action-creators
+[`App`]:                          https://feature-u.js.org/cur/api.html#App
+[`Feature`]:                      https://feature-u.js.org/cur/api.html#Feature
+[`createFeature()`]:              https://feature-u.js.org/cur/api.html#createFeature
+[`launchApp()`]:                  https://feature-u.js.org/cur/api.html#launchApp
+[`registerRootAppElm()`]:         https://feature-u.js.org/cur/api.html#registerRootAppElmCB
+[`eatery-nod`]:                   https://github.com/KevinAst/eatery-nod
+[`expo`]:                         https://expo.io/
+[`feature-router`]:               https://github.com/KevinAst/feature-router
+[`react-native`]:                 https://facebook.github.io/react-native/
+[`react`]:                        https://reactjs.org/
+[`redux-logic`]:                  https://github.com/jeffbski/redux-logic
+[`redux`]:                        http://redux.js.org/
+[`Cross Feature Communication`]:  https://feature-u.js.org/cur/crossCommunication.html
+[`Extendable aspects`]:           https://feature-u.js.org/cur/detail.html#extendable-aspects
+[`React Registration`]:           https://feature-u.js.org/cur/detail.html#react-registration
