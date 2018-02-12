@@ -18,10 +18,12 @@ convenience this list:_
   * {{book.api.validateFeatureContentMeth$}}
   * {{book.api.assembleFeatureContentMeth$}}
   * {{book.api.assembleAspectResourcesMeth$}}
+  * {{book.api.initialRootAppElmMeth$}}
   * {{book.api.injectRootAppElmMeth$}}
 
 
-* {{book.api.addBuiltInFeatureKeyword$}}
+* {{book.api.extendAspectProperty$}}
+* {{book.api.extendFeatureProperty$}}
 
 
 

@@ -64,8 +64,14 @@
       "detail_doesFeatureExist":  "[`Does Feature Exist`](/detail.md#does-feature-exist)",
 
       "appLifeCycle":             "[`Application Life Cycle Hook`](/appLifeCycle.md)",
+
       "appWillStart":             "[`appWillStart`](/appLifeCycle.md#appwillstart)",
+      "appWillStartCB":           "[`Feature.appWillStart()`](/appLifeCycle.md#appwillstart)",
+      "appWillStartCB$":          "[`Feature.appWillStart({app, curRootAppElm}): rootAppElm || falsy`](/appLifeCycle.md#appwillstart)",
+
       "appDidStart":              "[`appDidStart`](/appLifeCycle.md#appDidStart)",
+      "appDidStartCB":            "[`Feature.appDidStart()`](/appLifeCycle.md#appDidStart)",
+      "appDidStartCB$":           "[`Feature.appDidStart({app, [appState], [dispatch]}): void`](/appLifeCycle.md#appDidStart)",
 
       "crossCom":                 "[`Cross Feature Communication`](/crossCommunication.md)",
       "crossCom_publicFaceApp":   "[`publicFace and the App Object`](/crossCommunication.md#publicface-and-the-app-object)",
@@ -84,11 +90,35 @@
 
       "coreApi":                  "[`Core API`](/coreApi.md)",
 
-      "extending":                    "[`Extending feature-u`](/extending.md)",
-      "extending_locatingExtensions": "[`Locating Extensions`](/extending.md#locating-extensions)",
-      "extending_aspect":             "[`Aspect Object`](/extending.md#aspect-object-extending-feature-u)",
+      "extending":                           "[`Extending feature-u`](/extending.md)",
+      "extending_locatingExtensions":        "[`Locating Extensions`](/extending.md#locating-extensions)",
+      "extending_aspectObject":              "[`Aspect Object`](/extending.md#aspect-object-extending-feature-u)",
+      "extending_definingAppElm":            "[`Defining rootAppElm`](/extending.md#defining-rootappelm)",
+      "extending_aspectCrossCommunication":  "[`Aspect Cross Communication`](/extending.md#aspect-cross-communication)",
+      "extending_aspectLifeCycleMethods":    "[`Aspect Life Cycle Methods`](/extending.md#aspect-life-cycle-methods)",
 
-      "extensionApi":                 "[`Extension API`](/extensionApi.md)",
+        "validateConfigurationMeth":     "[`Aspect.validateConfiguration()`](/extending.md#aspectvalidateconfiguration)",
+        "validateConfigurationMeth$":    "[`Aspect.validateConfiguration(): string`](/extending.md#aspectvalidateconfiguration)",
+
+        "expandFeatureContentMeth":      "[`Aspect.expandFeatureContent()`](/extending.md#aspectexpandfeaturecontent)",
+        "expandFeatureContentMeth$":     "[`Aspect.expandFeatureContent(app, feature): string`](/extending.md#aspectexpandfeaturecontent)",
+
+        "validateFeatureContentMeth":    "[`Aspect.validateFeatureContent()`](/extending.md#aspectvalidatefeaturecontent)",
+        "validateFeatureContentMeth$":   "[`Aspect.validateFeatureContent(feature): string`](/extending.md#aspectvalidatefeaturecontent)",
+
+        "assembleFeatureContentMeth":    "[`Aspect.assembleFeatureContent()`](/extending.md#aspectassemblefeaturecontent)",
+        "assembleFeatureContentMeth$":   "[`Aspect.assembleFeatureContent(app, activeFeatures): void`](/extending.md#aspectassemblefeaturecontent)",
+
+        "assembleAspectResourcesMeth":   "[`Aspect.assembleAspectResources()`](/extending.md#aspectassembleaspectresources)",
+        "assembleAspectResourcesMeth$":  "[`Aspect.assembleAspectResources(app, aspects): void`](/extending.md#aspectassembleaspectresources)",
+
+        "initialRootAppElmMeth":         "[`Aspect.initialRootAppElm()`](/extending.md#aspectinitialrootappelm)",
+        "initialRootAppElmMeth$":        "[`Aspect.initialRootAppElm(app, curRootAppElm): rootAppElm`](/extending.md#aspectinitialrootappelm)",
+
+        "injectRootAppElmMeth":          "[`Aspect.injectRootAppElm()`](/extending.md#aspectinjectrootappelm)",
+        "injectRootAppElmMeth$":         "[`Aspect.injectRootAppElm(app, curRootAppElm): rootAppElm`](/extending.md#aspectinjectrootappelm)",
+
+      "extensionApi":                        "[`Extension API`](/extensionApi.md)",
 
       "dist":                   "[`Distribution`](/dist.md)",
       "why":                    "[`Why feature-u?`](/why.md)",
@@ -106,14 +136,14 @@
       "coreApi":                    "[`Core API`](/coreApi.md)",
         "createFeature":            "[`createFeature()`](/api.md#createFeature)",
         "createFeature$":           "[`createFeature({name, [enabled], [publicFace], [appWillStart], [appDidStart], [pluggableAspects]}): Feature`](/api.md#createFeature)",
-          "appWillStartCB":         "[`appWillStartCB()`](/api.md#appWillStartCB)",
-          "appWillStartCB$":        "[`appWillStartCB({app, curRootAppElm}): rootAppElm || null`](/api.md#appWillStartCB)",
-          "appDidStartCB":          "[`appDidStartCB()`](/api.md#appDidStartCB)",
-          "appDidStartCB$":         "[`appDidStartCB({app, [appState], [dispatch]}): void`](/api.md#appDidStartCB)",
+          "appWillStartCB":         "[`appWillStart()`](/api.md#appWillStartCB)",
+          "appWillStartCB$":        "[`appWillStart({app, curRootAppElm}): rootAppElm || falsy`](/api.md#appWillStartCB)",
+          "appDidStartCB":          "[`appDidStart()`](/api.md#appDidStartCB)",
+          "appDidStartCB$":         "[`appDidStart({app, [appState], [dispatch]}): void`](/api.md#appDidStartCB)",
         "launchApp":                "[`launchApp()`](/api.md#launchApp)",
         "launchApp$":               "[`launchApp({[aspects], features, registerRootAppElm}): App`](/api.md#launchApp)",
-          "registerRootAppElmCB":   "[`registerRootAppElmCB()`](/api.md#registerRootAppElmCB)",
-          "registerRootAppElmCB$":  "[`registerRootAppElmCB(rootAppElm): void`](/api.md#registerRootAppElmCB)",
+          "registerRootAppElmCB":   "[`registerRootAppElm()`](/api.md#registerRootAppElmCB)",
+          "registerRootAppElmCB$":  "[`registerRootAppElm(rootAppElm): void`](/api.md#registerRootAppElmCB)",
         "managedExpansion":         "[`managedExpansion()`](/api.md#managedExpansion)",
         "managedExpansion$":        "[`managedExpansion(managedExpansionCB): managedExpansionCB`](/api.md#managedExpansion)",
           "managedExpansionCB":     "[`managedExpansionCB()`](/api.md#managedExpansionCB)",
@@ -122,20 +152,33 @@
       "extensionApi":                      "[`Extension API`](/extensionApi.md)",
         "createAspect":                    "[`createAspect()`](/api.md#createAspect)",
         "createAspect$":                   "[`createAspect({see-docs}): Aspect`](/api.md#createAspect)",
-          "validateConfigurationMeth":     "[`validateConfigurationMeth()`](/api.md#validateConfigurationMeth)",
-          "validateConfigurationMeth$":    "[`validateConfigurationMeth(): string`](/api.md#validateConfigurationMeth)",
-          "expandFeatureContentMeth":      "[`expandFeatureContentMeth()`](/api.md#expandFeatureContentMeth)",
-          "expandFeatureContentMeth$":     "[`expandFeatureContentMeth(app, feature): string`](/api.md#expandFeatureContentMeth)",
-          "validateFeatureContentMeth":    "[`validateFeatureContentMeth()`](/api.md#validateFeatureContentMeth)",
-          "validateFeatureContentMeth$":   "[`validateFeatureContentMeth(feature): string`](/api.md#validateFeatureContentMeth)",
-          "assembleFeatureContentMeth":    "[`assembleFeatureContentMeth()`](/api.md#assembleFeatureContentMeth)",
-          "assembleFeatureContentMeth$":   "[`assembleFeatureContentMeth(app, activeFeatures): void`](/api.md#assembleFeatureContentMeth)",
-          "assembleAspectResourcesMeth":   "[`assembleAspectResourcesMeth()`](/api.md#assembleAspectResourcesMeth)",
-          "assembleAspectResourcesMeth$":  "[`assembleAspectResourcesMeth(app, aspects): void`](/api.md#assembleAspectResourcesMeth)",
-          "injectRootAppElmMeth":          "[`injectRootAppElmMeth()`](/api.md#injectRootAppElmMeth)",
-          "injectRootAppElmMeth$":         "[`injectRootAppElmMeth(app, activeFeatures, curRootAppElm): reactElm`](/api.md#injectRootAppElmMeth)",
-        "addBuiltInFeatureKeyword":        "[`addBuiltInFeatureKeyword()`](/api.md#addBuiltInFeatureKeyword)",
-        "addBuiltInFeatureKeyword$":       "[`addBuiltInFeatureKeyword(keyword): void`](/api.md#addBuiltInFeatureKeyword)"
+
+          "validateConfigurationMeth":     "[`validateConfiguration()`](/api.md#validateConfigurationMeth)",
+          "validateConfigurationMeth$":    "[`validateConfiguration(): string`](/api.md#validateConfigurationMeth)",
+
+          "expandFeatureContentMeth":      "[`expandFeatureContent()`](/api.md#expandFeatureContentMeth)",
+          "expandFeatureContentMeth$":     "[`expandFeatureContent(app, feature): string`](/api.md#expandFeatureContentMeth)",
+
+          "validateFeatureContentMeth":    "[`validateFeatureContent()`](/api.md#validateFeatureContentMeth)",
+          "validateFeatureContentMeth$":   "[`validateFeatureContent(feature): string`](/api.md#validateFeatureContentMeth)",
+
+          "assembleFeatureContentMeth":    "[`assembleFeatureContent()`](/api.md#assembleFeatureContentMeth)",
+          "assembleFeatureContentMeth$":   "[`assembleFeatureContent(app, activeFeatures): void`](/api.md#assembleFeatureContentMeth)",
+
+          "assembleAspectResourcesMeth":   "[`assembleAspectResources()`](/api.md#assembleAspectResourcesMeth)",
+          "assembleAspectResourcesMeth$":  "[`assembleAspectResources(app, aspects): void`](/api.md#assembleAspectResourcesMeth)",
+
+          "initialRootAppElmMeth":         "[`initialRootAppElm()`](/api.md#initialRootAppElmMeth)",
+          "initialRootAppElmMeth$":        "[`initialRootAppElm(app, curRootAppElm): rootAppElm`](/api.md#initialRootAppElmMeth)",
+
+          "injectRootAppElmMeth":          "[`injectRootAppElm()`](/api.md#injectRootAppElmMeth)",
+          "injectRootAppElmMeth$":         "[`injectRootAppElm(app, curRootAppElm): rootAppElm`](/api.md#injectRootAppElmMeth)",
+
+        "extendAspectProperty":            "[`extendAspectProperty()`](/api.md#extendAspectProperty)",
+        "extendAspectProperty$":           "[`extendAspectProperty(name): void`](/api.md#extendAspectProperty)",
+
+        "extendFeatureProperty":           "[`extendFeatureProperty()`](/api.md#extendFeatureProperty)",
+        "extendFeatureProperty$":          "[`extendFeatureProperty(name): void`](/api.md#extendFeatureProperty)"
     },
 
     "ext": {

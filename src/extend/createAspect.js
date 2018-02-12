@@ -1,7 +1,7 @@
-import verify                    from '../util/verify';
-import isString                  from 'lodash.isstring';
-import isFunction                from 'lodash.isfunction';
-import {isBuiltInFeatureKeyword} from '../core/createFeature';
+import verify               from '../util/verify';
+import isString             from 'lodash.isstring';
+import isFunction           from 'lodash.isfunction';
+import {isFeatureProperty}  from '../core/createFeature';
 
 const default_validateConfiguration = (feature) => null;
 
@@ -13,7 +13,7 @@ function default_expandFeatureContent(app, feature) {
 
 const default_assembleAspectResources = (app, aspects) => null;
 
-const default_injectRootAppElm = (app, activeFeatures, curRootAppElm) => curRootAppElm;
+const default_processRootAppElm = (app, curRootAppElm) => curRootAppElm;
 
  
 /**
@@ -26,19 +26,15 @@ const default_injectRootAppElm = (app, activeFeatures, curRootAppElm) => curRoot
  * 
  * The essential characteristics of the {{book.api.Aspect}} life-cycle is to:
  * 
- * - accumulate aspect content across all features
+ * - accumulate {{book.api.AspectContent}} across all features
  * - perform the desired setup and configuration
  * - expose the framework in some way _(by injecting a component in the
- *   root DOM, or some "aspect cross-communication mechanism")_
+ *   root DOM, or some {{book.guide.extending_aspectCrossCommunication}}
+ *   mechanism)_
  * 
- * Typically the {{book.api.Aspect}} object will need to retain state between these
- * life-cycle methods in order to do it's job.
+ * The {{book.guide.extending}} section provides more insight on how
+ * {{book.api.Aspect}}s are created and used.
  * 
- * Some Aspects may rely on an "aspect cross-communication mechanism" to
- * accomplish it's work.  This is merely a proprietary Aspect method which
- * is documented and consumed by another Aspect.  Please refer to
- * [Aspect.additionalMethods()](#aspectadditionalmethods).
- *
  * **Please Note** this function uses named parameters.  The order in
  * which these items are presented represents the same order they are
  * executed.
@@ -88,19 +84,33 @@ const default_injectRootAppElm = (app, activeFeatures, curRootAppElm) => curRoot
  * feature content (i.e. after
  * {{book.api.assembleFeatureContentMeth}}).
  *
- * @param {injectRootAppElmMeth} [injectRootAppElm] an optional callback
- * hook that promotes some characteristic of this aspect within the
- * app root element (i.e. react component instance).
+ * @param {initialRootAppElmMeth} [initialRootAppElm] an optional
+ * callback hook that promotes some characteristic of this aspect
+ * within the `rootAppElm` ... the top-level react DOM that represents
+ * the display of the entire application.<br/><br/>
+ * 
+ * The {{book.guide.extending_definingAppElm}} section highlights when
+ * to use {{book.api.initialRootAppElmMeth}} verses
+ * {{book.api.injectRootAppElmMeth}}.
+ *
+ * @param {injectRootAppElmMeth} [injectRootAppElm] an optional
+ * callback hook that promotes some characteristic of this aspect
+ * within the `rootAppElm` ... the top-level react DOM that represents
+ * the display of the entire application.<br/><br/>
+ * 
+ * The {{book.guide.extending_definingAppElm}} section highlights when
+ * to use {{book.api.initialRootAppElmMeth}} verses
+ * {{book.api.injectRootAppElmMeth}}.
  * 
  * @param {Any} [additionalMethods] additional methods (proprietary to
  * specific Aspects), supporting two different requirements:<br/><br/>
  * 
  * 1. internal Aspect helper methods, and<br/><br/>
  * 
- * 2. APIs used in "aspect cross-communication" ... a contract
- *    between one or more aspects.  This is merely an API specified
- *    by one Aspect, and used by another Aspect, that is facilitate
- *    through the {{book.api.assembleAspectResourcesMeth$}}
+ * 2. APIs used in {{book.guide.extending_aspectCrossCommunication}}
+ *    ... a contract between one or more aspects.  This is merely an
+ *    API specified by one Aspect, and used by another Aspect, that is
+ *    facilitate through the {{book.api.assembleAspectResourcesMeth$}}
  *    hook.
  *
  * @return {Aspect} a new Aspect object (to be consumed by {{book.api.launchApp}}).
@@ -111,7 +121,8 @@ export default function createAspect({name,
                                       validateFeatureContent,
                                       assembleFeatureContent,
                                       assembleAspectResources=default_assembleAspectResources,
-                                      injectRootAppElm=default_injectRootAppElm,
+                                      initialRootAppElm=default_processRootAppElm,
+                                      injectRootAppElm=default_processRootAppElm,
                                       ...additionalMethods}={}) {
 
   // ***
@@ -122,7 +133,7 @@ export default function createAspect({name,
 
   check(name,            'name is required');
   check(isString(name),  'name must be a string');
-  check(!isBuiltInFeatureKeyword(name), `aspect name value: '${name}' is a reserved Feature keyword`);
+  check(!isFeatureProperty(name), `Aspect.name: '${name}' is a reserved Feature keyword`);
   // NOTE: Aspect.name uniqueness is validated in launchApp() (once we know all aspects in-use)
 
   check(isFunction(validateConfiguration),   'validateConfiguration (when supplied) must be a function');
@@ -137,9 +148,13 @@ export default function createAspect({name,
 
   check(isFunction(assembleAspectResources), 'assembleAspectResources (when supplied) must be a function');
 
+  check(isFunction(initialRootAppElm),       'initialRootAppElm (when supplied) must be a function');
+
   check(isFunction(injectRootAppElm),        'injectRootAppElm (when supplied) must be a function');
 
-
+  // ... additionalMethods
+  //     ... this validation occurs in launchApp()
+  //         BECAUSE we don't know the Aspects in use UNTIL run-time
 
   // ***
   // *** return our new Aspect object
@@ -152,10 +167,67 @@ export default function createAspect({name,
     validateFeatureContent,
     assembleFeatureContent,
     assembleAspectResources,
+    initialRootAppElm,
     injectRootAppElm,
     ...additionalMethods,
   };
 
+}
+
+
+/**
+ * Maintain all VALID Aspect properties.
+ *
+ * This is used to restrict Aspect properties to ONLY valid ones:
+ *  - preventing user typos
+ *  - validation is employed at run-time in launchApp()
+ *
+ * Initially seeded with Aspect builtins.
+ *
+ * Later, supplemented with extendAspectProperty(name) at run-time
+ * (via Aspect plugins).
+ *
+ * @private
+ */
+const validAspectProps = {
+  name:                     true,
+  validateConfiguration:    true,
+  expandFeatureContent:     true,
+  validateFeatureContent:   true,
+  assembleFeatureContent:   true,
+  assembleAspectResources:  true,
+  initialRootAppElm:        true,
+  injectRootAppElm:         true,
+};
+
+/**
+ * Is the supplied name a valid Aspect property?
+ *
+ * @param {string} name the property name to check.
+ *
+ * @param {boolean} true:  valid Aspect property,
+ *                  false: NOT a Aspect property
+ *
+ * @private
+ */
+export function isAspectProperty(name) {
+  return validAspectProps[name] || false;
+}
+
+/**
+ * Extend the supplied name as an Aspect property.  This is used by
+ * Aspects to extend Aspect APIs for
+ * {{book.guide.extending_aspectCrossCommunication}}.
+ *
+ * @param {string} name the property name to allow.
+ */
+export function extendAspectProperty(name) {
+
+  if (isAspectProperty(name)) {
+    throw new Error(`**ERROR** extendAspectProperty('${name}') ... 'Aspect.${name}' is already in use (i.e. it is already a valid Aspect property)!`);
+  }
+
+  validAspectProps[name] = true;
 }
 
 
@@ -323,7 +395,7 @@ export default function createAspect({name,
 //***
 
 /**
- * An optional Aspect method that assemble resources for this aspect
+ * An optional Aspect method that assembles resources for this aspect
  * across all other aspects, retaining needed state for subsequent
  * ops.  This hook is executed after all the aspects have assembled
  * their feature content (i.e. after
@@ -332,15 +404,10 @@ export default function createAspect({name,
  * **API:** {{book.api.assembleAspectResourcesMeth$}}
  *
  * This is an optional second-pass (so-to-speak) of Aspect data
- * gathering, that facilitates an "aspect cross-communication"
- * mechanism.  It allows a given aspect to gather resources from other
- * aspects, through a documented API for a given Aspect (ex:
- * Aspect.getXyz()).
- * 
- * As an example of this, the "reducer" aspect (which manages redux),
- * allows other aspects to inject their own redux middleware (ex:
- * redux-logic), through it's documented Aspect.getReduxMiddleware()
- * API.
+ * gathering, that facilitates
+ * {{book.guide.extending_aspectCrossCommunication}}.  It allows an
+ * extending aspect to gather resources from other aspects, using an
+ * additional API (ex: `Aspect.getXyz()`).
  *
  * @callback assembleAspectResourcesMeth
  *
@@ -355,17 +422,50 @@ export default function createAspect({name,
 
 
 //***
+//*** Specification: initialRootAppElmMeth
+//***
+
+/**
+ * An optional callback hook that promotes some characteristic of this
+ * aspect within the `rootAppElm` ... the top-level react DOM that
+ * represents the display of the entire application.
+ * 
+ * **API:** {{book.api.initialRootAppElmMeth$}}
+ * 
+ * The {{book.guide.extending_definingAppElm}} section highlights when
+ * to use {{book.api.initialRootAppElmMeth}} verses
+ * {{book.api.injectRootAppElmMeth}}.
+ *
+ * **NOTE**: When this hook is used, the supplied curRootAppElm MUST be
+ * included as part of this definition!
+ *
+ * @callback initialRootAppElmMeth
+ *
+ * @param {App} app the App object used in feature cross-communication.
+ * 
+ * @param {reactElm} curRootAppElm - the current react app element root.
+ *
+ * @return {reactElm} a new react app element root (which in turn must
+ * contain the supplied curRootAppElm), or simply the supplied
+ * curRootAppElm (if no change).
+ */
+
+
+
+//***
 //*** Specification: injectRootAppElmMeth
 //***
 
 /**
  * An optional callback hook that promotes some characteristic of this
- * aspect within the app root element (i.e. react component instance).
+ * aspect within the `rootAppElm` ... the top-level react DOM that
+ * represents the display of the entire application.
  * 
  * **API:** {{book.api.injectRootAppElmMeth$}}
  * 
- * All aspects will either promote themselves through this hook, -or-
- * through some "aspect cross-communication" mechanism.
+ * The {{book.guide.extending_definingAppElm}} section highlights when
+ * to use {{book.api.initialRootAppElmMeth}} verses
+ * {{book.api.injectRootAppElmMeth}}.
  *
  * **NOTE**: When this hook is used, the supplied curRootAppElm MUST be
  * included as part of this definition!
@@ -373,12 +473,6 @@ export default function createAspect({name,
  * @callback injectRootAppElmMeth
  *
  * @param {App} app the App object used in feature cross-communication.
- * 
- * @param {Feature[]} activeFeatures - The set of active (enabled)
- * features that comprise this application.  This can be used in an
- * optional Aspect/Feature cross-communication.  As an example, an Xyz
- * Aspect may define a Feature API by which a Feature can inject DOM
- * in conjunction with the Xyz Aspect DOM injection.
  * 
  * @param {reactElm} curRootAppElm - the current react app element root.
  *

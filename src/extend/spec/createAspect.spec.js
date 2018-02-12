@@ -77,7 +77,7 @@ describe('feature-u createAspect() tests', () => {
     });
 
     test('aspect.injectRootAppElm', () => {
-      expect(aspect.injectRootAppElm('app', 'activeFeatures', 'curRootAppElm')).toEqual('curRootAppElm');
+      expect(aspect.injectRootAppElm('app', 'curRootAppElm')).toEqual('curRootAppElm');
     });
   });
 
@@ -125,7 +125,7 @@ describe('feature-u createAspect() tests', () => {
 
     test('name value is a reserved Feature keyword', () => {
       expect(()=>createAspect({name:'appWillStart'}))
-        .toThrow(/aspect name value.* is a reserved Feature keyword/);
+        .toThrow(/Aspect.name: 'appWillStart' is a reserved Feature keyword/);
     });
   });
 

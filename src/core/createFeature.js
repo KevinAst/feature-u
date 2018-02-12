@@ -8,8 +8,8 @@ const noOp = () => null;
 /**
  * Create a new {{book.api.Feature}} object, cataloging
  * {{book.api.AspectContent}} to be consumed by
- * {{book.api.launchApp}}.  Each feature within an app promotes it's
- * own {{book.api.Feature}} object.
+ * {{book.api.launchApp}}.  Each feature within an application
+ * promotes it's own {{book.api.Feature}} object.
  *
  * For more information, please refer to
  * {{book.guide.detail_featureAndAspect}}, with examples at
@@ -49,8 +49,8 @@ const noOp = () => null;
  * plugable aspects) _(please refer to: {{book.guide.appDidStart}})_.
  * 
  * @param {AspectContent} [extendedAspect] additional aspects, as
- * defined by the feature-u's plugable Aspect extension _(please
- * refer to: {{book.guide.detail_extendableAspects}} -and-
+ * defined by the feature-u's Aspect plugins _(please refer to:
+ * {{book.guide.detail_extendableAspects}} -and-
  * {{book.guide.extending}})_.
  *
  * @return {Feature} a new Feature object (to be consumed by
@@ -86,6 +86,7 @@ export default function createFeature({name,
 
   // ... extendedAspect
   //     ... this validation occurs by the Aspect itself (via launchApp())
+  //         BECAUSE we don't know the Aspects in use UNTIL run-time (in launchApp)
 
   // create/return our new Feature object
   return {
@@ -101,7 +102,22 @@ export default function createFeature({name,
   };
 }
 
-const builtInFeatureKeywords = {
+
+/**
+ * Maintain all VALID Feature properties.
+ *
+ * This is used to restrict Feature properties to ONLY valid ones:
+ *  - preventing user typos
+ *  - validation is employed at run-time in launchApp()
+ *
+ * Initially seeded with Feature builtins.
+ *
+ * Later, supplemented with extendFeatureProperty(name) at run-time
+ * (via Aspect plugins).
+ *
+ * @private
+ */
+const validFeatureProps = {
   name:         true,
   enabled:      true,
   publicFace:   true,
@@ -110,27 +126,33 @@ const builtInFeatureKeywords = {
 };
 
 /**
+ * Is the supplied name a valid Feature property?
+ *
+ * @param {string} name the property name to check.
+ *
+ * @param {boolean} true:  valid Feature property,
+ *                  false: NOT a Feature property
+ *
  * @private
- * 
- * Return indicator as to whether the supplied keyword is a built-in
- * Feature keyword.
- *
- * @param {string} keyword the keyword name to check.
- *
- * @param {boolean} true: is keyword, false: is NOT keyword
  */
-export function isBuiltInFeatureKeyword(keyword) {
-  return builtInFeatureKeywords[keyword] || false;
+export function isFeatureProperty(name) {
+  return validFeatureProps[name] || false;
 }
 
 /**
- * Add additional Feature keyword (typically used by Aspect extensions
- * to Feature).
+ * Extend the supplied name as a Feature property.  This is used by
+ * Aspects to extend Feature APIs for
+ * {{book.guide.extending_aspectCrossCommunication}}.
  *
- * @param {string} keyword the keyword name to add.
+ * @param {string} name the property name to allow.
  */
-export function addBuiltInFeatureKeyword(keyword) {
-  builtInFeatureKeywords[keyword] = true;
+export function extendFeatureProperty(name) {
+
+  if (isFeatureProperty(name)) {
+    throw new Error(`**ERROR** extendFeatureProperty('${name}') ... 'Feature.${name}' is already in use (i.e. it is already a valid Feature property)!`);
+  }
+
+  validFeatureProps[name] = true;
 }
 
 
