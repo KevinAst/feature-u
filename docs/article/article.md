@@ -1,9 +1,11 @@
 # feature-u (Feature Based Project Organization for React)
 
-This article is an introduction to [feature-u] - a utility library that
+This article is an introduction to [feature-u] - a library that
 _facilitates feature-based project organization_ in your [react]
-project.  This library assists in organizing your project by
+project.  This utility assists in organizing your project by
 individual features.
+
+<p align="center"><img src="img/features.jpg" alt="Features" width="60%"></p>
 
 Most developers would agree that organizing your project by feature is
 much preferred over type-based patterns.  Because **application
@@ -12,12 +14,10 @@ simply doesn't scale**, _it just becomes unmanageable_!  There are
 many good articles on this topic with insights on feature-based design
 and structure _(see: [References] below)_.
 
-<p align="center"><img src="img/features.jpg" alt="Features" width="60%"></p>
-
-This article chronicles my excursion into feature-based composition.
-In working through the details, I realized there was an opportunity
-for a utility that helps to manage and streamline some of the hurdles
-incurred in this process.  The result: _[feature-u]_.
+This article outlines my excursion into feature-based composition.  In
+working through the details, I realized there was an opportunity for a
+library to help manage and streamline some of the hurdles incurred in
+this process.  The result: _[feature-u]_.
 
 
 <!-- *** SECTION ********************************************************************************  -->
@@ -27,22 +27,22 @@ Let's start by chronicling my journey in this process
 
 **out of the Starting Gate ...**
 
-<ul>
+<ul><!--- indentation hack for github - other attempts with style is stripped (be careful with number bullets) ---> 
 
-_sooo ...  I had decided to structure my project code by features_.
-From a design perspective, there were a number of considerations in
-determining the feature boundaries.  In general, I was feeling good
-about the progress.
+_sooo ...  I had decided to restructure my project by features_.  From
+a design perspective, there were a number of considerations in
+determining the feature boundaries.  I had read all the articles, and
+applied my design to a **new feature-based directory structure**.
 
-My intuition (guided by insights from other software engineers ?? and
-a long career) was starting to realize concrete benefits ... **feature
-segregation is going to result in code that much more manageable!**
+In general, I was feeling good about my progress.  I was starting to
+see concrete benefits ... **feature segregation was going to result in
+code that is much more manageable!**
 
 </ul>
 
 **the Hurdles ...**
 
-<ul>
+<ul><!--- indentation hack for github - other attempts with style is stripped (be careful with number bullets) ---> 
 
 However, there were a number of hurdles yet to be resolved ...
 
@@ -69,9 +69,9 @@ However, there were a number of hurdles yet to be resolved ...
 
 **the Goal _(what now?)_ ...**
 
-<ul>
+<ul><!--- indentation hack for github - other attempts with style is stripped (be careful with number bullets) ---> 
 
-The **overriding goal** of **feature-u** is actually two fold:
+The **overriding goal** of **feature-u** is two fold:
 
 1. Allow features to **Plug-and-Play!** This encompasses many things,
    such as: encapsulation, cross communication, enablement,
@@ -81,60 +81,62 @@ The **overriding goal** of **feature-u** is actually two fold:
 2. **Automate the startup of your application!!** You have the
    features.  Allow them to promote their characteristics, so a
    central utility can **automatically configure the frameworks** used
-   in your app, thereby **launching your application!**
-
-   This task **must be accomplished in an extendable way**, _because
-   not everyone uses the same set of frameworks!_
+   in your app, thereby **launching your application!** This task
+   **must be accomplished in an extendable way**, _because not
+   everyone uses the same set of frameworks!_
 
 </ul>
-
 
 <!-- *** SECTION ********************************************************************************  -->
 ## feature-u Basics
 
-The basic process of feature-u is that each feature promotes a
-`Feature` object that contains various aspects of that feature
+The basic process of [feature-u] is that each feature promotes a
+[`Feature`] object that contains various aspects of that feature
 ... _things like: the feature's name, it's Public API, whether it is
-enabled, initialization constructs, and resources used in configuring
-it's slice of the frameworks in use._ 
+enabled, initialization constructs, and resources used to configure
+it's slice of the frameworks in use._
 
-In turn, these Feature objects are supplied to `launchApp()`, which
-configures and starts your application, returning an [App
-Object](#app-object) (_which promotes the public API of each
-feature_).
+In turn, these [`Feature`] objects are supplied to [`launchApp()`],
+which configures and starts your application, returning an [`App`]
+object (_which promotes the public API of each feature_).
+
+_aspects ..._
 
 In **feature-u**, "aspect" is a generalized term used to refer to the
 various ingredients that (when combined) constitute your application.
-Aspects can take on many different forms: **UI Components** and **Routes**
-&bull; **State Management** _(actions, reducers, selectors)_ &bull;
-**Business Logic** &bull; **Startup Initialization Code** &bull;
-_etc._
+Aspects can take on many different forms: **UI Components** and
+**Routes** &bull; **State Management** _(actions, reducers,
+selectors)_ &bull; **Business Logic** &bull; **Startup Initialization
+Code** &bull; _etc. etc. etc._
 
 **Not all aspects are of interest to feature-u** ...  _only those that
-are needed to setup and launch the app_ ... all others are
-considered to be an internal implementation detail of the feature.  As
-an example, consider the redux state manager: while it uses actions,
-reducers, and selectors ... only reducers are needed to setup and
-configure redux.
+are needed to setup and launch the app_ ... all others are considered
+an internal implementation detail of the feature.  As an example,
+consider the redux state manager: while it uses actions, reducers, and
+selectors ... only reducers are needed to setup and configure redux.
 
-A fundemental goal of **feature-u** is to **automatically configure
+_framework integration ..._
+
+A fundamental goal of **feature-u** is to **automatically configure
 the framework(s)** used in your run-time-stack _(by accumulating the
 necessary resources across all your features)_.  Because not everyone
 uses the same frameworks, **feature-u** accomplishes this through
-**Extendable Aspects** _(you can find them in external packages, or
-you can create your own)_.  It is important to understand that the
-interface to your chosen frameworks is not altered in any way _(you
-use them the same way you always have)_. It's just that now you are
-dealing with a **smaller context** ... _within the boundaries of your
-feature_!
+**Extendable Aspects** _(you can find them in external NPM packages,
+or you can create your own)_.
+
+It is important to understand that the interface to your chosen
+frameworks is not altered in any way.  You use them the same way you
+always have _(just within your feature boundary)_.  **feature-u**
+merely provides a well defined organizational layer, where the
+frameworks are automatically setup and configured by accumulating the
+necessary resources across all your features.
 
 
 <!-- *** SECTION ********************************************************************************  -->
 ## eatery-nod
 
-**eatery-nod** is the application _where **feature-u** was developed_.
-It is a [react-native](https://facebook.github.io/react-native/)
-[Expo](https://expo.io/) mobile app, and is one of my sandbox
+[eatery-nod] is the application _where **feature-u** was conceived_.
+It is a [react-native] - [expo] mobile app, and is one of my sandbox
 applications that I use to test frameworks.  I like to develop apps
 that I can use, but have enough real-world requirements to make it
 interesting.
@@ -148,46 +150,147 @@ always indecisive on which of our favorite restaurants to frequent
 <!-- *** SECTION ********************************************************************************  -->
 ## Before & After
 
-Speaking of my wife, she will attest that I have an appreciation for a
+Anyone who knows me will tell you that I have an appreciation for a
 good before/after analysis.  Whether it is a home remodel or a
-software refactor, it helps in chronicling where you have been and
-gives you a sense of accomplishment.
+software refactor, it helps to chronicle where you have been, so as to
+quantify concreate achevements _(giving you a sense of
+accomplishment)_.
+
+<p align="center"><img src="img/beforeAfter.jpg" alt="Before/After" width="40%"></p>
 
 Let's take a look at **eatery-nod**'s directory structure
 (before/after).
 
-<p align="center"><img src="img/beforeAfter.jpg" alt="Before/After" width="40%"></p>
+For illustration purposes, I have only expanded a few directories, but
+I think you get the idea _(click on the caption link to navigate the
+actual code - sourced in github)_.
 
-**Here is my project before features:**
+**Before**: _here is my project before features ..._
 
-?? BEFORE directory structure WITH live links
+[src BEFORE]
 
-**And here is the same project after features:**
+```
+eatery-nod src BEFORE features
 
-?? AFTER directory structure WITH live links
+src/
+├──actions/        ... redux actions
+│     auth.js
+│     discovery.js
+│     eateries.js
+│     ... snip snip
+├──api/            ... various abstract APIs
+│     device.js
+│     discovery.js
+│     ... snip snip
+├──app/            ... mainline startup
+│  │  ScreenRouter.js
+│  │  SideBar.js
+│  │  index.js
+│  └──startup/
+│     │  createAppStore.js
+│     │  platformSetup.android.js
+│     │  platformSetup.ios.js
+│     └──firebase/
+│           firebaseAppConfig.js
+│           initFireBase.js
+├──appState/       ... redux reducers
+│     auth.js
+│     discovery.js
+│     eateries.js
+│     ... snip snip
+├──comp/           ... UI Component Screens
+│     DiscoveryListScreen.js
+│     EateriesListScreen.js
+│     ... snip snip
+├──logic/          ... redux-logic modules
+│     auth.js
+│     discovery.js
+│     eateries.js
+│     ... snip snip
+└──util/           ... common utilities
+```
 
-As expected, the difference in project organization is obvious and
-dramatic.  Each feature is located in it's own directory, and contains
-it's own slice of aspects (actions, reducers, components, routes,
-logic, etc.).
 
 
-**eatery-nod feature orientation**
+**After**: _and here is the same project after features ..._
+
+[src AFTER]
+```
+eatery-nod src AFTER features
+
+src/
+│  app.js          ... launches app via launchApp()
+├──feature/
+│  │  index.js     ... accumulate/promote all app Feature objects
+│  ├──auth/        ... the app's authorization feature
+│  │  │  actions.js
+│  │  │  featureName.js
+│  │  │  index.js
+│  │  │  logic.js
+│  │  │  publicFace.js
+│  │  │  route.js
+│  │  │  signInFormMeta.js
+│  │  │  state.js
+│  │  └──comp/
+│  │        SignInScreen.js
+│  │        SignInVerifyScreen.js
+│  ├──currentView/ ... other features
+│  ├──device/      ... feature to initialize the device
+│  │  │  actions.js
+│  │  │  api.js
+│  │  │  appDidStart.js
+│  │  │  appWillStart.js
+│  │  │  featureName.js
+│  │  │  index.js
+│  │  │  logic.js
+│  │  │  publicFace.js
+│  │  │  route.js
+│  │  │  state.js
+│  │  └──init/
+│  │        platformSetup.android.js
+│  │        platformSetup.ios.js
+│  ├──discovery/
+│  ├──eateries/
+│  ├──firebase/
+│  ├──leftNav/
+│  ├──logActions/
+│  └──sandbox/
+└──util/           ... common utilities used across all features
+```
+
+As expected, **the difference in project organization is dramatic**!
+
+- **Before features**: you find constructs for a given feature spread
+  over numerious typed directories.
+
+- **After features**: all aspects of a given feature are contained in
+  it's own isolated directory.
+
+- A notable difference is **the dramatic reduction in complexity of
+  the application startup process!** The "before features" contained
+  an entire `app\` directory of startup code, while the "after
+  features" simply contains a single `app.js` startup file.  **Where
+  did all the complexity go?** _... stay tuned_!
+
+
+
+**SideBar**: _**eatery-nod** feature orientation ..._
 
 You can get a feel for what each **eatery-nod** feature accomplishes,
-by perusing the README files found in each feature directory.  Take
-some time now and skim through these READMEs.
+by perusing the [README files] found in each feature directory.
+Screen flows are even shown _(where applicable)_, so it really helps
+in orienting you to the project.  Take some time now and skim through
+these [README files]:
 
-?? link directly into each README -OR- simply link to src/feature/README.md which does THIS
-- **'device'**:      initializes the device for use by the app, and promotes a **device api** abstraction
-- **'auth'**:        promotes complete user authentication
-- **'leftNav'**:     promotes the app-specific Drawer/SideBar on the app's left side
-- **'currentView'**: maintains the currentView with get/set cross-feature communication bindings
-- **'eateries'**:    manages and promotes the eateries view
-- **'discovery'**:   manages and promotes the discovery view
-- **'firebase'**:    initializes the google firebase service
-- **'logActions'**:  logs all dispatched actions and resulting state
-- **'sandbox'**:     promotes a variety of interactive tests, used in development, that can easily be disabled
+- [device]:      initializes the device for use by the app, and promotes a **device api** abstraction
+- [auth]:        promotes complete user authentication
+- [leftNav]:     promotes the app-specific Drawer/SideBar on the app's left side
+- [currentView]: maintains the currentView with get/set cross-feature communication bindings
+- [eateries]:    manages and promotes the eateries view
+- [discovery]:   manages and promotes the discovery view
+- [firebase]:    initializes the google firebase service
+- [logActions]:  logs all dispatched actions and resulting state
+- [sandbox]:     promotes a variety of interactive tests, used in development, that can easily be disabled
 
 
 
@@ -199,10 +302,12 @@ To better understand **feature-u**, let's take a closer look at some
 
 <p align="center"><img src="img/examples.jpg" alt="Examples" width="60%"></p>
 
-Each of the following sections briefly introduces a new topic in
-**feature-u**, correlating example code from **eatery-nod**.
-Additional information is supplied through links to both the
-**feature-u** docs, and **eatery-nod** source code.
+Each of the following sections briefly introduce a new **feature-u**
+topic, correlating sample code from **eatery-nod**.  Additional
+information is provided through links, both to the **feature-u** docs,
+and **eatery-nod** source code.  In some cases the in-line sample code
+has been streamlined _(to emphasize a focal point)_, however the links
+will take you to the actual code _(hosted in github)_.
 
 - [Simplified App Startup](#simplified-app-startup)
 - [React Platforms](#react-platforms)
@@ -229,7 +334,7 @@ Additional information is supplied through links to both the
 After breaking your application into pieces _(i.e. features)_, how do
 you pull it all together, and actually start your app running?  At
 first glance, this may seem like a daunting task.  As it turns out,
-however, because of the structure promoted by feature-u, it actually
+however, because of the structure promoted by **feature-u**, it actually
 is a very simple process.
 
 To solve this, **feature-u** provides the `launchApp()` function
@@ -675,7 +780,7 @@ expansion time, you simply wrap the definition in a
 can either be the actual content itself (ex: a reducer), or a function
 that returns the content.
 
-When this is done, feature-u will expand it by invoking it in a
+When this is done, **feature-u** will expand it by invoking it in a
 controlled way, passing the fully resolved `app` object as a
 parameter.
 
@@ -879,8 +984,32 @@ end" of your features!** _Go forth and compute!!_
 <!--- internal references ---> 
 [References]:       #references
 
+<!--- eatery-nod TODO: eventually change BRANCH: organize-by-feature TO TAG: after-features ---> 
+[eatery-nod]:   https://github.com/KevinAst/eatery-nod/tree/organize-by-feature
+[src BEFORE]:   https://github.com/KevinAst/eatery-nod/tree/before-features/src
+[src AFTER]:    https://github.com/KevinAst/eatery-nod/tree/organize-by-feature/src
+[README files]: https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/README.md
+[device]:       https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/device/README.md
+[auth]:         https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/auth/README.md
+[leftNav]:      https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/leftNav/README.md
+[currentView]:  https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/currentView/README.md
+[eateries]:     https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/eateries/README.md
+[discovery]:    https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/discovery/README.md
+[firebase]:     https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/firebase/README.md
+[logActions]:   https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/logActions/README.md
+[sandbox]:      https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/sandbox/README.md
+
+
+
+
+
 <!--- feature-u ---> 
 [feature-u]:        https://feature-u.js.org/
+[`Feature`]:        https://feature-u.js.org/cur/api.html#Feature
+[`launchApp()`]:    https://feature-u.js.org/cur/api.html#launchApp
+[`App`]:            https://feature-u.js.org/cur/api.html#App
 
 <!--- react ---> 
 [react]:            https://reactjs.org/
+[react-native]:     https://facebook.github.io/react-native/
+[expo]:             https://expo.io/
