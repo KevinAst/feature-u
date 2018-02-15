@@ -163,7 +163,7 @@ Let's take a look at **eatery-nod**'s directory structure
 
 For illustration purposes, I have only expanded a few directories, but
 I think you get the idea _(click on the caption link to navigate the
-actual code - sourced in github)_.
+actual code - sourced on github)_.
 
 **Before**: _here is my project before features ..._
 
@@ -182,7 +182,7 @@ src/
 │     device.js
 │     discovery.js
 │     ... snip snip
-├──app/            ... mainline startup
+├──app/            ... mainline startup **1**
 │  │  ScreenRouter.js
 │  │  SideBar.js
 │  │  index.js
@@ -219,7 +219,7 @@ src/
 eatery-nod src AFTER features
 
 src/
-│  app.js          ... launches app via launchApp()
+│  app.js          ... launches app via launchApp() **2**
 ├──feature/
 │  │  index.js     ... accumulate/promote all app Feature objects
 │  ├──auth/        ... the app's authorization feature
@@ -268,9 +268,10 @@ As expected, **the difference in project organization is dramatic**!
 
 - A notable difference is **the dramatic reduction in complexity of
   the application startup process!** The "before features" contained
-  an entire `app\` directory of startup code, while the "after
-  features" simply contains a single `app.js` startup file.  **Where
-  did all the complexity go?** _... stay tuned_!
+  an entire `app\` directory of startup code _(see `**1**` above)_,
+  while the "after features" simply contains a single `app.js` startup
+  file _(see `**2**` above)_.  **Where did all the complexity go?**
+  _... stay tuned_!
 
 
 
@@ -305,63 +306,65 @@ To better understand **feature-u**, let's take a closer look at some
 Each of the following sections briefly introduce a new **feature-u**
 topic, correlating sample code from **eatery-nod**.  Additional
 information is provided through links, both to the **feature-u** docs,
-and **eatery-nod** source code.  In some cases the in-line sample code
-has been streamlined _(to emphasize a focal point)_, however the links
-will take you to the actual code _(hosted in github)_.
+and **eatery-nod** source code.  In some cases the in-lined sample
+code has been streamlined _(to emphasize a focal point)_, however the
+caption link will take you to the actual code _(hosted on github)_.
 
-- [Simplified App Startup](#simplified-app-startup)
-- [React Platforms](#react-platforms)
-- [Initialization](#initialization)
-- [Feature Collaboration](#feature-collaboration)
-- [Framework Integration](#framework-integration)
-- [Feature Enablement](#feature-enablement)
-- [Managed Code Expansion](#managed-code-expansion)
-- [MORE](#xx??$$)
-- ? 
-
-<!-- ??$$ more ... pull from Why feature-u -->
-
-- ? UI Component Promotion
-- ? Single Source of Truth
+0. INTERNAL: markdown shows order from "Why" section
+9. [Simplified App Startup](#simplified-app-startup)
+0. [React Platforms](#react-platforms)
+3. [Initialization](#initialization)
+2. [Feature Collaboration](#feature-collaboration)
+6. [Framework Integration](#framework-integration)
+4. [Feature Enablement](#feature-enablement)
+5. [Managed Code Expansion](#managed-code-expansion)
+7. ?? UI Component Promotion
+8. ?? Single Source of Truth
 
 
+<!-- 
+"Why feature-u" docs section
+   ... it should be OK to re-order
+   ... emphasizing a progression that makes sense
+
+1. Feature Encapsulation <<< ABSTRACT CONCEPT NOT presented here (it is an amalgamation of several items)
+2. Feature Collaboration
+3. Feature Initialization
+4. Feature Enablement
+5. Resource Resolution during Code Expansion
+6. Framework Integration
+7. UI Component Promotion
+8. Single Source of Truth
+9. Simplified App Startup
+-->
 
 
 
 <!-- ** SUB-SECTION ********************************************************************************  -->
 ## Simplified App Startup
 
-After breaking your application into pieces _(i.e. features)_, how do
-you pull it all together, and actually start your app running?  At
-first glance, this may seem like a daunting task.  As it turns out,
-however, because of the structure promoted by **feature-u**, it actually
-is a very simple process.
+After breaking your application up into pieces _(i.e. features)_, how
+do you pull them all back together, and actually start your app
+running?  At first glance, this may seem like a daunting task.  As it
+turns out, however, because of the structure promoted by
+**feature-u**, it actually is a very simple process.
 
-To solve this, **feature-u** provides the `launchApp()` function
-_(see: [Launching Your Application](#launching-your-application))_.
+To solve this, **feature-u** provides the [`launchApp()`] function
+_(see: [Launching Your Application])_.
 
 Here is **eatery-nod**'s mainline ...
 
-The first thing to note is just how simple the mainline startup
-process is.  It's actually very generic.  There is no real
-app-specific code in it.  That is because **feature-u** provides
-various hooks that allows our features to inject their own
-app-specific constructs.
-
-The code merely accumulates the Aspects and Features, and starts the
-app by invoking `launchApp()`:
-
-**`src/app.js`**
+**[`src/app.js`]** GIST with Caption Link HIGHLIGHTING the launchApp() line
 ```js
-import ReactDOM          from 'react-dom';
+import Expo              from 'expo';
 import {launchApp}       from 'feature-u';
 import {reducerAspect}   from 'feature-redux';
 import {logicAspect}     from 'feature-redux-logic';
 import {routeAspect}     from 'feature-router';
-import features          from './feature';
+import features          from './feature'; // the set of features that comprise this application
 
 // launch our app, exposing the App object (facilitating cross-feature communication)
-export default launchApp({           // *4*
+export default launchApp({           // *3*
 
   aspects: [                         // *1*
     reducerAspect, // redux          ... extending: Feature.reducer
@@ -371,37 +374,50 @@ export default launchApp({           // *4*
 
   features,                          // *2*
 
-  registerRootAppElm(rootAppElm) {   // *3*
-    ReactDOM.render(rootAppElm,
-                    getElementById('myAppRoot'));
+  registerRootAppElm(rootAppElm) {   // *4*
+    Expo.registerRootComponent(()=>rootAppElm);
   }
 });
 ```
 
-**Notice** that the Aspects used here define the frameworks used in
-our run-time stack, extending what can be accumulated in `Feature`
-aspect properties, automatically configuring the framework from the
-accumulation of Feature aspects.  For **eatery-nod** our run-time
-stack includes [redux], [redux-logic], and [StateRouter], extending
-the **Feature Object** to accept `Feature.reducer`, `Feature.logic`,
-`Feature.route` aspects respectively ... _see [Framework Integration](#framework-integration)_.
+The first thing to note is just how simple and generic the mainline
+startup process is.  There is no real app-specific code in it
+... **not even any global initialization**!  That is because
+**feature-u** provides various hooks that allow your features to
+inject their own app-specific constructs!!
 
-**Also Notice** that we export the **App Object**, returned from
-`launchApp()` in order to promote the **Public API** of our features
-... _please refer to [Feature Collaboration](#feature-collaboration)_.
+The mainline merely accumulates the Aspects and Features, and starts
+the app by invoking [`launchApp()`]:
+
+Here are some **important points of interest** _(match the numbers to
+`*n*` in the code above)_:
+
+1. the supplied Aspects _(pulled from separate npm packages)_ reflect
+   the frameworks of our run-time stack _(in our example [redux],
+   [redux-logic], and [feature-router])_ and extend the acceptable
+   Feature properties _(`Feature.reducer`, `Feature.logic`, and
+   `Feature.route` respectively)_ ... _**see:** [Extendable aspects]_
+
+2. all app features are accumulated from our `feature/` directory
+
+3. _as a preview_ to [Feature Collaboration](#feature-collaboration)
+   (TK link), the exported return value of [`launchApp()`] is an
+   [`App`] object, which promotes the accumulated Public API of all
+   features.
+
 
 
 <!-- *** SECTION ********************************************************************************  -->
 ## React Platforms
 
-In the example above, you see that `launchApp()` uses a
-`registerRootAppElm()` callback hook to register the supplied
-`rootAppElm` to the specific React framework in use.  Because this
+In the example above _(see `**4**`)_, you see that [`launchApp()`] uses
+a [`registerRootAppElm()`] callback hook to register the supplied
+`rootAppElm` to the specific React platform in use.  Because this
 registration is accomplished by app-specific code, **feature-u** can
-operate in any of the React platforms, such as:
+operate in any of the React platforms _(see [React Registration])_.
+For example:
 
-
-**React Web**
+**[react web]** GIST with Caption Link to external site (NOT eatery-nod code)
 ```js
 import ReactDOM from 'react-dom';
 ...
@@ -415,7 +431,7 @@ export default launchApp({
 });
 ```
 
-**React Native**
+**[react-native]** GIST with Caption Link to external site (NOT eatery-nod code)
 ```js
 import {AppRegistry} from 'react-native';
 ...
@@ -429,7 +445,7 @@ export default launchApp({
 });
 ```
 
-**Expo**
+**[expo]** GIST with Caption Link to external site (NOT eatery-nod code)
 ```js
 import Expo from 'expo';
 ...
@@ -444,10 +460,11 @@ export default launchApp({
 
 
 
-
-
 <!-- *** SECTION ********************************************************************************  -->
 ## Initialization
+
+??$$ NUMBER 3
+
 
 Any given feature should not have to rely on an external startup
 process to perform the initialization that it needs.  Rather, the
@@ -607,9 +624,32 @@ export default {
 };
 ```
 
-Out of all the functionality found in in `auth`, only two actions and
-one selector is public.  They can be accessed through the App object
-as follows:
+Out of all the functionality found in `auth`, only two actions and one
+selector are public.
+
+The [`App`] object contains named feature nodes, and is exported to
+provide [Cross Feature Communication] ... _here is what app looks like
+(for this example):_
+
+```js
+app: {
+  auth: {
+    actions: {
+      userProfileChanged(userProfile),
+      signOut(),
+    },
+    sel: {
+      getUserPool(appState),
+    },
+  },
+  currentView: { ... other features (snip snip)
+    ...
+  },
+}
+```
+
+As a result, other features can access the `auth` public API as
+follows:
 
 ```js
   app.auth.actions.userProfileChanged(userProfile)
@@ -817,10 +857,6 @@ expand it in a controlled way, passing the fully resolved `app` object
 as a parameter.
 
 
-??$$ current point ********************************************************************************
-
-
-
 
 
 <!-- *** SECTION ********************************************************************************  -->
@@ -998,18 +1034,27 @@ end" of your features!** _Go forth and compute!!_
 [firebase]:     https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/firebase/README.md
 [logActions]:   https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/logActions/README.md
 [sandbox]:      https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/sandbox/README.md
-
+[`src/app.js`]: https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/app.js
 
 
 
 
 <!--- feature-u ---> 
 [feature-u]:        https://feature-u.js.org/
+[feature-router]:   https://github.com/KevinAst/feature-router
 [`Feature`]:        https://feature-u.js.org/cur/api.html#Feature
 [`launchApp()`]:    https://feature-u.js.org/cur/api.html#launchApp
 [`App`]:            https://feature-u.js.org/cur/api.html#App
+[`registerRootAppElm()`]:      https://feature-u.js.org/cur/api.html#registerRootAppElmCB
+[Launching Your Application]:  https://feature-u.js.org/cur/detail.html#launching-your-application
+[Extendable aspects]:          https://feature-u.js.org/cur/detail.html#extendable-aspects
+[React Registration]:          https://feature-u.js.org/cur/detail.html#react-registration
+[Cross Feature Communication]: https://feature-u.js.org/cur/crossCommunication.html
 
-<!--- react ---> 
+<!--- react etal ---> 
 [react]:            https://reactjs.org/
+[react web]:        https://reactjs.org/
 [react-native]:     https://facebook.github.io/react-native/
 [expo]:             https://expo.io/
+[redux]:            http://redux.js.org/
+[redux-logic]:      https://github.com/jeffbski/redux-logic
