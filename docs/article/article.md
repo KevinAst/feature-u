@@ -323,7 +323,7 @@ TK: update links
 4. [Feature Enablement](#feature-enablement)
 5. [Managed Code Expansion](#managed-code-expansion)
 7. [UI Component Promotion](#ui-component-promotion)
-8. ?? Single Source of Truth
+8. [Single Source of Truth](#single-source-of-truth)
 
 
 <!-- 
@@ -524,7 +524,7 @@ YES: firebase/appWillStart . initFireBase()
 
 - **Bootstrap Action**
 
-  **[`src/feature/device/appDidStart.js`]** via **[`src/feature/device/index.js`]** TK: GIST with Caption Link HIGHLIGHTING appDidStart() RANGE
+  **[`src/feature/device/appDidStart.js`]** via **[`src/feature/device/index.js62`]** TK: GIST with Caption Link HIGHLIGHTING appDidStart() RANGE
   ```js
   import actions  from './actions';
 
@@ -679,7 +679,7 @@ YES: device/state.js .... simplest state
 NO:  many others
 -->
 
-**[`src/feature/device/index.js`]** TK: GIST with Caption Link HIGHLIGHTING reducer
+**[`src/feature/device/index.js57`]** TK: GIST with Caption Link HIGHLIGHTING reducer
 ```js
 import {createFeature}  from 'feature-u';
 import name             from './featureName';
@@ -873,7 +873,7 @@ YES: device/route.js .... simplest route
 NO:  many others
 -->
 
-**[`src/feature/device/route.js`]** via **[`src/feature/device/index.js`]** TK: GIST with Caption Link HIGHLIGHTING route
+**[`src/feature/device/route.js`]** via **[`src/feature/device/index.js49`]** TK: GIST with Caption Link HIGHLIGHTING route
 ```js
 import React                from 'react';
 import {isDeviceReady,
@@ -913,31 +913,71 @@ screens in an encapsulated and autonomous way**!
 
 
 <!-- *** SECTION ********************************************************************************  -->
-## XXX 
+## Single Source of Truth
 
-??$$ NUMBER ??
+Feature implementations (like all coding constructs) should strive to
+follow the **single-source-of-truth** principle.  In doing this, a
+single line modification can propagate to many areas of your
+implementation.
 
-Bla ???
+What are some **Best Practices** for **single-source-of-truth** as it
+relates to features, and how can **feature-u** help?
 
-To solve this, **feature-u** ?? introduces ??
+The [Best Practices] section highlights a number of feature-based
+**single-source-of-truth** items of interest.  These are guidelines,
+because you must implement them in your application code
+_(i.e. **feature-u** is not in control of this)_.
 
-Here are some examples from **eatery-nod**:
+Here is an example from the [eateries] feature:
 
 <!-- 
-NO:  ?? device/appWillStart ... platformSetup()
-YES: ?? device/appDidStart .... dispatch( actions.bootstrap() );
+YES: eateries/state.js ... uses featureName and reducer.getSlicedState()
+NO:  ... many more
 -->
 
+**[`src/feature/eateries/state.js`]** via **[`src/feature/eateries/index.js`]** TK: GIST with Caption Link HIGHLIGHTING junk
+```js
+// ***
+// *** the eateries feature reducer
+// ***
+                                      // *1*
+const reducer = slicedReducer(`view.${featureName}`, managedExpansion( () => combineReducers({
+  ... snip snip
+}) ) );
 
-- **Xxx**
 
-  **`src/feature/firebase/xxx.js`**
-  ```js
-  xxx
-  ```
+// ***
+// *** eateries feature selectors
+// ***
+                                   /** Our feature state root (via slicedReducer as a single-source-of-truth) */
+const getFeatureState            = (appState) => reducer.getSlicedState(appState); // *2*
+const gfs = getFeatureState;       // ... concise alias (used internally)
+
+export const getDbPool           = (appState) => gfs(appState).dbPool;
+
+... snip snip
+```
+
+The `featureName` is used to specify the top-level state location of
+this feature (see `*1*`).  **feature-u** guarantees the feature name
+is unique.  As a result, it can be used to qualify the identity of
+several feature aspects.  For example:
+
+- prefix action types with featureName, guaranteeing their uniqueness app-wide
+  _(see: [feature-redux](https://github.com/KevinAst/feature-redux#action-uniqueness-single-source-of-truth) docs)_
+
+- prefix logic module names with featureName, identifying where that module lives
+  _(see: [feature-redux-logic](https://github.com/KevinAst/feature-redux-logic#single-source-of-truth) docs)_
+
+- depending on the context, the featureName can be used as the root of your feature state's shape
+  _(see: [feature-redux](https://github.com/KevinAst/feature-redux#state-root-single-source-of-truth) docs)_
 
 
-
+Because **feature-u** relies on [`slicedReducer()`] (in the
+[feature-redux] package), a best practice is to use the reducer's
+embellished selector to qualify your feature state root in all your
+selector definitions.  As a result the slice definition is maintained
+in one spot (see `*2*`).
 
 
 
@@ -990,10 +1030,6 @@ In summary, the benefits of using **feature-u** include:
 - **Operates in any React Platform** _(React Web, React Native, Expo,
   etc.)_
 
-
-<!-- ?? trash (I think):
-- **Manages Feature Aspects** _accumulation, setup, configure, etc._
--->
 
 Hopefully this article gives you a feel for how **feature-u** can
 improve your project.  Please refer to the full documentation for more
@@ -1082,14 +1118,12 @@ end" of your features!** _Go forth and compute!!_
 [logActions]:   https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/logActions/README.md
 [sandbox]:      https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/sandbox/README.md
 
-<!--- ?? resolve some index files repeated ---> 
-
 [`src/app.js`]:                           https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/app.js#L28-L34
 
 [`src/feature/firebase/index.js`]:        https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/firebase/index.js#L11-L13
 
 [`src/feature/device/appDidStart.js`]:    https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/device/appDidStart.js#L7-L9
-[`src/feature/device/index.js`]:          https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/device/index.js#L62
+[`src/feature/device/index.js62`]:          https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/device/index.js#L62
 
 [`src/feature/leftNav/appWillStart.js`]:  https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/leftNav/appWillStart.js#L10-L18
 [`src/feature/leftNav/index.js`]:         https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/leftNav/index.js#L24
@@ -1098,13 +1132,18 @@ end" of your features!** _Go forth and compute!!_
 [`src/feature/auth/index.js`]:            https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/auth/index.js#L49
 [`src/feature/auth/logic.js`]:            https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/auth/logic.js#L18-L27
 
-[`src/feature/device/index.js`]:          https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/device/index.js#L57
+[`src/feature/device/index.js57`]:          https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/device/index.js#L57
 [`src/feature/device/state.js`]:          https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/device/state.js#L10-L27
 
 [`src/feature/sandbox/index.js`]:         https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/sandbox/index.js#L15
 
 [`src/feature/device/route.js`]:          https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/device/route.js#L13-L29
-[`src/feature/device/index.js`]:          https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/device/index.js#L59
+[`src/feature/device/index.js49`]:          https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/device/index.js#L59
+
+[`src/feature/eateries/state.js`]:        https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/eateries/state.js#L17
+[`src/feature/eateries/index.js`]:        https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/eateries/index.js#L31
+
+
 
 
 <!--- feature-u ---> 
@@ -1120,7 +1159,9 @@ end" of your features!** _Go forth and compute!!_
 [Feature Enablement]:           https://feature-u.js.org/cur/enablement.html
 [Managed Code Expansion]:       https://feature-u.js.org/cur/crossCommunication.html#managed-code-expansion
 [Feature Based Routes]:         https://feature-u.js.org/cur/featureRouter.html
+[Best Practices]:               https://feature-u.js.org/cur/bestPractices.html
 [extendable]:                   https://feature-u.js.org/cur/extending.html
+
 
 [`Feature`]:        https://feature-u.js.org/cur/api.html#Feature
 [`App`]:            https://feature-u.js.org/cur/api.html#App
