@@ -161,7 +161,7 @@ always indecisive on which of our favorite restaurants to frequent
 
 Take a look at the **eatery-nod** [README] to get a feel for the
 application.  **Screen flows are available**, _so it really helps in
-orienting you to the project_.
+your orientation to the project_.
 
 <p align="center"><img src="img/eatery-nod.png" alt="Before/After" width="90%"></p>
 
@@ -285,7 +285,7 @@ src/
 │  │  └──init/
 │  │        platformSetup.android.js
 │  │        platformSetup.ios.js
-│  ├──discovery/
+│  ├──discovery/   ... more features
 │  ├──eateries/
 │  ├──firebase/
 │  ├──leftNav/
@@ -333,6 +333,7 @@ TK: update links
 0. INTERNAL: markdown shows order from "Why" section
 9. [Simplified App Startup]
 0. [React Platforms]
+0. [Feature Object]
 3. [Feature Initialization]
 2. [Feature Collaboration]
 6. [Framework Integration]
@@ -478,6 +479,57 @@ export default launchApp({
   }
 });
 ```
+
+<!-- *** SECTION ********************************************************************************  -->
+## Feature Object
+
+Each feature is located in it's own directory, and promotes aspect
+content through a [`Feature`] object (using [`createFeature()`]).
+
+Here is an example from **eatery-nod**'s [device] feature.
+
+<!-- 
+YES: device/index.js .......... contains just about every aspect
+     many more
+-->
+
+**[`src/feature/device/index.js`]** TK: GIST with Caption Link HIGHLIGHTING createFeature RANGE
+```js
+import {createFeature}  from 'feature-u';
+import name             from './featureName';
+import publicFace       from './publicFace';
+import reducer          from './state';
+import logic            from './logic';
+import route            from './route';
+import appWillStart     from './appWillStart';
+import appDidStart      from './appDidStart';
+
+export default createFeature({
+  name,
+
+  publicFace,
+
+  reducer,
+  logic,
+  route,
+
+  appWillStart,
+  appDidStart,
+});
+```
+
+As you can see, the [`Feature`] object is merely a container that
+holds aspect content of interest to **feature-u**.  The sole purpose
+of the [`Feature`] object is to communicate this aspect information to
+[`launchApp()`].
+
+We will fill in more detail a bit later, but for now notice that the
+feature is conveying reducers, logic modules, routes, and does some
+type of initialization (appWillStart/appDidStart).  It also promotes a
+publicFace that can be used by other features (i.e. the feature's
+Public API).
+
+For more information, please refer to [Feature & aspect content].
 
 
 
@@ -1124,6 +1176,7 @@ end" of your features!** _Go forth and compute!!_
 
 [Simplified App Startup]:  #simplified-app-startup
 [React Platforms]:         #react-platforms
+[Feature Object]:          #feature-object
 [Feature Initialization]:  #feature-initialization
 [Feature Collaboration]:   #feature-collaboration
 [Framework Integration]:   #framework-integration
@@ -1160,7 +1213,7 @@ end" of your features!** _Go forth and compute!!_
 [`src/feature/firebase/index.js`]:        https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/firebase/index.js#L11-L13
 
 [`src/feature/device/appDidStart.js`]:    https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/device/appDidStart.js#L7-L9
-[`src/feature/device/index.js62`]:          https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/device/index.js#L62
+[`src/feature/device/index.js62`]:        https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/device/index.js#L62
 
 [`src/feature/leftNav/appWillStart.js`]:  https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/leftNav/appWillStart.js#L10-L18
 [`src/feature/leftNav/index.js`]:         https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/leftNav/index.js#L24
@@ -1169,13 +1222,15 @@ end" of your features!** _Go forth and compute!!_
 [`src/feature/auth/index.js`]:            https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/auth/index.js#L49
 [`src/feature/auth/logic.js`]:            https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/auth/logic.js#L18-L27
 
-[`src/feature/device/index.js57`]:          https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/device/index.js#L57
+[`src/feature/device/index.js`]:          https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/device/index.js#L52-L63
+
+[`src/feature/device/index.js57`]:        https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/device/index.js#L57
 [`src/feature/device/state.js`]:          https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/device/state.js#L10-L27
 
 [`src/feature/sandbox/index.js`]:         https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/sandbox/index.js#L15
 
 [`src/feature/device/route.js`]:          https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/device/route.js#L13-L29
-[`src/feature/device/index.js49`]:          https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/device/index.js#L59
+[`src/feature/device/index.js49`]:        https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/device/index.js#L59
 
 [`src/feature/eateries/state.js`]:        https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/eateries/state.js#L17
 [`src/feature/eateries/index.js`]:        https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/eateries/index.js#L31
@@ -1189,6 +1244,7 @@ end" of your features!** _Go forth and compute!!_
 [feature-router]:     https://github.com/KevinAst/feature-router
 
 [Launching Your Application]:   https://feature-u.js.org/cur/detail.html#launching-your-application
+[Feature & aspect content]:     https://feature-u.js.org/cur/detail.html#feature-object-relaying-aspect-content
 [Extendable aspects]:           https://feature-u.js.org/cur/detail.html#extendable-aspects
 [React Registration]:           https://feature-u.js.org/cur/detail.html#react-registration
 [Cross Feature Communication]:  https://feature-u.js.org/cur/crossCommunication.html
@@ -1201,9 +1257,11 @@ end" of your features!** _Go forth and compute!!_
 [extendable]:                   https://feature-u.js.org/cur/extending.html
 
 
+
 [`Feature`]:        https://feature-u.js.org/cur/api.html#Feature
 [`App`]:            https://feature-u.js.org/cur/api.html#App
 
+[`createFeature()`]:       https://feature-u.js.org/cur/api.html#createFeature
 [`launchApp()`]:           https://feature-u.js.org/cur/api.html#launchApp
 [`registerRootAppElm()`]:  https://feature-u.js.org/cur/api.html#registerRootAppElmCB
 
