@@ -310,10 +310,12 @@ and **eatery-nod** source code.  In some cases the in-lined sample
 code has been streamlined _(to emphasize a focal point)_, however the
 caption link will take you to the actual code _(hosted on github)_.
 
+TK: update links
+
 0. INTERNAL: markdown shows order from "Why" section
 9. [Simplified App Startup](#simplified-app-startup)
 0. [React Platforms](#react-platforms)
-3. [Initialization](#initialization)
+3. [Feature Initialization](#feature-initialization)
 2. [Feature Collaboration](#feature-collaboration)
 6. [Framework Integration](#framework-integration)
 4. [Feature Enablement](#feature-enablement)
@@ -354,7 +356,7 @@ _(see: [Launching Your Application])_.
 
 Here is **eatery-nod**'s mainline ...
 
-**[`src/app.js`]** GIST with Caption Link HIGHLIGHTING the launchApp() line
+**[`src/app.js`]** TK: GIST with Caption Link HIGHLIGHTING the launchApp() line
 ```js
 import Expo              from 'expo';
 import {launchApp}       from 'feature-u';
@@ -415,9 +417,10 @@ a [`registerRootAppElm()`] callback hook to register the supplied
 `rootAppElm` to the specific React platform in use.  Because this
 registration is accomplished by app-specific code, **feature-u** can
 operate in any of the React platforms _(see [React Registration])_.
-For example:
 
-**[react web]** GIST with Caption Link to external site (NOT eatery-nod code)
+Here are some [`registerRootAppElm()`] variations:
+
+**[react web]** TK: GIST with Caption Link to external site (NOT eatery-nod code)
 ```js
 import ReactDOM from 'react-dom';
 ...
@@ -431,7 +434,7 @@ export default launchApp({
 });
 ```
 
-**[react-native]** GIST with Caption Link to external site (NOT eatery-nod code)
+**[react-native]** TK: GIST with Caption Link to external site (NOT eatery-nod code)
 ```js
 import {AppRegistry} from 'react-native';
 ...
@@ -445,7 +448,7 @@ export default launchApp({
 });
 ```
 
-**[expo]** GIST with Caption Link to external site (NOT eatery-nod code)
+**[expo]** TK: GIST with Caption Link to external site (NOT eatery-nod code)
 ```js
 import Expo from 'expo';
 ...
@@ -461,44 +464,35 @@ export default launchApp({
 
 
 <!-- *** SECTION ********************************************************************************  -->
-## Initialization
-
-??$$ NUMBER 3
-
+## Feature Initialization
 
 Any given feature should not have to rely on an external startup
 process to perform the initialization that it needs.  Rather, the
 feature should be able to spawn initialization that it depends on.
-This could be any number of things, such as &bull; initialize a
+This could be any number of things, such as &bull; initialize some
 service API &bull; inject a utility react component at the App root
 &bull; dispatch an action that kicks off a startup process &bull; etc.
 
 To solve this, **feature-u** introduces two [Application Life Cycle
-Hooks](#application-life-cycle-hooks), injected through the following
-Feature properties:
+Hooks], injected through the following Feature aspects:
 
-1. [**appWillStart**](#appwillstart) - invoked one time at app startup time
+1. [`Feature.appWillStart({app, curRootAppElm}): rootAppElm || falsy`]
+   ...  invoked one time, just before the app starts up.  This an do
+   any type of initialization, including supplementing the app's
+   top-level root element (i.e. react component instance).
 
-   ```js
-   API: appWillStart({app, curRootAppElm}): rootAppElm || null
-   ```
-
-2. [**appDidStart**](#appdidstart)   - invoked one time immediatly after app has started
-
-   ```js
-   API: appDidStart({app, appState, dispatch}): void
-   ```
-
+2. [`Feature.appDidStart({app, appState, dispatch}): void`] ...
+   invoked one time immediatly after the app has started.  A typical
+   usage for this hook is to dispatch some type of bootstrap action.
 
 Here are some examples from **eatery-nod**:
 
 <!-- 
-
 NO:  device/appWillStart ... platformSetup()
 YES: device/appDidStart .... dispatch( actions.bootstrap() );
-NO:  device/injectRootAppElmForStateRouter ... inject ROOT ELM: Notify component         ... normally done with appWillStart() but this is a Feature Route requirment
+NO:  device/appWillStart ... inject ROOT ELM: Notify component
 
-YES: leftNav/injectRootAppElmForStateRouter .. inject ROOT ELM: Drawer/SideBar component ... normally done with appWillStart() but this is a Feature Route requirment
+YES: leftNav/appWillStart .. inject ROOT ELM: Drawer/SideBar component
 
 NO:  eateries/appDidStart .. dispatch( app.currentView.actions.changeView(featureName) ); ... TOO CONFUSING: simply defaults the standard view to use
 
@@ -508,9 +502,9 @@ YES: firebase/appWillStart . initFireBase()
 
 - **FireBase Initialization**
 
-  **`src/feature/firebase/index.js`**
+  **[`src/feature/firebase/index.js`]** TK: GIST with Caption Link HIGHLIGHTING appWillStart() RANGE
   ```js
-  import {createFeature}  from '../../util/feature-u';
+  import {createFeature}  from 'feature-u';
   import initFireBase     from './init/initFireBase';
 
   /**
@@ -528,7 +522,7 @@ YES: firebase/appWillStart . initFireBase()
 
 - **Bootstrap Action**
 
-  **`src/feature/device/appDidStart.js`** _via **`src/feature/device/index.js`**_
+  **[`src/feature/device/appDidStart.js`]** via **[`src/feature/device/index.js`]** TK: GIST with Caption Link HIGHLIGHTING appDidStart() RANGE
   ```js
   import actions  from './actions';
 
@@ -541,9 +535,9 @@ YES: firebase/appWillStart . initFireBase()
   }
   ```
 
-- **Inject DOM Root Elm** _normally done with `appWillStart()` but this is a Feature Route requirment_
+- **Inject DOM Root Elm**
 
-  **`src/feature/leftNav/injectRootAppElmForStateRouter.js`** _via **`src/feature/leftNav/index.js`**_
+  **[`src/feature/leftNav/appWillStart.js`]** via **[`src/feature/leftNav/index.js`]** TK: GIST with Caption Link HIGHLIGHTING appWillStart() RANGE
   ```js
   import React            from 'react';
   import {Drawer}         from 'native-base';
@@ -552,11 +546,9 @@ YES: firebase/appWillStart . initFireBase()
          closeSideBar}    from './comp/SideBar';
 
   /**
-   * Inject our Drawer/SideBar component at the root of our app, using
-   * API: `injectRootAppElmForStateRouter()` required when using the
-   * `routeAspect`.
+   * Inject our Drawer/SideBar component at the root of our app
    */
-  export default function injectRootAppElmForStateRouter(app, curRootAppElm) {
+  export default function appWillStart({app, curRootAppElm}) {
     return (
       <Drawer ref={ ref => registerDrawer(ref) }
               content={<SideBar/>}
@@ -574,27 +566,26 @@ YES: firebase/appWillStart . initFireBase()
 
 Even though a feature's implementation is encapsulated, it still needs
 to interact with it's surroundings.  To complicate matters, one
-feature should never import resources from another feature, because of
-the plug-and-play requirement.  As a result, we need a well-defined
-feature-based Public API.
+feature should never import resources from another feature, because it
+should strive to be plug-and-play.  As a result, we need a
+well-defined feature-based Public API.
 
-To solve this, **feature-u** promotes a [Cross Feature
-Communication](#cross-feature-communication).  This is accomplished
-through the `Feature.publicFace` built-in aspect property.  A feature
-can expose whatever it deems necessary through it's `publicFace`.
-There are no real constraints on this resource.  It is truly open.
-Typically this involves promoting selected **actions** &bull; **selectors**
-&bull; **APIs** &bull; etc.
+To solve this, **feature-u** promotes a [Cross Feature Communication].
+This is accomplished through the `Feature.publicFace` [Built-In
+aspect] property.  A feature can expose whatever it deems necessary
+through it's `publicFace`.  There are no real constraints on this
+resource.  It is truly open.  Typically this involves promoting
+selected **actions** &bull; **selectors** &bull; **APIs** &bull; etc.
 
 The `publicFace` of all features are accumulated and exposed through
-the [App Object](#app-object) (emitted from `launchApp()`), as
-follows:
+the [`App`] object (emitted from [`launchApp()`]).  It contains named feature
+nodes, as follows:
 
 ```js
 App.{featureName}.{publicFace}
 ```
 
-Here is an example from **eatery-nod**'s `auth` feature.
+Here is an example from **eatery-nod**'s [auth] feature.
 
 <!-- 
 NO:  device/publicFace.js ........ API     ACTIONS: ready()                                                                      SELECTORS: areFontsLoaded(appState) ... isDeviceReady(appState) ... getDeviceLoc(appState)
@@ -605,7 +596,8 @@ NO:  eateries/publicFace.js ......         ACTIONS: openFilterDialog([domain] [,
 NO:  discovery/publicFace.js ..... API     ACTIONS: openFilterDialog([domain] [,formMsg])
 -->
 
-**`src/feature/auth/publicFace.js`** _via **`src/feature/auth/index.js`**_
+
+**[`src/feature/auth/publicFace.js`]** via **[`src/feature/auth/index.js`]** TK: GIST with Caption Link HIGHLIGHTING RANGE
 ```js
 import actions  from './actions';
 import * as sel from './state';
@@ -624,12 +616,9 @@ export default {
 };
 ```
 
-Out of all the functionality found in `auth`, only two actions and one
-selector are public.
-
-The [`App`] object contains named feature nodes, and is exported to
-provide [Cross Feature Communication] ... _here is what app looks like
-(for this example):_
+Out of all the items found in the `auth` feature, only two actions and
+one selector are public.  Here is what the [`App`] object would look
+like for this example:
 
 ```js
 app: {
@@ -642,13 +631,13 @@ app: {
       getUserPool(appState),
     },
   },
-  currentView: { ... other features (snip snip)
-    ...
+  currentView: {   // other features
+    ... snip snip
   },
 }
 ```
 
-As a result, other features can access the `auth` public API as
+As a result, the `auth` feature's public API can be accessed as
 follows:
 
 ```js
@@ -661,42 +650,36 @@ follows:
 <!-- *** SECTION ********************************************************************************  -->
 ## Framework Integration
 
-Most likely your application employs one or more different frameworks
-(ex: [redux], [redux-logic], etc.).  As a result, your features are
-typically going to rely on these same frameworks.
+Most likely your application employs one or more frameworks (ex:
+[redux], [redux-logic], etc.).  How are the resources needed by these
+frameworks acumulated and configured across the many features of your
+app?
 
-How are the resources needed by these frameworks acumulated and
-configured across the many features of your app?
+To solve this, **feature-u** introduces [Extendable aspects].
+**feature-u** is [extendable]!!  It provides integration points
+between your features and your chosen frameworks.
 
-To solve this, **feature-u** introduces [Extendable
-aspects](#docs-Extendable-aspects) _(**feature-u** is
-[extendable](#docs-Extending-feature-u))_, providing integration
-points between your features and your chosen frameworks.
 Extendable Aspects are packaged separately from **feature-u**, so as
 to not introduce unwanted dependencies (_because not everyone uses the
 same frameworks_).  You pick and choose them based on the framework(s)
-used in your project (_matching your project's run-time stack_).  They
+used in your project _(matching your project's run-time stack)_.  They
 are created with **feature-u**'s extendable API, using
-`createAspect()`.  You can define your own Aspect (_if the one you
-need doesn't already exist_)!
+[`createAspect()`].  You can define your own Aspect, _if the one you
+need doesn't already exist_!
 
-You have already seen the Aspects used by **eatery-nod** in
-[src/app.js](#code) _(refer to [Simplified App
-Startup](#simplified-app-startup) above)_.
+Let's take a look at a [redux] example from **eatery-nod**.  
 
-Like all aspects, Extendable Aspect content is relayed through Feature
-object properties (via `createFeature()`).
-
-Here is a [redux] example from **eatery-nod** ...
+The `device` feature maintains it's own slice of the state tree.  It
+promotes it's reducer through the `Feature.reducer` aspect:
 
 <!-- 
 YES: device/state.js .... simplest state
 NO:  many others
 -->
 
-**`src/feature/device/index.js`**
+**[`src/feature/device/index.js`]** TK: GIST with Caption Link HIGHLIGHTING reducer
 ```js
-import {createFeature}  from '../../util/feature-u';
+import {createFeature}  from 'feature-u';
 import name             from './featureName';
 import reducer          from './state';
 
@@ -707,18 +690,18 @@ export default createFeature({
 });
 ```
 
-The `device` feature maintains it's own slice of the state tree.  It
-communicates it's redux reducer through the `Feature.reducer`
-property:
+Because `Feature.reducer` is an **extended aspect** (verses a
+_built-in aspect_), it is only available because we registered the
+[feature-redux] `reducerAspect` to [`launchApp()`] _(please refer to
+[Simplified App Startup](#simplified-app-startup) above TK link)_
 
-The **key thing to note here** is that because the reducer is promoted
-within our `Feature` object, **feature-u** will automatically include
-it as part of the overall appState.  In other words, **feature-u**
-automatically configures it within the [redux] framework.
+The **key thing to understand** is that **feature-u** _(through the
+[feature-redux] extension)_ will automatically configure [redux] by
+accumulating all feature reducers into one overall appState.
 
 Here is the reducer code ...
 
-**`src/feature/device/state.js`**
+**[`src/feature/device/state.js`]** TK: GIST with Caption Link HIGHLIGHTING reducer RANGE
 ```js
 import {combineReducers}  from 'redux';
 import {reducerHash}      from 'astx-redux-util';
@@ -745,42 +728,46 @@ const reducer = slicedReducer('device', combineReducers({
 export default reducer;
 ```
 
-You can see that this reducer maintains only the state relevent to the
-`device` feature _(i.e. it's little slice of the world)_ ... a
+A feature-based reducer is simply a normal reducer that manages the
+feature's slice of the the overall appState. The only difference is it
+must be embellished with [`slicedReducer()`], which provides
+instructions on where to insert it in the overall top-level appState.
+
+As a result, the `device` reducer only maintains the state relevent to
+the `device` feature _(i.e. it's little slice of the world)_ ... a
 **status**, a **fontsLoaded** indicator, and the **device location**.
 
-A **key thing to note here** is the reducer must be embellished by
-`slicedReducer()`, which provides instructions on how to combine
-multiple feature-based reducers in constructing the overall top-level
-application state tree.
-
-**SideBar**: We are using the **astx-redux-util** `reducerHash()`
-utility to concisely implement the reducer _(providing an alternative
-to the common switch statement)_.  You may want to check this out.
-
+**SideBar**: We are using the [astx-redux-util] utility's
+[`reducerHash()`] function to concisely implement the feature's
+reducer _(providing an alternative to the common switch statement)_.
+I have found that in using a utility like this, for most cases it is
+feasable to implement all the reducers of a feature in one file _(due
+in part to the smaller boundary of a feature)_.  [astx-redux-util]
+also promotes other [Higher-Order Reducers].  You may want to check
+this out.
 
 
 <!-- *** SECTION ********************************************************************************  -->
 ## Feature Enablement
 
-You may have the need for selected features to be dynamically
-enabled or disabled.  As an example, certain features may only be
-enabled with a license upgrade, or other features may only be used for
-diagnostic purposes.
+Some of your features may need to be dynamically enabled or disabled.
+As an example, certain features may only be enabled with a license
+upgrade, or other features may only be used for diagnostic purposes.
 
-To solve this, **feature-u** promotes a `Feature.enabled` boolean
-property that determines whether it is enabled or not.  
+To solve this, **feature-u** introduces [Feature Enablement].  Using
+the `Feature.enabled` [Built-In aspect] _(a boolean property)_, you
+can enable or disable your feature.
 
-Here is an example from **eatery-nod**'s `sandbox` feature ...
+Here is an example from **eatery-nod**'s [sandbox] feature ...
 
 <!-- 
 YES: sandbox/index.js
 NO:  logActions/index.js
 -->
 
-**`src/feature/sandbox/index.js`**
+**[`src/feature/sandbox/index.js`]** TK: GIST with Caption Link HIGHLIGHTING reducer RANGE
 ```js
-import {createFeature}  from '../../util/feature-u';
+import {createFeature}  from 'feature-u';
 
 export default createFeature({
   name:    'sandbox',
@@ -789,48 +776,47 @@ export default createFeature({
 });
 ```
 
-The **'sandbox'** feature promotes a variety of interactive tests,
+The [sandbox] feature promotes a variety of interactive tests,
 used in development, that can easily be disabled.
 
 Typically this indicator is based on a dynamic expression, but in this
 case it is simply hard-coded _(to be set by a developer)_.
 
-**SideBar:** If need be you can use the App object to determine if a
-feature is present or not (see: [Checking Feature Dependencies (via
-App)](#checking-feature-dependencies-via-app)).
+**SideBar:** When other features interact with a feature that can be
+disabled, you can use the [`App`] object to determine if a feature is
+presdent or not _(see: [Feature Enablement] for more information)_.
 
 
 
 <!-- *** SECTION ********************************************************************************  -->
 ## Managed Code Expansion
 
-In general, accessing resources during in-line code expansion is
-problematic, _due to the order in which these resources are expanded_.
-The **feature-u** `App` object is such a critical resource _(because
-it promotes the Public API of all features)_, it must be made
-available even during code expansion.  In other words, we cannot rely
-on an "imported app" being resolved during code expansion time.
+In general, accessing **imported resources** during in-line code
+expansion can be problematic, _due to the order in which these
+resources are expanded_.  The **feature-u** [`App`] object is such a
+critical resource _(because it promotes the Public API of all
+features)_, **it must be available even during code expansion**.  In
+other words, we cannot rely on an "imported app" being resolved during
+code expansion time.
 
-To solve this, **feature-u** introduces [Managed Code
-Expansion](#managed-code-expansion).
+To solve this, **feature-u** introduces [Managed Code Expansion].
 
-When aspect content definitions require the `app` object at code
+When aspect content definitions require the [`App`] object at code
 expansion time, you simply wrap the definition in a
-`managedExpansion()` function.  In other words, your aspect content
-can either be the actual content itself (ex: a reducer), or a function
-that returns the content.
+[`managedExpansion()`] function.  In other words, your aspect content
+can either be the actual content itself _(ex: a reducer)_, or a
+function that returns the content.
 
 When this is done, **feature-u** will expand it by invoking it in a
-controlled way, passing the fully resolved `app` object as a
+controlled way, passing the fully resolved [`App`] object as a
 parameter.
 
+Here is a logic module from **eatery-nod**'s [auth] feature ...
 
-Here is a logic module from **eatery-nod**'s `auth` feature ...
-
-**`src/feature/auth/logic.js`**
+**[`src/feature/auth/logic.js`]** TK: GIST with Caption Link HIGHLIGHTING reducer RANGE
 ```js
 import {createLogic}      from 'redux-logic';
-import {managedExpansion} from '../../util/feature-u';
+import {managedExpansion} from 'feature-u';
 import featureName        from './featureName';
 import actions            from './actions';
 
@@ -849,10 +835,10 @@ export const startAuthorization = managedExpansion( (app) => createLogic({
 ... snip snip
 ```
 
-You can see that the `auth` feature is using an action from the
-`device` feature, requiring access to the `app` object (see `*2*`).
+You can see that the [auth] feature is using an action from the
+[device] feature, requiring access to the `app` object (see `*2*`).
 Because the `app` object is needed during code expansion, we use the
-`managedExpansion()` function (see `*1*`), allowing **feature-u** to
+[`managedExpansion()`] function (see `*1*`), allowing **feature-u** to
 expand it in a controlled way, passing the fully resolved `app` object
 as a parameter.
 
@@ -861,6 +847,8 @@ as a parameter.
 
 <!-- *** SECTION ********************************************************************************  -->
 ## XXX 
+
+??$$ NUMBER 4
 
 Bla ???
 
@@ -1034,27 +1022,74 @@ end" of your features!** _Go forth and compute!!_
 [firebase]:     https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/firebase/README.md
 [logActions]:   https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/logActions/README.md
 [sandbox]:      https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/sandbox/README.md
-[`src/app.js`]: https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/app.js
 
+[`src/app.js`]:                           https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/app.js#L28-L34
 
+[`src/feature/firebase/index.js`]:        https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/firebase/index.js#L11-L13
+
+[`src/feature/device/appDidStart.js`]:    https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/device/appDidStart.js#L7-L9
+[`src/feature/device/index.js`]:          https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/device/index.js#L62
+
+[`src/feature/leftNav/appWillStart.js`]:  https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/leftNav/appWillStart.js#L10-L18
+[`src/feature/leftNav/index.js`]:         https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/leftNav/index.js#L24
+
+[`src/feature/auth/publicFace.js`]:       https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/auth/publicFace.js#L7-L15
+[`src/feature/auth/index.js`]:            https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/auth/index.js#L49
+[`src/feature/auth/logic.js`]:            https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/auth/logic.js#L18-L27
+
+[`src/feature/device/index.js`]:          https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/device/index.js#L57
+[`src/feature/device/state.js`]:          https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/device/state.js#L10-L27
+
+[`src/feature/sandbox/index.js`]:         https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/sandbox/index.js#L15
 
 
 <!--- feature-u ---> 
 [feature-u]:        https://feature-u.js.org/
 [feature-router]:   https://github.com/KevinAst/feature-router
-[`Feature`]:        https://feature-u.js.org/cur/api.html#Feature
-[`launchApp()`]:    https://feature-u.js.org/cur/api.html#launchApp
-[`App`]:            https://feature-u.js.org/cur/api.html#App
-[`registerRootAppElm()`]:      https://feature-u.js.org/cur/api.html#registerRootAppElmCB
-[Launching Your Application]:  https://feature-u.js.org/cur/detail.html#launching-your-application
-[Extendable aspects]:          https://feature-u.js.org/cur/detail.html#extendable-aspects
-[React Registration]:          https://feature-u.js.org/cur/detail.html#react-registration
-[Cross Feature Communication]: https://feature-u.js.org/cur/crossCommunication.html
 
-<!--- react etal ---> 
+[Launching Your Application]:   https://feature-u.js.org/cur/detail.html#launching-your-application
+[Extendable aspects]:           https://feature-u.js.org/cur/detail.html#extendable-aspects
+[React Registration]:           https://feature-u.js.org/cur/detail.html#react-registration
+[Cross Feature Communication]:  https://feature-u.js.org/cur/crossCommunication.html
+[Application Life Cycle Hooks]: https://feature-u.js.org/cur/appLifeCycle.html
+[Built-In aspect]:              https://feature-u.js.org/cur/detail.html#built-in-aspects
+[Feature Enablement]:           https://feature-u.js.org/cur/enablement.html
+[Managed Code Expansion]:       https://feature-u.js.org/cur/crossCommunication.html#managed-code-expansion
+[extendable]:                   https://feature-u.js.org/cur/extending.html
+
+
+[`Feature`]:        https://feature-u.js.org/cur/api.html#Feature
+[`App`]:            https://feature-u.js.org/cur/api.html#App
+
+[`launchApp()`]:           https://feature-u.js.org/cur/api.html#launchApp
+[`registerRootAppElm()`]:  https://feature-u.js.org/cur/api.html#registerRootAppElmCB
+
+[`Feature.appWillStart()`]:                                           https://feature-u.js.org/cur/appLifeCycle.html#appwillstart
+[`Feature.appWillStart({app, curRootAppElm}): rootAppElm || falsy`]:  https://feature-u.js.org/cur/appLifeCycle.html#appwillstart
+
+[`Feature.appDidStart()`]:                                https://feature-u.js.org/cur/appLifeCycle.html#appDidStart
+[`Feature.appDidStart({app, appState, dispatch}): void`]: https://feature-u.js.org/cur/appLifeCycle.html#appDidStart
+
+[`managedExpansion()`]:    https://feature-u.js.org/cur/api.html#managedExpansion
+
+[`createAspect()`]:        https://feature-u.js.org/cur/api.html#createAspect
+
+[feature-redux]:     https://github.com/KevinAst/feature-redux
+[`slicedReducer()`]: https://github.com/KevinAst/feature-redux#slicedreducer
+
+<!--- external links ---> 
 [react]:            https://reactjs.org/
+
 [react web]:        https://reactjs.org/
 [react-native]:     https://facebook.github.io/react-native/
 [expo]:             https://expo.io/
+
 [redux]:            http://redux.js.org/
 [redux-logic]:      https://github.com/jeffbski/redux-logic
+
+[astx-redux-util]:  https://astx-redux-util.js.org/
+[`reducerHash()`]:  https://astx-redux-util.js.org/1.0.0/api.html#reducerHash
+
+[Higher-Order Reducers]: https://redux.js.org/docs/recipes/reducers/ReusingReducerLogic.html#customizing-behavior-with-higher-order-reducers
+
+
