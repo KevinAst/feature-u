@@ -7,12 +7,12 @@ individual features.
 
 <p align="center"><img src="img/features.jpg" alt="Features" width="60%"></p>
 
-Most developers would agree that organizing your project by feature is
+Most developers would agree that organizing your project by features is
 much preferred over type-based patterns.  Because **application
 domains grow** _in the real world_, project **organization by type
 simply doesn't scale**, _it just becomes unmanageable_!  There are
 many good articles on this topic with insights on feature-based design
-and structure _(see: [References] below)_.
+and structure _(see: [References] below TK: link)_.
 
 This article outlines my excursion into feature-based composition.  In
 working through the details, I realized there was an opportunity for a
@@ -109,8 +109,9 @@ enabled, initialization constructs, and resources used to configure
 it's slice of the frameworks in use._
 
 In turn, these [`Feature`] objects are supplied to [`launchApp()`],
-which configures and starts your application, returning an [`App`]
-object (_which promotes the public API of each feature_).
+which configures and starts your application running.  In addition the
+returned [`App`] object is exported, _in order to promote the public
+API of each feature_.
 
 _aspects ..._
 
@@ -157,6 +158,29 @@ interesting.
 of favorites.  _My wife and I have a steady "date night", and we are
 always indecisive on which of our favorite restaurants to frequent
 :-)_ So **eatery-nod** provides the spinning wheel!
+
+Take a look at the **eatery-nod** [README] to get a feel for the
+application.  **Screen flows are available**, _so it really helps in
+orienting you to the project_.
+
+<p align="center"><img src="img/eatery-nod.png" alt="Before/After" width="90%"></p>
+
+In addition, [README files] are found in each feature, describing what
+each feature accomplishes.  Take some time now and skim through these
+resources:
+
+- [device]:      initializes the device for use by the app, and promotes a **device api** abstraction
+- [auth]:        promotes complete user authentication
+- [leftNav]:     promotes the app-specific Drawer/SideBar on the app's left side
+- [currentView]: maintains the currentView with get/set cross-feature communication bindings
+- [eateries]:    manages and promotes the eateries view
+- [discovery]:   manages and promotes the discovery view
+- [firebase]:    initializes the google firebase service
+- [logActions]:  logs all dispatched actions and resulting state
+- [sandbox]:     promotes a variety of interactive tests, used in development, that can easily be disabled
+
+
+
 
 
 <!-- *** SECTION ********************************************************************************  -->
@@ -284,26 +308,6 @@ As expected, **the difference in project organization is dramatic**!
   while the "after features" simply contains a single `app.js` startup
   file _(see `**2**` above)_.  **Where did all the complexity go?**
   _... stay tuned_!
-
-
-
-**SideBar**: _**eatery-nod** feature orientation ..._
-
-You can get a feel for what each **eatery-nod** feature accomplishes,
-by perusing the [README files] found in each feature directory.
-Screen flows are even shown _(where applicable)_, so it really helps
-in orienting you to the project.  Take some time now and skim through
-these [README files]:
-
-- [device]:      initializes the device for use by the app, and promotes a **device api** abstraction
-- [auth]:        promotes complete user authentication
-- [leftNav]:     promotes the app-specific Drawer/SideBar on the app's left side
-- [currentView]: maintains the currentView with get/set cross-feature communication bindings
-- [eateries]:    manages and promotes the eateries view
-- [discovery]:   manages and promotes the discovery view
-- [firebase]:    initializes the google firebase service
-- [logActions]:  logs all dispatched actions and resulting state
-- [sandbox]:     promotes a variety of interactive tests, used in development, that can easily be disabled
 
 
 
@@ -1044,8 +1048,8 @@ In summary, the benefits of using **feature-u** include:
 
 
 Hopefully this article gives you a feel for how **feature-u** can
-improve your project.  Please refer to the full documentation for more
-details.
+improve your project.  Please refer to the [full documentation] for
+more details.
 
 **feature-u** allows you to **focus your attention on the "business
 end" of your features!** _Go forth and compute!!_
@@ -1137,6 +1141,7 @@ end" of your features!** _Go forth and compute!!_
 
 <!--- eatery-nod TODO: eventually change BRANCH: organize-by-feature TO TAG: after-features ---> 
 [eatery-nod]:   https://github.com/KevinAst/eatery-nod/tree/organize-by-feature
+[README]:       https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/README.md
 [src BEFORE]:   https://github.com/KevinAst/eatery-nod/tree/before-features/src
 [src AFTER]:    https://github.com/KevinAst/eatery-nod/tree/organize-by-feature/src
 [README files]: https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/README.md
@@ -1179,8 +1184,9 @@ end" of your features!** _Go forth and compute!!_
 
 
 <!--- feature-u ---> 
-[feature-u]:        https://feature-u.js.org/
-[feature-router]:   https://github.com/KevinAst/feature-router
+[feature-u]:          https://feature-u.js.org/
+[full documentation]: https://feature-u.js.org/
+[feature-router]:     https://github.com/KevinAst/feature-router
 
 [Launching Your Application]:   https://feature-u.js.org/cur/detail.html#launching-your-application
 [Extendable aspects]:           https://feature-u.js.org/cur/detail.html#extendable-aspects
