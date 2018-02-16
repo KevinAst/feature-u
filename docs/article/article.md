@@ -310,6 +310,8 @@ and **eatery-nod** source code.  In some cases the in-lined sample
 code has been streamlined _(to emphasize a focal point)_, however the
 caption link will take you to the actual code _(hosted on github)_.
 
+Here are our topics ...
+
 TK: update links
 
 0. INTERNAL: markdown shows order from "Why" section
@@ -320,7 +322,7 @@ TK: update links
 6. [Framework Integration](#framework-integration)
 4. [Feature Enablement](#feature-enablement)
 5. [Managed Code Expansion](#managed-code-expansion)
-7. ?? UI Component Promotion
+7. [UI Component Promotion](#ui-component-promotion)
 8. ?? Single Source of Truth
 
 
@@ -844,11 +846,76 @@ as a parameter.
 
 
 
+<!-- *** SECTION ********************************************************************************  -->
+## UI Component Promotion
+
+Features that maintain their own UI Components need a way to promote
+them in the overall app's GUI.  Because features are encapsolated, how
+is this accomplished in an autonomous way?
+
+To address this, **feature-u** recommends considering [Feature Based
+Routes] via the [feature-router] extendable Aspect _(packaged
+separately)_.  This approach can even be used in conjunction with
+other navigational solutions.
+
+**Feature Routes** are _based on a very simple concept_: **allow the
+application state to drive the routes**!  It operates through a series
+of feature-based routing functions that reason about the appState, and
+either return a rendered component, or null to allow downstream routes
+the same opportunity.
+
+Here is a simple example from the [device] feature.  This route
+analyzes the current appState, and displays a SplashScreen until the
+system is ready.
+
+<!-- 
+YES: device/route.js .... simplest route
+NO:  many others
+-->
+
+**[`src/feature/device/route.js`]** via **[`src/feature/device/index.js`]** TK: GIST with Caption Link HIGHLIGHTING route
+```js
+import React                from 'react';
+import {isDeviceReady,
+        getDeviceStatusMsg} from './state';
+import {featureRoute, 
+        PRIORITY}           from 'feature-router';
+import SplashScreen         from '../../util/comp/SplashScreen';
+
+export default featureRoute({
+
+  priority: PRIORITY.HIGH,
+
+  content({app, appState}) {
+
+    // promote a simple SplashScreen (with status) until our system is ready
+    if (!isDeviceReady(appState)) {
+      return <SplashScreen msg={getDeviceStatusMsg(appState)}/>;
+    }
+
+    return null;
+  },
+
+});
+```
+
+In feature based routing, you will not find the typical "route path to
+component" mapping catalog, where _(for example)_ some pseudo
+`route('device')` directive causes the Device screen to display, which
+in turn causes the system to accommodate the request by adjusting it's
+state appropriately.  Rather, the appState is analyzed, and if the
+device is NOT ready, no other screens are given the option to even
+render ... **Easy Peasy!**
+
+Depending on your perspective, this approach can be **more natural**,
+but _more importantly_, **it allows features to promote their own
+screens in an encapsulated and autonomous way**!
+
 
 <!-- *** SECTION ********************************************************************************  -->
 ## XXX 
 
-??$$ NUMBER 4
+??$$ NUMBER ??
 
 Bla ???
 
@@ -936,14 +1003,6 @@ details.
 end" of your features!** _Go forth and compute!!_
 
 
-
-<!--
-## ?? SideBar highlight my preferred run-time stack and show how concise usage is with MY other utilities
-  * ? action definitions can be with action-u
-  * ? reducer definitions can be with astx-redux-util
--->
-
-
 ## References
 
 - [A feature based approach to React development](http://ryanlanciaux.com/blog/2017/08/20/a-feature-based-approach-to-react-development/)
@@ -1023,6 +1082,8 @@ end" of your features!** _Go forth and compute!!_
 [logActions]:   https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/logActions/README.md
 [sandbox]:      https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/sandbox/README.md
 
+<!--- ?? resolve some index files repeated ---> 
+
 [`src/app.js`]:                           https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/app.js#L28-L34
 
 [`src/feature/firebase/index.js`]:        https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/firebase/index.js#L11-L13
@@ -1042,6 +1103,9 @@ end" of your features!** _Go forth and compute!!_
 
 [`src/feature/sandbox/index.js`]:         https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/sandbox/index.js#L15
 
+[`src/feature/device/route.js`]:          https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/device/route.js#L13-L29
+[`src/feature/device/index.js`]:          https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/device/index.js#L59
+
 
 <!--- feature-u ---> 
 [feature-u]:        https://feature-u.js.org/
@@ -1055,8 +1119,8 @@ end" of your features!** _Go forth and compute!!_
 [Built-In aspect]:              https://feature-u.js.org/cur/detail.html#built-in-aspects
 [Feature Enablement]:           https://feature-u.js.org/cur/enablement.html
 [Managed Code Expansion]:       https://feature-u.js.org/cur/crossCommunication.html#managed-code-expansion
+[Feature Based Routes]:         https://feature-u.js.org/cur/featureRouter.html
 [extendable]:                   https://feature-u.js.org/cur/extending.html
-
 
 [`Feature`]:        https://feature-u.js.org/cur/api.html#Feature
 [`App`]:            https://feature-u.js.org/cur/api.html#App
