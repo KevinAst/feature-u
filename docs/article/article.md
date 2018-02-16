@@ -19,6 +19,18 @@ working through the details, I realized there was an opportunity for a
 library to help manage and streamline some of the hurdles incurred in
 this process.  The result: _[feature-u]_.
 
+## At a Glance
+
+TK: resolve internal links
+
+- [Backdrop] ... _why was **feature-u** was created_
+- [feature-u Basics] ... _introduce high-level **feature-u** concepts_
+- [eatery-nod App] ... _the sample app used to demonstrate **feature-u**_
+- [Before & After] ... _**eatery-nod** project structure **before** and **after** features_
+- [feature-u In Action] ... _explore **feature-u** aspects through concrete examples_
+- [feature-u Benefits] ... _in summary_
+- [References] ... _feature-based articles_
+
 
 <!-- *** SECTION ********************************************************************************  -->
 ## Backdrop
@@ -133,7 +145,7 @@ necessary resources across all your features.
 
 
 <!-- *** SECTION ********************************************************************************  -->
-## eatery-nod
+## eatery-nod App
 
 [eatery-nod] is the application _where **feature-u** was conceived_.
 It is a [react-native] - [expo] mobile app, and is one of my sandbox
@@ -315,15 +327,15 @@ Here are our topics ...
 TK: update links
 
 0. INTERNAL: markdown shows order from "Why" section
-9. [Simplified App Startup](#simplified-app-startup)
-0. [React Platforms](#react-platforms)
-3. [Feature Initialization](#feature-initialization)
-2. [Feature Collaboration](#feature-collaboration)
-6. [Framework Integration](#framework-integration)
+9. [Simplified App Startup]
+0. [React Platforms]
+3. [Feature Initialization]
+2. [Feature Collaboration]
+6. [Framework Integration]
 4. [Feature Enablement](#feature-enablement)
 5. [Managed Code Expansion](#managed-code-expansion)
-7. [UI Component Promotion](#ui-component-promotion)
-8. [Single Source of Truth](#single-source-of-truth)
+7. [UI Component Promotion]
+8. [Single Source of Truth]
 
 
 <!-- 
@@ -404,8 +416,8 @@ Here are some **important points of interest** _(match the numbers to
 
 2. all app features are accumulated from our `feature/` directory
 
-3. _as a preview_ to [Feature Collaboration](#feature-collaboration)
-   (TK link), the exported return value of [`launchApp()`] is an
+3. _as a preview_ to [Feature Collaboration]
+   (TK: link), the exported return value of [`launchApp()`] is an
    [`App`] object, which promotes the accumulated Public API of all
    features.
 
@@ -695,7 +707,7 @@ export default createFeature({
 Because `Feature.reducer` is an **extended aspect** (verses a
 _built-in aspect_), it is only available because we registered the
 [feature-redux] `reducerAspect` to [`launchApp()`] _(please refer to
-[Simplified App Startup](#simplified-app-startup) above TK link)_
+[Simplified App Startup] above TK: link)_
 
 The **key thing to understand** is that **feature-u** _(through the
 [feature-redux] extension)_ will automatically configure [redux] by
@@ -997,7 +1009,7 @@ in one spot (see `*2*`).
 
 
 <!-- *** SECTION ********************************************************************************  -->
-## feature-u Benefits ...
+## feature-u Benefits
 
 In summary, the benefits of using **feature-u** include:
 
@@ -1099,9 +1111,29 @@ end" of your features!** _Go forth and compute!!_
 
 
 
-
 <!--- internal references ---> 
-[References]:       #references
+[Backdrop]:                #backdrop
+[feature-u Basics]:        #feature-u-basics
+[eatery-nod App]:          #eatery-nod-app
+[Before & After]:          #before--after
+[feature-u In Action]:     #feature-u-in-action
+
+[Simplified App Startup]:  #simplified-app-startup
+[React Platforms]:         #react-platforms
+[Feature Initialization]:  #feature-initialization
+[Feature Collaboration]:   #feature-collaboration
+[Framework Integration]:   #framework-integration
+<!--                       NOTE: can't use convenience links because they conflick with a feature-u doc section
+[Feature Enablement]:      #feature-enablement
+[Managed Code Expansion]:  #managed-code-expansion
+ -->
+[UI Component Promotion]:  #ui-component-promotion
+[Single Source of Truth]:  #single-source-of-truth
+
+[feature-u Benefits]:      #feature-u-benefits
+[References]:              #references
+
+
 
 <!--- eatery-nod TODO: eventually change BRANCH: organize-by-feature TO TAG: after-features ---> 
 [eatery-nod]:   https://github.com/KevinAst/eatery-nod/tree/organize-by-feature
