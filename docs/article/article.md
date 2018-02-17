@@ -1192,48 +1192,48 @@ end" of your features!** _Go forth and compute!!_
 
 
 
-<!--- eatery-nod TODO: eventually change BRANCH: organize-by-feature TO TAG: after-features ---> 
-[eatery-nod]:   https://github.com/KevinAst/eatery-nod/tree/organize-by-feature
-[README]:       https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/README.md
+<!--- eatery-nod ---> 
+[eatery-nod]:   https://github.com/KevinAst/eatery-nod/tree/after-features
+[README]:       https://github.com/KevinAst/eatery-nod/blob/after-features/README.md
 [src BEFORE]:   https://github.com/KevinAst/eatery-nod/tree/before-features/src
-[src AFTER]:    https://github.com/KevinAst/eatery-nod/tree/organize-by-feature/src
-[README files]: https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/README.md
-[device]:       https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/device/README.md
-[auth]:         https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/auth/README.md
-[leftNav]:      https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/leftNav/README.md
-[currentView]:  https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/currentView/README.md
-[eateries]:     https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/eateries/README.md
-[discovery]:    https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/discovery/README.md
-[firebase]:     https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/firebase/README.md
-[logActions]:   https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/logActions/README.md
-[sandbox]:      https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/sandbox/README.md
+[src AFTER]:    https://github.com/KevinAst/eatery-nod/tree/after-features/src
+[README files]: https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/README.md
+[device]:       https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/device/README.md
+[auth]:         https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/auth/README.md
+[leftNav]:      https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/leftNav/README.md
+[currentView]:  https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/currentView/README.md
+[eateries]:     https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/eateries/README.md
+[discovery]:    https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/discovery/README.md
+[firebase]:     https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/firebase/README.md
+[logActions]:   https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/logActions/README.md
+[sandbox]:      https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/sandbox/README.md
 
-[`src/app.js`]:                           https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/app.js#L28-L34
+[`src/app.js`]:                           https://github.com/KevinAst/eatery-nod/blob/after-features/src/app.js#L28-L34
 
-[`src/feature/firebase/index.js`]:        https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/firebase/index.js#L11-L13
+[`src/feature/firebase/index.js`]:        https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/firebase/index.js#L11-L13
 
-[`src/feature/device/appDidStart.js`]:    https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/device/appDidStart.js#L7-L9
-[`src/feature/device/index.js62`]:        https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/device/index.js#L62
+[`src/feature/device/appDidStart.js`]:    https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/device/appDidStart.js#L7-L9
+[`src/feature/device/index.js62`]:        https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/device/index.js#L62
 
-[`src/feature/leftNav/appWillStart.js`]:  https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/leftNav/appWillStart.js#L10-L18
-[`src/feature/leftNav/index.js`]:         https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/leftNav/index.js#L24
+[`src/feature/leftNav/appWillStart.js`]:  https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/leftNav/appWillStart.js#L10-L18
+[`src/feature/leftNav/index.js`]:         https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/leftNav/index.js#L24
 
-[`src/feature/auth/publicFace.js`]:       https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/auth/publicFace.js#L7-L15
-[`src/feature/auth/index.js`]:            https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/auth/index.js#L49
-[`src/feature/auth/logic.js`]:            https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/auth/logic.js#L18-L27
+[`src/feature/auth/publicFace.js`]:       https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/auth/publicFace.js#L7-L15
+[`src/feature/auth/index.js`]:            https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/auth/index.js#L49
+[`src/feature/auth/logic.js`]:            https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/auth/logic.js#L18-L27
 
-[`src/feature/device/index.js`]:          https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/device/index.js#L52-L63
+[`src/feature/device/index.js`]:          https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/device/index.js#L52-L63
 
-[`src/feature/device/index.js57`]:        https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/device/index.js#L57
-[`src/feature/device/state.js`]:          https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/device/state.js#L11-L28
+[`src/feature/device/index.js57`]:        https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/device/index.js#L57
+[`src/feature/device/state.js`]:          https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/device/state.js#L11-L28
 
-[`src/feature/sandbox/index.js`]:         https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/sandbox/index.js#L15
+[`src/feature/sandbox/index.js`]:         https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/sandbox/index.js#L15
 
-[`src/feature/device/route.js`]:          https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/device/route.js#L13-L29
-[`src/feature/device/index.js49`]:        https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/device/index.js#L59
+[`src/feature/device/route.js`]:          https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/device/route.js#L13-L29
+[`src/feature/device/index.js49`]:        https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/device/index.js#L59
 
-[`src/feature/eateries/state.js`]:        https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/eateries/state.js#L17
-[`src/feature/eateries/index.js`]:        https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/eateries/index.js#L31
+[`src/feature/eateries/state.js`]:        https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/eateries/state.js#L17
+[`src/feature/eateries/index.js`]:        https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/eateries/index.js#L31
 
 
 
