@@ -375,7 +375,7 @@ _(see: [Launching Your Application])_.
 
 Here is **eatery-nod**'s mainline ...
 
-**[`src/app.js`]** TK: GIST with Caption Link HIGHLIGHTING the launchApp() line
+**[`src/app.js`]** TK: [GIST](https://gist.github.com/KevinAst/5639a1c9912290187ce900bb7f555328#file-app-js-L9-L22) with Caption Link HIGHLIGHTING the launchApp() line
 ```js
 import Expo              from 'expo';
 import {launchApp}       from 'feature-u';
@@ -402,8 +402,8 @@ export default launchApp({           // *3*
 ```
 
 The first thing to note is just how simple and generic the mainline
-startup process is.  There is no real app-specific code in it
-... **not even any global initialization**!  That is because
+startup process is.  There is **no real app-specific code in it
+... not even any global initialization**!  That is because
 **feature-u** provides various hooks that allow your features to
 inject their own app-specific constructs!!
 
@@ -439,7 +439,7 @@ operate in any of the React platforms _(see [React Registration])_.
 
 Here are some [`registerRootAppElm()`] variations:
 
-**[react web]** TK: GIST with Caption Link to external site (NOT eatery-nod code)
+**[react web]** TK: [GIST](https://gist.github.com/KevinAst/ccc6d808cf49e54f56c1fc2792e78410) with Caption Link to external site (NOT eatery-nod code)
 ```js
 import ReactDOM from 'react-dom';
 ...
@@ -453,7 +453,7 @@ export default launchApp({
 });
 ```
 
-**[react-native]** TK: GIST with Caption Link to external site (NOT eatery-nod code)
+**[react-native]** TK: [GIST](https://gist.github.com/KevinAst/f0b1866d2899b635a9768bb8d891f048) with Caption Link to external site (NOT eatery-nod code)
 ```js
 import {AppRegistry} from 'react-native';
 ...
@@ -467,7 +467,7 @@ export default launchApp({
 });
 ```
 
-**[expo]** TK: GIST with Caption Link to external site (NOT eatery-nod code)
+**[expo]** TK: [GIST](https://gist.github.com/KevinAst/ccca57a9f4fed835e62e469752159c11) with Caption Link to external site (NOT eatery-nod code)
 ```js
 import Expo from 'expo';
 ...
@@ -493,7 +493,7 @@ YES: device/index.js .......... contains just about every aspect
      many more
 -->
 
-**[`src/feature/device/index.js`]** TK: GIST with Caption Link HIGHLIGHTING createFeature RANGE
+**[`src/feature/device/index.js`]** TK: [GIST](https://gist.github.com/KevinAst/84a6a0f1e0d67756168aaefdfd15f1cd) with Caption Link HIGHLIGHTING createFeature RANGE
 ```js
 import {createFeature}  from 'feature-u';
 import name             from './featureName';
@@ -572,7 +572,7 @@ YES: firebase/appWillStart . initFireBase()
 
 - **FireBase Initialization**
 
-  **[`src/feature/firebase/index.js`]** TK: GIST with Caption Link HIGHLIGHTING appWillStart() RANGE
+  **[`src/feature/firebase/index.js`]** TK: [GIST](https://gist.github.com/KevinAst/70e2c25c399bf0e5533f70729027bb31) with Caption Link HIGHLIGHTING appWillStart() RANGE
   ```js
   import {createFeature}  from 'feature-u';
   import initFireBase     from './init/initFireBase';
@@ -592,7 +592,7 @@ YES: firebase/appWillStart . initFireBase()
 
 - **Bootstrap Action**
 
-  **[`src/feature/device/appDidStart.js`]** via **[`src/feature/device/index.js62`]** TK: GIST with Caption Link HIGHLIGHTING appDidStart() RANGE
+  **[`src/feature/device/appDidStart.js`]** via **[`src/feature/device/index.js62`]** TK: [GIST](https://gist.github.com/KevinAst/9c97b1f9a1120e9ac838e9507494c4b3) with Caption Link HIGHLIGHTING appDidStart() RANGE
   ```js
   import actions  from './actions';
 
@@ -607,7 +607,7 @@ YES: firebase/appWillStart . initFireBase()
 
 - **Inject DOM Root Elm**
 
-  **[`src/feature/leftNav/appWillStart.js`]** via **[`src/feature/leftNav/index.js`]** TK: GIST with Caption Link HIGHLIGHTING appWillStart() RANGE
+  **[`src/feature/leftNav/appWillStart.js`]** via **[`src/feature/leftNav/index.js`]** TK: [GIST](https://gist.github.com/KevinAst/afeed94f1223af7db2a4a3092de4cb77) with Caption Link HIGHLIGHTING appWillStart() RANGE
   ```js
   import React            from 'react';
   import {Drawer}         from 'native-base';
@@ -667,7 +667,7 @@ NO:  discovery/publicFace.js ..... API     ACTIONS: openFilterDialog([domain] [,
 -->
 
 
-**[`src/feature/auth/publicFace.js`]** via **[`src/feature/auth/index.js`]** TK: GIST with Caption Link HIGHLIGHTING RANGE
+**[`src/feature/auth/publicFace.js`]** via **[`src/feature/auth/index.js`]** TK: [GIST](https://gist.github.com/KevinAst/1584e625f7d560e2be34761f15f47406) with Caption Link HIGHLIGHTING RANGE
 ```js
 import actions  from './actions';
 import * as sel from './state';
@@ -713,7 +713,7 @@ follows:
 ```js
   app.auth.actions.userProfileChanged(userProfile)
   app.auth.actions.signOut()
-  app.auth.sel.getUserPool(appState): 
+  app.auth.sel.getUserPool(appState)
 ```
 
 
@@ -747,7 +747,7 @@ YES: device/state.js .... simplest state
 NO:  many others
 -->
 
-**[`src/feature/device/index.js57`]** TK: GIST with Caption Link HIGHLIGHTING reducer
+**[`src/feature/device/index.js57`]** TK: [GIST](https://gist.github.com/KevinAst/8153d8665918d819b21308679f8f0740) with Caption Link HIGHLIGHTING reducer
 ```js
 import {createFeature}  from 'feature-u';
 import name             from './featureName';
@@ -770,8 +770,7 @@ The **key thing to understand** is that **feature-u** _(through the
 accumulating all feature reducers into one overall appState.
 
 Here is the reducer code ...
-
-**[`src/feature/device/state.js`]** TK: GIST with Caption Link HIGHLIGHTING reducer RANGE
+**[`src/feature/device/state.js`]** TK: [GIST](https://gist.github.com/KevinAst/a71e46370e0ca10621705da9628a2bb9) with Caption Link HIGHLIGHTING reducer RANGE
 ```js
 import {combineReducers}  from 'redux';
 import {reducerHash}      from 'astx-redux-util';
@@ -835,7 +834,7 @@ YES: sandbox/index.js
 NO:  logActions/index.js
 -->
 
-**[`src/feature/sandbox/index.js`]** TK: GIST with Caption Link HIGHLIGHTING reducer RANGE
+**[`src/feature/sandbox/index.js`]** TK: [GIST](https://gist.github.com/KevinAst/b1a72f3a6ab4cc4223c92781ed6ed106) with Caption Link HIGHLIGHTING reducer RANGE
 ```js
 import {createFeature}  from 'feature-u';
 
@@ -883,7 +882,7 @@ parameter.
 
 Here is a logic module from **eatery-nod**'s [auth] feature ...
 
-**[`src/feature/auth/logic.js`]** TK: GIST with Caption Link HIGHLIGHTING reducer RANGE
+**[`src/feature/auth/logic.js`]** TK: [GIST](https://gist.github.com/KevinAst/9f57d7470a403897280b634fb2927c6b) with Caption Link HIGHLIGHTING reducer RANGE
 ```js
 import {createLogic}      from 'redux-logic';
 import {managedExpansion} from 'feature-u';
@@ -941,7 +940,7 @@ YES: device/route.js .... simplest route
 NO:  many others
 -->
 
-**[`src/feature/device/route.js`]** via **[`src/feature/device/index.js49`]** TK: GIST with Caption Link HIGHLIGHTING route
+**[`src/feature/device/route.js`]** via **[`src/feature/device/index.js49`]** TK: [GIST](https://gist.github.com/KevinAst/a928ff44ee3952a10c1daabec3cc87a1) with Caption Link HIGHLIGHTING route
 ```js
 import React                from 'react';
 import {isDeviceReady,
@@ -1003,7 +1002,7 @@ YES: eateries/state.js ... uses featureName and reducer.getSlicedState()
 NO:  ... many more
 -->
 
-**[`src/feature/eateries/state.js`]** via **[`src/feature/eateries/index.js`]** TK: GIST with Caption Link HIGHLIGHTING junk
+**[`src/feature/eateries/state.js`]** via **[`src/feature/eateries/index.js`]** TK: [GIST](https://gist.github.com/KevinAst/cf85d24e5aa9b0dfff08884b5dfa5e3f) with Caption Link HIGHLIGHTING junk
 ```js
 // ***
 // *** the eateries feature reducer
