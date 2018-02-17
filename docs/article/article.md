@@ -1,6 +1,6 @@
 # feature-u (Feature Based Project Organization for React)
 
-This article is an introduction to [feature-u] - a library that
+This article is an introduction to **[feature-u]** - a library that
 _facilitates feature-based project organization_ in your [react]
 project.  This utility assists in organizing your project by
 individual features.
@@ -17,7 +17,7 @@ and structure _(see: [References] below TK: link)_.
 This article outlines my excursion into feature-based composition.  In
 working through the details, I realized there was an opportunity for a
 library to help manage and streamline some of the hurdles incurred in
-this process.  The result: _[feature-u]_.
+this process.  The result: **[feature-u]**.
 
 ## At a Glance
 
@@ -102,7 +102,7 @@ The **overriding goal** of **feature-u** is two fold:
 <!-- *** SECTION ********************************************************************************  -->
 ## feature-u Basics
 
-The basic process of [feature-u] is that each feature promotes a
+The basic process of **[feature-u]** is that each feature promotes a
 [`Feature`] object that contains various aspects of that feature
 ... _things like: the feature's name, it's Public API, whether it is
 enabled, initialization constructs, and resources used to configure
