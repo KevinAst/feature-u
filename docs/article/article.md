@@ -130,7 +130,7 @@ selectors ... only reducers are needed to setup and configure redux.
 
 _framework integration ..._
 
-A fundamental goal of **feature-u** is to **automatically configure
+A fundamental goal of **[feature-u]** is to **automatically configure
 the framework(s)** used in your run-time-stack _(by accumulating the
 necessary resources across all your features)_.  Because not everyone
 uses the same frameworks, **feature-u** accomplishes this through
@@ -148,7 +148,7 @@ necessary resources across all your features.
 <!-- *** SECTION ********************************************************************************  -->
 ## eatery-nod App
 
-[eatery-nod] is the application _where **feature-u** was conceived_.
+**[eatery-nod]** is the application _where **[feature-u]** was conceived_.
 It is a [react-native] - [expo] mobile app, and is one of my sandbox
 applications that I use to test frameworks.  I like to develop apps
 that I can use, but have enough real-world requirements to make it
@@ -189,7 +189,7 @@ resources:
 Anyone who knows me will tell you that I have an appreciation for a
 good before/after analysis.  Whether it is a home remodel or a
 software refactor, it helps to chronicle where you have been, so as to
-quantify concreate achevements _(giving you a sense of
+quantify concrete achievements _(giving you a sense of
 accomplishment)_.
 
 <p align="center"><img src="img/beforeAfter.jpg" alt="Before/After" width="40%"></p>
@@ -297,7 +297,7 @@ src/
 As expected, **the difference in project organization is dramatic**!
 
 - **Before features**: you find constructs for a given feature spread
-  over numerious typed directories.
+  over numerous typed directories.
 
 - **After features**: all aspects of a given feature are contained in
   it's own isolated directory.
@@ -314,8 +314,8 @@ As expected, **the difference in project organization is dramatic**!
 <!-- *** SECTION ********************************************************************************  -->
 ## feature-u In Action
 
-To better understand **feature-u**, let's take a closer look at some
-**eatery-nod** examples in action.
+To better understand **[feature-u]**, let's take a closer look at some
+**[eatery-nod]** examples in action.
 
 <p align="center"><img src="img/examples.jpg" alt="Examples" width="60%"></p>
 
@@ -547,12 +547,12 @@ To solve this, **feature-u** introduces two [Application Life Cycle
 Hooks], injected through the following Feature aspects:
 
 1. [`Feature.appWillStart({app, curRootAppElm}): rootAppElm || falsy`]
-   ...  invoked one time, just before the app starts up.  This an do
+   ...  invoked one time, just before the app starts up.  This can do
    any type of initialization, including supplementing the app's
    top-level root element (i.e. react component instance).
 
 2. [`Feature.appDidStart({app, appState, dispatch}): void`] ...
-   invoked one time immediatly after the app has started.  A typical
+   invoked one time immediately after the app has started.  A typical
    usage for this hook is to dispatch some type of bootstrap action.
 
 Here are some examples from **eatery-nod**:
@@ -722,7 +722,7 @@ follows:
 
 Most likely your application employs one or more frameworks (ex:
 [redux], [redux-logic], etc.).  How are the resources needed by these
-frameworks acumulated and configured across the many features of your
+frameworks accumulated and configured across the many features of your
 app?
 
 To solve this, **feature-u** introduces [Extendable aspects].
@@ -803,7 +803,7 @@ feature's slice of the the overall appState. The only difference is it
 must be embellished with [`slicedReducer()`], which provides
 instructions on where to insert it in the overall top-level appState.
 
-As a result, the `device` reducer only maintains the state relevent to
+As a result, the `device` reducer only maintains the state relevant to
 the `device` feature _(i.e. it's little slice of the world)_ ... a
 **status**, a **fontsLoaded** indicator, and the **device location**.
 
@@ -811,7 +811,7 @@ the `device` feature _(i.e. it's little slice of the world)_ ... a
 [`reducerHash()`] function to concisely implement the feature's
 reducer _(providing an alternative to the common switch statement)_.
 I have found that in using a utility like this, for most cases it is
-feasable to implement all the reducers of a feature in one file _(due
+feasible to implement all the reducers of a feature in one file _(due
 in part to the smaller boundary of a feature)_.  [astx-redux-util]
 also promotes other [Higher-Order Reducers].  You may want to check
 this out.
@@ -854,7 +854,7 @@ case it is simply hard-coded _(to be set by a developer)_.
 
 **SideBar:** When other features interact with a feature that can be
 disabled, you can use the [`App`] object to determine if a feature is
-presdent or not _(see: [Feature Enablement] for more information)_.
+present or not _(see: [Feature Enablement] for more information)_.
 
 
 
@@ -918,7 +918,7 @@ as a parameter.
 ## UI Component Promotion
 
 Features that maintain their own UI Components need a way to promote
-them in the overall app's GUI.  Because features are encapsolated, how
+them in the overall app's GUI.  Because features are encapsulated, how
 is this accomplished in an autonomous way?
 
 To address this, **feature-u** recommends considering [Feature Based
@@ -1067,7 +1067,7 @@ in one spot (see `*2*`).
 <!-- *** SECTION ********************************************************************************  -->
 ## feature-u Benefits
 
-In summary, the benefits of using **feature-u** include:
+In summary, the benefits of using **[feature-u]** include:
 
 - **Feature Encapsulation** _isolating feature implementations improves code manageability_
 
@@ -1147,7 +1147,7 @@ end" of your features!** _Go forth and compute!!_
 - [The 100% correct way to structure a React app (or why there’s no such thing)](https://hackernoon.com/the-100-correct-way-to-structure-a-react-app-or-why-theres-no-such-thing-3ede534ef1ed)
   _... David Gilbertson_
   <!--
-  KJB: more interested in file usage/accessability (large hit count)
+  KJB: more interested in file usage/accessibility (large hit count)
   -->
 
 - [Redux for state management in large web apps](https://blog.mapbox.com/redux-for-state-management-in-large-web-apps-c7f3fab3ce9b)
@@ -1180,7 +1180,7 @@ end" of your features!** _Go forth and compute!!_
 [Feature Initialization]:  #feature-initialization
 [Feature Collaboration]:   #feature-collaboration
 [Framework Integration]:   #framework-integration
-<!--                       NOTE: can't use convenience links because they conflick with a feature-u doc section
+<!--                       NOTE: can't use convenience links because they conflict with a feature-u doc section
 [Feature Enablement]:      #feature-enablement
 [Managed Code Expansion]:  #managed-code-expansion
  -->
@@ -1225,7 +1225,7 @@ end" of your features!** _Go forth and compute!!_
 [`src/feature/device/index.js`]:          https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/device/index.js#L52-L63
 
 [`src/feature/device/index.js57`]:        https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/device/index.js#L57
-[`src/feature/device/state.js`]:          https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/device/state.js#L10-L27
+[`src/feature/device/state.js`]:          https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/device/state.js#L11-L28
 
 [`src/feature/sandbox/index.js`]:         https://github.com/KevinAst/eatery-nod/blob/organize-by-feature/src/feature/sandbox/index.js#L15
 
