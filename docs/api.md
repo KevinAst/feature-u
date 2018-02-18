@@ -70,14 +70,14 @@ Mark the supplied {{book.api.managedExpansionCB}} as a "ManagedExpansion Callba
 <a id="createAspect"></a>
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
-  createAspect(name, [validateConfiguration], [expandFeatureContent], validateFeatureContent, assembleFeatureContent, [assembleAspectResources], [initialRootAppElm], [injectRootAppElm], [additionalMethods]) ⇒ [`Aspect`](#Aspect)</h5>
+  createAspect(name, [genesis], [expandFeatureContent], validateFeatureContent, assembleFeatureContent, [assembleAspectResources], [initialRootAppElm], [injectRootAppElm], [additionalMethods]) ⇒ [`Aspect`](#Aspect)</h5>
 Create an {{book.api.Aspect}} object, used to extend **feature-u**.The {{book.api.Aspect}} object promotes a series of life-cyclemethods that **feature-u** invokes in a controlled way.  Thislife-cycle is controlled by {{book.api.launchApp}} _... it issupplied the Aspects, and it invokes their methods._The essential characteristics of the {{book.api.Aspect}} life-cycle is to:- accumulate {{book.api.AspectContent}} across all features- perform the desired setup and configuration- expose the framework in some way _(by injecting a component in the  root DOM, or some {{book.guide.extending_aspectCrossCommunication}}  mechanism)_The {{book.guide.extending}} section provides more insight on how{{book.api.Aspect}}s are created and used.**Please Note** this function uses named parameters.  The order inwhich these items are presented represents the same order they areexecuted.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
 | name | string | the `Aspect.name` is used to "key" {{book.api.AspectContent}} of this type in the {{book.api.Feature}} object.<br/><br/> For example: an `Aspect.name: 'xyz'` would permit a `Feature.xyz: xyzContent` construct.<br/><br/> As a result, Aspect names cannot clash with built-in aspects, and they must be unique _(across all aspects that are in-use)_. |
-| [validateConfiguration] | [`validateConfigurationMeth`](#validateConfigurationMeth) | an optional validation hook allowing this aspect to verify it's own required configuration (if any).<br/><br/> Some aspects may require certain settings in self for them to operate. |
+| [genesis] | [`genesisMeth`](#genesisMeth) | an optional Life Cycle Hook invoked one time, at the very beginning of the app's start up process. This hook can perform Aspect related **initialization** and **validation**: |
 | [expandFeatureContent] | [`expandFeatureContentMeth`](#expandFeatureContentMeth) | an optional aspect expansion hook, defaulting to the algorithm defined by {{book.api.managedExpansion}}.<br/><br/> This function rarely needs to be overridden.  It provides a hook to aspects that need to transfer additional content from the expansion function to the expanded content. |
 | validateFeatureContent | [`validateFeatureContentMeth`](#validateFeatureContentMeth) | a validation hook allowing this aspect to verify it's content on the supplied feature (which is known to contain this aspect). |
 | assembleFeatureContent | [`assembleFeatureContentMeth`](#assembleFeatureContentMeth) | the Aspect method that assembles content for this aspect across all features, retaining needed state for subsequent ops.<br/><br/> This method is required because this is the primary task that is accomplished by all aspects. |
@@ -203,11 +203,11 @@ The content (or payload) of an {{book.api.Aspect}}, specifiedwithin a {{book.ap
 
 <br/><br/><br/>
 
-<a id="validateConfigurationMeth"></a>
+<a id="genesisMeth"></a>
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
-  validateConfigurationMeth ⇒ string</h5>
-A validation hook allowing this aspect to verify it's own requiredconfiguration (if any).  Some aspects may require certain settingsin self for them to operate.**API:** {{book.api.validateConfigurationMeth$}}
+  genesisMeth ⇒ string</h5>
+An optional Life Cycle Hook invoked one time, at the very beginning ofthe app's start up process.This hook can perform Aspect related **initialization** and**validation**:- **initialization**: this is where where proprietary Aspect/Feature  APIs should be registered (if any) - via  {{book.api.extendAspectProperty}} and  {{book.api.extendFeatureProperty}} _(please see:  {{book.guide.extending_aspectCrossCommunication}})_.- **validation**: this is where an aspect can verify it's own required  configuration (if any). Some aspects require certain settings _(set  by the application)_ in self for them to operate.**API:** {{book.api.genesisMeth$}}
 
 **Returns**: string - an error message when self is in an invalid state(falsy when valid).  Because this validation occurs under thecontrol of {{book.api.launchApp}}, any message is prefixed with:`'launchApp() parameter violation: '`.  
 

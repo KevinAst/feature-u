@@ -56,8 +56,8 @@ export default function launchApp({aspects=[],
       check(false, `supplied aspects contain a NON-unique name: '${aspect.name}'`);
     }
 
-    // allow each aspect to validate itself (for applied run-time configuration settings)
-    const errMsg = aspect.validateConfiguration();
+    // allow each aspect to perform Aspect related initialization and validation
+    const errMsg = aspect.genesis();
     check(!errMsg, errMsg); // non-null is considered a validation error
 
     // maintain our convenient hash of aspects

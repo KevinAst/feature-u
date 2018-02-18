@@ -203,8 +203,8 @@ Because it manages {{book.ext.redux}}, it also maintains the
 other **Aspects** to inject their middleware.  It accomplishes this by
 exposing a new **Aspect API**: `Aspect.getReduxMiddleware()`.
 
-- **Do This**: An extending **Aspect** that introduces a new API
-  should **do the following**:
+- An extending **Aspect** that introduces a new API should **do the
+  following**:
   
   1. Document the API, so the external client knows how to use it.
   
@@ -218,9 +218,9 @@ exposing a new **Aspect API**: `Aspect.getReduxMiddleware()`.
      This registration allows the new API (i.e. the `name` parameter)
      to be referenced in either {{book.api.createAspect}} or
      {{book.api.createFeature}} respectively.
-  
-     The registration should occur globally, during the in-line
-     expansion of the extending Aspect, guaranteeing the new API is
+
+     This registration should occur in the {{book.guide.genesisMeth}}
+     life cycle method _(i.e. very early)_ to guarantee the new API is
      available during **feature-u** validation.
   
   1. Utilize the API in one of the
@@ -228,10 +228,12 @@ exposing a new **Aspect API**: `Aspect.getReduxMiddleware()`.
      additional information _(from other {{book.api.Aspects}} or
      {{book.api.Features}})_.
 
-- **Example**: As a **concrete example** of this, let's look at some code snippets from
-  the aforementioned {{book.ext.featureRedux}} plugin:
+- **Example**: 
+
+  As a **concrete example** of this, let's look at some code snippets
+  from the aforementioned {{book.ext.featureRedux}} plugin:
   
-  1. Here is the new API documentation:
+  1. Here is how the new API is documented:
   
      [feature-redux#inputs](https://github.com/KevinAst/feature-redux/tree/18987a3d7911eb4148e91089309b30bef3c7dbcd#inputs)
   
@@ -246,14 +248,18 @@ exposing a new **Aspect API**: `Aspect.getReduxMiddleware()`.
   
   1. Here is the new API registration:
   
-     [feature-redux/src/reducerAspect.js](https://github.com/KevinAst/feature-redux/blob/18987a3d7911eb4148e91089309b30bef3c7dbcd/src/reducerAspect.js#L12-L17)
+     [feature-redux/src/reducerAspect.js](https://github.com/KevinAst/feature-redux/blob/f22a8d254aec4908fcf7784e07bc1829409859fa/src/reducerAspect.js#L41-L44)
      ```js
-     // register feature-redux proprietary Aspect APIs
-     // ... required to pass feature-u validation
-     // ... must occur globally (during our in-line code expansion)
-     //     guaranteeing the new API is available during feature-u validation
-     extendAspectProperty('getReduxStore');      // Aspect.getReduxStore(): store
-     extendAspectProperty('getReduxMiddleware'); // Aspect.getReduxMiddleware(): reduxMiddleware
+     /**
+      * Register feature-redux proprietary Aspect APIs (required to pass
+      * feature-u validation).
+      * This must occur early in the life-cycle (i.e. this method) to
+      * guarantee the new API is available during feature-u validation.
+      */
+     function genesis() {
+       extendAspectProperty('getReduxStore');      // Aspect.getReduxStore(): store
+       extendAspectProperty('getReduxMiddleware'); // Aspect.getReduxMiddleware(): reduxMiddleware
+     }
      ```
   
   1. Here is the new API usage:
@@ -281,7 +287,7 @@ Life Cycle Methods**.  Simply follow the link for a thorough
 discussion of each:
 
  - [`Aspect.name`](#aspectname)
- - {{book.guide.validateConfigurationMeth$}}
+ - {{book.guide.genesisMeth$}}
  - {{book.guide.expandFeatureContentMeth$}}
  - {{book.guide.validateFeatureContentMeth$}}
  - {{book.guide.assembleFeatureContentMeth$}}
@@ -387,14 +393,25 @@ This allows your clientele to reset the Aspect.name as follows:
 ```
 
 
-### Aspect.validateConfiguration()
+### Aspect.genesis()
 
-**API:** {{book.api.validateConfigurationMeth$}}
+**API:** {{book.api.genesisMeth$}}
 
-{{book.api.validateConfigurationMeth}} is an optional validation hook
-allowing this aspect to verify it's own required configuration (if
-any).  Some aspects may require certain settings in self for them to
-operate.
+{{book.api.genesisMeth}} is an optional Life Cycle Hook invoked one
+time, at the very beginning of the app's start up process.
+
+This hook can perform Aspect related **initialization** and
+**validation**:
+
+- **initialization**: this is where where proprietary Aspect/Feature
+  APIs should be registered (if any) - via
+  {{book.api.extendAspectProperty}} and
+  {{book.api.extendFeatureProperty}} _(please see:
+  {{book.guide.extending_aspectCrossCommunication}})_.
+
+- **validation**: this is where an aspect can verify it's own required
+  configuration (if any). Some aspects require certain settings _(set
+  by the application)_ in self for them to operate.
 
 **RETURN**: an error message string when self is in an invalid state
 (falsy when valid).  Because this validation occurs under the control

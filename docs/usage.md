@@ -142,7 +142,7 @@ Here are some **important points of interest** _(match the numbers to
 `*n*` in the code above)_:
 
 1. the supplied Aspects _(pulled from separate npm packages)_ reflect
-   the frameworks of our run-time stack _(in our example [
+   the frameworks of our run-time stack _(in our example
    {{book.ext.redux}}, {{book.ext.reduxLogic}}, and
    {{book.ext.featureRouter}})_ and extend the acceptable Feature
    properties _(`Feature.reducer`, `Feature.logic`, and

@@ -149,6 +149,7 @@ in your project (_matching your project's run-time stack_).
 Extendable Aspects are created with **feature-u**'s
 {{book.guide.extensionApi}}, using {{book.api.createAspect}}.  You can
 define your own Aspect (_if the one you need doesn't already exist_)!
+For more information, please see {{book.guide.extending}}.
 
 Like all aspects, Extendable Aspect content is relayed through Feature
 object properties (via {{book.api.createFeature}}).

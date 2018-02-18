@@ -3,7 +3,7 @@ import isString             from 'lodash.isstring';
 import isFunction           from 'lodash.isfunction';
 import {isFeatureProperty}  from '../core/createFeature';
 
-const default_validateConfiguration = (feature) => null;
+const default_genesis = () => null;
 
 function default_expandFeatureContent(app, feature) {
   // expand self's content in the supplied feature
@@ -49,12 +49,10 @@ const default_processRootAppElm = (app, curRootAppElm) => curRootAppElm;
  * As a result, Aspect names cannot clash with built-in aspects, and
  * they must be unique _(across all aspects that are in-use)_.
  *
- * @param {validateConfigurationMeth} [validateConfiguration] an
- * optional validation hook allowing this aspect to verify it's own
- * required configuration (if any).<br/><br/>
- * 
- * Some aspects may require certain settings in self for them to
- * operate.
+ * @param {genesisMeth} [genesis] an optional Life Cycle Hook invoked
+ * one time, at the very beginning of the app's start up process.
+ * This hook can perform Aspect related **initialization** and
+ * **validation**:
  *
  * @param {expandFeatureContentMeth} [expandFeatureContent] an
  * optional aspect expansion hook, defaulting to the algorithm defined
@@ -116,7 +114,7 @@ const default_processRootAppElm = (app, curRootAppElm) => curRootAppElm;
  * @return {Aspect} a new Aspect object (to be consumed by {{book.api.launchApp}}).
  */
 export default function createAspect({name,
-                                      validateConfiguration=default_validateConfiguration,
+                                      genesis=default_genesis,
                                       expandFeatureContent=default_expandFeatureContent,
                                       validateFeatureContent,
                                       assembleFeatureContent,
@@ -136,7 +134,7 @@ export default function createAspect({name,
   check(!isFeatureProperty(name), `Aspect.name: '${name}' is a reserved Feature keyword`);
   // NOTE: Aspect.name uniqueness is validated in launchApp() (once we know all aspects in-use)
 
-  check(isFunction(validateConfiguration),   'validateConfiguration (when supplied) must be a function');
+  check(isFunction(genesis),                 'genesis (when supplied) must be a function');
 
   check(isFunction(expandFeatureContent),    'expandFeatureContent (when supplied) must be a function');
 
@@ -162,7 +160,7 @@ export default function createAspect({name,
 
   return {
     name,
-    validateConfiguration,
+    genesis,
     expandFeatureContent,
     validateFeatureContent,
     assembleFeatureContent,
@@ -191,7 +189,7 @@ export default function createAspect({name,
  */
 const validAspectProps = {
   name:                     true,
-  validateConfiguration:    true,
+  genesis:                  true,
   expandFeatureContent:     true,
   validateFeatureContent:   true,
   assembleFeatureContent:   true,
@@ -281,17 +279,29 @@ export function extendAspectProperty(name) {
 
 
 //***
-//*** Specification: validateConfigurationMeth
+//*** Specification: genesisMeth
 //***
 
 /**
- * A validation hook allowing this aspect to verify it's own required
- * configuration (if any).  Some aspects may require certain settings
- * in self for them to operate.
+ * An optional Life Cycle Hook invoked one time, at the very beginning of
+ * the app's start up process.
+ * 
+ * This hook can perform Aspect related **initialization** and
+ * **validation**:
+ * 
+ * - **initialization**: this is where where proprietary Aspect/Feature
+ *   APIs should be registered (if any) - via
+ *   {{book.api.extendAspectProperty}} and
+ *   {{book.api.extendFeatureProperty}} _(please see:
+ *   {{book.guide.extending_aspectCrossCommunication}})_.
+ * 
+ * - **validation**: this is where an aspect can verify it's own required
+ *   configuration (if any). Some aspects require certain settings _(set
+ *   by the application)_ in self for them to operate.
  *
- * **API:** {{book.api.validateConfigurationMeth$}}
+ * **API:** {{book.api.genesisMeth$}}
  *
- * @callback validateConfigurationMeth
+ * @callback genesisMeth
  *
  * @return {string} an error message when self is in an invalid state
  * (falsy when valid).  Because this validation occurs under the
