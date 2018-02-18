@@ -12,7 +12,7 @@ much preferred over type-based patterns.  Because **application
 domains grow** _in the real world_, project **organization by type
 simply doesn't scale**, _it just becomes unmanageable_!  There are
 many good articles on this topic with insights on feature-based design
-and structure _(see: [References] below TK: link)_.
+and structure _(see: [References] below TK:medium-resolve-internal-link)_.
 
 This article outlines my excursion into feature-based composition.  In
 working through the details, I realized there was an opportunity for a
@@ -21,7 +21,7 @@ this process.  The result: **[feature-u]**.
 
 ## At a Glance
 
-TK: resolve internal links
+TK:medium-resolve-internal-links
 
 - [Backdrop] ... _why was **feature-u** was created_
 - [feature-u Basics] ... _introduce high-level **feature-u** concepts_
@@ -328,7 +328,7 @@ caption link will take you to the actual code _(hosted on github)_.
 
 Here are our topics ...
 
-TK: update links
+TK:medium-resolve-internal-links
 
 0. INTERNAL: markdown shows order from "Why" section
 9. [Simplified App Startup]
@@ -424,7 +424,7 @@ Here are some **important points of interest** _(match the numbers to
 2. all app features are accumulated from our `feature/` directory
 
 3. _as a preview_ to [Feature Collaboration]
-   (TK: link), the exported return value of [`launchApp()`] is an
+   (TK:medium-resolve-internal-link), the exported return value of [`launchApp()`] is an
    [`App`] object, which promotes the accumulated Public API of all
    features.
 
@@ -786,7 +786,7 @@ export default createFeature({
 Because `Feature.reducer` is an **extended aspect** (verses a
 _built-in aspect_), it is only available because we registered the
 [feature-redux] `reducerAspect` to [`launchApp()`] _(please refer to
-[Simplified App Startup] above TK: link)_
+[Simplified App Startup] above TK:medium-resolve-internal-link)_
 
 The **key thing to understand** is that **feature-u** _(through the
 [feature-redux] extension)_ will automatically configure [redux] by
