@@ -9,7 +9,7 @@ describe('feature-u createAspect() tests', () => {
   describe('VERIFY content pass through', () => {
     const aspect = createAspect({
       name:                    'myAspectName',
-      validateConfiguration:   () => 'MY validateConfiguration',
+      genesis:                 () => 'MY genesis',
       expandFeatureContent:    () => 'MY expandFeatureContent',
       validateFeatureContent:  () => 'MY validateFeatureContent',
       assembleFeatureContent:  () => 'MY assembleFeatureContent',
@@ -21,8 +21,8 @@ describe('feature-u createAspect() tests', () => {
       expect(aspect.name).toEqual('myAspectName');
     });
 
-    test('aspect.validateConfiguration', () => {
-      expect(aspect.validateConfiguration()).toEqual('MY validateConfiguration');
+    test('aspect.genesis', () => {
+      expect(aspect.genesis()).toEqual('MY genesis');
     });
 
     test('aspect.expandFeatureContent', () => {
@@ -85,7 +85,7 @@ describe('feature-u createAspect() tests', () => {
   describe('VERIFY MANAGED EXPANSION DEFAULT SEMANTICS', () => {
     const aspect = createAspect({
       name:                   'myAspectName',
-      // validateConfiguration:   // USE DEFAULT
+      // genesis:                 // USE DEFAULT
       // expandFeatureContent,    // DEFAULT SEMANTICS - UNDER TEST
       validateFeatureContent: identityFn,
       assembleFeatureContent: identityFn,

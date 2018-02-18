@@ -13,7 +13,7 @@ convenience this list:_
 ## Extension API Summary
 
 * {{book.api.createAspect$}}
-  * {{book.api.validateConfigurationMeth$}}
+  * {{book.api.genesisMeth$}}
   * {{book.api.expandFeatureContentMeth$}}
   * {{book.api.validateFeatureContentMeth$}}
   * {{book.api.assembleFeatureContentMeth$}}

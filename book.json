@@ -96,8 +96,8 @@
       "extending_aspectCrossCommunication":  "[`Aspect Cross Communication`](/extending.md#aspect-cross-communication)",
       "extending_aspectLifeCycleMethods":    "[`Aspect Life Cycle Methods`](/extending.md#aspect-life-cycle-methods)",
 
-        "validateConfigurationMeth":     "[`Aspect.validateConfiguration()`](/extending.md#aspectvalidateconfiguration)",
-        "validateConfigurationMeth$":    "[`Aspect.validateConfiguration(): string`](/extending.md#aspectvalidateconfiguration)",
+        "genesisMeth":                   "[`Aspect.genesis()`](/extending.md#aspectgenesis)",
+        "genesisMeth$":                  "[`Aspect.genesis(): string`](/extending.md#aspectgenesis)",
 
         "expandFeatureContentMeth":      "[`Aspect.expandFeatureContent()`](/extending.md#aspectexpandfeaturecontent)",
         "expandFeatureContentMeth$":     "[`Aspect.expandFeatureContent(app, feature): string`](/extending.md#aspectexpandfeaturecontent)",
@@ -154,8 +154,8 @@
         "createAspect":                    "[`createAspect()`](/api.md#createAspect)",
         "createAspect$":                   "[`createAspect({see-docs}): Aspect`](/api.md#createAspect)",
 
-          "validateConfigurationMeth":     "[`validateConfiguration()`](/api.md#validateConfigurationMeth)",
-          "validateConfigurationMeth$":    "[`validateConfiguration(): string`](/api.md#validateConfigurationMeth)",
+          "genesisMeth":                   "[`genesis()`](/api.md#genesisMeth)",
+          "genesisMeth$":                  "[`genesis(): string`](/api.md#genesisMeth)",
 
           "expandFeatureContentMeth":      "[`expandFeatureContent()`](/api.md#expandFeatureContentMeth)",
           "expandFeatureContentMeth$":     "[`expandFeatureContent(app, feature): string`](/api.md#expandFeatureContentMeth)",
