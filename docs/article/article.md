@@ -375,7 +375,9 @@ _(see: [Launching Your Application])_.
 
 Here is **eatery-nod**'s mainline ...
 
-**[`src/app.js`]** TK: [GIST](https://gist.github.com/KevinAst/5639a1c9912290187ce900bb7f555328#file-app-js-L9-L22) with Caption Link HIGHLIGHTING the launchApp() line
+TK: For medium article, use this [GIST](https://gist.github.com/KevinAst/5639a1c9912290187ce900bb7f555328#file-app-js-L9-L22)
+with caption:
+**[`src/app.js`](https://github.com/KevinAst/eatery-nod/blob/after-features/src/app.js#L28-L34)** 
 ```js
 import Expo              from 'expo';
 import {launchApp}       from 'feature-u';
@@ -439,7 +441,9 @@ operate in any of the React platforms _(see [React Registration])_.
 
 Here are some [`registerRootAppElm()`] variations:
 
-**[react web]** TK: [GIST](https://gist.github.com/KevinAst/ccc6d808cf49e54f56c1fc2792e78410) with Caption Link to external site (NOT eatery-nod code)
+TK: For medium article, use this [GIST](https://gist.github.com/KevinAst/ccc6d808cf49e54f56c1fc2792e78410)
+with caption:
+**[react web]** (in this case NOT eatery-nod code)
 ```js
 import ReactDOM from 'react-dom';
 ...
@@ -453,7 +457,9 @@ export default launchApp({
 });
 ```
 
-**[react-native]** TK: [GIST](https://gist.github.com/KevinAst/f0b1866d2899b635a9768bb8d891f048) with Caption Link to external site (NOT eatery-nod code)
+TK: For medium article, use this [GIST](https://gist.github.com/KevinAst/f0b1866d2899b635a9768bb8d891f048)
+with caption:
+**[react-native]** (in this case NOT eatery-nod code)
 ```js
 import {AppRegistry} from 'react-native';
 ...
@@ -467,7 +473,9 @@ export default launchApp({
 });
 ```
 
-**[expo]** TK: [GIST](https://gist.github.com/KevinAst/ccca57a9f4fed835e62e469752159c11) with Caption Link to external site (NOT eatery-nod code)
+TK: For medium article, use this [GIST](https://gist.github.com/KevinAst/ccca57a9f4fed835e62e469752159c11)
+with caption:
+**[expo]** (in this case NOT eatery-nod code)
 ```js
 import Expo from 'expo';
 ...
@@ -493,7 +501,9 @@ YES: device/index.js .......... contains just about every aspect
      many more
 -->
 
-**[`src/feature/device/index.js`]** TK: [GIST](https://gist.github.com/KevinAst/84a6a0f1e0d67756168aaefdfd15f1cd) with Caption Link HIGHLIGHTING createFeature RANGE
+TK: For medium article, use this [GIST](https://gist.github.com/KevinAst/84a6a0f1e0d67756168aaefdfd15f1cd)
+with caption:
+**[`src/feature/device/index.js`](https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/device/index.js#L52-L63)**
 ```js
 import {createFeature}  from 'feature-u';
 import name             from './featureName';
@@ -572,7 +582,9 @@ YES: firebase/appWillStart . initFireBase()
 
 - **FireBase Initialization**
 
-  **[`src/feature/firebase/index.js`]** TK: [GIST](https://gist.github.com/KevinAst/70e2c25c399bf0e5533f70729027bb31) with Caption Link HIGHLIGHTING appWillStart() RANGE
+  TK: For medium article, use this [GIST](https://gist.github.com/KevinAst/70e2c25c399bf0e5533f70729027bb31)
+  with caption:
+  **[`src/feature/firebase/index.js`](https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/firebase/index.js#L11-L13)**
   ```js
   import {createFeature}  from 'feature-u';
   import initFireBase     from './init/initFireBase';
@@ -592,7 +604,10 @@ YES: firebase/appWillStart . initFireBase()
 
 - **Bootstrap Action**
 
-  **[`src/feature/device/appDidStart.js`]** via **[`src/feature/device/index.js62`]** TK: [GIST](https://gist.github.com/KevinAst/9c97b1f9a1120e9ac838e9507494c4b3) with Caption Link HIGHLIGHTING appDidStart() RANGE
+  TK: For medium article, use this [GIST](https://gist.github.com/KevinAst/9c97b1f9a1120e9ac838e9507494c4b3)
+  with caption:
+  **[`src/feature/device/appDidStart.js`](https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/device/appDidStart.js#L7-L9)**
+  via **[`index.js`](https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/device/index.js#L62)**
   ```js
   import actions  from './actions';
 
@@ -607,7 +622,10 @@ YES: firebase/appWillStart . initFireBase()
 
 - **Inject DOM Root Elm**
 
-  **[`src/feature/leftNav/appWillStart.js`]** via **[`src/feature/leftNav/index.js`]** TK: [GIST](https://gist.github.com/KevinAst/afeed94f1223af7db2a4a3092de4cb77) with Caption Link HIGHLIGHTING appWillStart() RANGE
+  TK: For medium article, use this [GIST](https://gist.github.com/KevinAst/afeed94f1223af7db2a4a3092de4cb77)
+  with caption:
+  **[`src/feature/leftNav/appWillStart.js`](https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/leftNav/appWillStart.js#L10-L18)**
+  via **[`index.js`](https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/leftNav/index.js#L24)**
   ```js
   import React            from 'react';
   import {Drawer}         from 'native-base';
@@ -667,7 +685,10 @@ NO:  discovery/publicFace.js ..... API     ACTIONS: openFilterDialog([domain] [,
 -->
 
 
-**[`src/feature/auth/publicFace.js`]** via **[`src/feature/auth/index.js`]** TK: [GIST](https://gist.github.com/KevinAst/1584e625f7d560e2be34761f15f47406) with Caption Link HIGHLIGHTING RANGE
+TK: For medium article, use this [GIST](https://gist.github.com/KevinAst/1584e625f7d560e2be34761f15f47406)
+with caption:
+**[`src/feature/auth/publicFace.js`](https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/auth/publicFace.js#L7-L15)**
+via **[`index.js`](https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/auth/index.js#L49)**
 ```js
 import actions  from './actions';
 import * as sel from './state';
@@ -747,7 +768,9 @@ YES: device/state.js .... simplest state
 NO:  many others
 -->
 
-**[`src/feature/device/index.js57`]** TK: [GIST](https://gist.github.com/KevinAst/8153d8665918d819b21308679f8f0740) with Caption Link HIGHLIGHTING reducer
+TK: For medium article, use this [GIST](https://gist.github.com/KevinAst/8153d8665918d819b21308679f8f0740)
+with caption:
+**[`src/feature/device/index.js`](https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/device/index.js#L57)**
 ```js
 import {createFeature}  from 'feature-u';
 import name             from './featureName';
@@ -770,7 +793,10 @@ The **key thing to understand** is that **feature-u** _(through the
 accumulating all feature reducers into one overall appState.
 
 Here is the reducer code ...
-**[`src/feature/device/state.js`]** TK: [GIST](https://gist.github.com/KevinAst/a71e46370e0ca10621705da9628a2bb9) with Caption Link HIGHLIGHTING reducer RANGE
+
+TK: For medium article, use this [GIST](https://gist.github.com/KevinAst/a71e46370e0ca10621705da9628a2bb9)
+with caption:
+**[`src/feature/device/state.js`](https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/device/state.js#L11-L28)**
 ```js
 import {combineReducers}  from 'redux';
 import {reducerHash}      from 'astx-redux-util';
@@ -834,7 +860,9 @@ YES: sandbox/index.js
 NO:  logActions/index.js
 -->
 
-**[`src/feature/sandbox/index.js`]** TK: [GIST](https://gist.github.com/KevinAst/b1a72f3a6ab4cc4223c92781ed6ed106) with Caption Link HIGHLIGHTING reducer RANGE
+TK: For medium article, use this [GIST](https://gist.github.com/KevinAst/b1a72f3a6ab4cc4223c92781ed6ed106)
+with caption:
+**[`src/feature/sandbox/index.js`](https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/sandbox/index.js#L15)**
 ```js
 import {createFeature}  from 'feature-u';
 
@@ -882,7 +910,9 @@ parameter.
 
 Here is a logic module from **eatery-nod**'s [auth] feature ...
 
-**[`src/feature/auth/logic.js`]** TK: [GIST](https://gist.github.com/KevinAst/9f57d7470a403897280b634fb2927c6b) with Caption Link HIGHLIGHTING reducer RANGE
+TK: For medium article, use this [GIST](https://gist.github.com/KevinAst/9f57d7470a403897280b634fb2927c6b)
+with caption:
+**[`src/feature/auth/logic.js`](https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/auth/logic.js#L18-L27)**
 ```js
 import {createLogic}      from 'redux-logic';
 import {managedExpansion} from 'feature-u';
@@ -940,7 +970,10 @@ YES: device/route.js .... simplest route
 NO:  many others
 -->
 
-**[`src/feature/device/route.js`]** via **[`src/feature/device/index.js49`]** TK: [GIST](https://gist.github.com/KevinAst/a928ff44ee3952a10c1daabec3cc87a1) with Caption Link HIGHLIGHTING route
+TK: For medium article, use this [GIST](https://gist.github.com/KevinAst/a928ff44ee3952a10c1daabec3cc87a1)
+with caption:
+**[`src/feature/device/route.js`](https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/device/route.js#L13-L29)**
+via **[`index.js`](https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/device/index.js#L59)**
 ```js
 import React                from 'react';
 import {isDeviceReady,
@@ -1002,7 +1035,10 @@ YES: eateries/state.js ... uses featureName and reducer.getSlicedState()
 NO:  ... many more
 -->
 
-**[`src/feature/eateries/state.js`]** via **[`src/feature/eateries/index.js`]** TK: [GIST](https://gist.github.com/KevinAst/cf85d24e5aa9b0dfff08884b5dfa5e3f) with Caption Link HIGHLIGHTING junk
+TK: For medium article, use this [GIST](https://gist.github.com/KevinAst/cf85d24e5aa9b0dfff08884b5dfa5e3f)
+with caption:
+**[`src/feature/eateries/state.js`](https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/eateries/state.js#L17)**
+via **[`index.js`](https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/eateries/index.js#L31)**
 ```js
 // ***
 // *** the eateries feature reducer
@@ -1206,34 +1242,6 @@ end" of your features!** _Go forth and compute!!_
 [firebase]:     https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/firebase/README.md
 [logActions]:   https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/logActions/README.md
 [sandbox]:      https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/sandbox/README.md
-
-[`src/app.js`]:                           https://github.com/KevinAst/eatery-nod/blob/after-features/src/app.js#L28-L34
-
-[`src/feature/firebase/index.js`]:        https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/firebase/index.js#L11-L13
-
-[`src/feature/device/appDidStart.js`]:    https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/device/appDidStart.js#L7-L9
-[`src/feature/device/index.js62`]:        https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/device/index.js#L62
-
-[`src/feature/leftNav/appWillStart.js`]:  https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/leftNav/appWillStart.js#L10-L18
-[`src/feature/leftNav/index.js`]:         https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/leftNav/index.js#L24
-
-[`src/feature/auth/publicFace.js`]:       https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/auth/publicFace.js#L7-L15
-[`src/feature/auth/index.js`]:            https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/auth/index.js#L49
-[`src/feature/auth/logic.js`]:            https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/auth/logic.js#L18-L27
-
-[`src/feature/device/index.js`]:          https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/device/index.js#L52-L63
-
-[`src/feature/device/index.js57`]:        https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/device/index.js#L57
-[`src/feature/device/state.js`]:          https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/device/state.js#L11-L28
-
-[`src/feature/sandbox/index.js`]:         https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/sandbox/index.js#L15
-
-[`src/feature/device/route.js`]:          https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/device/route.js#L13-L29
-[`src/feature/device/index.js49`]:        https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/device/index.js#L59
-
-[`src/feature/eateries/state.js`]:        https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/eateries/state.js#L17
-[`src/feature/eateries/index.js`]:        https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/eateries/index.js#L31
-
 
 
 
