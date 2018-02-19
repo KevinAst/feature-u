@@ -4,6 +4,7 @@ import {createAspect,     // module under test
 
 const identityFn = p => p;
 
+
 describe('feature-u createAspect() tests', () => {
 
   describe('VERIFY content pass through', () => {
