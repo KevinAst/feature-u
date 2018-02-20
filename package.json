@@ -31,9 +31,9 @@
     "build:plat:es":         "cross-env BABEL_ENV=es       babel src --out-dir es  --ignore spec.js",
     "build:plat:lib":        "cross-env BABEL_ENV=commonjs babel src --out-dir lib --ignore spec.js",
     "build:watch":           "npm run build -- --watch",
-    "check":                 "npm-run-all lint pkgReview",
+    "check":                 "npm-run-all lint pkgReview test cov",
     "clean":                 "npm-run-all build:clean cov:clean",
-    "cov":                   "cross-env NODE_ENV=test nyc --reporter=lcov --reporter=text mocha --compilers js:babel-core/register --colors \"src/**/*.spec.js\"",
+    "cov":                   "jest src --coverage",
     "cov:clean":             "rimraf coverage",
     "cov:publish":           "cat coverage/lcov.info | codacy-coverage --verbose",
     "dev":                   "npm run test:all:watch",
@@ -49,7 +49,7 @@
     "docs:clean":            "rimraf _book _docs/cur",
     "lint":                  "echo '*** Verify code quality (lint):' && eslint src",
     "pkgReview":             "echo '*** Showing outdated installed packages:' && npm outdated --long || true",
-    "prepublish":            "npm-run-all lint pkgReview clean build:plat:all test:plat:all",
+    "prepublish":            "npm-run-all lint pkgReview clean build:plat:all test:plat:all cov",
     "start":                 "npm run dev",
     "test":                  "jest src",
     "test:all":              "npm run test         --",
@@ -88,20 +88,6 @@
     "url": "https://github.com/KevinAst/feature-u/issues"
   },
   "homepage": "https://github.com/KevinAst/feature-u",
-  "nyc": {
-    "include": [
-      "src/**/*.js"
-    ],
-    "exclude": [
-      "**/spec/**",
-      "**/*.spec.js"
-    ],
-    "require": [
-      "babel-register"
-    ],
-    "sourceMap": false,
-    "instrument": false
-  },
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-core": "^6.24.1",
@@ -122,7 +108,6 @@
     "jsdoc-babel": "^0.3.0",
     "jsdoc-to-markdown": "^3.0.0",
     "npm-run-all": "^4.0.2",
-    "nyc": "^10.2.0",
     "rimraf": "^2.6.1",
     "webpack": "^2.4.1"
   },
