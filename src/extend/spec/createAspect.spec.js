@@ -1,6 +1,6 @@
 import {createAspect,     // module under test
         createFeature,
-        managedExpansion} from '../../../tooling/ModuleUnderTest';
+        managedExpansion} from '../..'; // STOP USING: '../../../tooling/ModuleUnderTest';
 
 const identityFn = p => p;
 

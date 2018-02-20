@@ -35,7 +35,8 @@ prepublish .............. cleanly build/test all machine generated resources,
                             - verify code quality (lint)
                             - show outdated installed packages
                             - clean (delete) ALL machine generated resources
-                            - build/test all bundled libraries (for publication)
+                            - build all bundled libraries (for publication)
+                            - test (against our master src)
                             - generate the code coverage report
 
 
@@ -43,26 +44,8 @@ prepublish .............. cleanly build/test all machine generated resources,
 TESTING
 =======
 
-test ................... run ALL unit tests on master src (same as 'test:all' or 'test:plat:src')
-
-                         Following runs SELECTED tests ON master src
-                         ===========================================
-test:lib ............... run unit tests that are part of our published library  TODO: NOT yet in feature-u
-test:lib:watch ......... ditto (continuously)                                   TODO: NOT yet in feature-u
-test:samples ........... run unit tests from our sample code (in the Dev Guide) TODO: NOT yet in feature-u
-test:samples:watch ..... ditto (continuously)                                   TODO: NOT yet in feature-u
-test:all ............... run ALL our unit tests
-test:all:watch ......... ditto (continuously)
-
-                         Following runs ALL tests ON specified Target Platform
-                         =====================================================
-test:plat:{platform} ... see discussion below
-test:plat:src
-test:plat:bundle
-test:plat:bundle.min
-test:plat:lib
-test:plat:es
-test:plat:all
+test ......... run ALL unit tests on master src
+test:watch ... ditto (continuously)
 
 
 CODE QUALITY
@@ -115,41 +98,6 @@ clean ... cleans ALL machine-generated directories (build, and coverage)
 ```
 
 
-
-## Testing Dynamics
-
-Our unit tests have the ability to dynamically target each of our
-published platforms, through the `test:plat:{platform}` script (see the
-[Target Platform](#target-platform) discussion below).
-
-- During development, our tests typically target the master src
-  directly, and continuously (through the `test:lib:watch` script).
-  
-- However, before any bundle is published, it is a good practice to run
-  our test suite against each of the published bundles (through the
-  `test:plat:all` script).
-
-Testing dynamics is accomplished by our unit tests importing
-[ModuleUnderTest](tooling/ModuleUnderTest.js), which in turn
-dynamically exports the desired test module, as controlled by the
-MODULE_PLATFORM environment variable.
-
-**There is one slight QUIRK in this process** ... that is: *ALL
-supported platforms MUST exist before you can test one of them*.  The
-reason for this is that
-[ModuleUnderTest.js](tooling/ModuleUnderTest.js) must import all
-the platforms and then decide which one to export *(this is due to the
-static nature of ES6 imports)*.
-
-**As it turns out, this is not a big deal**, it's just a bit of
-un-expected behavior.  During development, our tests typically
-continuously target the master src (which doesn't require any
-re-building).  So the `build:plat:all` script **does NOT have to be run
-continuously ... just once, after a clean** (to prime the pump).
-
-
-
-
 ## Target Platform
 
 Some npm scripts target a platform (i.e. the JS module ecosystem),
@@ -158,7 +106,6 @@ using 'plat' nomenclature (i.e. platform).
 Specifically:
 
  - `build:plat:{platform}`
- - `test:plat:{platform}`
 
 Supported platforms are:
 
@@ -173,7 +120,3 @@ lib              ES5 source           CommonJS  lib/*.js
 es               ES5 source           ES        es/*.js                                        
 all              all of the above                                      Used in npm scripts ONLY
 ```
-
-The 'plat' nomenclature helps disambiguate the difference between (for example):
- - `test:all:     ` identifies WHICH tests to run (i.e. all tests)
- - `test:plat:all:` identifies WHICH platform to run tests on (i.e. all platforms)
