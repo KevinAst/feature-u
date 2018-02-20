@@ -18,6 +18,7 @@
     "it":       true  // it()       is part of our unit test framework
   },
   "rules": {
+    "no-console":      "off",                       // allow console logging
     "strict":          ["error", "never"],          // ES6 Modules imply a 'use strict'; ... specifying this is redundant
     "indent":          ["off",   2],                // allow any indentation
     "no-unused-vars":  ["error", {"args": "none"}], // allow unsed parameter declaration 

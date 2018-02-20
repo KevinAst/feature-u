@@ -71,7 +71,13 @@ const webpackConfig = {
       // apply style check with eslint
       // ... NOTE: This is production code only (i.e. what is being bundled).
       //           To check test code, use the npm lint script.
-      { test: /\.(js|jsx)$/,  use: 'eslint-loader' }
+//*1* { test: /\.(js|jsx)$/,  use: 'eslint-loader' },
+//*1* 2/19/2018: I disabled this eslint step BECAUSE 
+//     - it was erroring on code picked up from my node_modules that has been transpiled to es5 (i.e. feature-u)
+//       ex: C:\dev\feature-u\es\index.js
+//           1:1  error  'use strict' is unnecessary inside of modules  strict
+//     - my thought is I only care about MY code being eslint correct (which is verified externally), NOT my dependent packages
+//     - UNSURE of the full ramifications of this
     ]
   },
   plugins: [] // NOTE: WebPack 2 auto includes webpack.optimize.OccurrenceOrderPlugin, so there is NO need to specify it!

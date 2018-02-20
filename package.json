@@ -2,7 +2,7 @@
   "name": "feature-u",
   "version": "0.1.0",
   "description": "Feature Based Project Organization for React",
-  "main": "lib/index.js",
+  "main": "src/index.js",
   "browser": {
     "main": "dist/feature-u.js"
   },
@@ -36,7 +36,7 @@
     "cov":                   "jest src --coverage",
     "cov:clean":             "rimraf coverage",
     "cov:publish":           "cat coverage/lcov.info | codacy-coverage --verbose",
-    "dev":                   "npm run test:all:watch",
+    "dev":                   "npm run test:watch",
     "docs":                  "npm run docs:prepare && npm run docs:build",
     "docs:api":              "jsdoc2md --configure tooling/docs/jsdoc.json --global-index-format none --helper tooling/docs/escapeAnchor.js --partial tooling/docs/header.hbs --partial tooling/docs/link.hbs --partial tooling/docs/body.hbs --files src/**/*.js > docs/api.md",
     "docs:prepare":          "gitbook install",
@@ -49,17 +49,10 @@
     "docs:clean":            "rimraf _book _docs/cur",
     "lint":                  "echo '*** Verify code quality (lint):' && eslint src",
     "pkgReview":             "echo '*** Showing outdated installed packages:' && npm outdated --long || true",
-    "prepublish":            "npm-run-all lint pkgReview clean build:plat:all test:plat:all cov",
+    "prepublish":            "npm-run-all lint pkgReview clean build:plat:all test cov",
     "start":                 "npm run dev",
     "test":                  "jest src",
-    "test:all":              "npm run test         --",
-    "test:all:watch":        "npm run test:all     -- --watch",
-    "test:plat:all":         "npm-run-all test:plat:src test:plat:bundle test:plat:bundle.min test:plat:lib test:plat:es",
-    "test:plat:bundle":      "cross-env MODULE_PLATFORM=bundle     npm run test:all",
-    "test:plat:bundle.min":  "cross-env MODULE_PLATFORM=bundle.min npm run test:all",
-    "test:plat:es":          "cross-env MODULE_PLATFORM=es         npm run test:all",
-    "test:plat:lib":         "cross-env MODULE_PLATFORM=lib        npm run test:all",
-    "test:plat:src":         "cross-env MODULE_PLATFORM=src        npm run test:all"
+    "test:watch":            "npm run test -- --watch"
   },
   "repository": {
     "type": "git",
