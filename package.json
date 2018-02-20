@@ -2,7 +2,7 @@
   "name": "feature-u",
   "version": "0.1.0",
   "description": "Feature Based Project Organization for React",
-  "main": "lib/index.js",
+  "main": "src/index.js",
   "browser": {
     "main": "dist/feature-u.js"
   },
