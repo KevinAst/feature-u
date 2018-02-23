@@ -49,7 +49,7 @@ export default function launchApp({aspects=[],
   const check = verify.prefix('launchApp() parameter violation: ');
 
   // ... aspects
-  const aspectMap = op.alch.genesis({aspects});
+  const aspectMap = op.alch.genesis(aspects);
 
   // ... features
   check(features,                'features is required');
@@ -67,30 +67,30 @@ export default function launchApp({aspects=[],
   check(arguments.length === 1,  'unrecognized positional parameters (only named parameters can be specified)');
 
   // peform "Aspect" property validation
-  op.helper.validateAspectProperties({aspects});
+  op.helper.validateAspectProperties(aspects);
 
   // peform "Feature" property validation
-  op.alch.validateFeatureContent({features, aspectMap});
+  op.alch.validateFeatureContent(features, aspectMap);
 
   // prune to activeFeatures, insuring all feature.names are unique
-  const activeFeatures = op.helper.pruneActiveFeatures({features});
+  const activeFeatures = op.helper.pruneActiveFeatures(features);
 
   // create our App object containing the publicFace (used in cross-communication between features)
-  const app = op.helper.createApp({activeFeatures});
+  const app = op.helper.createApp(activeFeatures);
 
   // expand the feature content of any aspect that relies on managedExpansion()
   // ... AND perform a delayed validation, once expansion has occurred
-  op.alch.expandFeatureContent({app, activeFeatures, aspects});
+  op.alch.expandFeatureContent(app, activeFeatures, aspects);
 
   // assemble content of each aspect across all features
-  op.alch.assembleFeatureContent({app, activeFeatures, aspects});
+  op.alch.assembleFeatureContent(app, activeFeatures, aspects);
 
   // assemble resources for each aspect across all other aspects, ONCE ALL aspects have assembled their feature content
-  op.alch.assembleAspectResources({app, aspects});
+  op.alch.assembleAspectResources(app, aspects);
 
   // define our rootAppElm via DOM injections from a combination of Aspects/Features
   // ... also apply Feature.appWillStart() life-cycle hook
-  const rootAppElm = op.helper.defineRootAppElm({app, activeFeatures, aspects});
+  const rootAppElm = op.helper.defineRootAppElm(app, activeFeatures, aspects);
 
   // start our app by registering our rootAppElm to the appropriate react framework
   // ... because this is accomplished by app-specific code, 
@@ -99,7 +99,7 @@ export default function launchApp({aspects=[],
   registerRootAppElm(rootAppElm);
 
   // apply Feature.appDidStart() life-cycle hook
-  op.flch.appDidStart({app, activeFeatures, aspects});
+  op.flch.appDidStart(app, activeFeatures, aspects);
 
   // expose our new App object (used in feature cross-communication)
   return app;
@@ -160,7 +160,6 @@ export default function launchApp({aspects=[],
 //*** Operations Bundle (broken out for testability)
 //***
 
-
 /*
  * A bundle of launchApp() operations (i.e. functions)
  *  - exported internally
@@ -181,10 +180,10 @@ export const op = {
 
 
 //*--------------------------------------------------------------
-//* aspect-life-cycle-hook: genesis({aspects}): aspectMap
+//* aspect-life-cycle-hook: genesis(aspects): aspectMap
 //*--------------------------------------------------------------
 
-op.alch.genesis = function({aspects}) {
+op.alch.genesis = function(aspects) {
 
   const check = verify.prefix('launchApp() parameter violation: ');
 
@@ -214,10 +213,10 @@ op.alch.genesis = function({aspects}) {
 
 
 //*---------------------------------------------------
-//* helper: validateAspectProperties({aspects}): void
+//* helper: validateAspectProperties(aspects): void
 //*---------------------------------------------------
 
-op.helper.validateAspectProperties = function({aspects}) {
+op.helper.validateAspectProperties = function(aspects) {
 
   // peform "Aspect" property validation
   // NOTE 1: This is done here rather than createAspect(), because 
@@ -243,10 +242,10 @@ op.helper.validateAspectProperties = function({aspects}) {
 
 
 //*-----------------------------------------------------------------------------
-//* aspect-life-cycle-hook: validateFeatureContent({features, aspectMap}): void
+//* aspect-life-cycle-hook: validateFeatureContent(features, aspectMap): void
 //*-----------------------------------------------------------------------------
 
-op.alch.validateFeatureContent = function({features, aspectMap}) {
+op.alch.validateFeatureContent = function(features, aspectMap) {
 
   // peform "Feature" property validation
   // NOTE 1: This is done here rather than createFeature(), because it's the aspect's
@@ -292,10 +291,10 @@ op.alch.validateFeatureContent = function({features, aspectMap}) {
 
 
 //*----------------------------------------------------------------
-//* helper: pruneActiveFeatures({features}): activeFeatures
+//* helper: pruneActiveFeatures(features): activeFeatures
 //*----------------------------------------------------------------
 
-op.helper.pruneActiveFeatures = function({features}) {
+op.helper.pruneActiveFeatures = function(features) {
 
   const check = verify.prefix('launchApp() parameter violation: ');
 
@@ -313,10 +312,10 @@ op.helper.pruneActiveFeatures = function({features}) {
 
 
 //*------------------------------------------
-//* helper: createApp({activeFeatures}): app
+//* helper: createApp(activeFeatures): app
 //*------------------------------------------
 
-op.helper.createApp = function({activeFeatures}) {
+op.helper.createApp = function(activeFeatures) {
 
   // create our App object containing the publicFace (used in cross-communication between features)
   const app =  {
@@ -358,10 +357,10 @@ op.helper.createApp = function({activeFeatures}) {
 
 
 //*------------------------------------------------------------------------------------
-//* aspect-life-cycle-hook: expandFeatureContent({app, activeFeatures, aspects}): void
+//* aspect-life-cycle-hook: expandFeatureContent(app, activeFeatures, aspects): void
 //*------------------------------------------------------------------------------------
 
-op.alch.expandFeatureContent = function({app, activeFeatures, aspects}) {
+op.alch.expandFeatureContent = function(app, activeFeatures, aspects) {
 
   // expand the feature content of any aspect that relies on managedExpansion()
   // ... AND perform a delayed validation, once expansion has occurred
@@ -392,10 +391,10 @@ op.alch.expandFeatureContent = function({app, activeFeatures, aspects}) {
 
 
 //*--------------------------------------------------------------------------------------
-//* aspect-life-cycle-hook: assembleFeatureContent({app, activeFeatures, aspects}): void
+//* aspect-life-cycle-hook: assembleFeatureContent(app, activeFeatures, aspects): void
 //*--------------------------------------------------------------------------------------
 
-op.alch.assembleFeatureContent = function({app, activeFeatures, aspects}) {
+op.alch.assembleFeatureContent = function(app, activeFeatures, aspects) {
 
   // assemble content of each aspect across all features
   // ... retaining needed state for subsequent ops
@@ -407,10 +406,10 @@ op.alch.assembleFeatureContent = function({app, activeFeatures, aspects}) {
 
 
 //*-----------------------------------------------------------------------
-//* aspect-life-cycle-hook: assembleAspectResources({app, aspects}): void
+//* aspect-life-cycle-hook: assembleAspectResources(app, aspects): void
 //*-----------------------------------------------------------------------
 
-op.alch.assembleAspectResources = function({app, aspects}) {
+op.alch.assembleAspectResources = function(app, aspects) {
 
   // assemble resources for each aspect across all other aspects, ONCE ALL aspects have assembled their feature content
   // ... retaining needed state for subsequent ops
@@ -422,22 +421,22 @@ op.alch.assembleAspectResources = function({app, aspects}) {
 
 
 //*----------------------------------------------------------------------
-//* helper: defineRootAppElm({app, activeFeatures, aspects}): rootAppElm
+//* helper: defineRootAppElm(app, activeFeatures, aspects): rootAppElm
 //*----------------------------------------------------------------------
 
-op.helper.defineRootAppElm = function({app, activeFeatures, aspects}) {
+op.helper.defineRootAppElm = function(app, activeFeatures, aspects) {
 
   // define our curRootAppElm via DOM injections from a combination of Aspects/Features
   let rootAppElm = null; // we start with nothing
 
   // FIRST: DOM injection via Aspect.initialRootAppElm(app, curRootAppElm)
-  rootAppElm = op.alch.initialRootAppElm({app, aspects, curRootAppElm: rootAppElm});
+  rootAppElm = op.alch.initialRootAppElm(app, aspects, rootAppElm);
 
   // SECOND: DOM injection via Feature.appWillStart() life-cycle hook
-  rootAppElm = op.flch.appWillStart({app, activeFeatures, curRootAppElm: rootAppElm});
+  rootAppElm = op.flch.appWillStart(app, activeFeatures, rootAppElm);
 
   // THIRD: DOM injection via Aspect.injectRootAppElm()
-  rootAppElm = op.alch.injectRootAppElm({app, aspects, curRootAppElm: rootAppElm});
+  rootAppElm = op.alch.injectRootAppElm(app, aspects, rootAppElm);
 
   // NOTE: We do NOT validate rootAppElm to insure it is non-null!
   //       - at first glance it would appear that a null rootAppElm would render NOTHING
@@ -450,13 +449,13 @@ op.helper.defineRootAppElm = function({app, activeFeatures, aspects}) {
 
 
 //*--------------------------------------------------------------------------------------
-//* aspect-life-cycle-hook: initialRootAppElm({app, aspects, curRootAppElm}): rootAppElm
+//* aspect-life-cycle-hook: initialRootAppElm(app, aspects, curRootAppElm): rootAppElm
 //*--------------------------------------------------------------------------------------
 
-op.alch.initialRootAppElm = function({app, aspects, curRootAppElm}) {
+op.alch.initialRootAppElm = function(app, aspects, curRootAppElm) {
 
   // DOM injection via Aspect.initialRootAppElm(app, curRootAppElm)
-  const rootAppElm = aspects.reduce( (runningRootAppElm, aspect) => aspect.initialRootAppElm(app, runningRootAppElm),
+  const rootAppElm = aspects.reduce( (curRootAppElm, aspect) => aspect.initialRootAppElm(app, curRootAppElm),
                                      curRootAppElm );
   return rootAppElm;
 };
@@ -464,16 +463,16 @@ op.alch.initialRootAppElm = function({app, aspects, curRootAppElm}) {
 
 
 //*-----------------------------------------------------------------------------------------
-//* feature-life-cycle-hook: appWillStart({app, activeFeatures, curRootAppElm}): rootAppElm
+//* feature-life-cycle-hook: appWillStart(app, activeFeatures, curRootAppElm): rootAppElm
 //*-----------------------------------------------------------------------------------------
 
-op.flch.appWillStart = function({app, activeFeatures, curRootAppElm}) {
+op.flch.appWillStart = function(app, activeFeatures, curRootAppElm) {
 
   // DOM injection via Feature.appWillStart() life-cycle hook
   // - can perform ANY initialization
   // - AND supplement our top-level content (using a non-null return)
   //   ... wedged between the two Aspect DOM injections (in support of various Aspect needs)
-  const rootAppElm = activeFeatures.reduce( (runningRootAppElm, feature) => feature.appWillStart({app, curRootAppElm: runningRootAppElm}) || runningRootAppElm,
+  const rootAppElm = activeFeatures.reduce( (curRootAppElm, feature) => feature.appWillStart({app, curRootAppElm}) || curRootAppElm,
                                             curRootAppElm );
   return rootAppElm;
 };
@@ -481,13 +480,13 @@ op.flch.appWillStart = function({app, activeFeatures, curRootAppElm}) {
 
 
 //*-------------------------------------------------------------------------------------
-//* aspect-life-cycle-hook: injectRootAppElm({app, aspects, curRootAppElm}): rootAppElm
+//* aspect-life-cycle-hook: injectRootAppElm(app, aspects, curRootAppElm): rootAppElm
 //*-------------------------------------------------------------------------------------
 
-op.alch.injectRootAppElm = function({app, aspects, curRootAppElm}) {
+op.alch.injectRootAppElm = function(app, aspects, curRootAppElm) {
 
   // DOM injection via Aspect.injectRootAppElm()
-  const rootAppElm = aspects.reduce( (runningRootAppElm, aspect) => aspect.injectRootAppElm(app, runningRootAppElm),
+  const rootAppElm = aspects.reduce( (curRootAppElm, aspect) => aspect.injectRootAppElm(app, curRootAppElm),
                                      curRootAppElm );
   return rootAppElm;
 };
@@ -495,15 +494,15 @@ op.alch.injectRootAppElm = function({app, aspects, curRootAppElm}) {
 
 
 //*----------------------------------------------------------------------------
-//* feature-life-cycle-hook: appDidStart({app, activeFeatures, aspects}): void
+//* feature-life-cycle-hook: appDidStart(app, activeFeatures, aspects): void
 //*----------------------------------------------------------------------------
 
-op.flch.appDidStart = function({app, activeFeatures, aspects}) {
+op.flch.appDidStart = function(app, activeFeatures, aspects) {
 
   // locate the redux app store (if any) from our aspects
   // ... used as a convenience to pass appState/dispatch to appDidStart()
   // ... we define this from the cross-aspect redux method: Aspect.getReduxStore()
-  const reduxAspect = op.helper.locateReduxStore({aspects});
+  const reduxAspect = op.helper.locateReduxStore(aspects);
   const [appState, dispatch] = reduxAspect 
                                 ? [reduxAspect.getReduxStore().getState(), reduxAspect.getReduxStore().dispatch]
                                 : [undefined, undefined];
@@ -516,10 +515,10 @@ op.flch.appDidStart = function({app, activeFeatures, aspects}) {
 
 
 //*--------------------------------------------------------------
-//* helper: locateReduxStore({aspects}): reduxStore || undefined
+//* helper: locateReduxStore(aspects): reduxStore || undefined
 //*--------------------------------------------------------------
 
-op.helper.locateReduxStore = function({aspects}) {
+op.helper.locateReduxStore = function(aspects) {
 
   const reduxAspect = aspects.find( aspect => aspect.getReduxStore ? true : false );
 
