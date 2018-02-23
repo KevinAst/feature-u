@@ -288,8 +288,8 @@ discussion of each:
 
  - [`Aspect.name`](#aspectname)
  - {{book.guide.genesisMeth$}}
- - {{book.guide.expandFeatureContentMeth$}}
  - {{book.guide.validateFeatureContentMeth$}}
+ - {{book.guide.expandFeatureContentMeth$}}
  - {{book.guide.assembleFeatureContentMeth$}}
  - {{book.guide.assembleAspectResourcesMeth$}}
  - {{book.guide.initialRootAppElmMeth$}}
@@ -307,22 +307,27 @@ discussion of each:
 - **Aspect State Retention**: 
 
   It is not uncommon for an **Aspect** to use more than one of these
-  life cycle methods to do it's work.  When this happens, there may be
-  a need to retain state _(in order to pick up in one method where it
-  left off in another)_.
-
-  These hooks are in fact methods of the **Aspect** object.  In other
-  words, **`this`** is bound to the **Aspect** object instance.  As a
-  result, you are free to use `this` for your **state retention**.
+  life cycle methods to do it's work.  When this happens, typically
+  there is a need for state retention _(in order to pick up in one
+  step where it left off in another)_.
 
   As an example, an Aspect may:
 
    1. use {{book.guide.assembleFeatureContentMeth}} to assemble it's
-      content across all features ... **retaining the content in
-      self**
+      content across all features ... **retaining the content**
 
    2. and then use {{book.guide.injectRootAppElmMeth}} to promote the
-      **content assembled in prior step**
+      **content assembled in the prior step**
+
+  This state retention can be implemented in a number of different
+  ways, depending on your philosophy and run-time environment.  For
+  example, you could use the module context of an ES6 environment, or
+  alternatively the Aspect object instance itself.
+
+  The latter is available _(should you choose to use it)_ because
+  these hooks are in fact methods of the **Aspect** object.  In other
+  words, **`this`** is bound to the **Aspect** object instance.  As a
+  result, you are free to use `this` for your **state retention**.
  
 
 - **App Parameter**: 
@@ -419,6 +424,22 @@ of `launchApp()`, any message is prefixed with: `'launchApp() parameter
 violation: '`.
 
 
+
+### Aspect.validateFeatureContent()
+
+**API:** {{book.api.validateFeatureContentMeth$}}
+
+{{book.api.validateFeatureContentMeth}} is a validation hook allowing
+this aspect to verify it's content on the supplied feature (which is
+known to contain this aspect).
+
+**RETURN**: an error message string when the supplied feature contains
+invalid content for this aspect (falsy when valid).  Because this
+validation conceptually occurs under the control of
+{{book.api.createFeature}}, any message is prefixed with:
+`'createFeature() parameter violation: '`.
+
+
 ### Aspect.expandFeatureContent()
 
 **API:** {{book.api.expandFeatureContentMeth$}}
@@ -451,22 +472,6 @@ function to the expanded reducer.
 contains invalid content for this aspect (falsy when valid).  This is
 a specialized validation of the expansion function, over-and-above
 what is checked in the standard validateFeatureContent() hook.
-
-
-
-### Aspect.validateFeatureContent()
-
-**API:** {{book.api.validateFeatureContentMeth$}}
-
-{{book.api.validateFeatureContentMeth}} is a validation hook allowing
-this aspect to verify it's content on the supplied feature (which is
-known to contain this aspect).
-
-**RETURN**: an error message string when the supplied feature contains
-invalid content for this aspect (falsy when valid).  Because this
-validation conceptually occurs under the control of
-{{book.api.createFeature}}, any message is prefixed with:
-`'createFeature() parameter violation: '`.
 
 
 ### Aspect.assembleFeatureContent()
