@@ -163,11 +163,11 @@ export default function launchApp({aspects=[],
 /*
  * A bundle of launchApp() operations (i.e. functions)
  *  - exported internally
- *  - supporting incremental unit testing
+ *  - supporting isolated unit testing
  *
- * This bundle container provides rudementary testing hooks,
- * providing support for things like:
- *  - moching
+ * Because we use a bundled container, it provides rudimentary
+ * testing hooks for things like:
+ *  - mocking
  *  - monkey patching
  *  - etc.
  */
@@ -502,7 +502,7 @@ op.flch.appDidStart = function(app, activeFeatures, aspects) {
   // locate the redux app store (if any) from our aspects
   // ... used as a convenience to pass appState/dispatch to appDidStart()
   // ... we define this from the cross-aspect redux method: Aspect.getReduxStore()
-  const reduxAspect = op.helper.locateReduxStore(aspects);
+  const reduxAspect = aspects.find( aspect => aspect.getReduxStore ? true : false );
   const [appState, dispatch] = reduxAspect 
                                 ? [reduxAspect.getReduxStore().getState(), reduxAspect.getReduxStore().dispatch]
                                 : [undefined, undefined];
@@ -510,17 +510,4 @@ op.flch.appDidStart = function(app, activeFeatures, aspects) {
   // apply Feature.appDidStart() life-cycle hooks
   // console.log(`xx launchApp ... feature appDidStart(): `, {appState, dispatch});
   activeFeatures.forEach( feature => feature.appDidStart({app, appState, dispatch}) );
-};
-
-
-
-//*--------------------------------------------------------------
-//* helper: locateReduxStore(aspects): reduxStore || undefined
-//*--------------------------------------------------------------
-
-op.helper.locateReduxStore = function(aspects) {
-
-  const reduxAspect = aspects.find( aspect => aspect.getReduxStore ? true : false );
-
-  return reduxAspect;
 };
