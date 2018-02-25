@@ -76,7 +76,7 @@ export default function createFeature({name,
   // ... enabled
   check(enabled===true || enabled===false, 'enabled must be a boolean');
 
-  // ... publicFace: nothing to validate (it can be anything, INCLUDING a .managedExpansion function)
+  // ... publicFace: nothing to validate (it can be anything)
 
   // ... appWillStart
   check(isFunction(appWillStart), 'appWillStart (when supplied) must be a function');
