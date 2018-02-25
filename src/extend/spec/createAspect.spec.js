@@ -2,19 +2,178 @@ import {createAspect,     // module under test
         createFeature,
         managedExpansion} from '../..'; // STOP USING: '../../../tooling/ModuleUnderTest';
 
+import {isAspectProperty,
+        extendAspectProperty} from '../createAspect';
+
 const identityFn = p => p;
 
 
-describe('feature-u createAspect() tests', () => {
+describe('createAspect() tests', () => {
 
+  //***--------------------------------------------------------------------------------
+  describe('VERIFY parameters', () => {
+
+    describe('no params', () => {
+      test('no params: name is required', () => {
+        expect(()=>createAspect())
+          .toThrow(/name is required/);
+        // THROW: createAspect() parameter violation: name is required
+      });
+    });
+
+    describe('aspect.name', () => {
+      test('name is required', () => {
+        expect(()=>createAspect({}))
+          .toThrow(/name is required/);
+      });
+
+      test('name must be a string', () => {
+        expect(()=>createAspect({name:123}))
+          .toThrow(/name must be a string/);
+      });
+
+      test('name value is a reserved Feature keyword', () => {
+        expect(()=>createAspect({name:'appWillStart'}))
+          .toThrow(/Aspect.name: 'appWillStart' is a reserved Feature keyword/);
+      });
+    });
+
+    describe('aspect.genesis', () => {
+      const primePump = {
+        name: 'myAspectName'
+      };
+
+      test('genesis must be a function', () => {
+        expect(()=>createAspect({...primePump, genesis:123}))
+          .toThrow(/genesis .* must be a function/);
+        // THROW: createAspect() parameter violation: genesis (when supplied) must be a function
+      });
+    });
+
+    describe('aspect.validateFeatureContent', () => {
+      const primePump = {
+        name: 'myAspectName'
+      };
+
+      test('validateFeatureContent is required', () => {
+        expect(()=>createAspect({...primePump}))
+          .toThrow(/validateFeatureContent is required/);
+      });
+
+      test('validateFeatureContent must be a function', () => {
+        expect(()=>createAspect({...primePump, validateFeatureContent:123}))
+          .toThrow(/validateFeatureContent must be a function/);
+      });
+    });
+
+    describe('aspect.expandFeatureContent', () => {
+      const primePump = {
+        name:                   'myAspectName',
+        validateFeatureContent: identityFn,
+      };
+
+      test('expandFeatureContent must be a function', () => {
+        expect(()=>createAspect({...primePump, expandFeatureContent:123}))
+          .toThrow(/expandFeatureContent .* must be a function/);
+        // THROW: createAspect() parameter violation: expandFeatureContent (when supplied) must be a function
+      });
+    });
+
+    describe('aspect.assembleFeatureContent', () => {
+      const primePump = {
+        name:                   'myAspectName',
+        validateFeatureContent: identityFn,
+      };
+
+      test('assembleFeatureContent is required', () => {
+        expect(()=>createAspect({...primePump}))
+          .toThrow(/assembleFeatureContent is required/);
+      });
+
+      test('assembleFeatureContent must be a function', () => {
+        expect(()=>createAspect({...primePump, assembleFeatureContent:123}))
+          .toThrow(/assembleFeatureContent must be a function/);
+      });
+    });
+
+    describe('aspect.assembleAspectResources', () => {
+      const primePump = {
+        name:                   'myAspectName',
+        validateFeatureContent: identityFn,
+        assembleFeatureContent: identityFn,
+      };
+
+      test('assembleAspectResources must be a function', () => {
+        expect(()=>createAspect({...primePump, assembleAspectResources:123}))
+          .toThrow(/assembleAspectResources.*must be a function/);
+      });
+    });
+
+    describe('aspect.initialRootAppElm', () => {
+      const primePump = {
+        name:                    'myAspectName',
+        validateFeatureContent:  identityFn,
+        assembleFeatureContent:  identityFn,
+      };
+
+      test('initialRootAppElm must be a function', () => {
+        expect(()=>createAspect({...primePump, initialRootAppElm:123}))
+          .toThrow(/initialRootAppElm.*must be a function/);
+      });
+    });
+
+    describe('aspect.injectRootAppElm', () => {
+      const primePump = {
+        name:                    'myAspectName',
+        validateFeatureContent:  identityFn,
+        assembleFeatureContent:  identityFn,
+      };
+
+      test('injectRootAppElm must be a function', () => {
+        expect(()=>createAspect({...primePump, injectRootAppElm:123}))
+          .toThrow(/injectRootAppElm.*must be a function/);
+      });
+    });
+
+  });
+
+  //***--------------------------------------------------------------------------------
+  describe('test extended Aspect properties', () => {
+
+    test("isAspectProperty('name'): true", () => {
+      expect(isAspectProperty('name'))
+        .toBe(true);
+    });
+
+    test("extendAspectProperty('name'): THROW 'already in use' ERROR", () => {
+      expect(()=>extendAspectProperty('name'))
+        .toThrow(/Aspect.name.*is already in use/);
+      // THROW: **ERROR** extendAspectProperty('name') ... 'Aspect.name' is already in use (i.e. it is already a valid Aspect property)!
+    });
+
+    test("isAspectProperty('MyNewProp'): false", () => {
+      expect(isAspectProperty('MyNewProp'))
+        .toBe(false);
+    });
+
+    test("isAspectProperty('MyNewProp'): true (after extending)", () => {
+      extendAspectProperty('MyNewProp');
+      expect(isAspectProperty('MyNewProp'))
+        .toBe(true);
+    });
+
+  });
+
+  //***--------------------------------------------------------------------------------
   describe('VERIFY content pass through', () => {
     const aspect = createAspect({
       name:                    'myAspectName',
       genesis:                 () => 'MY genesis',
-      expandFeatureContent:    () => 'MY expandFeatureContent',
       validateFeatureContent:  () => 'MY validateFeatureContent',
+      expandFeatureContent:    () => 'MY expandFeatureContent',
       assembleFeatureContent:  () => 'MY assembleFeatureContent',
       assembleAspectResources: () => 'MY assembleAspectResources',
+      initialRootAppElm:       () => 'MY initialRootAppElm',
       injectRootAppElm:        () => 'MY injectRootAppElm',
     });
 
@@ -26,12 +185,12 @@ describe('feature-u createAspect() tests', () => {
       expect(aspect.genesis()).toEqual('MY genesis');
     });
 
-    test('aspect.expandFeatureContent', () => {
-      expect(aspect.expandFeatureContent()).toEqual('MY expandFeatureContent');
-    });
-
     test('aspect.validateFeatureContent', () => {
       expect(aspect.validateFeatureContent()).toEqual('MY validateFeatureContent');
+    });
+
+    test('aspect.expandFeatureContent', () => {
+      expect(aspect.expandFeatureContent()).toEqual('MY expandFeatureContent');
     });
 
     test('aspect.assembleFeatureContent', () => {
@@ -42,13 +201,17 @@ describe('feature-u createAspect() tests', () => {
       expect(aspect.assembleAspectResources()).toEqual('MY assembleAspectResources');
     });
 
+    test('aspect.initialRootAppElm', () => {
+      expect(aspect.initialRootAppElm()).toEqual('MY initialRootAppElm');
+    });
+
     test('aspect.injectRootAppElm', () => {
       expect(aspect.injectRootAppElm()).toEqual('MY injectRootAppElm');
     });
     
   });
 
-
+  //***--------------------------------------------------------------------------------
   describe('VERIFY additional content', () => {
     const aspect = createAspect({
       name:                   'myAspectName',
@@ -62,14 +225,15 @@ describe('feature-u createAspect() tests', () => {
     });
   });
 
-
+  //***--------------------------------------------------------------------------------
   describe('VERIFY DEFAULT SEMANTICS', () => {
     const aspect = createAspect({
       name:                   'myAspectName',
-      // expandFeatureContent,    // USE DEFAULT (tested in MANAGED EXPANSION - below)
       validateFeatureContent: identityFn,
+      // expandFeatureContent,    // USE DEFAULT (tested in MANAGED EXPANSION - below)
       assembleFeatureContent: identityFn,
       // assembleAspectResources, // USE DEFAULT
+      // initialRootAppElm,       // USE DEFAULT
       // injectRootAppElm,        // USE DEFAULT
     });
 
@@ -77,20 +241,25 @@ describe('feature-u createAspect() tests', () => {
       expect(aspect.assembleAspectResources('app', 'aspects')).toEqual(null);
     });
 
+    test('aspect.initialRootAppElm', () => {
+      expect(aspect.initialRootAppElm('app', 'curRootAppElm')).toEqual('curRootAppElm');
+    });
+
     test('aspect.injectRootAppElm', () => {
       expect(aspect.injectRootAppElm('app', 'curRootAppElm')).toEqual('curRootAppElm');
     });
   });
 
-
+  //***--------------------------------------------------------------------------------
   describe('VERIFY MANAGED EXPANSION DEFAULT SEMANTICS', () => {
     const aspect = createAspect({
       name:                   'myAspectName',
       // genesis:                 // USE DEFAULT
-      // expandFeatureContent,    // DEFAULT SEMANTICS - UNDER TEST
       validateFeatureContent: identityFn,
+      // expandFeatureContent,    // DEFAULT SEMANTICS - UNDER TEST
       assembleFeatureContent: identityFn,
       // assembleAspectResources, // USE DEFAULT
+      // initialRootAppElm,       // USE DEFAULT
       // injectRootAppElm,        // USE DEFAULT
     });
 
@@ -110,88 +279,6 @@ describe('feature-u createAspect() tests', () => {
       expect(feature.myAspectName).toEqual('myAspectContent');
     });
 
-  });
-
-
-  describe('VERIFY aspect.name', () => {
-    test('name is required', () => {
-      expect(()=>createAspect({}))
-        .toThrow(/name is required/);
-    });
-
-    test('name must be a string', () => {
-      expect(()=>createAspect({name:123}))
-        .toThrow(/name must be a string/);
-    });
-
-    test('name value is a reserved Feature keyword', () => {
-      expect(()=>createAspect({name:'appWillStart'}))
-        .toThrow(/Aspect.name: 'appWillStart' is a reserved Feature keyword/);
-    });
-  });
-
-
-  describe('VERIFY aspect.validateFeatureContent', () => {
-    const genisis = {
-      name: 'myAspectName'
-    };
-
-    test('validateFeatureContent is required', () => {
-      expect(()=>createAspect({...genisis}))
-        .toThrow(/validateFeatureContent is required/);
-    });
-
-    test('validateFeatureContent must be a function', () => {
-      expect(()=>createAspect({...genisis, validateFeatureContent:123}))
-        .toThrow(/validateFeatureContent must be a function/);
-    });
-  });
-
-
-  describe('VERIFY aspect.assembleFeatureContent', () => {
-    const genisis = {
-      name:                   'myAspectName',
-      validateFeatureContent: identityFn,
-    };
-
-    test('assembleFeatureContent is required', () => {
-      expect(()=>createAspect({...genisis}))
-        .toThrow(/assembleFeatureContent is required/);
-    });
-
-    test('assembleFeatureContent must be a function', () => {
-      expect(()=>createAspect({...genisis, assembleFeatureContent:123}))
-        .toThrow(/assembleFeatureContent must be a function/);
-    });
-  });
-
-
-  describe('VERIFY aspect.assembleAspectResources', () => {
-    const genisis = {
-      name:                   'myAspectName',
-      validateFeatureContent: identityFn,
-      assembleFeatureContent: identityFn,
-    };
-
-    test('assembleAspectResources must be a function', () => {
-      expect(()=>createAspect({...genisis, assembleAspectResources:123}))
-        .toThrow(/assembleAspectResources.*must be a function/);
-    });
-  });
-
-
-  describe('VERIFY aspect.injectRootAppElm', () => {
-    const genisis = {
-      name:                    'myAspectName',
-      validateFeatureContent:  identityFn,
-      assembleFeatureContent:  identityFn,
-      assembleAspectResources: identityFn,
-    };
-
-    test('injectRootAppElm must be a function', () => {
-      expect(()=>createAspect({...genisis, injectRootAppElm:123}))
-        .toThrow(/injectRootAppElm.*must be a function/);
-    });
   });
 
 });

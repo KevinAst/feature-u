@@ -14,8 +14,8 @@ convenience this list:_
 
 * {{book.api.createAspect$}}
   * {{book.api.genesisMeth$}}
-  * {{book.api.expandFeatureContentMeth$}}
   * {{book.api.validateFeatureContentMeth$}}
+  * {{book.api.expandFeatureContentMeth$}}
   * {{book.api.assembleFeatureContentMeth$}}
   * {{book.api.assembleAspectResourcesMeth$}}
   * {{book.api.initialRootAppElmMeth$}}

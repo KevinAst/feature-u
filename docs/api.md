@@ -70,7 +70,7 @@ Mark the supplied {{book.api.managedExpansionCB}} as a "ManagedExpansion Callba
 <a id="createAspect"></a>
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
-  createAspect(name, [genesis], [expandFeatureContent], validateFeatureContent, assembleFeatureContent, [assembleAspectResources], [initialRootAppElm], [injectRootAppElm], [additionalMethods]) ⇒ [`Aspect`](#Aspect)</h5>
+  createAspect(name, [genesis], validateFeatureContent, [expandFeatureContent], assembleFeatureContent, [assembleAspectResources], [initialRootAppElm], [injectRootAppElm], [additionalMethods]) ⇒ [`Aspect`](#Aspect)</h5>
 Create an {{book.api.Aspect}} object, used to extend **feature-u**.The {{book.api.Aspect}} object promotes a series of life-cyclemethods that **feature-u** invokes in a controlled way.  Thislife-cycle is controlled by {{book.api.launchApp}} _... it issupplied the Aspects, and it invokes their methods._The essential characteristics of the {{book.api.Aspect}} life-cycle is to:- accumulate {{book.api.AspectContent}} across all features- perform the desired setup and configuration- expose the framework in some way _(by injecting a component in the  root DOM, or some {{book.guide.extending_aspectCrossCommunication}}  mechanism)_The {{book.guide.extending}} section provides more insight on how{{book.api.Aspect}}s are created and used.**Please Note** this function uses named parameters.  The order inwhich these items are presented represents the same order they areexecuted.
 
 
@@ -78,8 +78,8 @@ Create an {{book.api.Aspect}} object, used to extend **feature-u**.The {{book.
 | --- | --- | --- |
 | name | string | the `Aspect.name` is used to "key" {{book.api.AspectContent}} of this type in the {{book.api.Feature}} object.<br/><br/> For example: an `Aspect.name: 'xyz'` would permit a `Feature.xyz: xyzContent` construct.<br/><br/> As a result, Aspect names cannot clash with built-in aspects, and they must be unique _(across all aspects that are in-use)_. |
 | [genesis] | [`genesisMeth`](#genesisMeth) | an optional Life Cycle Hook invoked one time, at the very beginning of the app's start up process. This hook can perform Aspect related **initialization** and **validation**: |
-| [expandFeatureContent] | [`expandFeatureContentMeth`](#expandFeatureContentMeth) | an optional aspect expansion hook, defaulting to the algorithm defined by {{book.api.managedExpansion}}.<br/><br/> This function rarely needs to be overridden.  It provides a hook to aspects that need to transfer additional content from the expansion function to the expanded content. |
 | validateFeatureContent | [`validateFeatureContentMeth`](#validateFeatureContentMeth) | a validation hook allowing this aspect to verify it's content on the supplied feature (which is known to contain this aspect). |
+| [expandFeatureContent] | [`expandFeatureContentMeth`](#expandFeatureContentMeth) | an optional aspect expansion hook, defaulting to the algorithm defined by {{book.api.managedExpansion}}.<br/><br/> This function rarely needs to be overridden.  It provides a hook to aspects that need to transfer additional content from the expansion function to the expanded content. |
 | assembleFeatureContent | [`assembleFeatureContentMeth`](#assembleFeatureContentMeth) | the Aspect method that assembles content for this aspect across all features, retaining needed state for subsequent ops.<br/><br/> This method is required because this is the primary task that is accomplished by all aspects. |
 | [assembleAspectResources] | [`assembleAspectResourcesMeth`](#assembleAspectResourcesMeth) | an optional Aspect method that assemble resources for this aspect across all other aspects, retaining needed state for subsequent ops.<br/><br/> This hook is executed after all the aspects have assembled their feature content (i.e. after {{book.api.assembleFeatureContentMeth}}). |
 | [initialRootAppElm] | [`initialRootAppElmMeth`](#initialRootAppElmMeth) | an optional callback hook that promotes some characteristic of this aspect within the `rootAppElm` ... the top-level react DOM that represents the display of the entire application.<br/><br/> The {{book.guide.extending_definingAppElm}} section highlights when to use {{book.api.initialRootAppElmMeth}} verses {{book.api.injectRootAppElmMeth}}. |
@@ -213,6 +213,21 @@ An optional Life Cycle Hook invoked one time, at the very beginning ofthe app's
 
 <br/><br/><br/>
 
+<a id="validateFeatureContentMeth"></a>
+
+<h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
+  validateFeatureContentMeth ⇒ string</h5>
+A validation hook allowing this aspect to verify it's content onthe supplied feature.**API:** {{book.api.validateFeatureContentMeth$}}
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| feature | [`Feature`](#Feature) | the feature to validate, which is known to contain this aspect. |
+
+**Returns**: string - an error message string when the supplied featurecontains invalid content for this aspect (falsy when valid).Because this validation conceptually occurs under the control of{{book.api.createFeature}}, any message is prefixed with:`'createFeature() parameter violation: '`.  
+
+<br/><br/><br/>
+
 <a id="expandFeatureContentMeth"></a>
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
@@ -226,21 +241,6 @@ Expand self's {{book.api.AspectContent}} in the supplied feature,replacing that
 | feature | [`Feature`](#Feature) | the feature which is known to contain this aspect **and** is in need of expansion (as defined by {{book.api.managedExpansion}}). |
 
 **Returns**: string - an optional error message when the suppliedfeature contains invalid content for this aspect (falsy whenvalid).  This is a specialized validation of the expansionfunction, over-and-above what is checked in the standard{{book.api.validateFeatureContentMeth}} hook.  
-
-<br/><br/><br/>
-
-<a id="validateFeatureContentMeth"></a>
-
-<h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
-  validateFeatureContentMeth ⇒ string</h5>
-A validation hook allowing this aspect to verify it's content onthe supplied feature.**API:** {{book.api.validateFeatureContentMeth$}}
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| feature | [`Feature`](#Feature) | the feature to validate, which is known to contain this aspect. |
-
-**Returns**: string - an error message string when the supplied featurecontains invalid content for this aspect (falsy when valid).Because this validation conceptually occurs under the control of{{book.api.createFeature}}, any message is prefixed with:`'createFeature() parameter violation: '`.  
 
 <br/><br/><br/>
 

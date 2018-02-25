@@ -54,6 +54,10 @@ const default_processRootAppElm = (app, curRootAppElm) => curRootAppElm;
  * This hook can perform Aspect related **initialization** and
  * **validation**:
  *
+ * @param {validateFeatureContentMeth} validateFeatureContent a
+ * validation hook allowing this aspect to verify it's content on the
+ * supplied feature (which is known to contain this aspect).
+ *
  * @param {expandFeatureContentMeth} [expandFeatureContent] an
  * optional aspect expansion hook, defaulting to the algorithm defined
  * by {{book.api.managedExpansion}}.<br/><br/>
@@ -61,10 +65,6 @@ const default_processRootAppElm = (app, curRootAppElm) => curRootAppElm;
  * This function rarely needs to be overridden.  It provides a hook to
  * aspects that need to transfer additional content from the expansion
  * function to the expanded content.
- *
- * @param {validateFeatureContentMeth} validateFeatureContent a
- * validation hook allowing this aspect to verify it's content on the
- * supplied feature (which is known to contain this aspect).
  *
  * @param {assembleFeatureContentMeth} assembleFeatureContent the
  * Aspect method that assembles content for this aspect across all
@@ -115,8 +115,8 @@ const default_processRootAppElm = (app, curRootAppElm) => curRootAppElm;
  */
 export default function createAspect({name,
                                       genesis=default_genesis,
-                                      expandFeatureContent=default_expandFeatureContent,
                                       validateFeatureContent,
+                                      expandFeatureContent=default_expandFeatureContent,
                                       assembleFeatureContent,
                                       assembleAspectResources=default_assembleAspectResources,
                                       initialRootAppElm=default_processRootAppElm,
@@ -136,10 +136,10 @@ export default function createAspect({name,
 
   check(isFunction(genesis),                 'genesis (when supplied) must be a function');
 
-  check(isFunction(expandFeatureContent),    'expandFeatureContent (when supplied) must be a function');
-
   check(validateFeatureContent,              'validateFeatureContent is required');
   check(isFunction(validateFeatureContent),  'validateFeatureContent must be a function');
+
+  check(isFunction(expandFeatureContent),    'expandFeatureContent (when supplied) must be a function');
 
   check(assembleFeatureContent,              'assembleFeatureContent is required');
   check(isFunction(assembleFeatureContent),  'assembleFeatureContent must be a function');
@@ -161,8 +161,8 @@ export default function createAspect({name,
   return {
     name,
     genesis,
-    expandFeatureContent,
     validateFeatureContent,
+    expandFeatureContent,
     assembleFeatureContent,
     assembleAspectResources,
     initialRootAppElm,
@@ -190,8 +190,8 @@ export default function createAspect({name,
 const validAspectProps = {
   name:                     true,
   genesis:                  true,
-  expandFeatureContent:     true,
   validateFeatureContent:   true,
+  expandFeatureContent:     true,
   assembleFeatureContent:   true,
   assembleAspectResources:  true,
   initialRootAppElm:        true,
@@ -311,6 +311,29 @@ export function extendAspectProperty(name) {
 
 
 //***
+//*** Specification: validateFeatureContentMeth
+//***
+
+/**
+ * A validation hook allowing this aspect to verify it's content on
+ * the supplied feature.
+ *
+ * **API:** {{book.api.validateFeatureContentMeth$}}
+ *
+ * @callback validateFeatureContentMeth
+ * 
+ * @param {Feature} feature - the feature to validate, which is known
+ * to contain this aspect.
+ *
+ * @return {string} an error message string when the supplied feature
+ * contains invalid content for this aspect (falsy when valid).
+ * Because this validation conceptually occurs under the control of
+ * {{book.api.createFeature}}, any message is prefixed with:
+ * `'createFeature() parameter violation: '`.
+ */
+
+
+//***
 //*** Specification: expandFeatureContentMeth
 //***
 
@@ -349,29 +372,6 @@ export function extendAspectProperty(name) {
  * valid).  This is a specialized validation of the expansion
  * function, over-and-above what is checked in the standard
  * {{book.api.validateFeatureContentMeth}} hook.
- */
-
-
-//***
-//*** Specification: validateFeatureContentMeth
-//***
-
-/**
- * A validation hook allowing this aspect to verify it's content on
- * the supplied feature.
- *
- * **API:** {{book.api.validateFeatureContentMeth$}}
- *
- * @callback validateFeatureContentMeth
- * 
- * @param {Feature} feature - the feature to validate, which is known
- * to contain this aspect.
- *
- * @return {string} an error message string when the supplied feature
- * contains invalid content for this aspect (falsy when valid).
- * Because this validation conceptually occurs under the control of
- * {{book.api.createFeature}}, any message is prefixed with:
- * `'createFeature() parameter violation: '`.
  */
 
 
