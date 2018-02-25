@@ -54,7 +54,22 @@ describe('launchApp() parameter validation)', () => {
 
 describe('launchApp() verify execution order of life cycle hooks (both Aspects and Features)', () => {
 
-  // structure driving expected order of execution
+  beforeAll(() => {
+    // execute launchApp()
+    // ... ALOWING it to populate the executionOrder property of each life-cycle helper function
+    launchApp({
+      // NO Aspects 
+      features: [
+        createFeature({
+          name: 'feature1',
+        }),
+      ],
+      registerRootAppElm(rootAppElm) {
+      },
+    });
+  });
+
+  // structure driving the expected order of execution
   const expectedOrder = [
     { type: 'alch', func: 'genesis' },
     { type: 'alch', func: 'validateFeatureContent' },
@@ -67,60 +82,10 @@ describe('launchApp() verify execution order of life cycle hooks (both Aspects a
     { type: 'flch', func: 'appDidStart' },
   ];
 
-  const execOrder = {
-    alch:   {}, // aspect-life-cycle-hook
-    flch:   {}, // feature-life-cycle-hook
-  };
-
-  beforeAll(() => {
-
-    // the original op
-    const opOriginal = {
-      alch:   {}, // aspect-life-cycle-hook
-      flch:   {}, // feature-life-cycle-hook
-    };
-
-    // our running counts
-    let actualCount = 0;
-
-    // reset execOrder
-    execOrder.alch = {};
-    execOrder.flch = {};
-
-    // higher order function to monkey patch each life-cycle opertion ... keeping track of execution order
-    function monkeyPatch(type,   // 'alch' or 'flch'
-                         func) { // function
-      opOriginal[type][func] = op[type][func]; // retain original function
-      op[type][func] = function(...args) {   // monkey patched function
-        execOrder[type][func] = ++actualCount;
-        return opOriginal[type][func](...args);
-      };
-    }
-
-    // monkey patch in order of expected execution
-    expectedOrder.forEach( (e) => monkeyPatch(e.type, e.func) );
-
-    // execute launchApp()
-    launchApp({
-      // NO Aspects 
-      features: [
-        createFeature({
-          name: 'feature1',
-        }),
-      ],
-      registerRootAppElm(rootAppElm) {
-      },
-    });
-
-    // reset monkey patch, just in case (don't think is needed)
-    expectedOrder.forEach( (e) => op[e.type][e.func] = opOriginal[e.type][e.func] ); // reset to original
-
-  }); // end of ... beforeAll()
-
   // test order of execution
   expectedOrder.forEach( (e, indx) => {
     test(`op.${e.type}.${e.func}()`, () => {
-      expect(indx+1).toBe(execOrder[e.type][e.func]);
+      expect(indx+1).toBe(op[e.type][e.func].executionOrder);
     });
   });
 

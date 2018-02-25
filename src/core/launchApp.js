@@ -3,6 +3,7 @@ import verify               from '../util/verify';
 import {isAspectProperty}   from '../extend/createAspect';
 import {isFeatureProperty}  from './createFeature';
 
+let executionOrder = 1; // running counter of execution order of life-cycle-hooks (unit-test related)
 
 /**
  * Launch an application by assembling the supplied features, driving
@@ -44,6 +45,9 @@ export default function launchApp({aspects=[],
                                    features,
                                    registerRootAppElm,
                                    ...unknownArgs}={}) {
+
+  // reset: running counter of execution order of life-cycle-hooks (unit-test related)
+  executionOrder = 1;
 
   // validate launchApp() parameters
   const check = verify.prefix('launchApp() parameter violation: ');
@@ -185,6 +189,9 @@ export const op = {
 
 op.alch.genesis = function(aspects) {
 
+  // maintain: running counter of execution order of life-cycle-hooks (unit-test related)
+  op.alch.genesis.executionOrder = executionOrder++;
+
   const check = verify.prefix('launchApp() parameter violation: ');
 
   check(Array.isArray(aspects), 'aspects (when supplied) must be an Aspect[] array');
@@ -246,6 +253,9 @@ op.helper.validateAspectProperties = function(aspects) {
 //*-----------------------------------------------------------------------------
 
 op.alch.validateFeatureContent = function(features, aspectMap) {
+
+  // maintain: running counter of execution order of life-cycle-hooks (unit-test related)
+  op.alch.validateFeatureContent.executionOrder = executionOrder++;
 
   // peform "Feature" property validation
   // NOTE 1: This is done here rather than createFeature(), because it's the aspect's
@@ -362,6 +372,9 @@ op.helper.createApp = function(activeFeatures) {
 
 op.alch.expandFeatureContent = function(app, activeFeatures, aspects) {
 
+  // maintain: running counter of execution order of life-cycle-hooks (unit-test related)
+  op.alch.expandFeatureContent.executionOrder = executionOrder++;
+
   // expand the feature content of any aspect that relies on managedExpansion()
   // ... AND perform a delayed validation, once expansion has occurred
   // NOTE: The original source of this error is in createFeature(), 
@@ -396,6 +409,9 @@ op.alch.expandFeatureContent = function(app, activeFeatures, aspects) {
 
 op.alch.assembleFeatureContent = function(app, activeFeatures, aspects) {
 
+  // maintain: running counter of execution order of life-cycle-hooks (unit-test related)
+  op.alch.assembleFeatureContent.executionOrder = executionOrder++;
+
   // assemble content of each aspect across all features
   // ... retaining needed state for subsequent ops
   aspects.forEach( aspect => {
@@ -410,6 +426,9 @@ op.alch.assembleFeatureContent = function(app, activeFeatures, aspects) {
 //*-----------------------------------------------------------------------
 
 op.alch.assembleAspectResources = function(app, aspects) {
+
+  // maintain: running counter of execution order of life-cycle-hooks (unit-test related)
+  op.alch.assembleAspectResources.executionOrder = executionOrder++;
 
   // assemble resources for each aspect across all other aspects, ONCE ALL aspects have assembled their feature content
   // ... retaining needed state for subsequent ops
@@ -454,6 +473,9 @@ op.helper.defineRootAppElm = function(app, activeFeatures, aspects) {
 
 op.alch.initialRootAppElm = function(app, aspects, curRootAppElm) {
 
+  // maintain: running counter of execution order of life-cycle-hooks (unit-test related)
+  op.alch.initialRootAppElm.executionOrder = executionOrder++;
+
   // DOM injection via Aspect.initialRootAppElm(app, curRootAppElm)
   const rootAppElm = aspects.reduce( (curRootAppElm, aspect) => aspect.initialRootAppElm(app, curRootAppElm),
                                      curRootAppElm );
@@ -467,6 +489,9 @@ op.alch.initialRootAppElm = function(app, aspects, curRootAppElm) {
 //*-----------------------------------------------------------------------------------------
 
 op.flch.appWillStart = function(app, activeFeatures, curRootAppElm) {
+
+  // maintain: running counter of execution order of life-cycle-hooks (unit-test related)
+  op.flch.appWillStart.executionOrder = executionOrder++;
 
   // DOM injection via Feature.appWillStart() life-cycle hook
   // - can perform ANY initialization
@@ -485,6 +510,9 @@ op.flch.appWillStart = function(app, activeFeatures, curRootAppElm) {
 
 op.alch.injectRootAppElm = function(app, aspects, curRootAppElm) {
 
+  // maintain: running counter of execution order of life-cycle-hooks (unit-test related)
+  op.alch.injectRootAppElm.executionOrder = executionOrder++;
+
   // DOM injection via Aspect.injectRootAppElm()
   const rootAppElm = aspects.reduce( (curRootAppElm, aspect) => aspect.injectRootAppElm(app, curRootAppElm),
                                      curRootAppElm );
@@ -498,6 +526,9 @@ op.alch.injectRootAppElm = function(app, aspects, curRootAppElm) {
 //*----------------------------------------------------------------------------
 
 op.flch.appDidStart = function(app, activeFeatures, aspects) {
+
+  // maintain: running counter of execution order of life-cycle-hooks (unit-test related)
+  op.flch.appDidStart.executionOrder = executionOrder++;
 
   // locate the redux app store (if any) from our aspects
   // ... used as a convenience to pass appState/dispatch to appDidStart()
