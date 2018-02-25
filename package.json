@@ -81,6 +81,12 @@
     "url": "https://github.com/KevinAst/feature-u/issues"
   },
   "homepage": "https://github.com/KevinAst/feature-u",
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.js",
+      "!**/spec/**"
+    ]
+  },
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-core": "^6.24.1",
