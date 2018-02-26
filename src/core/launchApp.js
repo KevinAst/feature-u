@@ -2,6 +2,7 @@ import isFunction           from 'lodash.isfunction';
 import verify               from '../util/verify';
 import {isAspectProperty}   from '../extend/createAspect';
 import {isFeatureProperty}  from './createFeature';
+import logf                 from '../util/logf';
 
 let executionOrder = 1; // running counter of execution order of life-cycle-hooks (unit-test related)
 
@@ -45,6 +46,8 @@ export default function launchApp({aspects=[],
                                    features,
                                    registerRootAppElm,
                                    ...unknownArgs}={}) {
+
+  logf('STARTING: - your application is now starting up');
 
   // reset: running counter of execution order of life-cycle-hooks (unit-test related)
   executionOrder = 1;
@@ -105,9 +108,21 @@ export default function launchApp({aspects=[],
   // apply Feature.appDidStart() life-cycle hook
   op.flch.appDidStart(app, activeFeatures, aspects);
 
+  logf('COMPLETE: your application has now started');
+
   // expose our new App object (used in feature cross-communication)
   return app;
 }
+
+
+
+//***
+//*** A secret diagnostic hook attached to the launchApp() function.
+//***
+
+launchApp.diag = {
+  logf, // allow client to enable feature-u logs via: launchApp.diag.logf.enable();
+};
 
 
 
@@ -196,6 +211,11 @@ op.alch.genesis = function(aspects) {
 
   check(Array.isArray(aspects), 'aspects (when supplied) must be an Aspect[] array');
 
+  if (logf.isEnabled()) {
+    logf('the following Aspects are in effect: ' +
+         aspects.map( (aspect) => `\n  Aspect.name: '${aspect.name}'` ));
+  }
+
   // our convenient hash of aspects
   // ... keyed by aspectName
   //     aspectMap[aspectName]: aspect
@@ -206,6 +226,8 @@ op.alch.genesis = function(aspects) {
     }
 
     // allow each aspect to perform Aspect related initialization and validation
+    // TODO: consider using null Aspect.genesis() so we can logf() probes that aspect-specific hooks are being applied
+
     const errMsg = aspect.genesis();
     check(!errMsg, errMsg); // non-null is considered a validation error
 
@@ -253,6 +275,8 @@ op.helper.validateAspectProperties = function(aspects) {
 //*-----------------------------------------------------------------------------
 
 op.alch.validateFeatureContent = function(features, aspectMap) {
+
+  // NOTE: nothing to logf() here BECAUSE entire result is potential EXCEPTIONS
 
   // maintain: running counter of execution order of life-cycle-hooks (unit-test related)
   op.alch.validateFeatureContent.executionOrder = executionOrder++;
@@ -316,6 +340,13 @@ op.helper.pruneActiveFeatures = function(features) {
     return feature.enabled;
   });
 
+  if (logf.isEnabled()) {
+    logf('the following Features were supplied: ' +
+         features.map( (feature) => `\n  Feature.name: '${feature.name}'${feature.enabled ? '' : '  <<< NOT ACTIVE'}`));
+    logf('the following Features are in effect (active): ' +
+         activeFeatures.map( (feature) => `\n  Feature.name: '${feature.name}'` ));
+  }
+
   return activeFeatures;
 };
 
@@ -361,6 +392,8 @@ op.helper.createApp = function(activeFeatures) {
     app[feature.name] = feature.publicFace;
   });
 
+  logf('the following app is in effect (for cross-feature communication): ', app);
+
   return app;
 };
 
@@ -384,6 +417,8 @@ op.alch.expandFeatureContent = function(app, activeFeatures, aspects) {
   aspects.forEach( aspect => {
     activeFeatures.forEach( feature => {
       if (feature[aspect.name] && feature[aspect.name].managedExpansion) {
+
+        logf(`Feature.name: '${feature.name}' ... applying managedExpansion() on Feature.${aspect.name}: AspectContent`);
 
         let errMsg = null;
 
@@ -414,6 +449,7 @@ op.alch.assembleFeatureContent = function(app, activeFeatures, aspects) {
 
   // assemble content of each aspect across all features
   // ... retaining needed state for subsequent ops
+  // TODO: consider using null Aspect.assembleFeatureContent() so we can logf() probes that aspect-specific hooks are being applied
   aspects.forEach( aspect => {
     aspect.assembleFeatureContent(app, activeFeatures);
   });
@@ -432,6 +468,7 @@ op.alch.assembleAspectResources = function(app, aspects) {
 
   // assemble resources for each aspect across all other aspects, ONCE ALL aspects have assembled their feature content
   // ... retaining needed state for subsequent ops
+  // TODO: consider using null Aspect.assembleAspectResources() so we can logf() probes that aspect-specific hooks are being applied
   aspects.forEach( aspect => {
     aspect.assembleAspectResources(app, aspects);
   });
@@ -448,6 +485,8 @@ op.helper.defineRootAppElm = function(app, activeFeatures, aspects) {
   // define our curRootAppElm via DOM injections from a combination of Aspects/Features
   let rootAppElm = null; // we start with nothing
 
+  logf('defining-rootAppElm ... starting process, rootAppElm: null');
+
   // FIRST: DOM injection via Aspect.initialRootAppElm(app, curRootAppElm)
   rootAppElm = op.alch.initialRootAppElm(app, aspects, rootAppElm);
 
@@ -461,6 +500,7 @@ op.helper.defineRootAppElm = function(app, activeFeatures, aspects) {
   //       - at first glance it would appear that a null rootAppElm would render NOTHING
   //       - HOWEVER, ULTIMATLY the app code (found in the registerRootAppElm() hook) 
   //         can display whatever it wants ... a given app may have chosen to inject it's own rootAppElm
+  logf('defining-rootAppElm ... complete, rootAppElm: ', logf.elm2html(rootAppElm));
   return rootAppElm;
 
 };
@@ -477,9 +517,18 @@ op.alch.initialRootAppElm = function(app, aspects, curRootAppElm) {
   op.alch.initialRootAppElm.executionOrder = executionOrder++;
 
   // DOM injection via Aspect.initialRootAppElm(app, curRootAppElm)
-  const rootAppElm = aspects.reduce( (curRootAppElm, aspect) => aspect.initialRootAppElm(app, curRootAppElm),
-                                     curRootAppElm );
-  return rootAppElm;
+  return aspects.reduce( (curRootAppElm, aspect) => {
+
+    const rootAppElm = aspect.initialRootAppElm(app, curRootAppElm);
+
+    if (rootAppElm !== curRootAppElm && logf.isEnabled()) {
+      logf(`defining-rootAppElm ... Aspect.name: '${aspect.name}'s Aspect.initialRootAppElm() CHANGED rootAppElm: `,
+           logf.elm2html(rootAppElm));
+    }
+
+    return rootAppElm;
+
+  }, curRootAppElm );
 };
 
 
@@ -497,9 +546,19 @@ op.flch.appWillStart = function(app, activeFeatures, curRootAppElm) {
   // - can perform ANY initialization
   // - AND supplement our top-level content (using a non-null return)
   //   ... wedged between the two Aspect DOM injections (in support of various Aspect needs)
-  const rootAppElm = activeFeatures.reduce( (curRootAppElm, feature) => feature.appWillStart({app, curRootAppElm}) || curRootAppElm,
-                                            curRootAppElm );
-  return rootAppElm;
+  return activeFeatures.reduce( (curRootAppElm, feature) => {
+
+    // TODO: consider using null Feature.appWillStart() so we can logf() probes that feature-specific hooks are being applied
+    const rootAppElm = feature.appWillStart({app, curRootAppElm}) || curRootAppElm;
+
+    if (rootAppElm !== curRootAppElm && logf.isEnabled()) {
+      logf(`defining-rootAppElm ... Feature.name: '${feature.name}'s Feature.appWillStart() CHANGED rootAppElm: `,
+           logf.elm2html(rootAppElm));
+    }
+
+    return rootAppElm;
+
+  }, curRootAppElm );
 };
 
 
@@ -514,9 +573,18 @@ op.alch.injectRootAppElm = function(app, aspects, curRootAppElm) {
   op.alch.injectRootAppElm.executionOrder = executionOrder++;
 
   // DOM injection via Aspect.injectRootAppElm()
-  const rootAppElm = aspects.reduce( (curRootAppElm, aspect) => aspect.injectRootAppElm(app, curRootAppElm),
-                                     curRootAppElm );
-  return rootAppElm;
+  return aspects.reduce( (curRootAppElm, aspect) => {
+
+    const rootAppElm = aspect.injectRootAppElm(app, curRootAppElm);
+
+    if (rootAppElm !== curRootAppElm && logf.isEnabled()) {
+      logf(`defining-rootAppElm ... Aspect.name: '${aspect.name}'s Aspect.injectRootAppElm() CHANGED rootAppElm: `,
+           logf.elm2html(rootAppElm));
+    }
+
+    return rootAppElm;
+    
+  }, curRootAppElm );
 };
 
 
@@ -540,5 +608,6 @@ op.flch.appDidStart = function(app, activeFeatures, aspects) {
 
   // apply Feature.appDidStart() life-cycle hooks
   // console.log(`xx launchApp ... feature appDidStart(): `, {appState, dispatch});
+  // TODO: consider using null Feature.appDidStart() so we can logf() probes that feature-specific hooks are being applied
   activeFeatures.forEach( feature => feature.appDidStart({app, appState, dispatch}) );
 };
