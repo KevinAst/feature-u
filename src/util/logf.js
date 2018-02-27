@@ -124,7 +124,7 @@ logf.newLogger = function(prefix) {
   newLogger.isEnabled = logf.isEnabled;
   newLogger.enable    = logf.enable;
   newLogger.disable   = logf.disable;
-  newLogger.elm2html  = logf.elm2html;
+  newLogger.elm2html  = (elm) => logf.elm2html; // always dereference original logf to pick up any function overrides
 //newLogger.newLogger = logf.newLogger; // NOT: we draw the line somewhere (in this simple implementation)
   
   // thats all folks
