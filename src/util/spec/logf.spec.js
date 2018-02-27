@@ -48,7 +48,7 @@ describe('logf() tests', () => {
     test('newLogger() invocation', () => {
       const myLogger = logf.newLogger('~myLogger~ ');
       myLogger.enable(); // quick-and-dirty: activate this temporarly to visually see results
-      myLogger('This is a test FROM: myLogger');
+      myLogger('This is a test FROM: myLogger: ' + myLogger.elm2html('fake-elm'));
       logf('This is a test FROM: logf', 'THE END');
     });
 

@@ -288,7 +288,7 @@ op.alch.validateFeatureContent = function(features, aspectMap) {
   // log summary
   const aspects = []; // convert aspectMap to array ... do this RATHER than change API JUST to accommodate logging
   for (const propKey in aspectMap) {
-    aspects.push(aspectMap[propKey])
+    aspects.push(aspectMap[propKey]);
   }
   const hookCount   = aspects.reduce( (count, aspect) => aspect.validateFeatureContent ? count+1 : count, 0);
   const hookSummary = aspects.map( (aspect) => `\n  Aspect.name:${aspect.name}${aspect.validateFeatureContent ? ' <-- defines: validateFeatureContent()' : ''}` );
