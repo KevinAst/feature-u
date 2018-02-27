@@ -53,10 +53,12 @@ logf.isEnabled = function() {
 // API: logf.enabled(): void ... enable feature-u logging
 logf.enable = function() {
   _enabled = true;
+  logf('enabling logf()');
 };
 
 // API: logf.disable(): void ... disable feature-u logging
 logf.disable = function() {
+  logf('disabling logf()');
   _enabled = false;
 };
 
