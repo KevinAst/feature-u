@@ -2,19 +2,6 @@ import verify               from '../util/verify';
 import isString             from 'lodash.isstring';
 import isFunction           from 'lodash.isfunction';
 import {isFeatureProperty}  from '../core/createFeature';
-
-const default_genesis = () => null;
-
-function default_expandFeatureContent(app, feature) {
-  // expand self's content in the supplied feature
-  // ... by invoking the managedExpansionCB(app) embellished by managedExpansion(managedExpansionCB)
-  feature[this.name] = feature[this.name](app);
-}
-
-const default_assembleAspectResources = (app, aspects) => null;
-
-const default_processRootAppElm = (app, curRootAppElm) => curRootAppElm;
-
  
 /**
  * Create an {{book.api.Aspect}} object, used to extend **feature-u**.
@@ -114,13 +101,13 @@ const default_processRootAppElm = (app, curRootAppElm) => curRootAppElm;
  * @return {Aspect} a new Aspect object (to be consumed by {{book.api.launchApp}}).
  */
 export default function createAspect({name,
-                                      genesis=default_genesis,
+                                      genesis,
                                       validateFeatureContent,
-                                      expandFeatureContent=default_expandFeatureContent,
+                                      expandFeatureContent,
                                       assembleFeatureContent,
-                                      assembleAspectResources=default_assembleAspectResources,
-                                      initialRootAppElm=default_processRootAppElm,
-                                      injectRootAppElm=default_processRootAppElm,
+                                      assembleAspectResources,
+                                      initialRootAppElm,
+                                      injectRootAppElm,
                                       ...additionalMethods}={}) {
 
   // ***
@@ -134,21 +121,31 @@ export default function createAspect({name,
   check(!isFeatureProperty(name), `Aspect.name: '${name}' is a reserved Feature keyword`);
   // NOTE: Aspect.name uniqueness is validated in launchApp() (once we know all aspects in-use)
 
-  check(isFunction(genesis),                 'genesis (when supplied) must be a function');
+  if (genesis) {
+    check(isFunction(genesis),                 'genesis (when supplied) must be a function');
+  }
 
-  check(validateFeatureContent,              'validateFeatureContent is required');
-  check(isFunction(validateFeatureContent),  'validateFeatureContent must be a function');
+  check(validateFeatureContent,                'validateFeatureContent is required');
+  check(isFunction(validateFeatureContent),    'validateFeatureContent must be a function');
 
-  check(isFunction(expandFeatureContent),    'expandFeatureContent (when supplied) must be a function');
+  if (expandFeatureContent) {
+    check(isFunction(expandFeatureContent),    'expandFeatureContent (when supplied) must be a function');
+  }
 
-  check(assembleFeatureContent,              'assembleFeatureContent is required');
-  check(isFunction(assembleFeatureContent),  'assembleFeatureContent must be a function');
+  check(assembleFeatureContent,                'assembleFeatureContent is required');
+  check(isFunction(assembleFeatureContent),    'assembleFeatureContent must be a function');
 
-  check(isFunction(assembleAspectResources), 'assembleAspectResources (when supplied) must be a function');
+  if (assembleAspectResources) {
+    check(isFunction(assembleAspectResources), 'assembleAspectResources (when supplied) must be a function');
+  }
 
-  check(isFunction(initialRootAppElm),       'initialRootAppElm (when supplied) must be a function');
+  if (initialRootAppElm) {
+    check(isFunction(initialRootAppElm),       'initialRootAppElm (when supplied) must be a function');
+  }
 
-  check(isFunction(injectRootAppElm),        'injectRootAppElm (when supplied) must be a function');
+  if (injectRootAppElm) {
+    check(isFunction(injectRootAppElm),        'injectRootAppElm (when supplied) must be a function');
+  }
 
   // ... additionalMethods
   //     ... this validation occurs in launchApp()

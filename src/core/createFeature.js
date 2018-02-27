@@ -2,9 +2,6 @@ import verify      from '../util/verify';
 import isString    from 'lodash.isstring';
 import isFunction  from 'lodash.isfunction';
 
-// our default no-op function
-const noOp = () => null;
-
 /**
  * Create a new {{book.api.Feature}} object, cataloging
  * {{book.api.AspectContent}} to be consumed by
@@ -59,10 +56,10 @@ const noOp = () => null;
 export default function createFeature({name,
                                        enabled=true,
 
-                                       publicFace={}, // default to empty object, providing a consistent indicator in app object (that the feature is present/enabled)
+                                       publicFace,
 
-                                       appWillStart=noOp,
-                                       appDidStart=noOp,
+                                       appWillStart,
+                                       appDidStart,
 
                                        ...extendedAspect}={}) {
 
@@ -79,10 +76,14 @@ export default function createFeature({name,
   // ... publicFace: nothing to validate (it can be anything)
 
   // ... appWillStart
-  check(isFunction(appWillStart), 'appWillStart (when supplied) must be a function');
+  if (appWillStart) {
+    check(isFunction(appWillStart), 'appWillStart (when supplied) must be a function');
+  }
 
   // ... appDidStart
-  check(isFunction(appDidStart), 'appDidStart (when supplied) must be a function');
+  if (appDidStart) {
+    check(isFunction(appDidStart), 'appDidStart (when supplied) must be a function');
+  }
 
   // ... extendedAspect
   //     ... this validation occurs by the Aspect itself (via launchApp())

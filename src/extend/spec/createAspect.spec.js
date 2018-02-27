@@ -1,6 +1,4 @@
-import {createAspect,     // module under test
-        createFeature,
-        managedExpansion} from '../..'; // STOP USING: '../../../tooling/ModuleUnderTest';
+import {createAspect} from '../..'; // STOP USING: '../../../tooling/ModuleUnderTest';
 
 import {isAspectProperty,
         extendAspectProperty} from '../createAspect';
@@ -223,62 +221,6 @@ describe('createAspect() tests', () => {
     test('aspect.myAdditionalStuff', () => {
       expect(aspect.myAdditionalStuff).toEqual('myAdditionalStuff');
     });
-  });
-
-  //***--------------------------------------------------------------------------------
-  describe('VERIFY DEFAULT SEMANTICS', () => {
-    const aspect = createAspect({
-      name:                   'myAspectName',
-      validateFeatureContent: identityFn,
-      // expandFeatureContent,    // USE DEFAULT (tested in MANAGED EXPANSION - below)
-      assembleFeatureContent: identityFn,
-      // assembleAspectResources, // USE DEFAULT
-      // initialRootAppElm,       // USE DEFAULT
-      // injectRootAppElm,        // USE DEFAULT
-    });
-
-    test('aspect.assembleAspectResources', () => {
-      expect(aspect.assembleAspectResources('app', 'aspects')).toEqual(null);
-    });
-
-    test('aspect.initialRootAppElm', () => {
-      expect(aspect.initialRootAppElm('app', 'curRootAppElm')).toEqual('curRootAppElm');
-    });
-
-    test('aspect.injectRootAppElm', () => {
-      expect(aspect.injectRootAppElm('app', 'curRootAppElm')).toEqual('curRootAppElm');
-    });
-  });
-
-  //***--------------------------------------------------------------------------------
-  describe('VERIFY MANAGED EXPANSION DEFAULT SEMANTICS', () => {
-    const aspect = createAspect({
-      name:                   'myAspectName',
-      // genesis:                 // USE DEFAULT
-      validateFeatureContent: identityFn,
-      // expandFeatureContent,    // DEFAULT SEMANTICS - UNDER TEST
-      assembleFeatureContent: identityFn,
-      // assembleAspectResources, // USE DEFAULT
-      // initialRootAppElm,       // USE DEFAULT
-      // injectRootAppElm,        // USE DEFAULT
-    });
-
-    const feature = createFeature({
-      name:         'myFeatureName',
-      myAspectName: managedExpansion( (app) => 'myAspectContent' ), // UNDER TEST: needs expansion
-    });
-
-    // const app = null; // null ok for this test ... just being passed through 
-
-    test('aspect.expandFeatureContent', () => {
-
-      // expand feature
-      aspect.expandFeatureContent(null, feature);
-
-      // prove the expansion has occurred
-      expect(feature.myAspectName).toEqual('myAspectContent');
-    });
-
   });
 
 });

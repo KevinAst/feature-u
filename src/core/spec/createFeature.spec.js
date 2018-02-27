@@ -73,18 +73,6 @@ describe('createFeature() tests', () => {
       expect(feature.enabled).toBe(true);
     });
 
-    test('feature.publicFace', () => {
-      expect(feature.publicFace).toEqual({});
-    });
-    
-    test('feature.appWillStart', () => {
-      expect(feature.appWillStart()).toBe(null);
-    });
-    
-    test('feature.appDidStart', () => {
-      expect(feature.appDidStart()).toBe(null);
-    });
-
   });
 
   //***--------------------------------------------------------------------------------
