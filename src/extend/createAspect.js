@@ -2,6 +2,7 @@ import verify               from '../util/verify';
 import isString             from 'lodash.isstring';
 import isFunction           from 'lodash.isfunction';
 import {isFeatureProperty}  from '../core/createFeature';
+import logf                 from '../util/logf';
  
 /**
  * Create an {{book.api.Aspect}} object, used to extend **feature-u**.
@@ -217,6 +218,8 @@ export function isAspectProperty(name) {
  * @param {string} name the property name to allow.
  */
 export function extendAspectProperty(name) {
+
+  logf(`invoking: extendAspectProperty('${name}')`);
 
   if (isAspectProperty(name)) {
     throw new Error(`**ERROR** extendAspectProperty('${name}') ... 'Aspect.${name}' is already in use (i.e. it is already a valid Aspect property)!`);

@@ -1,6 +1,7 @@
 import verify      from '../util/verify';
 import isString    from 'lodash.isstring';
 import isFunction  from 'lodash.isfunction';
+import logf        from '../util/logf';
 
 /**
  * Create a new {{book.api.Feature}} object, cataloging
@@ -148,6 +149,8 @@ export function isFeatureProperty(name) {
  * @param {string} name the property name to allow.
  */
 export function extendFeatureProperty(name) {
+
+  logf(`invoking: extendFeatureProperty('${name}')`);
 
   if (isFeatureProperty(name)) {
     throw new Error(`**ERROR** extendFeatureProperty('${name}') ... 'Feature.${name}' is already in use (i.e. it is already a valid Feature property)!`);
