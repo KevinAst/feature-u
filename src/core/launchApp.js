@@ -576,7 +576,7 @@ op.alch.initialRootAppElm = function(app, aspects, curRootAppElm) {
       const rootAppElm = aspect.initialRootAppElm(app, curRootAppElm);
 
       if (rootAppElm !== curRootAppElm) {
-        logf(`defining-rootAppElm ... Aspect.name:${aspect.name}s Aspect.initialRootAppElm() CHANGED rootAppElm: `,
+        logf(`defining-rootAppElm ... Aspect.name:${aspect.name}'s Aspect.initialRootAppElm() CHANGED rootAppElm: `,
              logf.elm2html(rootAppElm));
       }
 
@@ -655,7 +655,7 @@ op.alch.injectRootAppElm = function(app, aspects, curRootAppElm) {
       const rootAppElm = aspect.injectRootAppElm(app, curRootAppElm);
 
       if (rootAppElm !== curRootAppElm) {
-        logf(`defining-rootAppElm ... Aspect.name:${aspect.name}s Aspect.injectRootAppElm() CHANGED rootAppElm: `,
+        logf(`defining-rootAppElm ... Aspect.name:${aspect.name}'s Aspect.injectRootAppElm() CHANGED rootAppElm: `,
              logf.elm2html(rootAppElm));
       }
 
