@@ -428,7 +428,6 @@ op.alch.expandFeatureContent = function(app, activeFeatures, aspects) {
   // log summary
   const hookCount   = aspects.reduce( (count, aspect) => aspect.expandFeatureContent ? count+1 : count, 0);
   const hookSummary = aspects.map( (aspect) => `\n  Aspect.name:${aspect.name}${aspect.expandFeatureContent ? ' <-- defines: expandFeatureContent()' : ''}` );
-  // ??? TEST: summarize differently
   logf(`resolving managedExpansion() ... either by DEFAULT-PROCESS -OR- aspect-life-cycle-hook PROCESSING: Aspect.expandFeatureContent() ... ${hookCount} hooks:${hookSummary}`);
 
   // expand the feature content of any aspect that relies on managedExpansion()
@@ -447,7 +446,6 @@ op.alch.expandFeatureContent = function(app, activeFeatures, aspects) {
         if (aspect.expandFeatureContent) {
           // aspect wishes to do this
           // ... a simple process, BUT provides the hook to do more (ex: reducer tranfer of slice)
-          // ??? TEST: make mutulay exclusive -AND- standardize
           logf(`resolving managedExpansion() [by aspect-life-cycle-hook Aspect.name:${aspect.name}'s Aspect.expandFeatureContent()] ON Feature.name:${feature.name}'s Feature.${aspect.name} AspectContent`);
 
           errMsg = aspect.expandFeatureContent(app, feature);
@@ -455,7 +453,6 @@ op.alch.expandFeatureContent = function(app, activeFeatures, aspects) {
           check(!errMsg, errMsg); // truthy is considered a validation error
         }
         else {
-          // ??? TEST: make mutulay exclusive -AND- standardize
           logf(`resolving managedExpansion() [by DEFAULT-PROCESS] ON Feature.name:${feature.name}'s Feature.${aspect.name} AspectContent`);
           // default implementation (when not done by the aspect)
           feature[aspect.name] = feature[aspect.name](app);
