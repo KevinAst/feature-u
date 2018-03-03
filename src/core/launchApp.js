@@ -693,7 +693,6 @@ op.flch.appDidStart = function(app, activeFeatures, aspects) {
                                 : [undefined, undefined];
 
   // apply Feature.appDidStart() life-cycle hooks
-  // console.log(`xx launchApp ... feature appDidStart(): `, {appState, dispatch});
   activeFeatures.forEach( feature => {
     if (feature.appDidStart) {
       logf(`feature-life-cycle-hook ... Feature.name:${feature.name} ... invoking it's defined Feature.appDidStart()`);
