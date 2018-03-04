@@ -289,7 +289,7 @@ const aspects = [ // *1*
 
 // configure our Aspects (as needed)
 // ... Feature Route fallback screen (when no routes are in effect)
-routeAspect.fallbackElm = <SplashScreen msg="I'm trying to think but it hurts!"/>;
+routeAspect.config.fallbackElm$ = <SplashScreen msg="I'm trying to think but it hurts!"/>;
 
 
 // launch our app, exposing the feature-u App object (facilitating cross-feature communication)!

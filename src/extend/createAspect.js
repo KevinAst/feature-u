@@ -1,6 +1,7 @@
 import verify               from '../util/verify';
 import isString             from 'lodash.isstring';
 import isFunction           from 'lodash.isfunction';
+import isPlainObject        from 'lodash.isplainobject';
 import {isFeatureProperty}  from '../core/createFeature';
 import logf                 from '../util/logf';
  
@@ -87,17 +88,16 @@ import logf                 from '../util/logf';
  * The {{book.guide.extending_definingAppElm}} section highlights when
  * to use {{book.api.initialRootAppElmMeth}} verses
  * {{book.api.injectRootAppElmMeth}}.
+ *
+ * @param {Any} [config] an optional sub-object that can be used for
+ * any type of configuration that a specific Aspect may need _(see:
+ * {{book.guide.aspectConfig}})_.
  * 
  * @param {Any} [additionalMethods] additional methods (proprietary to
- * specific Aspects), supporting two different requirements:<br/><br/>
- * 
- * 1. internal Aspect helper methods, and<br/><br/>
- * 
- * 2. APIs used in {{book.guide.extending_aspectCrossCommunication}}
- *    ... a contract between one or more aspects.  This is merely an
- *    API specified by one Aspect, and used by another Aspect, that is
- *    facilitate through the {{book.api.assembleAspectResourcesMeth$}}
- *    hook.
+ * specific Aspects), supporting
+ * {{book.guide.extending_aspectCrossCommunication}} ... a contract
+ * between one or more aspects _(see:
+ * {{book.guide.additionalMethods}})_.
  *
  * @return {Aspect} a new Aspect object (to be consumed by {{book.api.launchApp}}).
  */
@@ -109,6 +109,7 @@ export default function createAspect({name,
                                       assembleAspectResources,
                                       initialRootAppElm,
                                       injectRootAppElm,
+                                      config={},
                                       ...additionalMethods}={}) {
 
   // ***
@@ -148,6 +149,9 @@ export default function createAspect({name,
     check(isFunction(injectRootAppElm),        'injectRootAppElm (when supplied) must be a function');
   }
 
+  check(config,                                'config is required');
+  check(isPlainObject(config),                 'config must be a plain object literal');
+
   // ... additionalMethods
   //     ... this validation occurs in launchApp()
   //         BECAUSE we don't know the Aspects in use UNTIL run-time
@@ -165,6 +169,7 @@ export default function createAspect({name,
     assembleAspectResources,
     initialRootAppElm,
     injectRootAppElm,
+    config,
     ...additionalMethods,
   };
 
@@ -194,6 +199,7 @@ const validAspectProps = {
   assembleAspectResources:  true,
   initialRootAppElm:        true,
   injectRootAppElm:         true,
+  config:                   true,
 };
 
 /**

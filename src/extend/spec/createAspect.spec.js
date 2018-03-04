@@ -133,6 +133,27 @@ describe('createAspect() tests', () => {
       });
     });
 
+    describe('aspect.config', () => {
+      const primePump = {
+        name:                    'myAspectName',
+        validateFeatureContent:  identityFn,
+        assembleFeatureContent:  identityFn,
+      };
+
+      test('config is required', () => {
+        expect(()=>createAspect({...primePump, config:null}))
+          .toThrow(/config is required/);
+        // THROW:  createAspect() parameter violation: config is required
+      });
+
+      test('config is required', () => {
+        expect(()=>createAspect({...primePump, config:()=>1}))
+          .toThrow(/config must be a plain object literal/);
+        // THROW:  createAspect() parameter violation: config must be a plain object literal
+      });
+    });
+
+
   });
 
   //***--------------------------------------------------------------------------------
@@ -173,6 +194,7 @@ describe('createAspect() tests', () => {
       assembleAspectResources: () => 'MY assembleAspectResources',
       initialRootAppElm:       () => 'MY initialRootAppElm',
       injectRootAppElm:        () => 'MY injectRootAppElm',
+      config:                  { myConfig: 123 },
     });
 
     test('aspect.name', () => {
@@ -205,6 +227,10 @@ describe('createAspect() tests', () => {
 
     test('aspect.injectRootAppElm', () => {
       expect(aspect.injectRootAppElm()).toEqual('MY injectRootAppElm');
+    });
+
+    test('aspect.config', () => {
+      expect(aspect.config).toEqual({ myConfig: 123 });
     });
     
   });

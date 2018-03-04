@@ -117,6 +117,10 @@
         "injectRootAppElmMeth":          "[`Aspect.injectRootAppElm()`](/extending.md#aspectinjectrootappelm)",
         "injectRootAppElmMeth$":         "[`Aspect.injectRootAppElm(app, curRootAppElm): rootAppElm`](/extending.md#aspectinjectrootappelm)",
 
+        "additionalMethods":             "[`Aspect.additionalMethods()`](/extending.md#aspectadditionalmethods)",
+
+        "aspectConfig":                  "[`Aspect.config()`](/extending.md#aspectconfig)",
+
       "extensionApi":                        "[`Extension API`](/extensionApi.md)",
 
       "dist":                   "[`Distribution`](/dist.md)",
