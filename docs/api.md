@@ -24,13 +24,18 @@ Create a new {{book.api.Feature}} object, cataloging{{book.api.AspectContent}} 
 <a id="extendFeatureProperty"></a>
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
-  extendFeatureProperty(name)</h5>
-Extend the supplied name as a Feature property.  This is used byAspects to extend Feature APIs for{{book.guide.extending_aspectCrossCommunication}}.
+  extendFeatureProperty(name, owner)</h5>
+Extend valid Feature properties to include the supplied name... used when extending APIs for{{book.guide.extending_aspectCrossCommunication}}.**feature-u** keeps track of the agent that owns this extension(using the owner parameter).  This is used to prevent exceptionswhen duplicate extension requests are made by the same owner.  Thiscan happen when multiple instances of an aspect type are supported,and also in unit testing.
+
+**Throws**:
+
+- Error when supplied name is already reserved by a different owner
 
 
 | Param | Type | Description |
 | --- | --- | --- |
 | name | string | the property name to allow. |
+| owner | string | the requesting owner id of this extension request.  Use any string that uniquely identifies your utility _(such as the aspect's npm package name)_. |
 
 
 <br/><br/><br/>
@@ -94,13 +99,18 @@ Create an {{book.api.Aspect}} object, used to extend **feature-u**.The {{book.
 <a id="extendAspectProperty"></a>
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
-  extendAspectProperty(name)</h5>
-Extend the supplied name as an Aspect property.  This is used byAspects to extend Aspect APIs for{{book.guide.extending_aspectCrossCommunication}}.
+  extendAspectProperty(name, owner)</h5>
+Extend valid Aspect properties to include the supplied name... used when extending APIs for{{book.guide.extending_aspectCrossCommunication}}.**feature-u** keeps track of the agent that owns this extension(using the owner parameter).  This is used to prevent exceptionswhen duplicate extension requests are made by the same owner.  Thiscan happen when multiple instances of an aspect type are supported,and also in unit testing.
+
+**Throws**:
+
+- Error when supplied name is already reserved by a different owner
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| name | string | the property name to allow. |
+| name | string | the property name to extend. |
+| owner | string | the requesting owner id of this extension request.  Use any string that uniquely identifies your utility _(such as the aspect's npm package name)_. |
 
 
 <br/><br/><br/>

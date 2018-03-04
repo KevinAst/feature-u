@@ -185,21 +185,21 @@ export default function createAspect({name,
  *
  * Initially seeded with Aspect builtins.
  *
- * Later, supplemented with extendAspectProperty(name) at run-time
+ * Later, supplemented with extendAspectProperty(name, owner) at run-time
  * (via Aspect plugins).
  *
  * @private
  */
 const validAspectProps = {
-  name:                     true,
-  genesis:                  true,
-  validateFeatureContent:   true,
-  expandFeatureContent:     true,
-  assembleFeatureContent:   true,
-  assembleAspectResources:  true,
-  initialRootAppElm:        true,
-  injectRootAppElm:         true,
-  config:                   true,
+  name:                     'builtin',
+  genesis:                  'builtin',
+  validateFeatureContent:   'builtin',
+  expandFeatureContent:     'builtin',
+  assembleFeatureContent:   'builtin',
+  assembleAspectResources:  'builtin',
+  initialRootAppElm:        'builtin',
+  injectRootAppElm:         'builtin',
+  config:                   'builtin',
 };
 
 /**
@@ -213,25 +213,48 @@ const validAspectProps = {
  * @private
  */
 export function isAspectProperty(name) {
-  return validAspectProps[name] || false;
+  return validAspectProps[name] ? true : false;
 }
 
 /**
- * Extend the supplied name as an Aspect property.  This is used by
- * Aspects to extend Aspect APIs for
+ * Extend valid Aspect properties to include the supplied name
+ * ... used when extending APIs for
  * {{book.guide.extending_aspectCrossCommunication}}.
  *
- * @param {string} name the property name to allow.
+ * **feature-u** keeps track of the agent that owns this extension
+ * (using the owner parameter).  This is used to prevent exceptions
+ * when duplicate extension requests are made by the same owner.  This
+ * can happen when multiple instances of an aspect type are supported,
+ * and also in unit testing.
+ *
+ * @param {string} name the property name to extend.
+ *
+ * @param {string} owner the requesting owner id of this extension
+ * request.  Use any string that uniquely identifies your utility
+ * _(such as the aspect's npm package name)_.
+ * 
+ * @throws {Error} when supplied name is already reserved by a different owner
  */
-export function extendAspectProperty(name) {
+export function extendAspectProperty(name, owner) {
 
-  logf(`invoking: extendAspectProperty('${name}')`);
+  // validate parameters
+  const check = verify.prefix('extendAspectProperty() parameter violation: ');
 
-  if (isAspectProperty(name)) {
-    throw new Error(`**ERROR** extendAspectProperty('${name}') ... 'Aspect.${name}' is already in use (i.e. it is already a valid Aspect property)!`);
+  check(name,            'name is required');
+  check(isString(name),  'name must be a string');
+
+  check(owner,           'owner is required');
+  check(isString(owner), 'owner must be a string');
+
+  // verify supplied name is NOT already reserved (by a different owner)
+  if (isAspectProperty(name) &&           // already reserved
+      validAspectProps[name] !== owner) { // by a different owner
+    throw new Error(`**ERROR** extendAspectProperty('${name}', '${owner}') ... 'Aspect.${name}' is already reserved by different owner.`);
   }
 
-  validAspectProps[name] = true;
+  // reserve it
+  validAspectProps[name] = owner;
+  logf(`invoking: extendAspectProperty('${name}', '${owner}') ... now validAspectProps: `, validAspectProps);
 }
 
 

@@ -222,6 +222,14 @@ exposing a new **Aspect API**: `Aspect.getReduxMiddleware()`.
      This registration should occur in the {{book.guide.genesisMeth}}
      life cycle method _(i.e. very early)_ to guarantee the new API is
      available during **feature-u** validation.
+
+     **SideBar**: **feature-u** keeps track of the agent that owns
+     each extension through the owner parameter.  Use any string that
+     uniquely identifies your utility _(such as the aspect's npm
+     package name)_.  This prevents exceptions when duplicate
+     extension requests are made by the same owner.  This can happen
+     when multiple instances of an aspect type are supported, and also
+     in unit testing.
   
   1. Utilize the API in one of the
      {{book.guide.extending_aspectLifeCycleMethods}} to gather the
@@ -247,8 +255,8 @@ exposing a new **Aspect API**: `Aspect.getReduxMiddleware()`.
        **redux-logic**.
   
   1. Here is the new API registration:
-  
-     [feature-redux/src/reducerAspect.js](https://github.com/KevinAst/feature-redux/blob/f22a8d254aec4908fcf7784e07bc1829409859fa/src/reducerAspect.js#L41-L44)
+
+     [feature-redux/src/reducerAspect.js](https://github.com/KevinAst/feature-redux/blob/57858cbcc4052c153471205a8f217bfcc95a0ed2/src/reducerAspect.js#L48-L53)
      ```js
      /**
       * Register feature-redux proprietary Aspect APIs (required to pass
@@ -257,8 +265,8 @@ exposing a new **Aspect API**: `Aspect.getReduxMiddleware()`.
       * guarantee the new API is available during feature-u validation.
       */
      function genesis() {
-       extendAspectProperty('getReduxStore');      // Aspect.getReduxStore(): store
-       extendAspectProperty('getReduxMiddleware'); // Aspect.getReduxMiddleware(): reduxMiddleware
+       extendAspectProperty('getReduxStore', 'feature-redux');      // Aspect.getReduxStore(): store
+       extendAspectProperty('getReduxMiddleware', 'feature-redux'); // Aspect.getReduxMiddleware(): reduxMiddleware
      }
      ```
   

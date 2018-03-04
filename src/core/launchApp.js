@@ -265,7 +265,7 @@ op.helper.validateAspectProperties = function(aspects) {
       // handle unrecognized Aspect.property
       // ... NOTE: Aspect extended propertis have already been added to this isAspectProperty() list
       //           via extendAspectProperty() 
-      //               executed globally during the in-line expansion of the extending Aspect
+      //               executed early within the extending Aspect (i.e. in genesis())
       //               SO it is in the list at this time!!
       check(isAspectProperty(propName), `Aspect.name: '${aspect.name}' contains unrecognized property: ${propName} ... no Aspect is registered to handle this!`);
     }
@@ -310,7 +310,7 @@ op.alch.validateFeatureContent = function(features, aspectMap) {
       //     ... an error condition if if no Aspect is registered to handle it
       // ... NOTE: Aspect extended propertis have already been added to this isFeatureProperty() list
       //           via extendFeatureProperty() 
-      //               executed globally during the in-line expansion of the extending Aspect
+      //               executed early within the extending Aspect (i.e. in genesis())
       //               SO it is in the list at this time!!
       if (!isFeatureProperty(propName)) {
 

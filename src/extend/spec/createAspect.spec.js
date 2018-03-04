@@ -159,15 +159,39 @@ describe('createAspect() tests', () => {
   //***--------------------------------------------------------------------------------
   describe('test extended Aspect properties', () => {
 
-    test("isAspectProperty('name'): true", () => {
+    test("isAspectProperty() builtin props are included", () => {
       expect(isAspectProperty('name'))
         .toBe(true);
     });
 
-    test("extendAspectProperty('name'): THROW 'already in use' ERROR", () => {
-      expect(()=>extendAspectProperty('name'))
-        .toThrow(/Aspect.name.*is already in use/);
-      // THROW: **ERROR** extendAspectProperty('name') ... 'Aspect.name' is already in use (i.e. it is already a valid Aspect property)!
+    test("extendAspectProperty() name is required", () => {
+      expect(()=>extendAspectProperty())
+        .toThrow(/name is required/);
+      // THROW: extendAspectProperty() parameter violation: name is required
+    });
+
+    test("extendAspectProperty() name must be a string", () => {
+      expect(()=>extendAspectProperty(123))
+        .toThrow(/name must be a string/);
+      // THROW: extendAspectProperty() parameter violation: name must be a string
+    });
+
+    test("extendAspectProperty() owner is required", () => {
+      expect(()=>extendAspectProperty('MyNewProp'))
+        .toThrow(/owner is required/);
+      // THROW: extendAspectProperty() parameter violation: owner is required
+    });
+    
+    test("extendAspectProperty() owner must be a string", () => {
+      expect(()=>extendAspectProperty('MyNewProp', 456))
+        .toThrow(/owner must be a string/);
+      // THROW: extendAspectProperty() parameter violation: owner must be a string
+    });
+
+    test("extendAspectProperty() on builtin prop is already reserved", () => {
+      expect(()=>extendAspectProperty('name', 'myAspect'))
+        .toThrow(/is already reserved/);
+      // THROW: **ERROR** extendAspectProperty('name', 'myAspect') ... 'Aspect.name' is already reserved by different owner.
     });
 
     test("isAspectProperty('MyNewProp'): false", () => {
@@ -175,11 +199,23 @@ describe('createAspect() tests', () => {
         .toBe(false);
     });
 
-    test("isAspectProperty('MyNewProp'): true (after extending)", () => {
-      extendAspectProperty('MyNewProp');
+    test("isAspectProperty('MyNewProp', 'myAspect'): true (after extending)", () => {
+      extendAspectProperty('MyNewProp', 'myAspect');
       expect(isAspectProperty('MyNewProp'))
         .toBe(true);
     });
+
+    test("duplicate extendAspectProperty() is OK with same owner", () => {
+      expect(()=>extendAspectProperty('MyNewProp', 'myAspect'))
+        .not.toThrow();
+    });
+
+    test("duplicate extendAspectProperty() throws exception with different owner", () => {
+      expect(()=>extendAspectProperty('MyNewProp', 'differentAspect'))
+        .toThrow(/is already reserved/);
+      // THROW: **ERROR** extendAspectProperty('MyNewProp', 'differentAspect') ... 'Aspect.MyNewProp' is already reserved by different owner.
+    });
+
 
   });
 

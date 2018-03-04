@@ -119,15 +119,39 @@ describe('createFeature() tests', () => {
   //***--------------------------------------------------------------------------------
   describe('test extending Feature properties', () => {
 
-    test("isFeatureProperty('name'): true", () => {
+    test("isFeatureProperty() builtin props are included", () => {
       expect(isFeatureProperty('name'))
         .toBe(true);
     });
 
-    test("extendFeatureProperty('name'): THROW 'already in use' ERROR", () => {
-      expect(()=>extendFeatureProperty('name'))
-        .toThrow(/Feature.name.*is already in use/);
-      // THROW: **ERROR** extendFeatureProperty('name') ... 'Feature.name' is already in use (i.e. it is already a valid Feature property)!
+    test("extendFeatureProperty() name is required", () => {
+      expect(()=>extendFeatureProperty())
+        .toThrow(/name is required/);
+      // THROW: extendFeatureProperty() parameter violation: name is required
+    });
+
+    test("extendFeatureProperty() name must be a string", () => {
+      expect(()=>extendFeatureProperty(123))
+        .toThrow(/name must be a string/);
+      // THROW: extendFeatureProperty() parameter violation: name must be a string
+    });
+
+    test("extendFeatureProperty() owner is required", () => {
+      expect(()=>extendFeatureProperty('MyNewProp'))
+        .toThrow(/owner is required/);
+      // THROW: extendFeatureProperty() parameter violation: owner is required
+    });
+    
+    test("extendFeatureProperty() owner must be a string", () => {
+      expect(()=>extendFeatureProperty('MyNewProp', 456))
+        .toThrow(/owner must be a string/);
+      // THROW: extendFeatureProperty() parameter violation: owner must be a string
+    });
+
+    test("extendFeatureProperty() on builtin prop is already reserved", () => {
+      expect(()=>extendFeatureProperty('name', 'myAspect'))
+        .toThrow(/Feature.name.*is already reserved by different owner/);
+      // THROW: **ERROR** extendFeatureProperty('name', 'myAspect') ... 'Feature.name' is already reserved by different owner.
     });
 
     test("isFeatureProperty('MyNewProp'): false", () => {
@@ -135,10 +159,21 @@ describe('createFeature() tests', () => {
         .toBe(false);
     });
 
-    test("isFeatureProperty('MyNewProp'): true (after extending)", () => {
-      extendFeatureProperty('MyNewProp');
+    test("isFeatureProperty('MyNewProp', 'myAspect'): true (after extending)", () => {
+      extendFeatureProperty('MyNewProp', 'myAspect');
       expect(isFeatureProperty('MyNewProp'))
         .toBe(true);
+    });
+
+    test("duplicate extendFeatureProperty() is OK with same owner", () => {
+      expect(()=>extendFeatureProperty('MyNewProp', 'myAspect'))
+        .not.toThrow();
+    });
+
+    test("duplicate extendFeatureProperty() throws exception with different owner", () => {
+      expect(()=>extendFeatureProperty('MyNewProp', 'differentAspect'))
+        .toThrow(/is already reserved/);
+      // THROW: **ERROR** extendFeatureProperty('MyNewProp', 'differentAspect') ... 'Feature.MyNewProp' is already reserved by different owner.
     });
 
   });

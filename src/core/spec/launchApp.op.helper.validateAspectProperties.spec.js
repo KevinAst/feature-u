@@ -37,7 +37,7 @@ describe('launchApp.op.helper.validateAspectProperties(aspects): void', () => {
 
   describe('Extended properties are valid', () => {
     beforeEach(() => {
-      extendAspectProperty('extendedHookTester');
+      extendAspectProperty('extendedHookTester', 'myAspect');
     });
 
     test('check it', () => {

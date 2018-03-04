@@ -180,10 +180,10 @@
           "injectRootAppElmMeth$":         "[`injectRootAppElm(app, curRootAppElm): rootAppElm`](/api.md#injectRootAppElmMeth)",
 
         "extendAspectProperty":            "[`extendAspectProperty()`](/api.md#extendAspectProperty)",
-        "extendAspectProperty$":           "[`extendAspectProperty(name): void`](/api.md#extendAspectProperty)",
+        "extendAspectProperty$":           "[`extendAspectProperty(name, owner): void`](/api.md#extendAspectProperty)",
 
         "extendFeatureProperty":           "[`extendFeatureProperty()`](/api.md#extendFeatureProperty)",
-        "extendFeatureProperty$":          "[`extendFeatureProperty(name): void`](/api.md#extendFeatureProperty)"
+        "extendFeatureProperty$":          "[`extendFeatureProperty(name, owner): void`](/api.md#extendFeatureProperty)"
     },
 
     "ext": {
