@@ -1,0 +1,1699 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>createFeature() · feature-u</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        <meta name="author" content="Kevin J. Bridges <kevinast@gmail.com> (https://github.com/KevinAst)">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+        <link rel="stylesheet" href="styles/website.css">
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="api.html" />
+    
+    
+    <link rel="prev" href="coreApi.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">feature-u (0.1.0)</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="start.html">
+            
+                <a href="start.html">
+            
+                    
+                    Getting Started
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="divider"></li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" data-path="concepts.html">
+            
+                <a href="concepts.html">
+            
+                    
+                    Basic Concepts
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2" data-path="benefits.html">
+            
+                <a href="benefits.html">
+            
+                    
+                    Benefits
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3" data-path="usage.html">
+            
+                <a href="usage.html">
+            
+                    
+                    Usage
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.3.1" data-path="usage.html">
+            
+                <a href="usage.html#directory-structure">
+            
+                    
+                    Directory Structure
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3.2" data-path="usage.html">
+            
+                <a href="usage.html#feature-object">
+            
+                    
+                    Feature Object
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3.3" data-path="usage.html">
+            
+                <a href="usage.html#launchapp">
+            
+                    
+                    launchApp()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3.4" data-path="usage.html">
+            
+                <a href="usage.html#real-example">
+            
+                    
+                    Real Example
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="2.4" data-path="detail.html">
+            
+                <a href="detail.html">
+            
+                    
+                    A Closer Look
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.4.1" data-path="detail.html">
+            
+                <a href="detail.html#aspects">
+            
+                    
+                    aspects
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.4.2" data-path="detail.html">
+            
+                <a href="detail.html#feature-object-relaying-aspect-content">
+            
+                    
+                    Feature & aspect content
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.4.2.1" data-path="detail.html">
+            
+                <a href="detail.html#built-in-aspects">
+            
+                    
+                    Built-In aspects
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.4.2.2" data-path="detail.html">
+            
+                <a href="detail.html#extendable-aspects">
+            
+                    
+                    Extendable aspects
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="2.4.3" data-path="detail.html">
+            
+                <a href="detail.html#launching-your-application">
+            
+                    
+                    Launching Your Application
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.4.3.1" data-path="detail.html">
+            
+                <a href="detail.html#react-registration">
+            
+                    
+                    React Registration
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="2.4.4" data-path="detail.html">
+            
+                <a href="detail.html#app-object">
+            
+                    
+                    App Object
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.4.4.1" data-path="detail.html">
+            
+                <a href="detail.html#feature-public-api">
+            
+                    
+                    Feature Public API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.4.4.2" data-path="detail.html">
+            
+                <a href="detail.html#does-feature-exist">
+            
+                    
+                    Does Feature Exist
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="2.5" data-path="appLifeCycle.html">
+            
+                <a href="appLifeCycle.html">
+            
+                    
+                    Application Life Cycle Hooks
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.5.1" data-path="appLifeCycle.html">
+            
+                <a href="appLifeCycle.html#appwillstart">
+            
+                    
+                    appWillStart
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.5.2" data-path="appLifeCycle.html">
+            
+                <a href="appLifeCycle.html#appDidStart">
+            
+                    
+                    appDidStart
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="2.6" data-path="crossCommunication.html">
+            
+                <a href="crossCommunication.html">
+            
+                    
+                    Cross Feature Communication
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.6.1" data-path="crossCommunication.html">
+            
+                <a href="crossCommunication.html#publicface-and-the-app-object">
+            
+                    
+                    publicFace & App
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.6.2" data-path="crossCommunication.html">
+            
+                <a href="crossCommunication.html#accessing-the-app-object">
+            
+                    
+                    Accessing App
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.6.2.1" data-path="crossCommunication.html">
+            
+                <a href="crossCommunication.html#managed-code-expansion">
+            
+                    
+                    Managed Code Expansion
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.6.2.2" data-path="crossCommunication.html">
+            
+                <a href="crossCommunication.html#app-access-summary">
+            
+                    
+                    App Access Summary
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="2.7" data-path="featureRouter.html">
+            
+                <a href="featureRouter.html">
+            
+                    
+                    Feature Based Routes
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.8" data-path="enablement.html">
+            
+                <a href="enablement.html">
+            
+                    
+                    Feature Enablement
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.9" data-path="bestPractices.html">
+            
+                <a href="bestPractices.html">
+            
+                    
+                    Best Practices
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="divider"></li>
+        
+        
+    
+        <li class="chapter " data-level="3.1" data-path="coreApi.html">
+            
+                <a href="coreApi.html">
+            
+                    
+                    Core API
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.1.1" data-path="api.html">
+            
+                <a href="api.html#createFeature">
+            
+                    
+                    createFeature()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.1.2" data-path="api.html">
+            
+                <a href="api.html#launchApp">
+            
+                    
+                    launchApp()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.1.3" data-path="api.html">
+            
+                <a href="api.html#managedExpansion">
+            
+                    
+                    managedExpansion()
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="divider"></li>
+        
+        
+    
+        <li class="chapter " data-level="4.1" data-path="extending.html">
+            
+                <a href="extending.html">
+            
+                    
+                    Extending feature-u
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="4.1.1" data-path="extending.html">
+            
+                <a href="extending.html#locating-extensions">
+            
+                    
+                    Locating Extensions
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.1.2" data-path="extending.html">
+            
+                <a href="extending.html#aspect-object-extending-feature-u">
+            
+                    
+                    Aspect Object
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.1.3" data-path="extending.html">
+            
+                <a href="extending.html#defining-rootappelm">
+            
+                    
+                    Defining rootAppElm
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.1.4" data-path="extending.html">
+            
+                <a href="extending.html#aspect-cross-communication">
+            
+                    
+                    Aspect Cross Communication
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.1.5" data-path="extending.html">
+            
+                <a href="extending.html#aspect-life-cycle-methods">
+            
+                    
+                    Aspect Life Cycle Methods
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.1.6" data-path="extensionApi.html">
+            
+                <a href="extensionApi.html">
+            
+                    
+                    Extension API
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="4.1.6.1" data-path="api.html">
+            
+                <a href="api.html#createAspect">
+            
+                    
+                    createAspect()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.1.6.2" data-path="api.html">
+            
+                <a href="api.html#extendAspectProperty">
+            
+                    
+                    extendAspectProperty()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.1.6.3" data-path="api.html">
+            
+                <a href="api.html#extendFeatureProperty">
+            
+                    
+                    extendFeatureProperty()
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="divider"></li>
+        
+        
+    
+        <li class="chapter " data-level="5.1" data-path="dist.html">
+            
+                <a href="dist.html">
+            
+                    
+                    Distribution
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.2" data-path="why.html">
+            
+                <a href="why.html">
+            
+                    
+                    Why feature-u?
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.3" data-path="history.html">
+            
+                <a href="history.html">
+            
+                    
+                    Revision History
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.4" data-path="LICENSE.html">
+            
+                <a href="LICENSE.html">
+            
+                    
+                    MIT License
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >createFeature()</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <p><br><br><br></p>
+<p><a id="createFeature"></a></p>
+<p></p><h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;" id="
+--createfeaturename-enabled-publicface-appwillstart-appdidstart-extendedaspect-&#x21D2;-feature">
+  createFeature(name, [enabled], [publicFace], [appWillStart], [appDidStart], [extendedAspect]) &#x21D2; <a href="#Feature"><code>Feature</code></a></h5>
+Create a new <a href="api.html#Feature"><code>Feature</code></a> object, cataloging
+<a href="api.html#AspectContent"><code>AspectContent</code></a> to be consumed by
+<a href="api.html#launchApp"><code>launchApp()</code></a>.  Each feature within an application
+promotes it&apos;s own <a href="api.html#Feature"><code>Feature</code></a> object.<p></p>
+<p>For more information, please refer to
+<a href="detail.html#feature-object-relaying-aspect-content"><code>Feature &amp; aspect content</code></a>, with examples at
+<a href="usage.html#feature-object"><code>Feature Object</code></a>.</p>
+<p><strong>Please Note</strong> this function uses named parameters.</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+<td></td>
+<td>the identity of the feature.  Feature names are used to index the <a href="api.html#App"><code>App</code></a> Object <em>(in support of <a href="crossCommunication.html"><code>Cross Feature Communication</code></a>)</em>, and are therefore guaranteed to be unique.  Application code can also use the Feature name in various <strong>single-source-of-truth</strong> operations <em>(see <a href="bestPractices.html"><code>Best Practices</code></a>)</em>.</td>
+</tr>
+<tr>
+<td>[enabled]</td>
+<td>boolean</td>
+<td><code>true</code></td>
+<td>an indicator as to whether this feature is enabled (true) or not (false).  When used, this indicator is typically based on a dynamic expression, allowing packaged code to be dynamically enabled/disabled at run-time <em>(please refer to: <a href="enablement.html"><code>Feature Enablement</code></a>)</em>.</td>
+</tr>
+<tr>
+<td>[publicFace]</td>
+<td>Any</td>
+<td></td>
+<td>an optional resource object that is the feature&apos;s Public API, promoting <a href="crossCommunication.html"><code>Cross Feature Communication</code></a>.  This object is exposed through the <a href="api.html#App"><code>App</code></a> object as: <code>app.{featureName}.{publicFace}</code> <em>(please refer to: <a href="crossCommunication.html#publicface-and-the-app-object"><code>publicFace and the App Object</code></a>)</em>.</td>
+</tr>
+<tr>
+<td>[appWillStart]</td>
+<td><a href="#appWillStartCB"><code>appWillStartCB</code></a></td>
+<td></td>
+<td>an optional <a href="appLifeCycle.html"><code>Application Life Cycle Hook</code></a> invoked one time, just before the app starts up.  This life-cycle hook can do any type of initialization, and/or optionally supplement the app&apos;s top-level content (using a non-null return) <em>(please refer to: <a href="appLifeCycle.html#appwillstart"><code>appWillStart</code></a>)</em>.</td>
+</tr>
+<tr>
+<td>[appDidStart]</td>
+<td><a href="#appDidStartCB"><code>appDidStartCB</code></a></td>
+<td></td>
+<td>an optional <a href="appLifeCycle.html"><code>Application Life Cycle Hook</code></a> invoked one time, immediately after the app has started.  Because the app is up-and-running at this time, you have access to the appState and the dispatch() function ... assuming you are using redux (when detected by feature-u&apos;s plugable aspects) <em>(please refer to: <a href="appLifeCycle.html#appDidStart"><code>appDidStart</code></a>)</em>.</td>
+</tr>
+<tr>
+<td>[extendedAspect]</td>
+<td><a href="#AspectContent"><code>AspectContent</code></a></td>
+<td></td>
+<td>additional aspects, as defined by the feature-u&apos;s Aspect plugins <em>(please refer to: <a href="detail.html#extendable-aspects"><code>Extendable aspects</code></a> -and- <a href="extending.html"><code>Extending feature-u</code></a>)</em>.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns</strong>: <a href="#Feature"><code>Feature</code></a> - a new Feature object (to be consumed by
+launchApp()).  </p>
+<p><br><br><br></p>
+<p><a id="extendFeatureProperty"></a></p>
+<p></p><h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;" id="
+--extendfeaturepropertyname-owner">
+  extendFeatureProperty(name, owner)</h5>
+Extend valid Feature properties to include the supplied name
+... used when extending APIs for
+<a href="extending.html#aspect-cross-communication"><code>Aspect Cross Communication</code></a>.<p></p>
+<p><strong>feature-u</strong> keeps track of the agent that owns this extension
+(using the owner parameter).  This is used to prevent exceptions
+when duplicate extension requests are made by the same owner.  This
+can happen when multiple instances of an aspect type are supported,
+and also in unit testing.</p>
+<p><strong>Throws</strong>:</p>
+<ul>
+<li>Error when supplied name is already reserved by a different owner</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>the property name to allow.</td>
+</tr>
+<tr>
+<td>owner</td>
+<td>string</td>
+<td>the requesting owner id of this extension request.  Use any string that uniquely identifies your utility <em>(such as the aspect&apos;s npm package name)</em>.</td>
+</tr>
+</tbody>
+</table>
+<p><br><br><br></p>
+<p><a id="launchApp"></a></p>
+<p></p><h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;" id="
+--launchappaspects-features-registerrootappelm-&#x21D2;-app">
+  launchApp([aspects], features, registerRootAppElm) &#x21D2; <a href="#App"><code>App</code></a></h5>
+Launch an application by assembling the supplied features, driving
+the configuration of the frameworks in use <em>(as orchestrated by the
+supplied set of plugable Aspects)</em>.<p></p>
+<p>For more information <em>(with examples)</em>, please refer to
+<a href="detail.html#launching-your-application"><code>Launching Your Application</code></a>.</p>
+<p><strong>Please Note</strong> this function uses named parameters.</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>[aspects]</td>
+<td><a href="#Aspect"><code>Array.&amp;lt;Aspect&amp;gt;</code></a></td>
+<td>the set of plugable Aspects that extend <strong>feature-u</strong>, integrating other frameworks to match your specific run-time stack.<br><br> When NO Aspects are supplied <em>(an atypical case)</em>, only the very basic <strong>feature-u</strong> characteristics are in effect (like publicFace and life-cycle hooks).</td>
+</tr>
+<tr>
+<td>features</td>
+<td><a href="#Feature"><code>Array.&amp;lt;Feature&amp;gt;</code></a></td>
+<td>the features that comprise this application.</td>
+</tr>
+<tr>
+<td>registerRootAppElm</td>
+<td><a href="#registerRootAppElmCB"><code>registerRootAppElmCB</code></a></td>
+<td>the callback hook that registers the supplied root application element to the specific React framework used in the app.<br><br> Because this registration is accomplished by app-specific code, <strong>feature-u</strong> can operate in any of the react platforms, such as: <a href="https://reactjs.org/" target="_blank"><code>react</code></a> web, <a href="https://facebook.github.io/react-native/" target="_blank"><code>react-native</code></a>, <a href="https://expo.io/" target="_blank"><code>expo</code></a>, etc.<br><br> Please refer to <a href="detail.html#react-registration"><code>React Registration</code></a> for more details and complete examples.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns</strong>: <a href="#App"><code>App</code></a> - the App object used to promote
+<a href="crossCommunication.html"><code>Cross Feature Communication</code></a>.  </p>
+<p><br><br><br></p>
+<p><a id="managedExpansion"></a></p>
+<p></p><h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;" id="
+--managedexpansionmanagedexpansioncb-&#x21D2;-managedexpansioncb">
+  managedExpansion(managedExpansionCB) &#x21D2; <a href="#managedExpansionCB"><code>managedExpansionCB</code></a></h5>
+Mark the supplied <a href="api.html#managedExpansionCB"><code>managedExpansionCB()</code></a> as a &quot;Managed
+Expansion Callback&quot;, distinguishing it from other functions <em>(such
+as reducer functions)</em>.<p></p>
+<p>Features may communicate <a href="api.html#AspectContent"><code>AspectContent</code></a> directly, or
+through a <a href="api.html#managedExpansionCB"><code>managedExpansionCB()</code></a>.  In other words, the
+<a href="api.html#AspectContent"><code>AspectContent</code></a> can either be the actual content itself
+<em>(ex: reducer, logic modules, etc.)</em>, or a function that returns
+the content.  The latter:</p>
+<ol>
+<li>supports <a href="crossCommunication.html"><code>Cross Feature Communication</code></a> <em>(through app object
+injection)</em>, and</li>
+<li>minimizes circular dependency issues (of ES6 modules).</li>
+</ol>
+<p>Managed Expansion Callbacks are used when a fully resolved
+<a href="api.html#App"><code>App</code></a> object is required during in-line code expansion.
+They are merely functions that when invoked <em>(under the control of
+<strong>feature-u</strong>)</em>, are supplied the <a href="api.html#App"><code>App</code></a> object and
+return the expanded <a href="api.html#AspectContent"><code>AspectContent</code></a> <em>(ex: reducer, logic
+modules, etc.)</em>.</p>
+<p><strong>For more information <em>(with examples)</em></strong>, please refer to
+<a href="crossCommunication.html#managed-code-expansion"><code>Managed Code Expansion</code></a>.</p>
+<p>The <a href="api.html#managedExpansionCB"><code>managedExpansionCB()</code></a> function should conform to the
+following signature:</p>
+<p><strong>API:</strong> <a href="api.html#managedExpansionCB"><code>managedExpansionCB(app): AspectContent</code></a></p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>managedExpansionCB</td>
+<td><a href="#managedExpansionCB"><code>managedExpansionCB</code></a></td>
+<td>the callback function that when invoked (by <strong>feature-u</strong>) expands/returns the desired <a href="api.html#AspectContent"><code>AspectContent</code></a>.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns</strong>: <a href="#managedExpansionCB"><code>managedExpansionCB</code></a> - the supplied managedExpansionCB,
+marked as a &quot;managed expansion callback&quot;.  </p>
+<p><br><br><br></p>
+<p><a id="createAspect"></a></p>
+<p></p><h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;" id="
+--createaspectname-genesis-validatefeaturecontent-expandfeaturecontent-assemblefeaturecontent-assembleaspectresources-initialrootappelm-injectrootappelm-config-additionalmethods-&#x21D2;-aspect">
+  createAspect(name, [genesis], validateFeatureContent, [expandFeatureContent], assembleFeatureContent, [assembleAspectResources], [initialRootAppElm], [injectRootAppElm], [config], [additionalMethods]) &#x21D2; <a href="#Aspect"><code>Aspect</code></a></h5>
+Create an <a href="api.html#Aspect"><code>Aspect</code></a> object, used to extend <strong>feature-u</strong>.<p></p>
+<p>The <a href="api.html#Aspect"><code>Aspect</code></a> object promotes a series of life-cycle
+methods that <strong>feature-u</strong> invokes in a controlled way.  This
+life-cycle is controlled by <a href="api.html#launchApp"><code>launchApp()</code></a> <em>... it is
+supplied the Aspects, and it invokes their methods.</em></p>
+<p>The essential characteristics of the <a href="api.html#Aspect"><code>Aspect</code></a> life-cycle is to:</p>
+<ul>
+<li>accumulate <a href="api.html#AspectContent"><code>AspectContent</code></a> across all features</li>
+<li>perform the desired setup and configuration</li>
+<li>expose the framework in some way <em>(by injecting a component in the
+root DOM, or some <a href="extending.html#aspect-cross-communication"><code>Aspect Cross Communication</code></a>
+mechanism)</em></li>
+</ul>
+<p>The <a href="extending.html"><code>Extending feature-u</code></a> section provides more insight on how
+<a href="api.html#Aspect"><code>Aspect</code></a>s are created and used.</p>
+<p><strong>Please Note</strong> this function uses named parameters.  The order in
+which these items are presented represents the same order they are
+executed.</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>the <code>Aspect.name</code> is used to &quot;key&quot; <a href="api.html#AspectContent"><code>AspectContent</code></a> of this type in the <a href="api.html#Feature"><code>Feature</code></a> object.<br><br> For example: an <code>Aspect.name: &apos;xyz&apos;</code> would permit a <code>Feature.xyz: xyzContent</code> construct.<br><br> As a result, Aspect names cannot clash with built-in aspects, and they must be unique <em>(across all aspects that are in-use)</em>.</td>
+</tr>
+<tr>
+<td>[genesis]</td>
+<td><a href="#genesisMeth"><code>genesisMeth</code></a></td>
+<td>an optional Life Cycle Hook invoked one time, at the very beginning of the app&apos;s start up process. This hook can perform Aspect related <strong>initialization</strong> and <strong>validation</strong>:</td>
+</tr>
+<tr>
+<td>validateFeatureContent</td>
+<td><a href="#validateFeatureContentMeth"><code>validateFeatureContentMeth</code></a></td>
+<td>a validation hook allowing this aspect to verify it&apos;s content on the supplied feature (which is known to contain this aspect).</td>
+</tr>
+<tr>
+<td>[expandFeatureContent]</td>
+<td><a href="#expandFeatureContentMeth"><code>expandFeatureContentMeth</code></a></td>
+<td>an optional aspect expansion hook, defaulting to the algorithm defined by <a href="api.html#managedExpansion"><code>managedExpansion()</code></a>.<br><br> This function rarely needs to be overridden.  It provides a hook to aspects that need to transfer additional content from the expansion function to the expanded content.</td>
+</tr>
+<tr>
+<td>assembleFeatureContent</td>
+<td><a href="#assembleFeatureContentMeth"><code>assembleFeatureContentMeth</code></a></td>
+<td>the Aspect method that assembles content for this aspect across all features, retaining needed state for subsequent ops.<br><br> This method is required because this is the primary task that is accomplished by all aspects.</td>
+</tr>
+<tr>
+<td>[assembleAspectResources]</td>
+<td><a href="#assembleAspectResourcesMeth"><code>assembleAspectResourcesMeth</code></a></td>
+<td>an optional Aspect method that assemble resources for this aspect across all other aspects, retaining needed state for subsequent ops.<br><br> This hook is executed after all the aspects have assembled their feature content (i.e. after <a href="api.html#assembleFeatureContentMeth"><code>assembleFeatureContent()</code></a>).</td>
+</tr>
+<tr>
+<td>[initialRootAppElm]</td>
+<td><a href="#initialRootAppElmMeth"><code>initialRootAppElmMeth</code></a></td>
+<td>an optional callback hook that promotes some characteristic of this aspect within the <code>rootAppElm</code> ... the top-level react DOM that represents the display of the entire application.<br><br> The <a href="extending.html#defining-rootappelm"><code>Defining rootAppElm</code></a> section highlights when to use <a href="api.html#initialRootAppElmMeth"><code>initialRootAppElm()</code></a> verses <a href="api.html#injectRootAppElmMeth"><code>injectRootAppElm()</code></a>.</td>
+</tr>
+<tr>
+<td>[injectRootAppElm]</td>
+<td><a href="#injectRootAppElmMeth"><code>injectRootAppElmMeth</code></a></td>
+<td>an optional callback hook that promotes some characteristic of this aspect within the <code>rootAppElm</code> ... the top-level react DOM that represents the display of the entire application.<br><br> The <a href="extending.html#defining-rootappelm"><code>Defining rootAppElm</code></a> section highlights when to use <a href="api.html#initialRootAppElmMeth"><code>initialRootAppElm()</code></a> verses <a href="api.html#injectRootAppElmMeth"><code>injectRootAppElm()</code></a>.</td>
+</tr>
+<tr>
+<td>[config]</td>
+<td>Any</td>
+<td>an optional sub-object that can be used for any type of configuration that a specific Aspect may need <em>(see: <a href="extending.html#aspectconfig"><code>Aspect.config</code></a>)</em>.</td>
+</tr>
+<tr>
+<td>[additionalMethods]</td>
+<td>Any</td>
+<td>additional methods (proprietary to specific Aspects), supporting <a href="extending.html#aspect-cross-communication"><code>Aspect Cross Communication</code></a> ... a contract between one or more aspects <em>(see: <a href="extending.html#aspectadditionalmethods"><code>Aspect.additionalMethods()</code></a>)</em>.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns</strong>: <a href="#Aspect"><code>Aspect</code></a> - a new Aspect object (to be consumed by <a href="api.html#launchApp"><code>launchApp()</code></a>).  </p>
+<p><br><br><br></p>
+<p><a id="extendAspectProperty"></a></p>
+<p></p><h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;" id="
+--extendaspectpropertyname-owner">
+  extendAspectProperty(name, owner)</h5>
+Extend valid Aspect properties to include the supplied name
+... used when extending APIs for
+<a href="extending.html#aspect-cross-communication"><code>Aspect Cross Communication</code></a>.<p></p>
+<p><strong>feature-u</strong> keeps track of the agent that owns this extension
+(using the owner parameter).  This is used to prevent exceptions
+when duplicate extension requests are made by the same owner.  This
+can happen when multiple instances of an aspect type are supported,
+and also in unit testing.</p>
+<p><strong>Throws</strong>:</p>
+<ul>
+<li>Error when supplied name is already reserved by a different owner</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>the property name to extend.</td>
+</tr>
+<tr>
+<td>owner</td>
+<td>string</td>
+<td>the requesting owner id of this extension request.  Use any string that uniquely identifies your utility <em>(such as the aspect&apos;s npm package name)</em>.</td>
+</tr>
+</tbody>
+</table>
+<p><br><br><br></p>
+<p><a id="Feature"></a></p>
+<p></p><h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;" id="
+--feature--object">
+  Feature : Object</h5>
+The Feature object is a container that holds
+<a href="api.html#AspectContent"><code>AspectContent</code></a> that is of interest to <strong>feature-u</strong>.<p></p>
+<p>Each feature within an application promotes a Feature object (using
+<a href="api.html#createFeature"><code>createFeature()</code></a>) that catalogs the aspects of that
+feature.</p>
+<p>Ultimately, all Feature objects are consumed by
+<a href="api.html#launchApp"><code>launchApp()</code></a>.</p>
+<p>For more information, please refer to
+<a href="detail.html#feature-object-relaying-aspect-content"><code>Feature &amp; aspect content</code></a>, with examples at
+<a href="usage.html#feature-object"><code>Feature Object</code></a>.</p>
+<p><br><br><br></p>
+<p><a id="appWillStartCB"></a></p>
+<p></p><h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;" id="
+--appwillstartcb-&#x21D2;-reactelm">
+  appWillStartCB &#x21D2; reactElm</h5>
+An optional <a href="appLifeCycle.html"><code>Application Life Cycle Hook</code></a> invoked one time, just
+before the app starts up.<p></p>
+<p>This life-cycle hook can do any type of initialization. For
+example: initialize FireBase.</p>
+<p>In addition, it can optionally supplement the app&apos;s top-level root
+element (i.e. react component instance).  Any significant return
+(truthy) is interpreted as the app&apos;s new rootAppElm.
+<strong>IMPORTANT</strong>: When this is used, the supplied curRootAppElm MUST
+be included as part of this definition (accommodating the
+accumulative process of other feature injections)!</p>
+<p>For more information <em>(with examples)</em>, please refer to the
+Guide&apos;s <a href="appLifeCycle.html#appwillstart"><code>appWillStart</code></a>.</p>
+<p><strong>Please Note</strong> this function uses named parameters.</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>app</td>
+<td><a href="#App"><code>App</code></a></td>
+<td>the App object used in feature cross-communication.</td>
+</tr>
+<tr>
+<td>curRootAppElm</td>
+<td>reactElm</td>
+<td>the current react app element root.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns</strong>: reactElm - optionally, new top-level content (which in turn
+must contain the supplied curRootAppElm), or falsy for unchanged.  </p>
+<p><br><br><br></p>
+<p><a id="appDidStartCB"></a></p>
+<p></p><h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;" id="
+--appdidstartcb-&#x21D2;">
+  appDidStartCB &#x21D2;</h5>
+An optional <a href="appLifeCycle.html"><code>Application Life Cycle Hook</code></a> invoked one time,
+immediately after the app has started.<p></p>
+<p>Because the app is up-and-running at this time, you have access to
+the <code>appState</code> and <code>dispatch()</code> function ... assuming you are using
+<a href="http://redux.js.org/" target="_blank"><code>redux</code></a> (when detected by feature-u&apos;s plugable aspects).</p>
+<p>For more info with examples, please see the Guide&apos;s
+<a href="appLifeCycle.html#appDidStart"><code>appDidStart</code></a>.</p>
+<p><strong>Please Note</strong> this function uses named parameters.</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>app</td>
+<td><a href="#App"><code>App</code></a></td>
+<td>the App object used in feature cross-communication.</td>
+</tr>
+<tr>
+<td>[appState]</td>
+<td>Any</td>
+<td>the redux top-level app state (when redux is in use).</td>
+</tr>
+<tr>
+<td>[dispatch]</td>
+<td>function</td>
+<td>the redux dispatch() function (when redux is in use).</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns</strong>: void  </p>
+<p><br><br><br></p>
+<p><a id="registerRootAppElmCB"></a></p>
+<p></p><h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;" id="
+--registerrootappelmcb-&#x21D2;">
+  registerRootAppElmCB &#x21D2;</h5>
+The <a href="api.html#launchApp"><code>launchApp()</code></a> callback hook that registers the
+supplied root application element to the specific React framework
+used in the app.<p></p>
+<p>Because this registration is accomplished by app-specific code,
+<strong>feature-u</strong> can operate in any of the React platforms, such as:
+<a href="https://reactjs.org/" target="_blank"><code>react</code></a> web, <a href="https://facebook.github.io/react-native/" target="_blank"><code>react-native</code></a>,
+<a href="https://expo.io/" target="_blank"><code>expo</code></a>, etc.</p>
+<p>Please refer to <a href="detail.html#react-registration"><code>React Registration</code></a> for more
+details and complete examples.</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rootAppElm</td>
+<td>reactElm</td>
+<td>the root application element to be registered.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns</strong>: void  </p>
+<p><br><br><br></p>
+<p><a id="App"></a></p>
+<p></p><h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;" id="
+--app--object">
+  App : Object</h5>
+The App object <em>(emitted from <a href="api.html#launchApp"><code>launchApp()</code></a>)</em> facilitates
+<a href="crossCommunication.html"><code>Cross Feature Communication</code></a> by accumulating the Public API of all
+features, through named feature nodes structured as follows:<p></p>
+<pre><code class="lang-js">App.{featureName}.{publicFace}
+</code></pre>
+<p>For more information, please refer to
+<a href="crossCommunication.html#publicface-and-the-app-object"><code>publicFace and the App Object</code></a> and
+<a href="detail.html#app-object"><code>App Object</code></a>.</p>
+<p><br><br><br></p>
+<p><a id="managedExpansionCB"></a></p>
+<p></p><h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;" id="
+--managedexpansioncb-&#x21D2;-aspectcontent">
+  managedExpansionCB &#x21D2; <a href="#AspectContent"><code>AspectContent</code></a></h5>
+A &quot;managed expansion callback&quot; (defined by
+<a href="api.html#managedExpansion"><code>managedExpansion()</code></a>) that when invoked (by <strong>feature-u</strong>)
+expands and returns the desired <a href="api.html#AspectContent"><code>AspectContent</code></a>.<p></p>
+<p><strong>For more information <em>(with examples)</em></strong>, please refer to
+<a href="crossCommunication.html#managed-code-expansion"><code>Managed Code Expansion</code></a>.</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>app</td>
+<td><a href="#App"><code>App</code></a></td>
+<td>The <strong>feature-u</strong> app object, promoting the publicFace of each feature.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns</strong>: <a href="#AspectContent"><code>AspectContent</code></a> - The desired AspectContent (ex: reducer,
+logic module, etc.).  </p>
+<p><br><br><br></p>
+<p><a id="Aspect"></a></p>
+<p></p><h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;" id="
+--aspect--object">
+  Aspect : Object</h5>
+Aspect objects (emitted from <a href="api.html#createAspect"><code>createAspect()</code></a>) are used to
+extend <strong>feature-u</strong>.<p></p>
+<p>The Aspect object promotes a series of life-cycle methods that
+<strong>feature-u</strong> invokes in a controlled way.  This life-cycle is
+controlled by <a href="api.html#launchApp"><code>launchApp()</code></a>` <em>... it is supplied the
+Aspects, and it invokes their methods.</em></p>
+<p>Typically Aspects are packaged separately <em>(as an external npm
+<strong>feature-u</strong> extension)</em>, although they can be created locally
+within a project <em>(if needed)</em>.</p>
+<p>For more information, please refer to
+<a href="detail.html#extendable-aspects"><code>Extendable aspects</code></a> and
+<a href="extending.html"><code>Extending feature-u</code></a>.</p>
+<p><br><br><br></p>
+<p><a id="AspectContent"></a></p>
+<p></p><h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;" id="
+--aspectcontent--any">
+  AspectContent : Any</h5>
+The content (or payload) of an <a href="api.html#Aspect"><code>Aspect</code></a>, specified
+within a <a href="api.html#Feature"><code>Feature</code></a>.<p></p>
+<p>An <a href="api.html#Aspect"><code>Aspect</code></a> object extends <strong>feature-u</strong> by accumulating
+information of interest from <a href="api.html#Feature"><code>Feature</code></a> objects <em>(indexed
+by the Aspect name)</em>.</p>
+<p>The content type is specific to the Aspect. For example, a redux
+Aspect assembles reducers (via <code>Feature.reducer</code>), while a
+redux-logic Aspect gathers logic modules (via <code>Feature.logic</code>),
+etc.</p>
+<p>For more information, please refer to
+<a href="detail.html#feature-object-relaying-aspect-content"><code>Feature &amp; aspect content</code></a>.</p>
+<p><br><br><br></p>
+<p><a id="genesisMeth"></a></p>
+<p></p><h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;" id="
+--genesismeth-&#x21D2;-string">
+  genesisMeth &#x21D2; string</h5>
+An optional Life Cycle Hook invoked one time, at the very beginning of
+the app&apos;s start up process.<p></p>
+<p>This hook can perform Aspect related <strong>initialization</strong> and
+<strong>validation</strong>:</p>
+<ul>
+<li><p><strong>initialization</strong>: this is where where proprietary Aspect/Feature
+APIs should be registered (if any) - via
+<a href="api.html#extendAspectProperty"><code>extendAspectProperty()</code></a> and
+<a href="api.html#extendFeatureProperty"><code>extendFeatureProperty()</code></a> <em>(please see:
+<a href="extending.html#aspect-cross-communication"><code>Aspect Cross Communication</code></a>)</em>.</p>
+</li>
+<li><p><strong>validation</strong>: this is where an aspect can verify it&apos;s own required
+configuration (if any). Some aspects require certain settings <em>(set
+by the application)</em> in self for them to operate.</p>
+</li>
+</ul>
+<p><strong>API:</strong> <a href="api.html#genesisMeth"><code>genesis(): string</code></a></p>
+<p><strong>Returns</strong>: string - an error message when self is in an invalid state
+(falsy when valid).  Because this validation occurs under the
+control of <a href="api.html#launchApp"><code>launchApp()</code></a>, any message is prefixed with:
+<code>&apos;launchApp() parameter violation: &apos;</code>.  </p>
+<p><br><br><br></p>
+<p><a id="validateFeatureContentMeth"></a></p>
+<p></p><h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;" id="
+--validatefeaturecontentmeth-&#x21D2;-string">
+  validateFeatureContentMeth &#x21D2; string</h5>
+A validation hook allowing this aspect to verify it&apos;s content on
+the supplied feature.<p></p>
+<p><strong>API:</strong> <a href="api.html#validateFeatureContentMeth"><code>validateFeatureContent(feature): string</code></a></p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>feature</td>
+<td><a href="#Feature"><code>Feature</code></a></td>
+<td>the feature to validate, which is known to contain this aspect.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns</strong>: string - an error message string when the supplied feature
+contains invalid content for this aspect (falsy when valid).
+Because this validation conceptually occurs under the control of
+<a href="api.html#createFeature"><code>createFeature()</code></a>, any message is prefixed with:
+<code>&apos;createFeature() parameter violation: &apos;</code>.  </p>
+<p><br><br><br></p>
+<p><a id="expandFeatureContentMeth"></a></p>
+<p></p><h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;" id="
+--expandfeaturecontentmeth-&#x21D2;-string">
+  expandFeatureContentMeth &#x21D2; string</h5>
+Expand self&apos;s <a href="api.html#AspectContent"><code>AspectContent</code></a> in the supplied feature,
+replacing that content (within the feature).  Once expansion is
+complete, <strong>feature-u</strong> will perform a delayed validation of the
+expanded content.<p></p>
+<p><strong>API:</strong> <a href="api.html#expandFeatureContentMeth"><code>expandFeatureContent(app, feature): string</code></a></p>
+<p>The default behavior simply implements the expansion algorithm
+defined by <a href="api.html#managedExpansion"><code>managedExpansion()</code></a>:</p>
+<pre><code class="lang-js">feature[<span class="hljs-keyword">this</span>.name] = feature[<span class="hljs-keyword">this</span>.name](app);
+</code></pre>
+<p>This default behavior rarely needs to change.  It however provides
+a hook for aspects that need to transfer additional content from
+the expansion function to the expanded content.  As an example, the
+<code>reducer</code> aspect must transfer the slice property from the
+expansion function to the expanded reducer.</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>app</td>
+<td><a href="#App"><code>App</code></a></td>
+<td>the App object used in feature cross-communication.</td>
+</tr>
+<tr>
+<td>feature</td>
+<td><a href="#Feature"><code>Feature</code></a></td>
+<td>the feature which is known to contain this aspect <strong>and</strong> is in need of expansion (as defined by <a href="api.html#managedExpansion"><code>managedExpansion()</code></a>).</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns</strong>: string - an optional error message when the supplied
+feature contains invalid content for this aspect (falsy when
+valid).  This is a specialized validation of the expansion
+function, over-and-above what is checked in the standard
+<a href="api.html#validateFeatureContentMeth"><code>validateFeatureContent()</code></a> hook.  </p>
+<p><br><br><br></p>
+<p><a id="assembleFeatureContentMeth"></a></p>
+<p></p><h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;" id="
+--assemblefeaturecontentmeth-&#x21D2;">
+  assembleFeatureContentMeth &#x21D2;</h5>
+The required Aspect method that assembles content for this aspect
+across all features, retaining needed state for subsequent ops.
+This method is required because this is the primary task that is
+accomplished by all aspects.<p></p>
+<p><strong>API:</strong> <a href="api.html#assembleFeatureContentMeth"><code>assembleFeatureContent(app, activeFeatures): void</code></a></p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>app</td>
+<td><a href="#App"><code>App</code></a></td>
+<td>the App object used in feature cross-communication.</td>
+</tr>
+<tr>
+<td>activeFeatures</td>
+<td><a href="#Feature"><code>Array.&amp;lt;Feature&amp;gt;</code></a></td>
+<td>The set of active (enabled) features that comprise this application.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns</strong>: void  </p>
+<p><br><br><br></p>
+<p><a id="assembleAspectResourcesMeth"></a></p>
+<p></p><h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;" id="
+--assembleaspectresourcesmeth-&#x21D2;">
+  assembleAspectResourcesMeth &#x21D2;</h5>
+An optional Aspect method that assembles resources for this aspect
+across all other aspects, retaining needed state for subsequent
+ops.  This hook is executed after all the aspects have assembled
+their feature content (i.e. after
+<a href="api.html#assembleFeatureContentMeth"><code>assembleFeatureContent()</code></a>).<p></p>
+<p><strong>API:</strong> <a href="api.html#assembleAspectResourcesMeth"><code>assembleAspectResources(app, aspects): void</code></a></p>
+<p>This is an optional second-pass (so-to-speak) of Aspect data
+gathering, that facilitates
+<a href="extending.html#aspect-cross-communication"><code>Aspect Cross Communication</code></a>.  It allows an
+extending aspect to gather resources from other aspects, using an
+additional API (ex: <code>Aspect.getXyz()</code>).</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>app</td>
+<td><a href="#App"><code>App</code></a></td>
+<td>the App object used in feature cross-communication.</td>
+</tr>
+<tr>
+<td>aspects</td>
+<td><a href="#Aspect"><code>Array.&amp;lt;Aspect&amp;gt;</code></a></td>
+<td>The set of <strong>feature-u</strong> Aspect objects used in this this application.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns</strong>: void  </p>
+<p><br><br><br></p>
+<p><a id="initialRootAppElmMeth"></a></p>
+<p></p><h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;" id="
+--initialrootappelmmeth-&#x21D2;-reactelm">
+  initialRootAppElmMeth &#x21D2; reactElm</h5>
+An optional callback hook that promotes some characteristic of this
+aspect within the <code>rootAppElm</code> ... the top-level react DOM that
+represents the display of the entire application.<p></p>
+<p><strong>API:</strong> <a href="api.html#initialRootAppElmMeth"><code>initialRootAppElm(app, curRootAppElm): rootAppElm</code></a></p>
+<p>The <a href="extending.html#defining-rootappelm"><code>Defining rootAppElm</code></a> section highlights when
+to use <a href="api.html#initialRootAppElmMeth"><code>initialRootAppElm()</code></a> verses
+<a href="api.html#injectRootAppElmMeth"><code>injectRootAppElm()</code></a>.</p>
+<p><strong>NOTE</strong>: When this hook is used, the supplied curRootAppElm MUST be
+included as part of this definition!</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>app</td>
+<td><a href="#App"><code>App</code></a></td>
+<td>the App object used in feature cross-communication.</td>
+</tr>
+<tr>
+<td>curRootAppElm</td>
+<td>reactElm</td>
+<td>the current react app element root.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns</strong>: reactElm - a new react app element root (which in turn must
+contain the supplied curRootAppElm), or simply the supplied
+curRootAppElm (if no change).  </p>
+<p><br><br><br></p>
+<p><a id="injectRootAppElmMeth"></a></p>
+<p></p><h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;" id="
+--injectrootappelmmeth-&#x21D2;-reactelm">
+  injectRootAppElmMeth &#x21D2; reactElm</h5>
+An optional callback hook that promotes some characteristic of this
+aspect within the <code>rootAppElm</code> ... the top-level react DOM that
+represents the display of the entire application.<p></p>
+<p><strong>API:</strong> <a href="api.html#injectRootAppElmMeth"><code>injectRootAppElm(app, curRootAppElm): rootAppElm</code></a></p>
+<p>The <a href="extending.html#defining-rootappelm"><code>Defining rootAppElm</code></a> section highlights when
+to use <a href="api.html#initialRootAppElmMeth"><code>initialRootAppElm()</code></a> verses
+<a href="api.html#injectRootAppElmMeth"><code>injectRootAppElm()</code></a>.</p>
+<p><strong>NOTE</strong>: When this hook is used, the supplied curRootAppElm MUST be
+included as part of this definition!</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>app</td>
+<td><a href="#App"><code>App</code></a></td>
+<td>the App object used in feature cross-communication.</td>
+</tr>
+<tr>
+<td>curRootAppElm</td>
+<td>reactElm</td>
+<td>the current react app element root.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns</strong>: reactElm - a new react app element root (which in turn must
+contain the supplied curRootAppElm), or simply the supplied
+curRootAppElm (if no change).  </p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="coreApi.html" class="navigation navigation-prev " aria-label="Previous page: Core API">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="api.html#launchApp" class="navigation navigation-next " aria-label="Next page: launchApp()">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"createFeature()","level":"3.1.1","depth":2,"next":{"title":"launchApp()","level":"3.1.2","depth":2,"anchor":"#launchApp","path":"api.md","ref":"api.md#launchApp","articles":[]},"previous":{"title":"Core API","level":"3.1","depth":1,"path":"coreApi.md","ref":"coreApi.md","articles":[{"title":"createFeature()","level":"3.1.1","depth":2,"anchor":"#createFeature","path":"api.md","ref":"api.md#createFeature","articles":[]},{"title":"launchApp()","level":"3.1.2","depth":2,"anchor":"#launchApp","path":"api.md","ref":"api.md#launchApp","articles":[]},{"title":"managedExpansion()","level":"3.1.3","depth":2,"anchor":"#managedExpansion","path":"api.md","ref":"api.md#managedExpansion","articles":[]}]},"dir":"ltr"},"config":{"plugins":["-livereload","toolbar"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"sharing":{"facebook":false,"twitter":false,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["twitter","facebook","google","weibo","instapaper"]},"toolbar":{"buttons":[{"label":"GitHub","icon":"fa fa-github","url":"https://github.com/KevinAst/feature-u"},{"label":"NPM","icon":"fa fa-bullseye","url":"https://www.npmjs.com/package/feature-u"}]},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Kevin J. Bridges <kevinast@gmail.com> (https://github.com/KevinAst)","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"intro.md","glossary":"GLOSSARY.md","summary":"toc.md"},"variables":{"guide":{"detail_launchingApp":"[`Launching Your Application`](/detail.md#launching-your-application)","injectRootAppElmMeth$":"[`Aspect.injectRootAppElm(app, curRootAppElm): rootAppElm`](/extending.md#aspectinjectrootappelm)","LICENSE":"[`MIT License`](/LICENSE.md)","appDidStartCB$":"[`Feature.appDidStart({app, [appState], [dispatch]}): void`](/appLifeCycle.md#appDidStart)","crossCom":"[`Cross Feature Communication`](/crossCommunication.md)","enablement":"[`Feature Enablement`](/enablement.md)","usage":"[`Usage`](/usage.md)","assembleFeatureContentMeth":"[`Aspect.assembleFeatureContent()`](/extending.md#aspectassemblefeaturecontent)","crossCom_accessingApp":"[`Accessing App`](/crossCommunication.md#accessing-the-app-object)","start":"[`Getting Started`](/start.md)","assembleFeatureContentMeth$":"[`Aspect.assembleFeatureContent(app, activeFeatures): void`](/extending.md#aspectassemblefeaturecontent)","appDidStartCB":"[`Feature.appDidStart()`](/appLifeCycle.md#appDidStart)","appDidStart":"[`appDidStart`](/appLifeCycle.md#appDidStart)","injectRootAppElmMeth":"[`Aspect.injectRootAppElm()`](/extending.md#aspectinjectrootappelm)","crossCom_publicFace":"[`publicFace`](/crossCommunication.md#publicface-and-the-app-object)","validateFeatureContentMeth":"[`Aspect.validateFeatureContent()`](/extending.md#aspectvalidatefeaturecontent)","extending_aspectCrossCommunication":"[`Aspect Cross Communication`](/extending.md#aspect-cross-communication)","dist":"[`Distribution`](/dist.md)","detail_builtInAspects":"[`Built-In aspects`](/detail.md#built-in-aspects)","detail_featureAndAspect":"[`Feature & aspect content`](/detail.md#feature-object-relaying-aspect-content)","assembleAspectResourcesMeth":"[`Aspect.assembleAspectResources()`](/extending.md#aspectassembleaspectresources)","devGuide":"[**Dev Guide**](/index.html)","detail_doesFeatureExist":"[`Does Feature Exist`](/detail.md#does-feature-exist)","extending":"[`Extending feature-u`](/extending.md)","why":"[`Why feature-u?`](/why.md)","expandFeatureContentMeth":"[`Aspect.expandFeatureContent()`](/extending.md#aspectexpandfeaturecontent)","appLifeCycle":"[`Application Life Cycle Hook`](/appLifeCycle.md)","detail_featurePublicAPI":"[`Feature Public API`](/detail.md#feature-public-api)","detail_reactRegistration":"[`React Registration`](/detail.md#react-registration)","additionalMethods":"[`Aspect.additionalMethods()`](/extending.md#aspectadditionalmethods)","detail_aspects":"[`aspects`](/detail.md#aspects)","initialRootAppElmMeth$":"[`Aspect.initialRootAppElm(app, curRootAppElm): rootAppElm`](/extending.md#aspectinitialrootappelm)","usage_realExample":"[`Real Example`](/usage.md#real-example)","extending_aspectObject":"[`Aspect Object`](/extending.md#aspect-object-extending-feature-u)","appWillStartCB":"[`Feature.appWillStart()`](/appLifeCycle.md#appwillstart)","usage_dir":"[`Directory Structure`](/usage.md#directory-structure)","appWillStart":"[`appWillStart`](/appLifeCycle.md#appwillstart)","usage_launchapp":"[`launchApp()`](/usage.md#launchapp)","genesisMeth$":"[`Aspect.genesis(): string`](/extending.md#aspectgenesis)","crossCom_managedCodeExpansion":"[`Managed Code Expansion`](/crossCommunication.md#managed-code-expansion)","detail":"[`A Closer Look`](/detail.md)","detail_appObject":"[`App Object`](/detail.md#app-object)","history":"[`Revision History`](/history.md)","bestPractices":"[`Best Practices`](/bestPractices.md)","extending_definingAppElm":"[`Defining rootAppElm`](/extending.md#defining-rootappelm)","genesisMeth":"[`Aspect.genesis()`](/extending.md#aspectgenesis)","appWillStartCB$":"[`Feature.appWillStart({app, curRootAppElm}): rootAppElm || falsy`](/appLifeCycle.md#appwillstart)","bestPractices_featureName":"[`Feature Name`](/bestPractices.md#feature-name)","extending_aspectLifeCycleMethods":"[`Aspect Life Cycle Methods`](/extending.md#aspect-life-cycle-methods)","initialRootAppElmMeth":"[`Aspect.initialRootAppElm()`](/extending.md#aspectinitialrootappelm)","usage_featureObject":"[`Feature Object`](/usage.md#feature-object)","detail_extendableAspects":"[`Extendable aspects`](/detail.md#extendable-aspects)","basicConcepts":"[`Basic Concepts`](/concepts.md)","extending_locatingExtensions":"[`Locating Extensions`](/extending.md#locating-extensions)","aspectConfig":"[`Aspect.config`](/extending.md#aspectconfig)","extensionApi":"[`Extension API`](/extensionApi.md)","coreApi":"[`Core API`](/coreApi.md)","expandFeatureContentMeth$":"[`Aspect.expandFeatureContent(app, feature): string`](/extending.md#aspectexpandfeaturecontent)","benefits":"[`Benefits`](/benefits.md)","crossCom_publicFaceApp":"[`publicFace and the App Object`](/crossCommunication.md#publicface-and-the-app-object)","assembleAspectResourcesMeth$":"[`Aspect.assembleAspectResources(app, aspects): void`](/extending.md#aspectassembleaspectresources)","crossCom_appAccessSummary":"[`App Access Summary`](/crossCommunication.md#app-access-summary)","featureRouter":"[`Feature Based Routes`](/featureRouter.md)","validateFeatureContentMeth$":"[`Aspect.validateFeatureContent(feature): string`](/extending.md#aspectvalidatefeaturecontent)"},"api":{"injectRootAppElmMeth$":"[`injectRootAppElm(app, curRootAppElm): rootAppElm`](/api.md#injectRootAppElmMeth)","managedExpansion":"[`managedExpansion()`](/api.md#managedExpansion)","appDidStartCB$":"[`appDidStart({app, [appState], [dispatch]}): void`](/api.md#appDidStartCB)","AspectContent":"[`AspectContent`](/api.md#AspectContent)","App":"[`App`](/api.md#App)","assembleFeatureContentMeth":"[`assembleFeatureContent()`](/api.md#assembleFeatureContentMeth)","assembleFeatureContentMeth$":"[`assembleFeatureContent(app, activeFeatures): void`](/api.md#assembleFeatureContentMeth)","appDidStartCB":"[`appDidStart()`](/api.md#appDidStartCB)","managedExpansion$":"[`managedExpansion(managedExpansionCB): managedExpansionCB`](/api.md#managedExpansion)","injectRootAppElmMeth":"[`injectRootAppElm()`](/api.md#injectRootAppElmMeth)","validateFeatureContentMeth":"[`validateFeatureContent()`](/api.md#validateFeatureContentMeth)","managedExpansionCB$":"[`managedExpansionCB(app): AspectContent`](/api.md#managedExpansionCB)","extendAspectProperty":"[`extendAspectProperty()`](/api.md#extendAspectProperty)","assembleAspectResourcesMeth":"[`assembleAspectResources()`](/api.md#assembleAspectResourcesMeth)","expandFeatureContentMeth":"[`expandFeatureContent()`](/api.md#expandFeatureContentMeth)","registerRootAppElmCB":"[`registerRootAppElm()`](/api.md#registerRootAppElmCB)","createFeature$":"[`createFeature({name, [enabled], [publicFace], [appWillStart], [appDidStart], [pluggableAspects]}): Feature`](/api.md#createFeature)","initialRootAppElmMeth$":"[`initialRootAppElm(app, curRootAppElm): rootAppElm`](/api.md#initialRootAppElmMeth)","launchApp":"[`launchApp()`](/api.md#launchApp)","appWillStartCB":"[`appWillStart()`](/api.md#appWillStartCB)","createAspect$":"[`createAspect({see-docs}): Aspect`](/api.md#createAspect)","genesisMeth$":"[`genesis(): string`](/api.md#genesisMeth)","extendFeatureProperty":"[`extendFeatureProperty()`](/api.md#extendFeatureProperty)","extendFeatureProperty$":"[`extendFeatureProperty(name, owner): void`](/api.md#extendFeatureProperty)","createAspect":"[`createAspect()`](/api.md#createAspect)","genesisMeth":"[`genesis()`](/api.md#genesisMeth)","launchApp$":"[`launchApp({[aspects], features, registerRootAppElm}): App`](/api.md#launchApp)","appWillStartCB$":"[`appWillStart({app, curRootAppElm}): rootAppElm || falsy`](/api.md#appWillStartCB)","Feature":"[`Feature`](/api.md#Feature)","initialRootAppElmMeth":"[`initialRootAppElm()`](/api.md#initialRootAppElmMeth)","Aspect":"[`Aspect`](/api.md#Aspect)","createFeature":"[`createFeature()`](/api.md#createFeature)","extensionApi":"[`Extension API`](/extensionApi.md)","coreApi":"[`Core API`](/coreApi.md)","registerRootAppElmCB$":"[`registerRootAppElm(rootAppElm): void`](/api.md#registerRootAppElmCB)","Aspects":"[`Aspects`](/api.md#Aspect)","expandFeatureContentMeth$":"[`expandFeatureContent(app, feature): string`](/api.md#expandFeatureContentMeth)","Features":"[`Features`](/api.md#Feature)","extendAspectProperty$":"[`extendAspectProperty(name, owner): void`](/api.md#extendAspectProperty)","assembleAspectResourcesMeth$":"[`assembleAspectResources(app, aspects): void`](/api.md#assembleAspectResourcesMeth)","managedExpansionCB":"[`managedExpansionCB()`](/api.md#managedExpansionCB)","validateFeatureContentMeth$":"[`validateFeatureContent(feature): string`](/api.md#validateFeatureContentMeth)"},"ext":{"featureReduxLogic":"[`feature-redux-logic`](https://github.com/KevinAst/feature-redux-logic)","astxReduxUtil":"[`astx-redux-util`](https://astx-redux-util.js.org/)","reduxMiddleware":"[`redux middleware`](https://redux.js.org/docs/advanced/Middleware.html)","reduxActions":"[`redux-actions`](https://www.npmjs.com/package/redux-actions)","reduxLogic":"[`redux-logic`](https://github.com/jeffbski/redux-logic)","eateryNod":"[`eatery-nod`](https://github.com/KevinAst/eatery-nod)","expo":"[`expo`](https://expo.io/)","redux":"[`redux`](http://redux.js.org/)","reactNative":"[`react-native`](https://facebook.github.io/react-native/)","featureRedux":"[`feature-redux`](https://github.com/KevinAst/feature-redux)","actionU":"[`action-u`](https://action-u.js.org/)","react":"[`react`](https://reactjs.org/)","featureRouter":"[`feature-router`](https://github.com/KevinAst/feature-router)"}},"title":"feature-u","gitbook":"3.2.2","description":"Feature Based Project Organization for React"},"file":{"path":"api.md","mtime":"2018-03-06T16:57:56.699Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2018-03-06T16:57:58.347Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-toolbar/buttons.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
