@@ -67,7 +67,7 @@ reference the most current release.
 
 Release           | What                                   | *When*
 ------------------|----------------------------------------|------------------
-[v0.1.0](#v0_1_0) | Initial Release                        | *?Month ?day, 2018*
+[v0.1.0](#v0_1_0) | Initial Release                        | *March 6, 2018*
 
 
 
@@ -77,7 +77,7 @@ Release           | What                                   | *When*
 <!-- ************************************************************* -->
 <br/><br/><br/>
 <h3 id="v0_1_0" style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
-  v0.1.0 - Initial Release <i>(?Month ?day, 2018)</i>
+  v0.1.0 - Initial Release <i>(March 6, 2018)</i>
 </h3>
 
 [Full Docs](https://feature-u.js.org/0.1.0/)
