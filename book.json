@@ -119,7 +119,7 @@
 
         "additionalMethods":             "[`Aspect.additionalMethods()`](/extending.md#aspectadditionalmethods)",
 
-        "aspectConfig":                  "[`Aspect.config()`](/extending.md#aspectconfig)",
+        "aspectConfig":                  "[`Aspect.config`](/extending.md#aspectconfig)",
 
       "extensionApi":                        "[`Extension API`](/extensionApi.md)",
 
