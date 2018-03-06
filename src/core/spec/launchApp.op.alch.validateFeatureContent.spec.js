@@ -7,7 +7,7 @@ import {createFeature,
 const extension1 = createAspect$({
   name:     'extension1',
   genesis() {
-    extendFeatureProperty('otherFeatureExtension1');
+    extendFeatureProperty('otherFeatureExtension1', 'myAspect');
   },
 
   validateFeatureContent(feature) {

@@ -2,6 +2,7 @@ import isFunction           from 'lodash.isfunction';
 import verify               from '../util/verify';
 import {isAspectProperty}   from '../extend/createAspect';
 import {isFeatureProperty}  from './createFeature';
+import logf                 from '../util/logf';
 
 let executionOrder = 1; // running counter of execution order of life-cycle-hooks (unit-test related)
 
@@ -45,6 +46,8 @@ export default function launchApp({aspects=[],
                                    features,
                                    registerRootAppElm,
                                    ...unknownArgs}={}) {
+
+  logf('STARTING: - your application is now starting up');
 
   // reset: running counter of execution order of life-cycle-hooks (unit-test related)
   executionOrder = 1;
@@ -105,9 +108,21 @@ export default function launchApp({aspects=[],
   // apply Feature.appDidStart() life-cycle hook
   op.flch.appDidStart(app, activeFeatures, aspects);
 
+  logf('COMPLETE: your application has now started');
+
   // expose our new App object (used in feature cross-communication)
   return app;
 }
+
+
+
+//***
+//*** A secret diagnostic hook attached to the launchApp() function.
+//***
+
+launchApp.diag = {
+  logf, // allow client to enable feature-u logs via: launchApp.diag.logf.enable();
+};
 
 
 
@@ -196,6 +211,14 @@ op.alch.genesis = function(aspects) {
 
   check(Array.isArray(aspects), 'aspects (when supplied) must be an Aspect[] array');
 
+  logf('the following Aspects are in effect: ' +
+       aspects.map( (aspect) => `\n  Aspect.name:${aspect.name}` ));
+
+  // log summary
+  const hookCount   = aspects.reduce( (count, aspect) => aspect.genesis ? count+1 : count, 0);
+  const hookSummary = aspects.map( (aspect) => `\n  Aspect.name:${aspect.name}${aspect.genesis ? ' <-- defines: genesis()' : ''}` );
+  logf(`aspect-life-cycle-hook ... PROCESSING: Aspect.genesis() ... ${hookCount} hooks:${hookSummary}`);
+
   // our convenient hash of aspects
   // ... keyed by aspectName
   //     aspectMap[aspectName]: aspect
@@ -206,8 +229,11 @@ op.alch.genesis = function(aspects) {
     }
 
     // allow each aspect to perform Aspect related initialization and validation
-    const errMsg = aspect.genesis();
-    check(!errMsg, errMsg); // non-null is considered a validation error
+    if (aspect.genesis) {
+      logf(`aspect-life-cycle-hook ... Aspect.name:${aspect.name} ... invoking it's defined Aspect.genesis()`);
+      const errMsg = aspect.genesis();
+      check(!errMsg, errMsg); // non-null is considered a validation error
+    }
 
     // maintain our aspect hash
     accum[aspect.name] = aspect;
@@ -239,7 +265,7 @@ op.helper.validateAspectProperties = function(aspects) {
       // handle unrecognized Aspect.property
       // ... NOTE: Aspect extended propertis have already been added to this isAspectProperty() list
       //           via extendAspectProperty() 
-      //               executed globally during the in-line expansion of the extending Aspect
+      //               executed early within the extending Aspect (i.e. in genesis())
       //               SO it is in the list at this time!!
       check(isAspectProperty(propName), `Aspect.name: '${aspect.name}' contains unrecognized property: ${propName} ... no Aspect is registered to handle this!`);
     }
@@ -254,8 +280,19 @@ op.helper.validateAspectProperties = function(aspects) {
 
 op.alch.validateFeatureContent = function(features, aspectMap) {
 
+  // NOTE: nothing to logf() here BECAUSE entire result is potential EXCEPTIONS
+
   // maintain: running counter of execution order of life-cycle-hooks (unit-test related)
   op.alch.validateFeatureContent.executionOrder = executionOrder++;
+
+  // log summary
+  const aspects = []; // convert aspectMap to array ... do this RATHER than change API JUST to accommodate logging
+  for (const propKey in aspectMap) {
+    aspects.push(aspectMap[propKey]);
+  }
+  const hookCount   = aspects.reduce( (count, aspect) => aspect.validateFeatureContent ? count+1 : count, 0);
+  const hookSummary = aspects.map( (aspect) => `\n  Aspect.name:${aspect.name}${aspect.validateFeatureContent ? ' <-- defines: validateFeatureContent()' : ''}` );
+  logf(`aspect-life-cycle-hook ... PROCESSING: Aspect.validateFeatureContent() ... ${hookCount} hooks:${hookSummary}`);
 
   // peform "Feature" property validation
   // NOTE 1: This is done here rather than createFeature(), because it's the aspect's
@@ -273,7 +310,7 @@ op.alch.validateFeatureContent = function(features, aspectMap) {
       //     ... an error condition if if no Aspect is registered to handle it
       // ... NOTE: Aspect extended propertis have already been added to this isFeatureProperty() list
       //           via extendFeatureProperty() 
-      //               executed globally during the in-line expansion of the extending Aspect
+      //               executed early within the extending Aspect (i.e. in genesis())
       //               SO it is in the list at this time!!
       if (!isFeatureProperty(propName)) {
 
@@ -290,6 +327,7 @@ op.alch.validateFeatureContent = function(features, aspectMap) {
 
           // allow the aspect to validate it's content
           // ... ex: a reducer MUST be a function (or managedExpansion) and it must have a shape!
+          logf(`aspect-life-cycle-hook ... Aspect.name:${aspect.name} ... invoking it's required Aspect.validateFeatureContent() on Feature.name:${feature.name}'s Feature.${aspect.name}`);
           const errMsg = aspect.validateFeatureContent(feature); // validate self's aspect on supplied feature (which is known to contain this aspect)
           check(!errMsg, errMsg); // non-null is considered a validation error
         }
@@ -315,6 +353,11 @@ op.helper.pruneActiveFeatures = function(features) {
     allFeatureNames[feature.name] = true;
     return feature.enabled;
   });
+
+  logf('the following Features were supplied: ' +
+       features.map( (feature) => `\n  Feature.name:${feature.name}${feature.enabled ? '' : '  <<< NOT ACTIVE'}`));
+  logf('the following Features are in effect (i.e. active): ' +
+       activeFeatures.map( (feature) => `\n  Feature.name:${feature.name}` ));
 
   return activeFeatures;
 };
@@ -356,10 +399,17 @@ op.helper.createApp = function(activeFeatures) {
   //     expansion - EVEN in code that is expanded in-line
   activeFeatures.forEach( feature => {
     // promote the feature publicFace in our app
-    // ... NOTE: createFeature() defaults this to an empty object
-    //           (providing a consistent indicator that the feature is present/enabled)
-    app[feature.name] = feature.publicFace;
+    // ... NOTE: default to empty object, 
+    //           providing a consistent indicator that the feature is present/enabled
+    app[feature.name] = feature.publicFace || {};
   });
+
+  // log summary
+  const hookCount   = activeFeatures.reduce( (count, feature) => feature.publicFace ? count+1 : count, 0);
+  const hookSummary = activeFeatures.map( (feature) => `\n  Feature.name:${feature.name}${feature.publicFace ? ' <-- defines: publicFace' : ''}` );
+  logf(`cross-feature-communication ... INTERPRETING: Feature.publicFace ... ${hookCount} hooks:${hookSummary}`);
+
+  logf('cross-feature-communication ... the following app is in effect: ', app);
 
   return app;
 };
@@ -375,6 +425,11 @@ op.alch.expandFeatureContent = function(app, activeFeatures, aspects) {
   // maintain: running counter of execution order of life-cycle-hooks (unit-test related)
   op.alch.expandFeatureContent.executionOrder = executionOrder++;
 
+  // log summary
+  const hookCount   = aspects.reduce( (count, aspect) => aspect.expandFeatureContent ? count+1 : count, 0);
+  const hookSummary = aspects.map( (aspect) => `\n  Aspect.name:${aspect.name}${aspect.expandFeatureContent ? ' <-- defines: expandFeatureContent()' : ''}` );
+  logf(`resolving managedExpansion() ... either by DEFAULT-PROCESS -OR- aspect-life-cycle-hook PROCESSING: Aspect.expandFeatureContent() ... ${hookCount} hooks:${hookSummary}`);
+
   // expand the feature content of any aspect that relies on managedExpansion()
   // ... AND perform a delayed validation, once expansion has occurred
   // NOTE: The original source of this error is in createFeature(), 
@@ -388,12 +443,23 @@ op.alch.expandFeatureContent = function(app, activeFeatures, aspects) {
         let errMsg = null;
 
         // perform the expansion
-        // ... a simple process, BUT provides the hook to do more (ex: reducer tranfer of slice)
-        errMsg = aspect.expandFeatureContent(app, feature);
-        // ... specialized validation, over-and-above the validateFeatureContent() hook
-        check(!errMsg, errMsg); // truthy is considered a validation error
+        if (aspect.expandFeatureContent) {
+          // aspect wishes to do this
+          // ... a simple process, BUT provides the hook to do more (ex: reducer tranfer of slice)
+          logf(`resolving managedExpansion() [by aspect-life-cycle-hook Aspect.name:${aspect.name}'s Aspect.expandFeatureContent()] ON Feature.name:${feature.name}'s Feature.${aspect.name} AspectContent`);
+
+          errMsg = aspect.expandFeatureContent(app, feature);
+          // ... specialized validation, over-and-above the validateFeatureContent() hook
+          check(!errMsg, errMsg); // truthy is considered a validation error
+        }
+        else {
+          logf(`resolving managedExpansion() [by DEFAULT-PROCESS] ON Feature.name:${feature.name}'s Feature.${aspect.name} AspectContent`);
+          // default implementation (when not done by the aspect)
+          feature[aspect.name] = feature[aspect.name](app);
+        }
 
         // perform our delayed validation
+        logf(`aspect-life-cycle-hook ... Aspect.name:${aspect.name} ... invoking it's required Aspect.validateFeatureContent() on Feature.name:${feature.name}'s Feature.${aspect.name} ... DELAYED from managedExpansion()`);
         errMsg = aspect.validateFeatureContent(feature); // validate self's aspect on supplied feature (which is known to contain this aspect)
         check(!errMsg, errMsg); // truthy is considered a validation error
       }
@@ -412,9 +478,15 @@ op.alch.assembleFeatureContent = function(app, activeFeatures, aspects) {
   // maintain: running counter of execution order of life-cycle-hooks (unit-test related)
   op.alch.assembleFeatureContent.executionOrder = executionOrder++;
 
+  // log summary
+  const hookCount   = aspects.reduce( (count, aspect) => aspect.assembleFeatureContent ? count+1 : count, 0);
+  const hookSummary = aspects.map( (aspect) => `\n  Aspect.name:${aspect.name}${aspect.assembleFeatureContent ? ' <-- defines: assembleFeatureContent()' : ''}` );
+  logf(`aspect-life-cycle-hook ... PROCESSING: Aspect.assembleFeatureContent() ... ${hookCount} hooks:${hookSummary}`);
+
   // assemble content of each aspect across all features
   // ... retaining needed state for subsequent ops
   aspects.forEach( aspect => {
+    logf(`aspect-life-cycle-hook ... Aspect.name:${aspect.name} ... invoking it's required Aspect.assembleFeatureContent()`);
     aspect.assembleFeatureContent(app, activeFeatures);
   });
 };
@@ -430,10 +502,18 @@ op.alch.assembleAspectResources = function(app, aspects) {
   // maintain: running counter of execution order of life-cycle-hooks (unit-test related)
   op.alch.assembleAspectResources.executionOrder = executionOrder++;
 
+  // log summary
+  const hookCount   = aspects.reduce( (count, aspect) => aspect.assembleAspectResources ? count+1 : count, 0);
+  const hookSummary = aspects.map( (aspect) => `\n  Aspect.name:${aspect.name}${aspect.assembleAspectResources ? ' <-- defines: assembleAspectResources()' : ''}` );
+  logf(`aspect-life-cycle-hook ... PROCESSING: Aspect.assembleAspectResources() ... ${hookCount} hooks:${hookSummary}`);
+
   // assemble resources for each aspect across all other aspects, ONCE ALL aspects have assembled their feature content
   // ... retaining needed state for subsequent ops
   aspects.forEach( aspect => {
-    aspect.assembleAspectResources(app, aspects);
+    if (aspect.assembleAspectResources) {
+      logf(`aspect-life-cycle-hook ... Aspect.name:${aspect.name} ... invoking it's defined Aspect.assembleAspectResources()`);
+      aspect.assembleAspectResources(app, aspects);
+    }
   });
 };
 
@@ -448,6 +528,8 @@ op.helper.defineRootAppElm = function(app, activeFeatures, aspects) {
   // define our curRootAppElm via DOM injections from a combination of Aspects/Features
   let rootAppElm = null; // we start with nothing
 
+  logf('defining-rootAppElm ... starting process, rootAppElm: null');
+
   // FIRST: DOM injection via Aspect.initialRootAppElm(app, curRootAppElm)
   rootAppElm = op.alch.initialRootAppElm(app, aspects, rootAppElm);
 
@@ -461,6 +543,7 @@ op.helper.defineRootAppElm = function(app, activeFeatures, aspects) {
   //       - at first glance it would appear that a null rootAppElm would render NOTHING
   //       - HOWEVER, ULTIMATLY the app code (found in the registerRootAppElm() hook) 
   //         can display whatever it wants ... a given app may have chosen to inject it's own rootAppElm
+  logf('defining-rootAppElm ... complete, rootAppElm: ', logf.elm2html(rootAppElm));
   return rootAppElm;
 
 };
@@ -476,10 +559,31 @@ op.alch.initialRootAppElm = function(app, aspects, curRootAppElm) {
   // maintain: running counter of execution order of life-cycle-hooks (unit-test related)
   op.alch.initialRootAppElm.executionOrder = executionOrder++;
 
+  // log summary
+  const hookCount   = aspects.reduce( (count, aspect) => aspect.initialRootAppElm ? count+1 : count, 0);
+  const hookSummary = aspects.map( (aspect) => `\n  Aspect.name:${aspect.name}${aspect.initialRootAppElm ? ' <-- defines: initialRootAppElm()' : ''}` );
+  logf(`aspect-life-cycle-hook ... PROCESSING: Aspect.initialRootAppElm() ... ${hookCount} hooks:${hookSummary}`);
+
   // DOM injection via Aspect.initialRootAppElm(app, curRootAppElm)
-  const rootAppElm = aspects.reduce( (curRootAppElm, aspect) => aspect.initialRootAppElm(app, curRootAppElm),
-                                     curRootAppElm );
-  return rootAppElm;
+  return aspects.reduce( (curRootAppElm, aspect) => {
+
+    if (aspect.initialRootAppElm) {
+
+      logf(`aspect-life-cycle-hook ... Aspect.name:${aspect.name} ... invoking it's defined Aspect.initialRootAppElm()`);
+      const rootAppElm = aspect.initialRootAppElm(app, curRootAppElm);
+
+      if (rootAppElm !== curRootAppElm) {
+        logf(`defining-rootAppElm ... Aspect.name:${aspect.name}'s Aspect.initialRootAppElm() CHANGED rootAppElm: `,
+             logf.elm2html(rootAppElm));
+      }
+
+      return rootAppElm;
+    }
+    else {
+      return curRootAppElm;
+    }
+
+  }, curRootAppElm );
 };
 
 
@@ -493,13 +597,34 @@ op.flch.appWillStart = function(app, activeFeatures, curRootAppElm) {
   // maintain: running counter of execution order of life-cycle-hooks (unit-test related)
   op.flch.appWillStart.executionOrder = executionOrder++;
 
+  // log summary
+  const hookCount   = activeFeatures.reduce( (count, feature) => feature.appWillStart ? count+1 : count, 0);
+  const hookSummary = activeFeatures.map( (feature) => `\n  Feature.name:${feature.name}${feature.appWillStart ? ' <-- defines: appWillStart()' : ''}` );
+  logf(`feature-life-cycle-hook ... PROCESSING: Feature.appWillStart() ... ${hookCount} hooks:${hookSummary}`);
+
   // DOM injection via Feature.appWillStart() life-cycle hook
   // - can perform ANY initialization
   // - AND supplement our top-level content (using a non-null return)
   //   ... wedged between the two Aspect DOM injections (in support of various Aspect needs)
-  const rootAppElm = activeFeatures.reduce( (curRootAppElm, feature) => feature.appWillStart({app, curRootAppElm}) || curRootAppElm,
-                                            curRootAppElm );
-  return rootAppElm;
+  return activeFeatures.reduce( (curRootAppElm, feature) => {
+
+    if (feature.appWillStart) {
+
+      logf(`feature-life-cycle-hook ... Feature.name:${feature.name} ... invoking it's defined Feature.appWillStart()`);
+      const rootAppElm = feature.appWillStart({app, curRootAppElm}) || curRootAppElm;
+
+      if (rootAppElm !== curRootAppElm) {
+        logf(`defining-rootAppElm ... Feature.name:${feature.name}'s Feature.appWillStart() CHANGED rootAppElm: `,
+             logf.elm2html(rootAppElm));
+      }
+
+      return rootAppElm;
+    }
+    else {
+      return curRootAppElm;
+    }
+
+  }, curRootAppElm );
 };
 
 
@@ -513,10 +638,31 @@ op.alch.injectRootAppElm = function(app, aspects, curRootAppElm) {
   // maintain: running counter of execution order of life-cycle-hooks (unit-test related)
   op.alch.injectRootAppElm.executionOrder = executionOrder++;
 
+  // log summary
+  const hookCount   = aspects.reduce( (count, aspect) => aspect.injectRootAppElm ? count+1 : count, 0);
+  const hookSummary = aspects.map( (aspect) => `\n  Aspect.name:${aspect.name}${aspect.injectRootAppElm ? ' <-- defines: injectRootAppElm()' : ''}` );
+  logf(`aspect-life-cycle-hook ... PROCESSING: Aspect.injectRootAppElm() ... ${hookCount} hooks:${hookSummary}`);
+
   // DOM injection via Aspect.injectRootAppElm()
-  const rootAppElm = aspects.reduce( (curRootAppElm, aspect) => aspect.injectRootAppElm(app, curRootAppElm),
-                                     curRootAppElm );
-  return rootAppElm;
+  return aspects.reduce( (curRootAppElm, aspect) => {
+
+    if (aspect.injectRootAppElm) {
+
+      logf(`aspect-life-cycle-hook ... Aspect.name:${aspect.name} ... invoking it's defined Aspect.injectRootAppElm()`);
+      const rootAppElm = aspect.injectRootAppElm(app, curRootAppElm);
+
+      if (rootAppElm !== curRootAppElm) {
+        logf(`defining-rootAppElm ... Aspect.name:${aspect.name}'s Aspect.injectRootAppElm() CHANGED rootAppElm: `,
+             logf.elm2html(rootAppElm));
+      }
+
+      return rootAppElm;
+    }
+    else {
+      return curRootAppElm;
+    }
+    
+  }, curRootAppElm );
 };
 
 
@@ -530,6 +676,11 @@ op.flch.appDidStart = function(app, activeFeatures, aspects) {
   // maintain: running counter of execution order of life-cycle-hooks (unit-test related)
   op.flch.appDidStart.executionOrder = executionOrder++;
 
+  // log summary
+  const hookCount   = activeFeatures.reduce( (count, feature) => feature.appDidStart ? count+1 : count, 0);
+  const hookSummary = activeFeatures.map( (feature) => `\n  Feature.name:${feature.name}${feature.appDidStart ? ' <-- defines: appDidStart()' : ''}` );
+  logf(`feature-life-cycle-hook ... PROCESSING: Feature.appDidStart() ... ${hookCount} hooks:${hookSummary}`);
+
   // locate the redux app store (if any) from our aspects
   // ... used as a convenience to pass appState/dispatch to appDidStart()
   // ... we define this from the cross-aspect redux method: Aspect.getReduxStore()
@@ -539,6 +690,10 @@ op.flch.appDidStart = function(app, activeFeatures, aspects) {
                                 : [undefined, undefined];
 
   // apply Feature.appDidStart() life-cycle hooks
-  // console.log(`xx launchApp ... feature appDidStart(): `, {appState, dispatch});
-  activeFeatures.forEach( feature => feature.appDidStart({app, appState, dispatch}) );
+  activeFeatures.forEach( feature => {
+    if (feature.appDidStart) {
+      logf(`feature-life-cycle-hook ... Feature.name:${feature.name} ... invoking it's defined Feature.appDidStart()`);
+      feature.appDidStart({app, appState, dispatch});
+    }
+  });
 };

@@ -1,9 +1,7 @@
 import verify      from '../util/verify';
 import isString    from 'lodash.isstring';
 import isFunction  from 'lodash.isfunction';
-
-// our default no-op function
-const noOp = () => null;
+import logf        from '../util/logf';
 
 /**
  * Create a new {{book.api.Feature}} object, cataloging
@@ -59,10 +57,10 @@ const noOp = () => null;
 export default function createFeature({name,
                                        enabled=true,
 
-                                       publicFace={}, // default to empty object, providing a consistent indicator in app object (that the feature is present/enabled)
+                                       publicFace,
 
-                                       appWillStart=noOp,
-                                       appDidStart=noOp,
+                                       appWillStart,
+                                       appDidStart,
 
                                        ...extendedAspect}={}) {
 
@@ -79,10 +77,14 @@ export default function createFeature({name,
   // ... publicFace: nothing to validate (it can be anything)
 
   // ... appWillStart
-  check(isFunction(appWillStart), 'appWillStart (when supplied) must be a function');
+  if (appWillStart) {
+    check(isFunction(appWillStart), 'appWillStart (when supplied) must be a function');
+  }
 
   // ... appDidStart
-  check(isFunction(appDidStart), 'appDidStart (when supplied) must be a function');
+  if (appDidStart) {
+    check(isFunction(appDidStart), 'appDidStart (when supplied) must be a function');
+  }
 
   // ... extendedAspect
   //     ... this validation occurs by the Aspect itself (via launchApp())
@@ -112,17 +114,17 @@ export default function createFeature({name,
  *
  * Initially seeded with Feature builtins.
  *
- * Later, supplemented with extendFeatureProperty(name) at run-time
+ * Later, supplemented with extendFeatureProperty(name, owner) at run-time
  * (via Aspect plugins).
  *
  * @private
  */
 const validFeatureProps = {
-  name:         true,
-  enabled:      true,
-  publicFace:   true,
-  appWillStart: true,
-  appDidStart:  true,
+  name:         'builtin',
+  enabled:      'builtin',
+  publicFace:   'builtin',
+  appWillStart: 'builtin',
+  appDidStart:  'builtin',
 };
 
 /**
@@ -136,23 +138,48 @@ const validFeatureProps = {
  * @private
  */
 export function isFeatureProperty(name) {
-  return validFeatureProps[name] || false;
+  return validFeatureProps[name] ? true : false;
 }
 
 /**
- * Extend the supplied name as a Feature property.  This is used by
- * Aspects to extend Feature APIs for
+ * Extend valid Feature properties to include the supplied name
+ * ... used when extending APIs for
  * {{book.guide.extending_aspectCrossCommunication}}.
  *
+ * **feature-u** keeps track of the agent that owns this extension
+ * (using the owner parameter).  This is used to prevent exceptions
+ * when duplicate extension requests are made by the same owner.  This
+ * can happen when multiple instances of an aspect type are supported,
+ * and also in unit testing.
+ *
  * @param {string} name the property name to allow.
+ *
+ * @param {string} owner the requesting owner id of this extension
+ * request.  Use any string that uniquely identifies your utility
+ * _(such as the aspect's npm package name)_.
+ * 
+ * @throws {Error} when supplied name is already reserved by a different owner
  */
-export function extendFeatureProperty(name) {
+export function extendFeatureProperty(name, owner) {
 
-  if (isFeatureProperty(name)) {
-    throw new Error(`**ERROR** extendFeatureProperty('${name}') ... 'Feature.${name}' is already in use (i.e. it is already a valid Feature property)!`);
+  // validate parameters
+  const check = verify.prefix('extendFeatureProperty() parameter violation: ');
+
+  check(name,            'name is required');
+  check(isString(name),  'name must be a string');
+
+  check(owner,           'owner is required');
+  check(isString(owner), 'owner must be a string');
+
+  // verify supplied name is NOT already reserved (by a different owner)
+  if (isFeatureProperty(name) &&           // already reserved
+      validFeatureProps[name] !== owner) { // by a different owner
+    throw new Error(`**ERROR** extendFeatureProperty('${name}', '${owner}') ... 'Feature.${name}' is already reserved by different owner.`);
   }
 
-  validFeatureProps[name] = true;
+  // reserve it
+  validFeatureProps[name] = owner;
+  logf(`invoking: extendFeatureProperty('${name}', '${owner}') ... now validFeatureProps: `, validFeatureProps);
 }
 
 

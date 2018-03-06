@@ -17,7 +17,9 @@ and structure _(see: [References] below TK:medium-resolve-internal-link)_.
 This article outlines my excursion into feature-based composition.  In
 working through the details, I realized there was an opportunity for a
 library to help manage and streamline some of the hurdles incurred in
-this process.  The result: **[feature-u]**.
+this process.  The result: **feature-u** _(check out the [full
+docs], [github source], and [npm package])_.
+
 
 ## At a Glance
 
@@ -1247,7 +1249,11 @@ end" of your features!** _Go forth and compute!!_
 
 <!--- feature-u ---> 
 [feature-u]:          https://feature-u.js.org/
+[full docs]:          https://feature-u.js.org/
 [full documentation]: https://feature-u.js.org/
+[github source]:      https://github.com/KevinAst/feature-u
+[npm package]:        https://www.npmjs.com/package/feature-u
+
 [feature-router]:     https://github.com/KevinAst/feature-router
 
 [Launching Your Application]:   https://feature-u.js.org/cur/detail.html#launching-your-application

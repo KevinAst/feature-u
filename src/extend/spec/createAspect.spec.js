@@ -1,6 +1,4 @@
-import {createAspect,     // module under test
-        createFeature,
-        managedExpansion} from '../..'; // STOP USING: '../../../tooling/ModuleUnderTest';
+import {createAspect} from '../..'; // STOP USING: '../../../tooling/ModuleUnderTest';
 
 import {isAspectProperty,
         extendAspectProperty} from '../createAspect';
@@ -135,20 +133,65 @@ describe('createAspect() tests', () => {
       });
     });
 
+    describe('aspect.config', () => {
+      const primePump = {
+        name:                    'myAspectName',
+        validateFeatureContent:  identityFn,
+        assembleFeatureContent:  identityFn,
+      };
+
+      test('config is required', () => {
+        expect(()=>createAspect({...primePump, config:null}))
+          .toThrow(/config is required/);
+        // THROW:  createAspect() parameter violation: config is required
+      });
+
+      test('config is required', () => {
+        expect(()=>createAspect({...primePump, config:()=>1}))
+          .toThrow(/config must be a plain object literal/);
+        // THROW:  createAspect() parameter violation: config must be a plain object literal
+      });
+    });
+
+
   });
 
   //***--------------------------------------------------------------------------------
   describe('test extended Aspect properties', () => {
 
-    test("isAspectProperty('name'): true", () => {
+    test("isAspectProperty() builtin props are included", () => {
       expect(isAspectProperty('name'))
         .toBe(true);
     });
 
-    test("extendAspectProperty('name'): THROW 'already in use' ERROR", () => {
-      expect(()=>extendAspectProperty('name'))
-        .toThrow(/Aspect.name.*is already in use/);
-      // THROW: **ERROR** extendAspectProperty('name') ... 'Aspect.name' is already in use (i.e. it is already a valid Aspect property)!
+    test("extendAspectProperty() name is required", () => {
+      expect(()=>extendAspectProperty())
+        .toThrow(/name is required/);
+      // THROW: extendAspectProperty() parameter violation: name is required
+    });
+
+    test("extendAspectProperty() name must be a string", () => {
+      expect(()=>extendAspectProperty(123))
+        .toThrow(/name must be a string/);
+      // THROW: extendAspectProperty() parameter violation: name must be a string
+    });
+
+    test("extendAspectProperty() owner is required", () => {
+      expect(()=>extendAspectProperty('MyNewProp'))
+        .toThrow(/owner is required/);
+      // THROW: extendAspectProperty() parameter violation: owner is required
+    });
+    
+    test("extendAspectProperty() owner must be a string", () => {
+      expect(()=>extendAspectProperty('MyNewProp', 456))
+        .toThrow(/owner must be a string/);
+      // THROW: extendAspectProperty() parameter violation: owner must be a string
+    });
+
+    test("extendAspectProperty() on builtin prop is already reserved", () => {
+      expect(()=>extendAspectProperty('name', 'myAspect'))
+        .toThrow(/is already reserved/);
+      // THROW: **ERROR** extendAspectProperty('name', 'myAspect') ... 'Aspect.name' is already reserved by different owner.
     });
 
     test("isAspectProperty('MyNewProp'): false", () => {
@@ -156,11 +199,23 @@ describe('createAspect() tests', () => {
         .toBe(false);
     });
 
-    test("isAspectProperty('MyNewProp'): true (after extending)", () => {
-      extendAspectProperty('MyNewProp');
+    test("isAspectProperty('MyNewProp', 'myAspect'): true (after extending)", () => {
+      extendAspectProperty('MyNewProp', 'myAspect');
       expect(isAspectProperty('MyNewProp'))
         .toBe(true);
     });
+
+    test("duplicate extendAspectProperty() is OK with same owner", () => {
+      expect(()=>extendAspectProperty('MyNewProp', 'myAspect'))
+        .not.toThrow();
+    });
+
+    test("duplicate extendAspectProperty() throws exception with different owner", () => {
+      expect(()=>extendAspectProperty('MyNewProp', 'differentAspect'))
+        .toThrow(/is already reserved/);
+      // THROW: **ERROR** extendAspectProperty('MyNewProp', 'differentAspect') ... 'Aspect.MyNewProp' is already reserved by different owner.
+    });
+
 
   });
 
@@ -175,6 +230,7 @@ describe('createAspect() tests', () => {
       assembleAspectResources: () => 'MY assembleAspectResources',
       initialRootAppElm:       () => 'MY initialRootAppElm',
       injectRootAppElm:        () => 'MY injectRootAppElm',
+      config:                  { myConfig: 123 },
     });
 
     test('aspect.name', () => {
@@ -208,6 +264,10 @@ describe('createAspect() tests', () => {
     test('aspect.injectRootAppElm', () => {
       expect(aspect.injectRootAppElm()).toEqual('MY injectRootAppElm');
     });
+
+    test('aspect.config', () => {
+      expect(aspect.config).toEqual({ myConfig: 123 });
+    });
     
   });
 
@@ -223,62 +283,6 @@ describe('createAspect() tests', () => {
     test('aspect.myAdditionalStuff', () => {
       expect(aspect.myAdditionalStuff).toEqual('myAdditionalStuff');
     });
-  });
-
-  //***--------------------------------------------------------------------------------
-  describe('VERIFY DEFAULT SEMANTICS', () => {
-    const aspect = createAspect({
-      name:                   'myAspectName',
-      validateFeatureContent: identityFn,
-      // expandFeatureContent,    // USE DEFAULT (tested in MANAGED EXPANSION - below)
-      assembleFeatureContent: identityFn,
-      // assembleAspectResources, // USE DEFAULT
-      // initialRootAppElm,       // USE DEFAULT
-      // injectRootAppElm,        // USE DEFAULT
-    });
-
-    test('aspect.assembleAspectResources', () => {
-      expect(aspect.assembleAspectResources('app', 'aspects')).toEqual(null);
-    });
-
-    test('aspect.initialRootAppElm', () => {
-      expect(aspect.initialRootAppElm('app', 'curRootAppElm')).toEqual('curRootAppElm');
-    });
-
-    test('aspect.injectRootAppElm', () => {
-      expect(aspect.injectRootAppElm('app', 'curRootAppElm')).toEqual('curRootAppElm');
-    });
-  });
-
-  //***--------------------------------------------------------------------------------
-  describe('VERIFY MANAGED EXPANSION DEFAULT SEMANTICS', () => {
-    const aspect = createAspect({
-      name:                   'myAspectName',
-      // genesis:                 // USE DEFAULT
-      validateFeatureContent: identityFn,
-      // expandFeatureContent,    // DEFAULT SEMANTICS - UNDER TEST
-      assembleFeatureContent: identityFn,
-      // assembleAspectResources, // USE DEFAULT
-      // initialRootAppElm,       // USE DEFAULT
-      // injectRootAppElm,        // USE DEFAULT
-    });
-
-    const feature = createFeature({
-      name:         'myFeatureName',
-      myAspectName: managedExpansion( (app) => 'myAspectContent' ), // UNDER TEST: needs expansion
-    });
-
-    // const app = null; // null ok for this test ... just being passed through 
-
-    test('aspect.expandFeatureContent', () => {
-
-      // expand feature
-      aspect.expandFeatureContent(null, feature);
-
-      // prove the expansion has occurred
-      expect(feature.myAspectName).toEqual('myAspectContent');
-    });
-
   });
 
 });

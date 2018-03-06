@@ -117,6 +117,10 @@
         "injectRootAppElmMeth":          "[`Aspect.injectRootAppElm()`](/extending.md#aspectinjectrootappelm)",
         "injectRootAppElmMeth$":         "[`Aspect.injectRootAppElm(app, curRootAppElm): rootAppElm`](/extending.md#aspectinjectrootappelm)",
 
+        "additionalMethods":             "[`Aspect.additionalMethods()`](/extending.md#aspectadditionalmethods)",
+
+        "aspectConfig":                  "[`Aspect.config`](/extending.md#aspectconfig)",
+
       "extensionApi":                        "[`Extension API`](/extensionApi.md)",
 
       "dist":                   "[`Distribution`](/dist.md)",
@@ -176,10 +180,10 @@
           "injectRootAppElmMeth$":         "[`injectRootAppElm(app, curRootAppElm): rootAppElm`](/api.md#injectRootAppElmMeth)",
 
         "extendAspectProperty":            "[`extendAspectProperty()`](/api.md#extendAspectProperty)",
-        "extendAspectProperty$":           "[`extendAspectProperty(name): void`](/api.md#extendAspectProperty)",
+        "extendAspectProperty$":           "[`extendAspectProperty(name, owner): void`](/api.md#extendAspectProperty)",
 
         "extendFeatureProperty":           "[`extendFeatureProperty()`](/api.md#extendFeatureProperty)",
-        "extendFeatureProperty$":          "[`extendFeatureProperty(name): void`](/api.md#extendFeatureProperty)"
+        "extendFeatureProperty$":          "[`extendFeatureProperty(name, owner): void`](/api.md#extendFeatureProperty)"
     },
 
     "ext": {

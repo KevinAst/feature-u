@@ -1,20 +1,9 @@
 import verify               from '../util/verify';
 import isString             from 'lodash.isstring';
 import isFunction           from 'lodash.isfunction';
+import isPlainObject        from 'lodash.isplainobject';
 import {isFeatureProperty}  from '../core/createFeature';
-
-const default_genesis = () => null;
-
-function default_expandFeatureContent(app, feature) {
-  // expand self's content in the supplied feature
-  // ... by invoking the managedExpansionCB(app) embellished by managedExpansion(managedExpansionCB)
-  feature[this.name] = feature[this.name](app);
-}
-
-const default_assembleAspectResources = (app, aspects) => null;
-
-const default_processRootAppElm = (app, curRootAppElm) => curRootAppElm;
-
+import logf                 from '../util/logf';
  
 /**
  * Create an {{book.api.Aspect}} object, used to extend **feature-u**.
@@ -99,28 +88,28 @@ const default_processRootAppElm = (app, curRootAppElm) => curRootAppElm;
  * The {{book.guide.extending_definingAppElm}} section highlights when
  * to use {{book.api.initialRootAppElmMeth}} verses
  * {{book.api.injectRootAppElmMeth}}.
+ *
+ * @param {Any} [config] an optional sub-object that can be used for
+ * any type of configuration that a specific Aspect may need _(see:
+ * {{book.guide.aspectConfig}})_.
  * 
  * @param {Any} [additionalMethods] additional methods (proprietary to
- * specific Aspects), supporting two different requirements:<br/><br/>
- * 
- * 1. internal Aspect helper methods, and<br/><br/>
- * 
- * 2. APIs used in {{book.guide.extending_aspectCrossCommunication}}
- *    ... a contract between one or more aspects.  This is merely an
- *    API specified by one Aspect, and used by another Aspect, that is
- *    facilitate through the {{book.api.assembleAspectResourcesMeth$}}
- *    hook.
+ * specific Aspects), supporting
+ * {{book.guide.extending_aspectCrossCommunication}} ... a contract
+ * between one or more aspects _(see:
+ * {{book.guide.additionalMethods}})_.
  *
  * @return {Aspect} a new Aspect object (to be consumed by {{book.api.launchApp}}).
  */
 export default function createAspect({name,
-                                      genesis=default_genesis,
+                                      genesis,
                                       validateFeatureContent,
-                                      expandFeatureContent=default_expandFeatureContent,
+                                      expandFeatureContent,
                                       assembleFeatureContent,
-                                      assembleAspectResources=default_assembleAspectResources,
-                                      initialRootAppElm=default_processRootAppElm,
-                                      injectRootAppElm=default_processRootAppElm,
+                                      assembleAspectResources,
+                                      initialRootAppElm,
+                                      injectRootAppElm,
+                                      config={},
                                       ...additionalMethods}={}) {
 
   // ***
@@ -134,21 +123,34 @@ export default function createAspect({name,
   check(!isFeatureProperty(name), `Aspect.name: '${name}' is a reserved Feature keyword`);
   // NOTE: Aspect.name uniqueness is validated in launchApp() (once we know all aspects in-use)
 
-  check(isFunction(genesis),                 'genesis (when supplied) must be a function');
+  if (genesis) {
+    check(isFunction(genesis),                 'genesis (when supplied) must be a function');
+  }
 
-  check(validateFeatureContent,              'validateFeatureContent is required');
-  check(isFunction(validateFeatureContent),  'validateFeatureContent must be a function');
+  check(validateFeatureContent,                'validateFeatureContent is required');
+  check(isFunction(validateFeatureContent),    'validateFeatureContent must be a function');
 
-  check(isFunction(expandFeatureContent),    'expandFeatureContent (when supplied) must be a function');
+  if (expandFeatureContent) {
+    check(isFunction(expandFeatureContent),    'expandFeatureContent (when supplied) must be a function');
+  }
 
-  check(assembleFeatureContent,              'assembleFeatureContent is required');
-  check(isFunction(assembleFeatureContent),  'assembleFeatureContent must be a function');
+  check(assembleFeatureContent,                'assembleFeatureContent is required');
+  check(isFunction(assembleFeatureContent),    'assembleFeatureContent must be a function');
 
-  check(isFunction(assembleAspectResources), 'assembleAspectResources (when supplied) must be a function');
+  if (assembleAspectResources) {
+    check(isFunction(assembleAspectResources), 'assembleAspectResources (when supplied) must be a function');
+  }
 
-  check(isFunction(initialRootAppElm),       'initialRootAppElm (when supplied) must be a function');
+  if (initialRootAppElm) {
+    check(isFunction(initialRootAppElm),       'initialRootAppElm (when supplied) must be a function');
+  }
 
-  check(isFunction(injectRootAppElm),        'injectRootAppElm (when supplied) must be a function');
+  if (injectRootAppElm) {
+    check(isFunction(injectRootAppElm),        'injectRootAppElm (when supplied) must be a function');
+  }
+
+  check(config,                                'config is required');
+  check(isPlainObject(config),                 'config must be a plain object literal');
 
   // ... additionalMethods
   //     ... this validation occurs in launchApp()
@@ -167,6 +169,7 @@ export default function createAspect({name,
     assembleAspectResources,
     initialRootAppElm,
     injectRootAppElm,
+    config,
     ...additionalMethods,
   };
 
@@ -182,20 +185,21 @@ export default function createAspect({name,
  *
  * Initially seeded with Aspect builtins.
  *
- * Later, supplemented with extendAspectProperty(name) at run-time
+ * Later, supplemented with extendAspectProperty(name, owner) at run-time
  * (via Aspect plugins).
  *
  * @private
  */
 const validAspectProps = {
-  name:                     true,
-  genesis:                  true,
-  validateFeatureContent:   true,
-  expandFeatureContent:     true,
-  assembleFeatureContent:   true,
-  assembleAspectResources:  true,
-  initialRootAppElm:        true,
-  injectRootAppElm:         true,
+  name:                     'builtin',
+  genesis:                  'builtin',
+  validateFeatureContent:   'builtin',
+  expandFeatureContent:     'builtin',
+  assembleFeatureContent:   'builtin',
+  assembleAspectResources:  'builtin',
+  initialRootAppElm:        'builtin',
+  injectRootAppElm:         'builtin',
+  config:                   'builtin',
 };
 
 /**
@@ -209,23 +213,48 @@ const validAspectProps = {
  * @private
  */
 export function isAspectProperty(name) {
-  return validAspectProps[name] || false;
+  return validAspectProps[name] ? true : false;
 }
 
 /**
- * Extend the supplied name as an Aspect property.  This is used by
- * Aspects to extend Aspect APIs for
+ * Extend valid Aspect properties to include the supplied name
+ * ... used when extending APIs for
  * {{book.guide.extending_aspectCrossCommunication}}.
  *
- * @param {string} name the property name to allow.
+ * **feature-u** keeps track of the agent that owns this extension
+ * (using the owner parameter).  This is used to prevent exceptions
+ * when duplicate extension requests are made by the same owner.  This
+ * can happen when multiple instances of an aspect type are supported,
+ * and also in unit testing.
+ *
+ * @param {string} name the property name to extend.
+ *
+ * @param {string} owner the requesting owner id of this extension
+ * request.  Use any string that uniquely identifies your utility
+ * _(such as the aspect's npm package name)_.
+ * 
+ * @throws {Error} when supplied name is already reserved by a different owner
  */
-export function extendAspectProperty(name) {
+export function extendAspectProperty(name, owner) {
 
-  if (isAspectProperty(name)) {
-    throw new Error(`**ERROR** extendAspectProperty('${name}') ... 'Aspect.${name}' is already in use (i.e. it is already a valid Aspect property)!`);
+  // validate parameters
+  const check = verify.prefix('extendAspectProperty() parameter violation: ');
+
+  check(name,            'name is required');
+  check(isString(name),  'name must be a string');
+
+  check(owner,           'owner is required');
+  check(isString(owner), 'owner must be a string');
+
+  // verify supplied name is NOT already reserved (by a different owner)
+  if (isAspectProperty(name) &&           // already reserved
+      validAspectProps[name] !== owner) { // by a different owner
+    throw new Error(`**ERROR** extendAspectProperty('${name}', '${owner}') ... 'Aspect.${name}' is already reserved by different owner.`);
   }
 
-  validAspectProps[name] = true;
+  // reserve it
+  validAspectProps[name] = owner;
+  logf(`invoking: extendAspectProperty('${name}', '${owner}') ... now validAspectProps: `, validAspectProps);
 }
 
 

@@ -131,8 +131,8 @@ left-nav menu available throughout the application.
 
      // seed the rootAppElm with our StateRouter
      return <StateRouter routes={this.routes}
-                         fallbackElm={this.fallbackElm}
-                         componentWillUpdateHook={this.componentWillUpdateHook}
+                         fallbackElm={this.config.fallbackElm$}
+                         componentWillUpdateHook={this.config.componentWillUpdateHook$}
                          namedDependencies={{app}}/>;
    }
    ```
@@ -177,8 +177,8 @@ The **end result** of this example generates the following DOM:
           content={<SideBar/>}
           onClose={closeSideBar}>
     <StateRouter routes={this.routes}
-                 fallbackElm={this.fallbackElm}
-                 componentWillUpdateHook={this.componentWillUpdateHook}
+                 fallbackElm={this.config.fallbackElm$}
+                 componentWillUpdateHook={this.config.componentWillUpdateHook$}
                  namedDependencies={{app}}/>
   </Drawer>
 </Provider>
@@ -222,6 +222,14 @@ exposing a new **Aspect API**: `Aspect.getReduxMiddleware()`.
      This registration should occur in the {{book.guide.genesisMeth}}
      life cycle method _(i.e. very early)_ to guarantee the new API is
      available during **feature-u** validation.
+
+     **SideBar**: **feature-u** keeps track of the agent that owns
+     each extension through the owner parameter.  Use any string that
+     uniquely identifies your utility _(such as the aspect's npm
+     package name)_.  This prevents exceptions when duplicate
+     extension requests are made by the same owner.  This can happen
+     when multiple instances of an aspect type are supported, and also
+     in unit testing.
   
   1. Utilize the API in one of the
      {{book.guide.extending_aspectLifeCycleMethods}} to gather the
@@ -247,8 +255,8 @@ exposing a new **Aspect API**: `Aspect.getReduxMiddleware()`.
        **redux-logic**.
   
   1. Here is the new API registration:
-  
-     [feature-redux/src/reducerAspect.js](https://github.com/KevinAst/feature-redux/blob/f22a8d254aec4908fcf7784e07bc1829409859fa/src/reducerAspect.js#L41-L44)
+
+     [feature-redux/src/reducerAspect.js](https://github.com/KevinAst/feature-redux/blob/57858cbcc4052c153471205a8f217bfcc95a0ed2/src/reducerAspect.js#L48-L53)
      ```js
      /**
       * Register feature-redux proprietary Aspect APIs (required to pass
@@ -257,8 +265,8 @@ exposing a new **Aspect API**: `Aspect.getReduxMiddleware()`.
       * guarantee the new API is available during feature-u validation.
       */
      function genesis() {
-       extendAspectProperty('getReduxStore');      // Aspect.getReduxStore(): store
-       extendAspectProperty('getReduxMiddleware'); // Aspect.getReduxMiddleware(): reduxMiddleware
+       extendAspectProperty('getReduxStore', 'feature-redux');      // Aspect.getReduxStore(): store
+       extendAspectProperty('getReduxMiddleware', 'feature-redux'); // Aspect.getReduxMiddleware(): reduxMiddleware
      }
      ```
   
@@ -294,7 +302,8 @@ discussion of each:
  - {{book.guide.assembleAspectResourcesMeth$}}
  - {{book.guide.initialRootAppElmMeth$}}
  - {{book.guide.injectRootAppElmMeth$}}
- - [`Aspect.additionalMethods()`](#aspectadditionalmethods)
+ - {{book.guide.aspectConfig}}
+ - {{book.guide.additionalMethods}}
 
 **Notes of Interest** ...
 
@@ -550,21 +559,39 @@ no change).
 
 
 
+### Aspect.config
+
+The `Aspect.config` is a sub-object that can optionally be used for
+any type of configuration that a specific {{book.api.Aspect}} may
+need.  Configurations (if any) should be documented by the specific
+{{book.api.Aspect}}, and if required, should be validated in the
+{{book.guide.genesisMeth}} hook.
+
+The `config` sub-object is "open" in the sense that any content is
+allowed.  In other words there is no need to pre-register acceptable
+properties on the `config` sub-object (as there is in direct properties
+of the Aspect object ... i.e. {{book.api.extendAspectProperty}}).
+
+In addition to configuration, it is common for Aspects to use the
+`config` sub-object for **hidden** diagnostic purposes _(hidden in the
+sense that they are not documented)_.  These settings are employed
+when researching an issue, and typically alter behavior in some way or
+glean additional information.  As such they would only be communicated
+to users on a case-by-case basis.
+
+
+
 ### Aspect.additionalMethods()
 
-Aspects may contain any number of additional "proprietary" methods,
-supporting two different requirements:
+Aspects may contain additional "proprietary" methods in support of
+{{book.guide.extending_aspectCrossCommunication}} ... a contract
+between one or more aspects.  This is merely an API specified by one
+{{book.api.Aspect}}, and used by another {{book.api.Aspect}},
+facilitated through the {{book.api.assembleAspectResourcesMeth$}}
+hook.
 
-- internal Aspect helper methods, and
-
-- APIs used in "aspect cross-communication" ... a contract between one
-  or more aspects.  This is merely an API specified by one
-  {{book.api.Aspect}}, and used by another {{book.api.Aspect}},
-  facilitated through the {{book.api.assembleAspectResourcesMeth$}}
-  hook.
-
-  As an example of this, consider {{book.ext.featureRedux}}.  Because
-  it manages {{book.ext.redux}}, it must promote a technique by which
-  other Aspects can register their redux middleware.  This is
-  accomplished through the proprietary method:
-  `Aspect.getReduxMiddleware(): middleware`.
+As an example of this, consider {{book.ext.featureRedux}}.  Because it
+manages {{book.ext.redux}}, it must promote a technique by which other
+Aspects can register their redux middleware.  This is accomplished
+through the proprietary method: `Aspect.getReduxMiddleware():
+middleware`.

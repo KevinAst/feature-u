@@ -24,13 +24,18 @@ Create a new {{book.api.Feature}} object, cataloging{{book.api.AspectContent}} 
 <a id="extendFeatureProperty"></a>
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
-  extendFeatureProperty(name)</h5>
-Extend the supplied name as a Feature property.  This is used byAspects to extend Feature APIs for{{book.guide.extending_aspectCrossCommunication}}.
+  extendFeatureProperty(name, owner)</h5>
+Extend valid Feature properties to include the supplied name... used when extending APIs for{{book.guide.extending_aspectCrossCommunication}}.**feature-u** keeps track of the agent that owns this extension(using the owner parameter).  This is used to prevent exceptionswhen duplicate extension requests are made by the same owner.  Thiscan happen when multiple instances of an aspect type are supported,and also in unit testing.
+
+**Throws**:
+
+- Error when supplied name is already reserved by a different owner
 
 
 | Param | Type | Description |
 | --- | --- | --- |
 | name | string | the property name to allow. |
+| owner | string | the requesting owner id of this extension request.  Use any string that uniquely identifies your utility _(such as the aspect's npm package name)_. |
 
 
 <br/><br/><br/>
@@ -70,7 +75,7 @@ Mark the supplied {{book.api.managedExpansionCB}} as a "ManagedExpansion Callba
 <a id="createAspect"></a>
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
-  createAspect(name, [genesis], validateFeatureContent, [expandFeatureContent], assembleFeatureContent, [assembleAspectResources], [initialRootAppElm], [injectRootAppElm], [additionalMethods]) ⇒ [`Aspect`](#Aspect)</h5>
+  createAspect(name, [genesis], validateFeatureContent, [expandFeatureContent], assembleFeatureContent, [assembleAspectResources], [initialRootAppElm], [injectRootAppElm], [config], [additionalMethods]) ⇒ [`Aspect`](#Aspect)</h5>
 Create an {{book.api.Aspect}} object, used to extend **feature-u**.The {{book.api.Aspect}} object promotes a series of life-cyclemethods that **feature-u** invokes in a controlled way.  Thislife-cycle is controlled by {{book.api.launchApp}} _... it issupplied the Aspects, and it invokes their methods._The essential characteristics of the {{book.api.Aspect}} life-cycle is to:- accumulate {{book.api.AspectContent}} across all features- perform the desired setup and configuration- expose the framework in some way _(by injecting a component in the  root DOM, or some {{book.guide.extending_aspectCrossCommunication}}  mechanism)_The {{book.guide.extending}} section provides more insight on how{{book.api.Aspect}}s are created and used.**Please Note** this function uses named parameters.  The order inwhich these items are presented represents the same order they areexecuted.
 
 
@@ -84,7 +89,8 @@ Create an {{book.api.Aspect}} object, used to extend **feature-u**.The {{book.
 | [assembleAspectResources] | [`assembleAspectResourcesMeth`](#assembleAspectResourcesMeth) | an optional Aspect method that assemble resources for this aspect across all other aspects, retaining needed state for subsequent ops.<br/><br/> This hook is executed after all the aspects have assembled their feature content (i.e. after {{book.api.assembleFeatureContentMeth}}). |
 | [initialRootAppElm] | [`initialRootAppElmMeth`](#initialRootAppElmMeth) | an optional callback hook that promotes some characteristic of this aspect within the `rootAppElm` ... the top-level react DOM that represents the display of the entire application.<br/><br/> The {{book.guide.extending_definingAppElm}} section highlights when to use {{book.api.initialRootAppElmMeth}} verses {{book.api.injectRootAppElmMeth}}. |
 | [injectRootAppElm] | [`injectRootAppElmMeth`](#injectRootAppElmMeth) | an optional callback hook that promotes some characteristic of this aspect within the `rootAppElm` ... the top-level react DOM that represents the display of the entire application.<br/><br/> The {{book.guide.extending_definingAppElm}} section highlights when to use {{book.api.initialRootAppElmMeth}} verses {{book.api.injectRootAppElmMeth}}. |
-| [additionalMethods] | Any | additional methods (proprietary to specific Aspects), supporting two different requirements:<br/><br/> 1. internal Aspect helper methods, and<br/><br/> 2. APIs used in {{book.guide.extending_aspectCrossCommunication}}    ... a contract between one or more aspects.  This is merely an    API specified by one Aspect, and used by another Aspect, that is    facilitate through the {{book.api.assembleAspectResourcesMeth$}}    hook. |
+| [config] | Any | an optional sub-object that can be used for any type of configuration that a specific Aspect may need _(see: {{book.guide.aspectConfig}})_. |
+| [additionalMethods] | Any | additional methods (proprietary to specific Aspects), supporting {{book.guide.extending_aspectCrossCommunication}} ... a contract between one or more aspects _(see: {{book.guide.additionalMethods}})_. |
 
 **Returns**: [`Aspect`](#Aspect) - a new Aspect object (to be consumed by {{book.api.launchApp}}).  
 
@@ -93,13 +99,18 @@ Create an {{book.api.Aspect}} object, used to extend **feature-u**.The {{book.
 <a id="extendAspectProperty"></a>
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
-  extendAspectProperty(name)</h5>
-Extend the supplied name as an Aspect property.  This is used byAspects to extend Aspect APIs for{{book.guide.extending_aspectCrossCommunication}}.
+  extendAspectProperty(name, owner)</h5>
+Extend valid Aspect properties to include the supplied name... used when extending APIs for{{book.guide.extending_aspectCrossCommunication}}.**feature-u** keeps track of the agent that owns this extension(using the owner parameter).  This is used to prevent exceptionswhen duplicate extension requests are made by the same owner.  Thiscan happen when multiple instances of an aspect type are supported,and also in unit testing.
+
+**Throws**:
+
+- Error when supplied name is already reserved by a different owner
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| name | string | the property name to allow. |
+| name | string | the property name to extend. |
+| owner | string | the requesting owner id of this extension request.  Use any string that uniquely identifies your utility _(such as the aspect's npm package name)_. |
 
 
 <br/><br/><br/>
