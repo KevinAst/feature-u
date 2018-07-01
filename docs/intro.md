@@ -18,8 +18,7 @@ and helps in promoting features that are **plug-and-play**.
 The following article is an introduction to **feature-u** with
 examples from a real-world app: {{book.ext.eateryNod}} _(where
 **feature-u** was conceived)_:
-[*feature-u: Feature Based Project Organization for React*](https://tinyurl.com/feature-u)
-_... **NOTE**: you will receive an error until the article is published (ETA: 3/9/2018)_
+[*feature-u: Feature Based Project Organization for React*](http://bit.ly/feature-u).
 
 **feature-u** allows you to **focus your attention on the "business
 end" of your features!**

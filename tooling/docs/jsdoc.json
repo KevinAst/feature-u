@@ -1,3 +1,7 @@
+// NOTE: This file is NO longer referenced in our build process.
+//       It is kept as a stub example.
+//       If used, the jsdoc2md command (in our npm scripts) should reference as follows:
+//       $ jsdoc2md --configure tooling/docs/jsdoc.json
 {
   "plugins": ["node_modules/jsdoc-babel"],
   "babel": {
