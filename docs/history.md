@@ -37,11 +37,12 @@ reference the most current release.
    - NOTES:
      a) clicking link STAYS ON SAME PAGE (as for all links of this type)
  
-2. for RELEASE: expand them in-line using a VERSION RELATIVE SYNTAX:
-   - EX:       bla bla [`createFeature()`](../v.v.v/api.md#createFeature)
+2. for RELEASE: expand them in-line using a VERSION RELATIVE SYNTAX -AND- change .md to .html:
+   - EX:       bla bla [`createFeature()`](../v.v.v/api.html#createFeature)
                NOTES:
                 - start with template definition
                 - pre-pend ../v.v.v/
+                - change .md to .html (BECAUSE WE ARE TAKING the generation process out-of-the-picture)
    - gens:     bla bla <a href="../v.v.v/api.html#createFeature"><code>createFeature()</code></a>
    - NOTES:
      a) clicking link STAYS ON SAME PAGE
@@ -94,7 +95,7 @@ Release           | What                                   | *When*
 1. **Review**: A new policy is in affect where **polyfills are the
    responsibility of the client app**, when the target JavaScript
    engine is inadequate _(such as the IE browser)_.  Please refer to
-   [`Potential Need for Polyfills`](../0.1.3/start.md#potential-need-for-polyfills) for more information.
+   [`Potential Need for Polyfills`](../0.1.3/start.html#potential-need-for-polyfills) for more information.
    
    As a result, all previous code patches related to es2015+ polyfill
    issues were removed, in favor of **polyfilling at the app-level**.
