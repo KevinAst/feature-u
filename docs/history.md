@@ -66,7 +66,7 @@ reference the most current release.
 
 Release           | What                                   | *When*
 ------------------|----------------------------------------|------------------
-[v0.1.3](#v0_1_3) | Establish Polyfill Strategy            | *July ??, 2018*
+[v0.1.3](#v0_1_3) | Establish Polyfill Strategy            | *July 2, 2018*
 [v0.1.0](#v0_1_0) | Initial Release                        | *March 6, 2018*
 
 
@@ -78,7 +78,7 @@ Release           | What                                   | *When*
 <!-- ************************************************************* -->
 <br/><br/><br/>
 <h3 id="v0_1_3" style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
-  v0.1.3 - Establish Polyfill Strategy <i>(July ??, 2018)</i>
+  v0.1.3 - Establish Polyfill Strategy <i>(July 2, 2018)</i>
 </h3>
 
 [Full Docs](https://feature-u.js.org/0.1.3/)
@@ -87,15 +87,14 @@ Release           | What                                   | *When*
 &bull;
 [GitHub Content](https://github.com/KevinAst/feature-u/tree/v0.1.3)
 &bull;
-[Diff](https://github.com/KevinAst/feature-u/compare/v0.1.0...v0.1.3)
-<!-- ?? the Diff above needs to use doc tags to eliminate massive inclusion of 0.1.3 html -->
+[Diff](https://github.com/KevinAst/feature-u/compare/v0.1.0-docs...v0.1.3)
 
 **NOTE**: This release is a **non-breaking change** _(i.e. no API was affected)_.
 
 1. **Review**: A new policy is in affect where **polyfills are the
    responsibility of the client app**, when the target JavaScript
    engine is inadequate _(such as the IE browser)_.  Please refer to
-   {{book.guide.start_polyfill}} for more information.
+   [`Potential Need for Polyfills`](../0.1.3/start.md#potential-need-for-polyfills) for more information.
    
    As a result, all previous code patches related to es2015+ polyfill
    issues were removed, in favor of **polyfilling at the app-level**.
