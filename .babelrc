@@ -1,19 +1,29 @@
 {
-  "presets": ["es2015", "stage-1"],
-  "env": {
-    "commonjs": {
-      "plugins": [
-        ["transform-es2015-modules-commonjs", { "loose": true }]
+  // standard presets applying various plugins
+  presets: [
+    "env",  // babel-preset-env:   supporting es2015, es2016, and es2017 (with configuration)
+    "react" // babel-preset-react: react and jsx
+  ],
+
+  // explicit plugins NOT part of the presets (above) ... prefer this over yearly presets
+  plugins: [
+    "transform-object-rest-spread", // "object rest properties" (es2018 Stage 4)
+                                    // ... ex: myFn({p1, p2, ...restParms})
+  ],
+
+  // additional plugins explicitly called out via the BABEL_ENV variable
+  // ... see: build scripts in package.json
+  env: {
+    // BABEL_ENV=commonjs ... our CommonJS distribution (promoted in lib/ directory)
+    commonjs: {
+      plugins: [
+        ["transform-es2015-modules-commonjs", { loose: true }]
       ]
     },
-    "es": {
-      "plugins": [
+    // BABEL_ENV=es ... for our ES distribution (promoted in lib/ directory)
+    es: {
+      plugins: [
       ]
     },
-    "test": {
-      "plugins": [
-        ["transform-es2015-modules-commonjs", { "loose": true }]
-      ]
-    }
   }
 }

@@ -41,6 +41,7 @@
       "devGuide":                 "[**Dev Guide**](/index.html)",
 
       "start":                    "[`Getting Started`](/start.md)",
+      "start_polyfill":           "[`Potential Need for Polyfills`](/start.md#potential-need-for-polyfills)",
 
       "basicConcepts":            "[`Basic Concepts`](/concepts.md)",
 

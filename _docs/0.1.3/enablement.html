@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Revision History · feature-u</title>
+        <title>Feature Enablement · feature-u</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -59,10 +59,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="LICENSE.html" />
+    <link rel="next" href="bestPractices.html" />
     
     
-    <link rel="prev" href="why.html" />
+    <link rel="prev" href="featureRouter.html" />
     
 
     </head>
@@ -89,7 +89,7 @@
 
     
         
-        <li class="header">feature-u (0.1.0)</li>
+        <li class="header">feature-u (0.1.3)</li>
         
         
     
@@ -512,7 +512,7 @@
             
         </li>
     
-        <li class="chapter " data-level="2.8" data-path="enablement.html">
+        <li class="chapter active" data-level="2.8" data-path="enablement.html">
             
                 <a href="enablement.html">
             
@@ -785,7 +785,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="5.3" data-path="history.html">
+        <li class="chapter " data-level="5.3" data-path="history.html">
             
                 <a href="history.html">
             
@@ -841,7 +841,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >Revision History</a>
+        <a href="." >Feature Enablement</a>
     </h1>
 </div>
 
@@ -856,129 +856,116 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="revision-history">Revision History</h1>
-<p>The <strong>feature-u</strong> project adheres to <a href="http://semver.org/" target="_blank">Semantic
-Versioning</a>.  Each release is documented on this
-page <em>(in addition to the <a href="https://github.com/KevinAst/feature-u/releases" target="_blank">Github Release
-Notes</a>)</em>, and
-<strong>contains migration instructions</strong>.</p>
-<!--- Badges for CI Builds ---> 
-<p><a href="https://travis-ci.org/KevinAst/feature-u" target="_blank"><img src="https://travis-ci.org/KevinAst/feature-u.svg?branch=master" alt="Build Status"></a>
-<a href="https://www.codacy.com/app/KevinAst/feature-u?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=KevinAst/feature-u&amp;utm_campaign=Badge_Grade" target="_blank"><img src="https://api.codacy.com/project/badge/Grade/c063a6e2859148e8baa89e9369b0fa5d" alt="Codacy Badge"></a>
-<a href="https://www.codacy.com/app/KevinAst/feature-u?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=KevinAst/feature-u&amp;utm_campaign=Badge_Coverage" target="_blank"><img src="https://api.codacy.com/project/badge/Coverage/c063a6e2859148e8baa89e9369b0fa5d" alt="Codacy Badge"></a>
-<a href="https://snyk.io/test/github/kevinast/feature-u?targetFile=package.json" target="_blank"><img src="https://snyk.io/test/github/kevinast/feature-u/badge.svg?targetFile=package.json" alt="Known Vulnerabilities"></a>
-<a href="https://www.npmjs.com/package/feature-u" target="_blank"><img src="https://img.shields.io/npm/v/feature-u.svg" alt="NPM Version Badge"></a></p>
-<h2 id="versioned-docs">Versioned Docs</h2>
-<p><strong>feature-u</strong> maintains version-specific documentation for all of it&apos;s
-releases <em>(linked below)</em> ... ex: <a href="https://feature-u.js.org/0.1.0/" target="_blank">https://feature-u.js.org/0.1.0/</a>.
-This allows you to match the correct documentation to the specific
-version you are using.
-For your convenience the base <a href="https://feature-u.js.org/" target="_blank">https://feature-u.js.org/</a> will always
-reference the most current release.</p>
-<!-- 
-*-----------------------------------------------
-* PROCEDURE for maintaining LINKS in history.md
-*-----------------------------------------------
-
-1. for latest running work-in-progress: it is OK to use the gitbook templates
-   - EX:       bla bla [`createFeature()`](/api.md#createFeature)
-   - template: bla bla [`createFeature()`](/api.md#createFeature)
-   - gens:     bla bla <a href="api.html#createFeature"><code>createFeature()</code></a>
-   - NOTES:
-     a) clicking link STAYS ON SAME PAGE (as for all links of this type)
-
-2. for RELEASE: expand them in-line using a VERSION RELATIVE SYNTAX:
-   - EX:       bla bla [`createFeature()`](../v.v.v/api.md#createFeature)
-               NOTES:
-                - start with template definition
-                - pre-pend ../v.v.v/
-   - gens:     bla bla <a href="../v.v.v/api.html#createFeature"><code>createFeature()</code></a>
-   - NOTES:
-     a) clicking link STAYS ON SAME PAGE
-     b) because these notes are copied to all release history.md, 
-        thy MUST reference the appropriate version
-        so they will be guaranteed the reference has not been removed/changed
-
-3. for GITHUB release page (when copying these notes), fully qualify the VERSIONED relative references
-   - EX:       bla bla [`createFeature()`](https://feature-u.js.org/v.v.v/api.html#createFeature)
-               NOTES:
-                - from prior rendition
-                - REPLACE ../v.v.v WITH https://feature-u.js.org/v.v.v
-                - change .md TO .html
-   - NOTES:
-     a) this allows it to stand alone (in the external github page)
-     b) because these notes reference a versioned site
-        they will be guaranteed the reference has not been removed/changed
--->
-<h2 id="summary">Summary:</h2>
+                                <h1 id="feature-enablement">Feature Enablement</h1>
+<p>By default all Features are active.  If however you wish to disable a
+feature, you merely set it&apos;s <code>Feature.enabled</code> boolean property <em>(part
+of the <a href="detail.html#built-in-aspects"><code>Built-In aspects</code></a>)</em>:</p>
+<pre><code class="lang-js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> createFeature({
+  name:     <span class="hljs-string">&apos;sandbox&apos;</span>,
+  enabled:  <span class="hljs-literal">false</span>,
+  ... snip snip
+});
+</code></pre>
+<p>In this example, it is just as though the <code>sandbox</code> feature doesn&apos;t
+exist.  In other words <strong>it has been logically removed</strong>.</p>
+<p>Typically, this indicator is based on some run-time expression,
+allowing packaged code to be dynamically enabled/disabled during the
+application&apos;s start-up process:</p>
+<pre><code class="lang-js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> createFeature({
+  name:     <span class="hljs-string">&apos;sandbox&apos;</span>,
+  enabled:  inDevelopmentMode(),
+  ... snip snip
+});
+</code></pre>
+<p>This dynamic is useful in a number of different situations. For
+example:</p>
+<ul>
+<li><p>some features may require a license upgrade</p>
+</li>
+<li><p>other features may only be used for diagnostic purposes, and are
+disabled by default</p>
+</li>
+</ul>
+<h3 id="how-does-it-work">How does it work?</h3>
+<p>Because <strong>feature-u</strong> is responsible for aggregating assets across all
+features, it&apos;s a very simple process to disable a feature ... the
+features supplied to <a href="api.html#launchApp"><code>launchApp()</code></a> are merely pruned to a set
+of <strong>active</strong> features.  It&apos;s just as though disabled features never
+existed <em>(logically)</em>.</p>
+<p>To fully understand how this works, consider the following
+characteristics of a disabled feature <em>(read this table like a
+sentence ... injecting the header in front of each column)</em>:</p>
 <table>
 <thead>
 <tr>
-<th>Release</th>
-<th>What</th>
-<th><em>When</em></th>
+<th>disabled features with ...</th>
+<th>never registers the feature&apos;s ...</th>
+<th>therefore, the feature&apos;s:</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><a href="#v0_1_3">v0.1.3</a></td>
-<td>Establish Polyfill Strategy</td>
-<td><em>July 2, 2018</em></td>
+<td>life cycle hooks</td>
+<td>callbacks</td>
+<td>initialization code never executes</td>
 </tr>
 <tr>
+<td>state management</td>
+<td>reducers</td>
+<td>state doesn&apos;t exist</td>
+</tr>
 <tr>
-<td><a href="#v0_1_0">v0.1.0</a></td>
-<td>Initial Release</td>
-<td><em>March 6, 2018</em></td>
+<td>logic</td>
+<td>logic modules</td>
+<td>logic is never executed</td>
+</tr>
+<tr>
+<td>feature routes</td>
+<td>routes</td>
+<td>screens are never presented</td>
+</tr>
+<tr>
+<td>etc.</td>
+<td>etc.</td>
+<td>etc.</td>
 </tr>
 </tbody>
 </table>
-<p><br><br><br></p>
-<h2 id="details">Details:</h2>
-<!-- ************************************************************* -->
-<p><br><br><br></p>
-<h3 id="v0_1_3" style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
-  v0.1.3 - Establish Polyfill Strategy <i>(July 2, 2018)</i>
-</h3>
-
-<p><a href="https://feature-u.js.org/0.1.3/" target="_blank">Full Docs</a>
-&#x2022;
-<a href="https://github.com/KevinAst/feature-u/releases/tag/v0.1.3" target="_blank">GitHub Release</a>
-&#x2022;
-<a href="https://github.com/KevinAst/feature-u/tree/v0.1.3" target="_blank">GitHub Content</a>
-&#x2022;
-<a href="https://github.com/KevinAst/feature-u/compare/v0.1.0-docs...v0.1.3" target="_blank">Diff</a></p>
-<p><strong>NOTE</strong>: This release is a <strong>non-breaking change</strong> <em>(i.e. no API was affected)</em>.</p>
-<ol>
-<li><p><strong>Review</strong>: A new policy is in affect where <strong>polyfills are the
-responsibility of the client app</strong>, when the target JavaScript
-engine is inadequate <em>(such as the IE browser)</em>.  Please refer to
-<a href="../0.1.3/start.html#potential-need-for-polyfills"><code>Potential Need for Polyfills</code></a> for more information.</p>
-<p>As a result, all previous code patches related to es2015+ polyfill
-issues were removed, in favor of <strong>polyfilling at the app-level</strong>.</p>
+<p>The internal implementation of <strong>Feature Enablement</strong> is extremely
+straightforward!  The underlying reason for this simplicity is that
+<strong>feature-u</strong> is in charge of the setup and configuration of your
+application.  <strong>Easy Peasy!</strong> <em><strong>I love it when a design comes
+together!!</strong></em></p>
+<h3 id="feature-existence-and-dependencies">Feature Existence and Dependencies</h3>
+<p>When a feature is completely self-contained <em>(i.e. it <strong>has NO</strong>
+<a href="crossCommunication.html#publicface-and-the-app-object"><code>publicFace</code></a>)</em>, then there is no other
+consideration in disabling it ... you <strong>simply disable it</strong> and <strong>it
+disappears!</strong></p>
+<p>If however one feature depends on another <em>(i.e. it <strong>has a</strong>
+<a href="crossCommunication.html#publicface-and-the-app-object"><code>publicFace</code></a>)</em>, then there are additional
+factors to consider.</p>
+<p>As you know, the <a href="api.html#App"><code>App</code></a> object is used to facilitate
+<a href="crossCommunication.html"><code>Cross Feature Communication</code></a>.  If a feature does not exist, or has been
+disabled, the corresponding <code>app.{featureName}</code> will NOT exist.</p>
+<p>You can use this to conditionally determine whether a feature is
+present or not.</p>
+<ul>
+<li><p>It could be that <code>featureA</code> will conditionally use <code>featureB</code> if it
+is present.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">if</span> (app.featureB) {
+  ... do something featureB related
+}
+</code></pre>
 </li>
-<li><p><strong>Internal</strong>: The most current babel version/configuration is now
-used to transpile the library&apos;s es5 distribution.</p>
+<li><p>It could be that <code>featureC</code> unconditionally requires that <code>featureD</code>
+is present.  This can be checked in the <a href="api.html#appWillStartCB"><code>appWillStart()</code></a>
+<a href="appLifeCycle.html"><code>Application Life Cycle Hook</code></a>.</p>
+<pre><code class="lang-js">appWillStart({app, curRootAppElm}) {
+  assert(app.featureD, <span class="hljs-string">&apos;***ERROR*** I NEED featureD&apos;</span>);
+}
+</code></pre>
 </li>
-<li><p><strong>Internal</strong>: The most current docs version/configuration
-(i.e. GitBook, JSDoc) is now used to generate our documentation.</p>
-</li>
-</ol>
-<!-- ************************************************************* -->
-<p><br><br><br></p>
-<h3 id="v0_1_0" style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
-  v0.1.0 - Initial Release <i>(March 6, 2018)</i>
-</h3>
-
-<p><a href="https://feature-u.js.org/0.1.0/" target="_blank">Full Docs</a>
-&#x2022;
-<a href="https://github.com/KevinAst/feature-u/releases/tag/v0.1.0" target="_blank">GitHub Release</a>
-&#x2022;
-<a href="https://github.com/KevinAst/feature-u/tree/v0.1.0" target="_blank">GitHub Content</a></p>
-<p><strong>This is where it all began ...</strong></p>
-<ol>
-<li>Holy Guacamole Batman! ... <em>This commit has no parents!!</em></li>
-</ol>
+</ul>
 
                                 
                                 </section>
@@ -1006,12 +993,12 @@ used to transpile the library&apos;s es5 distribution.</p>
 
             
                 
-                <a href="why.html" class="navigation navigation-prev " aria-label="Previous page: Why feature-u?">
+                <a href="featureRouter.html" class="navigation navigation-prev " aria-label="Previous page: Feature Based Routes">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="LICENSE.html" class="navigation navigation-next " aria-label="Next page: MIT License">
+                <a href="bestPractices.html" class="navigation navigation-next " aria-label="Next page: Best Practices">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -1022,7 +1009,7 @@ used to transpile the library&apos;s es5 distribution.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Revision History","level":"5.3","depth":1,"next":{"title":"MIT License","level":"5.4","depth":1,"path":"LICENSE.md","ref":"LICENSE.md","articles":[]},"previous":{"title":"Why feature-u?","level":"5.2","depth":1,"path":"why.md","ref":"why.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-livereload","toolbar"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"sharing":{"facebook":false,"twitter":false,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["twitter","facebook","google","weibo","instapaper"]},"toolbar":{"buttons":[{"label":"GitHub","icon":"fa fa-github","url":"https://github.com/KevinAst/feature-u"},{"label":"NPM","icon":"fa fa-bullseye","url":"https://www.npmjs.com/package/feature-u"}]},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Kevin J. Bridges <kevinast@gmail.com> (https://github.com/KevinAst)","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"intro.md","glossary":"GLOSSARY.md","summary":"toc.md"},"variables":{"guide":{"detail_launchingApp":"[`Launching Your Application`](/detail.md#launching-your-application)","injectRootAppElmMeth$":"[`Aspect.injectRootAppElm(app, curRootAppElm): rootAppElm`](/extending.md#aspectinjectrootappelm)","LICENSE":"[`MIT License`](/LICENSE.md)","appDidStartCB$":"[`Feature.appDidStart({app, [appState], [dispatch]}): void`](/appLifeCycle.md#appDidStart)","crossCom":"[`Cross Feature Communication`](/crossCommunication.md)","enablement":"[`Feature Enablement`](/enablement.md)","usage":"[`Usage`](/usage.md)","assembleFeatureContentMeth":"[`Aspect.assembleFeatureContent()`](/extending.md#aspectassemblefeaturecontent)","crossCom_accessingApp":"[`Accessing App`](/crossCommunication.md#accessing-the-app-object)","start":"[`Getting Started`](/start.md)","assembleFeatureContentMeth$":"[`Aspect.assembleFeatureContent(app, activeFeatures): void`](/extending.md#aspectassemblefeaturecontent)","appDidStartCB":"[`Feature.appDidStart()`](/appLifeCycle.md#appDidStart)","appDidStart":"[`appDidStart`](/appLifeCycle.md#appDidStart)","injectRootAppElmMeth":"[`Aspect.injectRootAppElm()`](/extending.md#aspectinjectrootappelm)","crossCom_publicFace":"[`publicFace`](/crossCommunication.md#publicface-and-the-app-object)","validateFeatureContentMeth":"[`Aspect.validateFeatureContent()`](/extending.md#aspectvalidatefeaturecontent)","extending_aspectCrossCommunication":"[`Aspect Cross Communication`](/extending.md#aspect-cross-communication)","dist":"[`Distribution`](/dist.md)","detail_builtInAspects":"[`Built-In aspects`](/detail.md#built-in-aspects)","detail_featureAndAspect":"[`Feature & aspect content`](/detail.md#feature-object-relaying-aspect-content)","assembleAspectResourcesMeth":"[`Aspect.assembleAspectResources()`](/extending.md#aspectassembleaspectresources)","devGuide":"[**Dev Guide**](/index.html)","detail_doesFeatureExist":"[`Does Feature Exist`](/detail.md#does-feature-exist)","extending":"[`Extending feature-u`](/extending.md)","why":"[`Why feature-u?`](/why.md)","expandFeatureContentMeth":"[`Aspect.expandFeatureContent()`](/extending.md#aspectexpandfeaturecontent)","appLifeCycle":"[`Application Life Cycle Hook`](/appLifeCycle.md)","detail_featurePublicAPI":"[`Feature Public API`](/detail.md#feature-public-api)","detail_reactRegistration":"[`React Registration`](/detail.md#react-registration)","additionalMethods":"[`Aspect.additionalMethods()`](/extending.md#aspectadditionalmethods)","detail_aspects":"[`aspects`](/detail.md#aspects)","initialRootAppElmMeth$":"[`Aspect.initialRootAppElm(app, curRootAppElm): rootAppElm`](/extending.md#aspectinitialrootappelm)","usage_realExample":"[`Real Example`](/usage.md#real-example)","extending_aspectObject":"[`Aspect Object`](/extending.md#aspect-object-extending-feature-u)","appWillStartCB":"[`Feature.appWillStart()`](/appLifeCycle.md#appwillstart)","usage_dir":"[`Directory Structure`](/usage.md#directory-structure)","appWillStart":"[`appWillStart`](/appLifeCycle.md#appwillstart)","usage_launchapp":"[`launchApp()`](/usage.md#launchapp)","genesisMeth$":"[`Aspect.genesis(): string`](/extending.md#aspectgenesis)","crossCom_managedCodeExpansion":"[`Managed Code Expansion`](/crossCommunication.md#managed-code-expansion)","detail":"[`A Closer Look`](/detail.md)","detail_appObject":"[`App Object`](/detail.md#app-object)","history":"[`Revision History`](/history.md)","bestPractices":"[`Best Practices`](/bestPractices.md)","extending_definingAppElm":"[`Defining rootAppElm`](/extending.md#defining-rootappelm)","genesisMeth":"[`Aspect.genesis()`](/extending.md#aspectgenesis)","appWillStartCB$":"[`Feature.appWillStart({app, curRootAppElm}): rootAppElm || falsy`](/appLifeCycle.md#appwillstart)","bestPractices_featureName":"[`Feature Name`](/bestPractices.md#feature-name)","extending_aspectLifeCycleMethods":"[`Aspect Life Cycle Methods`](/extending.md#aspect-life-cycle-methods)","initialRootAppElmMeth":"[`Aspect.initialRootAppElm()`](/extending.md#aspectinitialrootappelm)","usage_featureObject":"[`Feature Object`](/usage.md#feature-object)","detail_extendableAspects":"[`Extendable aspects`](/detail.md#extendable-aspects)","basicConcepts":"[`Basic Concepts`](/concepts.md)","extending_locatingExtensions":"[`Locating Extensions`](/extending.md#locating-extensions)","aspectConfig":"[`Aspect.config`](/extending.md#aspectconfig)","extensionApi":"[`Extension API`](/extensionApi.md)","coreApi":"[`Core API`](/coreApi.md)","expandFeatureContentMeth$":"[`Aspect.expandFeatureContent(app, feature): string`](/extending.md#aspectexpandfeaturecontent)","benefits":"[`Benefits`](/benefits.md)","crossCom_publicFaceApp":"[`publicFace and the App Object`](/crossCommunication.md#publicface-and-the-app-object)","assembleAspectResourcesMeth$":"[`Aspect.assembleAspectResources(app, aspects): void`](/extending.md#aspectassembleaspectresources)","crossCom_appAccessSummary":"[`App Access Summary`](/crossCommunication.md#app-access-summary)","featureRouter":"[`Feature Based Routes`](/featureRouter.md)","validateFeatureContentMeth$":"[`Aspect.validateFeatureContent(feature): string`](/extending.md#aspectvalidatefeaturecontent)"},"api":{"injectRootAppElmMeth$":"[`injectRootAppElm(app, curRootAppElm): rootAppElm`](/api.md#injectRootAppElmMeth)","managedExpansion":"[`managedExpansion()`](/api.md#managedExpansion)","appDidStartCB$":"[`appDidStart({app, [appState], [dispatch]}): void`](/api.md#appDidStartCB)","AspectContent":"[`AspectContent`](/api.md#AspectContent)","App":"[`App`](/api.md#App)","assembleFeatureContentMeth":"[`assembleFeatureContent()`](/api.md#assembleFeatureContentMeth)","assembleFeatureContentMeth$":"[`assembleFeatureContent(app, activeFeatures): void`](/api.md#assembleFeatureContentMeth)","appDidStartCB":"[`appDidStart()`](/api.md#appDidStartCB)","managedExpansion$":"[`managedExpansion(managedExpansionCB): managedExpansionCB`](/api.md#managedExpansion)","injectRootAppElmMeth":"[`injectRootAppElm()`](/api.md#injectRootAppElmMeth)","validateFeatureContentMeth":"[`validateFeatureContent()`](/api.md#validateFeatureContentMeth)","managedExpansionCB$":"[`managedExpansionCB(app): AspectContent`](/api.md#managedExpansionCB)","extendAspectProperty":"[`extendAspectProperty()`](/api.md#extendAspectProperty)","assembleAspectResourcesMeth":"[`assembleAspectResources()`](/api.md#assembleAspectResourcesMeth)","expandFeatureContentMeth":"[`expandFeatureContent()`](/api.md#expandFeatureContentMeth)","registerRootAppElmCB":"[`registerRootAppElm()`](/api.md#registerRootAppElmCB)","createFeature$":"[`createFeature({name, [enabled], [publicFace], [appWillStart], [appDidStart], [pluggableAspects]}): Feature`](/api.md#createFeature)","initialRootAppElmMeth$":"[`initialRootAppElm(app, curRootAppElm): rootAppElm`](/api.md#initialRootAppElmMeth)","launchApp":"[`launchApp()`](/api.md#launchApp)","appWillStartCB":"[`appWillStart()`](/api.md#appWillStartCB)","createAspect$":"[`createAspect({see-docs}): Aspect`](/api.md#createAspect)","genesisMeth$":"[`genesis(): string`](/api.md#genesisMeth)","extendFeatureProperty":"[`extendFeatureProperty()`](/api.md#extendFeatureProperty)","extendFeatureProperty$":"[`extendFeatureProperty(name, owner): void`](/api.md#extendFeatureProperty)","createAspect":"[`createAspect()`](/api.md#createAspect)","genesisMeth":"[`genesis()`](/api.md#genesisMeth)","launchApp$":"[`launchApp({[aspects], features, registerRootAppElm}): App`](/api.md#launchApp)","appWillStartCB$":"[`appWillStart({app, curRootAppElm}): rootAppElm || falsy`](/api.md#appWillStartCB)","Feature":"[`Feature`](/api.md#Feature)","initialRootAppElmMeth":"[`initialRootAppElm()`](/api.md#initialRootAppElmMeth)","Aspect":"[`Aspect`](/api.md#Aspect)","createFeature":"[`createFeature()`](/api.md#createFeature)","extensionApi":"[`Extension API`](/extensionApi.md)","coreApi":"[`Core API`](/coreApi.md)","registerRootAppElmCB$":"[`registerRootAppElm(rootAppElm): void`](/api.md#registerRootAppElmCB)","Aspects":"[`Aspects`](/api.md#Aspect)","expandFeatureContentMeth$":"[`expandFeatureContent(app, feature): string`](/api.md#expandFeatureContentMeth)","Features":"[`Features`](/api.md#Feature)","extendAspectProperty$":"[`extendAspectProperty(name, owner): void`](/api.md#extendAspectProperty)","assembleAspectResourcesMeth$":"[`assembleAspectResources(app, aspects): void`](/api.md#assembleAspectResourcesMeth)","managedExpansionCB":"[`managedExpansionCB()`](/api.md#managedExpansionCB)","validateFeatureContentMeth$":"[`validateFeatureContent(feature): string`](/api.md#validateFeatureContentMeth)"},"ext":{"featureReduxLogic":"[`feature-redux-logic`](https://github.com/KevinAst/feature-redux-logic)","astxReduxUtil":"[`astx-redux-util`](https://astx-redux-util.js.org/)","reduxMiddleware":"[`redux middleware`](https://redux.js.org/docs/advanced/Middleware.html)","reduxActions":"[`redux-actions`](https://www.npmjs.com/package/redux-actions)","reduxLogic":"[`redux-logic`](https://github.com/jeffbski/redux-logic)","eateryNod":"[`eatery-nod`](https://github.com/KevinAst/eatery-nod)","expo":"[`expo`](https://expo.io/)","redux":"[`redux`](http://redux.js.org/)","reactNative":"[`react-native`](https://facebook.github.io/react-native/)","featureRedux":"[`feature-redux`](https://github.com/KevinAst/feature-redux)","actionU":"[`action-u`](https://action-u.js.org/)","react":"[`react`](https://reactjs.org/)","featureRouter":"[`feature-router`](https://github.com/KevinAst/feature-router)"}},"title":"feature-u","gitbook":"3.2.2","description":"Feature Based Project Organization for React"},"file":{"path":"history.md","mtime":"2018-03-06T16:47:18.676Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2018-03-06T16:57:58.347Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Feature Enablement","level":"2.8","depth":1,"next":{"title":"Best Practices","level":"2.9","depth":1,"path":"bestPractices.md","ref":"bestPractices.md","articles":[]},"previous":{"title":"Feature Based Routes","level":"2.7","depth":1,"path":"featureRouter.md","ref":"featureRouter.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-livereload","toolbar"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"sharing":{"facebook":false,"twitter":false,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["twitter","facebook","google","weibo","instapaper"]},"toolbar":{"buttons":[{"label":"GitHub","icon":"fa fa-github","url":"https://github.com/KevinAst/feature-u"},{"label":"NPM","icon":"fa fa-bullseye","url":"https://www.npmjs.com/package/feature-u"}]},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Kevin J. Bridges <kevinast@gmail.com> (https://github.com/KevinAst)","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"intro.md","glossary":"GLOSSARY.md","summary":"toc.md"},"variables":{"guide":{"detail_launchingApp":"[`Launching Your Application`](/detail.md#launching-your-application)","injectRootAppElmMeth$":"[`Aspect.injectRootAppElm(app, curRootAppElm): rootAppElm`](/extending.md#aspectinjectrootappelm)","LICENSE":"[`MIT License`](/LICENSE.md)","appDidStartCB$":"[`Feature.appDidStart({app, [appState], [dispatch]}): void`](/appLifeCycle.md#appDidStart)","crossCom":"[`Cross Feature Communication`](/crossCommunication.md)","enablement":"[`Feature Enablement`](/enablement.md)","usage":"[`Usage`](/usage.md)","assembleFeatureContentMeth":"[`Aspect.assembleFeatureContent()`](/extending.md#aspectassemblefeaturecontent)","crossCom_accessingApp":"[`Accessing App`](/crossCommunication.md#accessing-the-app-object)","start":"[`Getting Started`](/start.md)","assembleFeatureContentMeth$":"[`Aspect.assembleFeatureContent(app, activeFeatures): void`](/extending.md#aspectassemblefeaturecontent)","appDidStartCB":"[`Feature.appDidStart()`](/appLifeCycle.md#appDidStart)","appDidStart":"[`appDidStart`](/appLifeCycle.md#appDidStart)","injectRootAppElmMeth":"[`Aspect.injectRootAppElm()`](/extending.md#aspectinjectrootappelm)","crossCom_publicFace":"[`publicFace`](/crossCommunication.md#publicface-and-the-app-object)","validateFeatureContentMeth":"[`Aspect.validateFeatureContent()`](/extending.md#aspectvalidatefeaturecontent)","extending_aspectCrossCommunication":"[`Aspect Cross Communication`](/extending.md#aspect-cross-communication)","dist":"[`Distribution`](/dist.md)","detail_builtInAspects":"[`Built-In aspects`](/detail.md#built-in-aspects)","detail_featureAndAspect":"[`Feature & aspect content`](/detail.md#feature-object-relaying-aspect-content)","assembleAspectResourcesMeth":"[`Aspect.assembleAspectResources()`](/extending.md#aspectassembleaspectresources)","devGuide":"[**Dev Guide**](/index.html)","detail_doesFeatureExist":"[`Does Feature Exist`](/detail.md#does-feature-exist)","extending":"[`Extending feature-u`](/extending.md)","why":"[`Why feature-u?`](/why.md)","expandFeatureContentMeth":"[`Aspect.expandFeatureContent()`](/extending.md#aspectexpandfeaturecontent)","appLifeCycle":"[`Application Life Cycle Hook`](/appLifeCycle.md)","detail_featurePublicAPI":"[`Feature Public API`](/detail.md#feature-public-api)","detail_reactRegistration":"[`React Registration`](/detail.md#react-registration)","additionalMethods":"[`Aspect.additionalMethods()`](/extending.md#aspectadditionalmethods)","start_polyfill":"[`Potential Need for Polyfills`](/start.md#potential-need-for-polyfills)","detail_aspects":"[`aspects`](/detail.md#aspects)","initialRootAppElmMeth$":"[`Aspect.initialRootAppElm(app, curRootAppElm): rootAppElm`](/extending.md#aspectinitialrootappelm)","usage_realExample":"[`Real Example`](/usage.md#real-example)","extending_aspectObject":"[`Aspect Object`](/extending.md#aspect-object-extending-feature-u)","appWillStartCB":"[`Feature.appWillStart()`](/appLifeCycle.md#appwillstart)","usage_dir":"[`Directory Structure`](/usage.md#directory-structure)","appWillStart":"[`appWillStart`](/appLifeCycle.md#appwillstart)","usage_launchapp":"[`launchApp()`](/usage.md#launchapp)","genesisMeth$":"[`Aspect.genesis(): string`](/extending.md#aspectgenesis)","crossCom_managedCodeExpansion":"[`Managed Code Expansion`](/crossCommunication.md#managed-code-expansion)","detail":"[`A Closer Look`](/detail.md)","detail_appObject":"[`App Object`](/detail.md#app-object)","history":"[`Revision History`](/history.md)","bestPractices":"[`Best Practices`](/bestPractices.md)","extending_definingAppElm":"[`Defining rootAppElm`](/extending.md#defining-rootappelm)","genesisMeth":"[`Aspect.genesis()`](/extending.md#aspectgenesis)","appWillStartCB$":"[`Feature.appWillStart({app, curRootAppElm}): rootAppElm || falsy`](/appLifeCycle.md#appwillstart)","bestPractices_featureName":"[`Feature Name`](/bestPractices.md#feature-name)","extending_aspectLifeCycleMethods":"[`Aspect Life Cycle Methods`](/extending.md#aspect-life-cycle-methods)","initialRootAppElmMeth":"[`Aspect.initialRootAppElm()`](/extending.md#aspectinitialrootappelm)","usage_featureObject":"[`Feature Object`](/usage.md#feature-object)","detail_extendableAspects":"[`Extendable aspects`](/detail.md#extendable-aspects)","basicConcepts":"[`Basic Concepts`](/concepts.md)","extending_locatingExtensions":"[`Locating Extensions`](/extending.md#locating-extensions)","aspectConfig":"[`Aspect.config`](/extending.md#aspectconfig)","extensionApi":"[`Extension API`](/extensionApi.md)","coreApi":"[`Core API`](/coreApi.md)","expandFeatureContentMeth$":"[`Aspect.expandFeatureContent(app, feature): string`](/extending.md#aspectexpandfeaturecontent)","benefits":"[`Benefits`](/benefits.md)","crossCom_publicFaceApp":"[`publicFace and the App Object`](/crossCommunication.md#publicface-and-the-app-object)","assembleAspectResourcesMeth$":"[`Aspect.assembleAspectResources(app, aspects): void`](/extending.md#aspectassembleaspectresources)","crossCom_appAccessSummary":"[`App Access Summary`](/crossCommunication.md#app-access-summary)","featureRouter":"[`Feature Based Routes`](/featureRouter.md)","validateFeatureContentMeth$":"[`Aspect.validateFeatureContent(feature): string`](/extending.md#aspectvalidatefeaturecontent)"},"api":{"injectRootAppElmMeth$":"[`injectRootAppElm(app, curRootAppElm): rootAppElm`](/api.md#injectRootAppElmMeth)","managedExpansion":"[`managedExpansion()`](/api.md#managedExpansion)","appDidStartCB$":"[`appDidStart({app, [appState], [dispatch]}): void`](/api.md#appDidStartCB)","AspectContent":"[`AspectContent`](/api.md#AspectContent)","App":"[`App`](/api.md#App)","assembleFeatureContentMeth":"[`assembleFeatureContent()`](/api.md#assembleFeatureContentMeth)","assembleFeatureContentMeth$":"[`assembleFeatureContent(app, activeFeatures): void`](/api.md#assembleFeatureContentMeth)","appDidStartCB":"[`appDidStart()`](/api.md#appDidStartCB)","managedExpansion$":"[`managedExpansion(managedExpansionCB): managedExpansionCB`](/api.md#managedExpansion)","injectRootAppElmMeth":"[`injectRootAppElm()`](/api.md#injectRootAppElmMeth)","validateFeatureContentMeth":"[`validateFeatureContent()`](/api.md#validateFeatureContentMeth)","managedExpansionCB$":"[`managedExpansionCB(app): AspectContent`](/api.md#managedExpansionCB)","extendAspectProperty":"[`extendAspectProperty()`](/api.md#extendAspectProperty)","assembleAspectResourcesMeth":"[`assembleAspectResources()`](/api.md#assembleAspectResourcesMeth)","expandFeatureContentMeth":"[`expandFeatureContent()`](/api.md#expandFeatureContentMeth)","registerRootAppElmCB":"[`registerRootAppElm()`](/api.md#registerRootAppElmCB)","createFeature$":"[`createFeature({name, [enabled], [publicFace], [appWillStart], [appDidStart], [pluggableAspects]}): Feature`](/api.md#createFeature)","initialRootAppElmMeth$":"[`initialRootAppElm(app, curRootAppElm): rootAppElm`](/api.md#initialRootAppElmMeth)","launchApp":"[`launchApp()`](/api.md#launchApp)","appWillStartCB":"[`appWillStart()`](/api.md#appWillStartCB)","createAspect$":"[`createAspect({see-docs}): Aspect`](/api.md#createAspect)","genesisMeth$":"[`genesis(): string`](/api.md#genesisMeth)","extendFeatureProperty":"[`extendFeatureProperty()`](/api.md#extendFeatureProperty)","extendFeatureProperty$":"[`extendFeatureProperty(name, owner): void`](/api.md#extendFeatureProperty)","createAspect":"[`createAspect()`](/api.md#createAspect)","genesisMeth":"[`genesis()`](/api.md#genesisMeth)","launchApp$":"[`launchApp({[aspects], features, registerRootAppElm}): App`](/api.md#launchApp)","appWillStartCB$":"[`appWillStart({app, curRootAppElm}): rootAppElm || falsy`](/api.md#appWillStartCB)","Feature":"[`Feature`](/api.md#Feature)","initialRootAppElmMeth":"[`initialRootAppElm()`](/api.md#initialRootAppElmMeth)","Aspect":"[`Aspect`](/api.md#Aspect)","createFeature":"[`createFeature()`](/api.md#createFeature)","extensionApi":"[`Extension API`](/extensionApi.md)","coreApi":"[`Core API`](/coreApi.md)","registerRootAppElmCB$":"[`registerRootAppElm(rootAppElm): void`](/api.md#registerRootAppElmCB)","Aspects":"[`Aspects`](/api.md#Aspect)","expandFeatureContentMeth$":"[`expandFeatureContent(app, feature): string`](/api.md#expandFeatureContentMeth)","Features":"[`Features`](/api.md#Feature)","extendAspectProperty$":"[`extendAspectProperty(name, owner): void`](/api.md#extendAspectProperty)","assembleAspectResourcesMeth$":"[`assembleAspectResources(app, aspects): void`](/api.md#assembleAspectResourcesMeth)","managedExpansionCB":"[`managedExpansionCB()`](/api.md#managedExpansionCB)","validateFeatureContentMeth$":"[`validateFeatureContent(feature): string`](/api.md#validateFeatureContentMeth)"},"ext":{"featureReduxLogic":"[`feature-redux-logic`](https://github.com/KevinAst/feature-redux-logic)","astxReduxUtil":"[`astx-redux-util`](https://astx-redux-util.js.org/)","reduxMiddleware":"[`redux middleware`](https://redux.js.org/docs/advanced/Middleware.html)","reduxActions":"[`redux-actions`](https://www.npmjs.com/package/redux-actions)","reduxLogic":"[`redux-logic`](https://github.com/jeffbski/redux-logic)","eateryNod":"[`eatery-nod`](https://github.com/KevinAst/eatery-nod)","expo":"[`expo`](https://expo.io/)","redux":"[`redux`](http://redux.js.org/)","reactNative":"[`react-native`](https://facebook.github.io/react-native/)","featureRedux":"[`feature-redux`](https://github.com/KevinAst/feature-redux)","actionU":"[`action-u`](https://action-u.js.org/)","react":"[`react`](https://reactjs.org/)","featureRouter":"[`feature-router`](https://github.com/KevinAst/feature-router)"}},"title":"feature-u","gitbook":"3.2.2","description":"Feature Based Project Organization for React"},"file":{"path":"enablement.md","mtime":"2018-01-31T16:19:15.483Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2018-07-02T14:57:07.943Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
