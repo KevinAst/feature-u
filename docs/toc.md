@@ -1,6 +1,6 @@
 # Table of content 
 
-### feature-u (0.1.3)
+### feature-u (1.0.0)
 * [Getting Started](start.md)
 
 ----

@@ -67,6 +67,7 @@ reference the most current release.
 
 Release           | What                                   | *When*
 ------------------|----------------------------------------|------------------
+[v1.0.0](#v1_0_0) | UI Composition                         | *August ??, 2018*
 [v0.1.3](#v0_1_3) | Establish Polyfill Strategy            | *July 2, 2018*
 [v0.1.0](#v0_1_0) | Initial Release                        | *March 6, 2018*
 
@@ -74,6 +75,63 @@ Release           | What                                   | *When*
 
 <br/><br/><br/>
 ## Details:
+
+
+<!-- ************************************************************* -->
+<br/><br/><br/>
+<h3 id="v1_0_0" style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
+  v1.0.0 - UI Composition <i>(August ??, 2018)</i>
+</h3>
+
+[Full Docs](https://feature-u.js.org/1.0.0/)
+&bull;
+[GitHub Release](https://github.com/KevinAst/feature-u/releases/tag/v1.0.0)
+&bull;
+[GitHub Content](https://github.com/KevinAst/feature-u/tree/v1.0.0)
+&bull;
+[Diff](https://github.com/KevinAst/feature-u/compare/v0.1.3-docs...v1.0.0)
+
+**NOTE**: This release contains **breaking changes** from prior
+releases _(i.e. a retrofit of client code is necessary)_.
+
+1. **Review**:
+   **feature-u**'s {{book.guide.crossCom}} has been completely
+   re-designed to include **UI Composition** as a core part of
+   **feature-u** _(thanks {{book.ext.jeffbski}} for the design
+   collaboration)_!
+
+   This means that **navigation and routing is supported**, when using
+   {{book.ext.reactRouter}} _(due to it's v4 design that utilizes
+   component composition)_.
+
+   This refactor promotes **one solution** for all cross-communication
+   _(i.e. Actions, Selectors, UI Components, API, etc.)_, making it
+   comprehensive and universal.
+   
+   You can read more about this in {{book.guide.crossCom}}.  
+
+   At a high level, the following items have been impacted _(more
+   detail can be found at {{book.guide.crossCom}})_:
+   
+   - In an effort to standardize terminology _(and remove ambiguity)_,
+     the term `fassets` _(feature assets)_ is being used throughout,
+     replacing `publicFace` _(on the aspect definition side)_ and `app`
+     _(on the usage side)_.
+   
+   - The `Feature.fassets` aspect replaces `Feature.publicFace`,
+     providing a more formal set of directives, supporting things like
+     **contractual arrangements** _(of usage and definition)_, and
+     **validation of resources**.
+   
+   - The `fassets` object replaces the `app` object, to programmatically
+     access cross-feature resources.
+   
+   - The new `fassetsConnect()` higher-order component (HOC) auto-wires
+     named feature assets as component properties.
+   
+   The following ??gist will lead you through the migration details.
+
+   ?? utilize MORE links (above)
 
 
 <!-- ************************************************************* -->

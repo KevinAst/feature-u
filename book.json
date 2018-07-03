@@ -197,10 +197,12 @@
       "featureRouter":     "[`feature-router`](https://github.com/KevinAst/feature-router)",
       "react":             "[`react`](https://reactjs.org/)",
       "reactNative":       "[`react-native`](https://facebook.github.io/react-native/)",
+      "reactRouter":       "[`react-router`](https://reacttraining.com/react-router/)",
       "redux":             "[`redux`](http://redux.js.org/)",
       "reduxMiddleware":   "[`redux middleware`](https://redux.js.org/docs/advanced/Middleware.html)",
       "reduxActions":      "[`redux-actions`](https://www.npmjs.com/package/redux-actions)",
-      "reduxLogic":        "[`redux-logic`](https://github.com/jeffbski/redux-logic)"
+      "reduxLogic":        "[`redux-logic`](https://github.com/jeffbski/redux-logic)",
+      "jeffbski":          "[`@jeffbski`](https://github.com/jeffbski)"
     }
   }
 }
