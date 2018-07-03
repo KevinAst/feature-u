@@ -2,6 +2,7 @@ import {op}           from '../launchApp';  // module under test INTERNAL
 import {createFeature} from '../..';
 
 
+// TODO: ?? RETROFIT to fassets
 describe('launchApp.op.helper.createApp(activeFeatures): app', () => {
 
   const feature1API = {
