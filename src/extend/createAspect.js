@@ -100,6 +100,8 @@ import logf                 from '../util/logf';
  * {{book.guide.additionalMethods}})_.
  *
  * @return {Aspect} a new Aspect object (to be consumed by {{book.api.launchApp}}).
+ *
+ * @function createAspect
  */
 export default function createAspect({name,
                                       genesis,

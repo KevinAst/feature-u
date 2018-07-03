@@ -41,6 +41,8 @@ let executionOrder = 1; // running counter of execution order of life-cycle-hook
  *
  * @return {App} the App object used to promote
  * {{book.guide.crossCom}}.
+ *
+ * @function launchApp
  */
 export default function launchApp({aspects=[],
                                    features,
@@ -83,6 +85,7 @@ export default function launchApp({aspects=[],
   const activeFeatures = op.helper.pruneActiveFeatures(features);
 
   // create our App object containing the publicFace (used in cross-communication between features)
+  // ?? RETROFIT:
   const app = op.helper.createApp(activeFeatures);
 
   // expand the feature content of any aspect that relies on managedExpansion()
@@ -368,6 +371,7 @@ op.helper.pruneActiveFeatures = function(features) {
 //* helper: createApp(activeFeatures): app
 //*------------------------------------------
 
+// ?? RETROFIT:
 op.helper.createApp = function(activeFeatures) {
 
   // create our App object containing the publicFace (used in cross-communication between features)

@@ -53,6 +53,8 @@ import logf        from '../util/logf';
  *
  * @return {Feature} a new Feature object (to be consumed by
  * launchApp()).
+ *
+ * @function createFeature
  */
 export default function createFeature({name,
                                        enabled=true,

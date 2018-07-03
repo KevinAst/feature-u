@@ -37,6 +37,8 @@ import isFunction  from 'lodash.isfunction';
  *
  * @return {managedExpansionCB} the supplied managedExpansionCB,
  * marked as a "managed expansion callback".
+ *
+ * @function managedExpansion
  */
 export default function managedExpansion(managedExpansionCB) {
 
