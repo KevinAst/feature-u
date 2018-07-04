@@ -122,11 +122,15 @@ export default function createFeature({name,
  * @private
  */
 const validFeatureProps = {
+
+  //            owner id  of extension (ex: aspect's npm package name)
+  //            =========
   name:         'builtin',
   enabled:      'builtin',
-  publicFace:   'builtin',
+  publicFace:   'builtin', // ?? now fassets
   appWillStart: 'builtin',
   appDidStart:  'builtin',
+
 };
 
 /**
