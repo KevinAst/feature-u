@@ -66,7 +66,7 @@ export default function createFassets(activeFeatures) {
 
 
   // PUBLIC: fassets object used in cross-communication between features
-  const fassets = {
+  const _fassets = {
 
     // ***
     // *** normalized fassets accumulation over all features
@@ -130,20 +130,24 @@ export default function createFassets(activeFeatures) {
   //         - normalize resource directly in fassets object
   //*---------------------------------------------------------------------------
 
-  activeFeatures.filter(  feature => feature.fassets ) // filter features with the fassets aspect
+  activeFeatures.filter(  feature => feature.fassets !== undefined ) // filter features with the fassets aspect
                 .forEach( feature => {
-
-  { // ?? remove once complete ... emacs messes up indentation
+  { // HELP_EMACS: extra bracket - emacs can't handle indentation with nested filter/forEach (above)
 
     const check = verify.prefix(`Feature.name: '${feature.name}' ... ERROR in "fassets" aspect: `);
 
     const fassets = feature.fassets;
 
-    // validate that fassets contain only "known" directives
-    // ??$$ TEST POINT ****************************************************************************************************************************************************************
+    // validate the fassets basic structure
+    // ... fassets must be an object literal
+    check(isPlainObject(fassets), `the fassets aspect MUST BE an object literal`);
     const {define, use, defineUse, ...unknownDirectives} = fassets;
+    // ... all fassets directives are recognized
     const unknownDirectiveKeys = Object.keys(unknownDirectives);
-    check(unknownDirectiveKeys.length === 0,  `unrecognized fassets sub-directive(s): ${unknownDirectiveKeys} ... expecting only: define/use/defineUse`);
+    check(unknownDirectiveKeys.length === 0,  `unrecognized fassets directive(s): ${unknownDirectiveKeys} ... expecting only: define/use/defineUse`);
+    // ... at least ONE fassets directive is supplied
+    check(define!==undefined || use!==undefined || defineUse!==undefined,
+          `at least one directive is required (define/use/defineUse)`);
 
     // interpret BOTH define/defineUse directives
     // ... we attempt to process in same order defined within the fassets object literal
@@ -154,15 +158,13 @@ export default function createFassets(activeFeatures) {
     //       ... see: http://2ality.com/2015/10/property-traversal-order-es6.html
     //     - While this may work in a majority of cases, I DO NOT ADVERTISE THIS!!!
     const directiveKeys = Object.keys(fassets);
-    directiveKeys.filter(  directiveKey => directiveKey === 'define' || directiveKey === 'defineUse' ) // filter both define directives
+    directiveKeys.filter(  directiveKey => directiveKey === 'define' || directiveKey === 'defineUse' ) // filter all define directives
                  .forEach( directiveKey => {
-
-    { // ?? remove once complete ... emacs messes up indentation
-
+    { // HELP_EMACS
       const defineDirective = fassets[directiveKey];
 
       // validate that defineDirective is an object literal
-      check(isPlainObject(defineDirective), `the ${directiveKey} sub-directive MUST BE an object literal`);
+      check(isPlainObject(defineDirective), `the ${directiveKey} directive MUST BE an object literal`);
 
       // iterpret each resource being defined
       // ... we attempt to process in same order defined within the fassets.define object literal
@@ -175,45 +177,43 @@ export default function createFassets(activeFeatures) {
         // NOTE: resource validation is postponed to subsequent Pass
         //       ... because we need BOTH _resources and _usage
 
-        // ... cannot contain wildcards
-        // ?? do it
+        // ... insure it will not overwrite our fasset method names (get/isFeature)
+        check(resourceKey!=='get' && resourceKey!=='isFeature', `fassets.${directiveKey}.'${resourceKey}' is a reserved word`);
+
+        // ... cannot contain wildcards ?? or other special characters (I THINK) ?? or spaces ?? or be an empty string
+        // ??$$ add/test checks
 
         // ... must be unique (i.e. cannot be defined more than once)
         //     ... these are individual "single-use" keys
         //         In other words, we do NOT support the "pull" (bucket) philosophy
         const resourcePreviouslyDefined = _resources[resourceKey];
-        check(!resourcePreviouslyDefined, `fassets.${directiveKey}.${resourceKey} is NOT unique ... previously defined in Feature.name: '${resourcePreviouslyDefined.definingFeature}'`);
+        if (resourcePreviouslyDefined) // conditional required to prevent template literal (next line) from referencing undefined.definingFeature
+          check(!resourcePreviouslyDefined, `fassets.${directiveKey}.'${resourceKey}' is NOT unique ... previously defined in Feature.name: '${resourcePreviouslyDefined.definingFeature}'`);
 
         // retain in _resources
-        _resources[resourceKey] = {
-          val:             resource,
-          definingFeature: feature.name,
-          defineUse:       directiveKey === 'defineUse',
-          order:           ++_runningExpansionOrder,
+        // ... NOTE: currently this structure is tested indirectly
+        //           - can't really export it without attaching it to the fassets object
+        _resources[resourceKey] = {                        // ex: 'action.openView' ... NO wildcards allowed
+          val:             resource,                       // resource value
+          definingFeature: feature.name,                   // the feature defining this resource
+          defineUse:       directiveKey === 'defineUse',   // directive used in defining this resource (false: define. true: defineUse)
+          order:           ++_runningExpansionOrder,       // order of feature expansion and fassets aspects (within feature)
+                                                           // ... used in ordering wildcard accumulation
         };
 
-        // normalize resource directly in fassets object
-        // ?? do it
+        // inject resource directly in our _fassets object (normalized)
+        injectFassetsResource(resourceKey, resource, _fassets, check);
 
       });
                    
-    } // ?? remove once complete ... emacs messes up indentation
+    } // HELP_EMACS
     });
 
-  } // ?? remove once complete ... emacs messes up indentation
+  } // HELP_EMACS
   });
 
-
-  //   const _resources = {
-  //   
-  // ?   '{fassetsKey}': {                    // ex: 'action.openView' ... NO wildcards allowed
-  // ?     val:             {whatever},       // resource value
-  // ?     definingFeature: {featureName},    // the feature defining this resource
-  // ?     defineUse:       boolean,          // directive used in defining this resource (false: define. true: defineUse)
-  // ?     order:           {num},            // order of feature expansion and fassets aspects (within feature)
-  //                                          // ... used in ordering wildcard accumulation
-  //     },
-
+  // ??$$ TEST POINT (all code tested) ****************************************************************************************************************************************************************
+  // console.log(`?? fassets NOW: `, _fassets);
 
 
   //*---------------------------------------------------------------------------
@@ -233,6 +233,7 @@ export default function createFassets(activeFeatures) {
   //*---------------------------------------------------------------------------
 
   // ??
+  _usage.temp = '??temporary remove lint error';
 
 
   //*---------------------------------------------------------------------------
@@ -260,5 +261,39 @@ export default function createFassets(activeFeatures) {
 
 
   // return our public fassets object (used in cross-communication between features)
-  return fassets;
+  return _fassets;
 }
+
+
+// inject the supplied key/val into obj,
+// normalized into a structure with depth (by interpreting the key's federated namespace)
+function injectFassetsResource(key, val, obj, check) {
+
+  const nodeKeys   = key.split('.'); // interpret federated namespace (delimited with DOTs)
+  const lastNode   = nodeKeys.pop(); // extract last node (reducing the size of nodeKeys array)
+  const runningObj = nodeKeys.reduce( (accum, nodeKey) => {
+    if (accum[nodeKey]) {
+      // appending to existing structure
+      // ... must be a plain object ... otherwise it represents a conflict
+      check(isPlainObject(accum[nodeKey]), `while normalizing the fassets '${key}' key, a conflict was detected with another feature at the '${nodeKey}' node (it is NOT an object)`);
+    }
+    else {
+      // introduce new intermediate node
+      accum[nodeKey] = {};
+    }
+    return accum[nodeKey];
+  }, obj);
+
+  // inject the val indexed by the lastNode
+  // ??NO: DO NOT THINK THIS IS A THING
+  // ??    ... must be a plain object ... otherwise it represents a conflict
+  // ??    check(isPlainObject(runningObj), `while normalizing the fassets '${key}' key, a conflict was detected with another feature at the '${lastNode}' node (?? parent is NOT an object)`);
+  // ... cannot clober (i.e. cover up or overwrite) existing data
+  check(!runningObj[lastNode],  `while normalizing the fassets '${key}' key, a conflict was detected with another feature at the '${lastNode}' node (overwriting existing data)`);
+  runningObj[lastNode] = val;
+
+}
+
+
+// ?? is it OK to have empty directives (define/use/defineUse)
+// ??? Wow: must introduce diagnostic logs to track what the heck this is doing :-(
