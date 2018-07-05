@@ -1,6 +1,8 @@
-import verify        from '../util/verify';
-import isString      from 'lodash.isstring';
-import isPlainObject from 'lodash.isplainobject';
+import verify             from '../util/verify';
+import isString           from 'lodash.isstring';
+import isPlainObject      from 'lodash.isplainobject';
+import isFunction         from 'lodash.isfunction';
+import fassetValidations  from './fassetValidations';
 
 // ?? is it OK to have empty directives (define/use/defineUse)
 // ?? Wow: must introduce diagnostic logs to track what the heck this is doing :-(
@@ -145,7 +147,8 @@ export default function createFassets(activeFeatures) {
 
     const fassets = feature.fassets;
 
-    // validate the fassets basic structure
+    // ??$$ really would like to pull this out in a seperate pass ... THIS would make our check unique ... i.e. would NOT have to create new check (below)
+    // validate the fassets basic structure (done here because it is the first time we see the fassets)
     // ... fassets must be an object literal
     check(isPlainObject(fassets), `the fassets aspect MUST BE an object literal`);
     const {define, use, defineUse, ...unknownDirectives} = fassets;
@@ -209,8 +212,8 @@ export default function createFassets(activeFeatures) {
         };
 
         // inject resource directly in our _fassets object (normalized)
-        injectFassetsResource(resourceKey, resource, _fassets, check);
-
+        injectFassetsResource(resourceKey, resource, _fassets, 
+                              verify.prefix(`Feature.name: '${feature.name}' ... ERROR in "fassets" aspect, "${directiveKey}" directive: `));
       });
                    
     } // HELP_EMACS
@@ -240,27 +243,64 @@ export default function createFassets(activeFeatures) {
   //                         the resource validation (Pass 4).
   //*---------------------------------------------------------------------------
 
+  // filter features with the "fassets" aspect -AND- "use" directive
+  activeFeatures.filter(  feature => feature.fassets !== undefined && feature.fassets.use !== undefined )
+                .forEach( feature => {
+  { // HELP_EMACS: extra bracket - sorry to say, emacs web-mode can't handle indentation with nested filter/forEach (above) :-(
+
+    const check = verify.prefix(`Feature.name: '${feature.name}' ... ERROR in "fassets" aspect, "use" directive: `);
+
+    const useDirective = feature.fassets.use;
+
+    // verify the use directive is an array
+    check(Array.isArray(useDirective), `the use directive MUST BE an array`);
+
+    // process each "use" contract
+    useDirective.forEach( useEntry => {
+
+      // decipher the useEntry, validating, and applying default semantics
+      const {useKey, required, validateFn} = decipherDefaultedUseEntry(useEntry, check);
+
+      // maintain each use contract in our _usage object
+      // NOTE: The uniqueness of "use" keys is NOT a requirement
+      //       IN OTHER WORDS: multiple features can specify the same (or overlapping) "use" keys
+      //       HOWEVER, for duplicate keys: 
+      //       - the optionality can vary (required simply takes precedence)
+      //       - the expected data types MUST be the same
+      //         NOTE: For overlapping wildcard items, there is an opportunity to have
+      //               multiple expected types.  This will be caught (indirectly) through
+      //               the resource validation (Pass 4).
+      if (_usage[useKey]) { // duplicate entry (from other features)
+        // accumulate necessary items
+        _usage[useKey].required = _usage[useKey].required || required; // required: true takes precedence
+        _usage[useKey].definingFeatures.push(feature.name);
+
+        // insure accumulation is possible
+        check(_usage[useKey].validateFn===validateFn, `cannot accumulate duplicate 'use' contract from multiple features: [${_usage[useKey].definingFeatures}] ... the type validateFns are NOT the same`);
+      }
+      else { // initial entry (first time introduced)
+        _usage[useKey] = {                   // ex: 'MainPage.*.link' ... wildcards allowed
+          regex: 'L8TR??',                   // the resolved regex for this useKey (null when useKey has NO wildcards)
+          required,                          // optionality (required takes precedence for multiple entries)
+          validateFn,                        // validation function (based on registered keywords)
+          definingFeatures: [feature.name],  // what feature(s) defined this "use" contract
+          resolution: 'resourceVal??',       // pre-resolved resource values matching useKey
+                                             // ... wrapped in [] when wildcards in use
+                                             // ... optionality, validation, and order applied (in Pass 4)
+        };
+      }
+
+    });
+
+  } // HELP_EMACS
+  });
+
+
+
   // ??$$ TEST POINT ****************************************************************************************************************************************************************
-
-
-
-  // maintain each use contract in our _usage object
-  // ??
-  _usage.temp = '??temporary remove lint error';
-
-  // _usage = {
-  // 
-  // ? '{useKey}': {                          // ex: 'MainPage.*.link' ... wildcards allowed
-  // ?   regex:            {from_useKey},     // the resolved regex for this useKey (null when useKey has NO wildcards)
-  // ?   required:         true/false,        // optionality (required takes precedence for multiple entries)
-  // ?   validateFn:       func,              // validation function (based on registered keywords)
-  // ?   definingFeatures: [{featureName}],   // what feature(s) defined this "use" contract
-  // ?   resolution:       resourceVal,       // pre-resolved resource values matching useKey
-  //                                          // ... wrapped in [] when wildcards in use
-  //                                          // ... optionality, validation, and order applied (in Pass 4)
-  //   },
-  // };
-
+  // ?? WE ARE PRETTY MUCH DONE with 'use' accumulation
+  // console.log(`?? use entry: `, {useKey, required, validateFn});
+  // console.log(`?? _usage['${useKey}']:`, _usage[useKey]);
 
 
   //*---------------------------------------------------------------------------
@@ -340,46 +380,120 @@ function injectFassetsResource(key, val, obj, check) {
  * ```
  *   - allow embedded DOTS "."
  *   - dissallow wildcards "*"
- *   - valid:   "a"
- *              "a1"
- *              "a1.b"
- *              "a1.b2.c"
- *   - invalid: ""           // empty string
- *              "123"        // must start with alpha
- *              ".a"         // beginning empty string
- *              "a."         // ending empty string
- *              "a..b"       // embedded empty string
- *              "a.b."       // ending empty string (again)
- *              "a.b.1"      // each node must start with alpha
- *              "a.b\n.c"    // cr/lf NOT supported
- *              "a.b .c"     // spaces NOT supported
- *              "a.*.c"      // wildcards NOT supported
- *              ""
+ *   - valid:      "a"
+ *                 "a1"
+ *                 "a1.b"
+ *                 "a1.b2.c"
+ *   - invalid:    ""           // empty string
+ *                 "123"        // must start with alpha
+ *                 ".a"         // beginning empty string
+ *                 "a."         // ending empty string
+ *                 "a..b"       // embedded empty string
+ *                 "a.b."       // ending empty string (again)
+ *                 "a.b.1"      // each node must start with alpha
+ *                 "a.b\n.c"    // cr/lf NOT supported
+ *                 "a.b .c"     // spaces NOT supported
+ *   - wildcards:
+ *                 "a.*.c"      // depends on allowWildcards parameter
+ *                 "*a.*.c*"    // depends on allowWildcards parameter
  * ```
  *
  * @param {string} key the key to validate.
  *
  * @param {assertionFn} check an assertion function (with context),
  * used to perform validation.
+ *
+ * @param {boolean} allowWildcards an indicator as to whether to 
+ * allow wildcards (true) or not (false DEFAULT).
  * 
  * @private
  */
-function checkProgrammaticStruct(key, check) {
+function checkProgrammaticStruct(key, check, allowWildcards=false) {
 
   const errMsg = `fassetsKey: '${key}' is invalid (NOT a programmatic structure) ...`;
+
+  const regexAllowingWildcards    = /^[a-zA-Z\*][a-zA-Z0-9\*]*$/;
+  const regexDisallowingWildcards = /^[a-zA-Z][a-zA-Z0-9]*$/;
+  var   regexCheck = regexAllowingWildcards;
 
   // insure NO cr/lf
   check(key.match(/[\n\r]/)===null, `${errMsg} contains unsupported cr/lf`);
 
-  // insure NO wildcards
-  // ... this is covered through our regex (below) but we want a more explicit message
-  check(key.match(/\*/)===null, `${errMsg} wildcards are not supported`);
+  // validate wildcards, per parameter
+  // ... must also accomodate in our regex check (below) but this check provides a more explicit message
+  if (!allowWildcards) {
+    check(key.match(/\*/)===null, `${errMsg} wildcards are not supported`);
+    regexCheck = regexDisallowingWildcards;
+  }
 
   // analyze each node of the federated namespace
   const nodeKeys = key.split('.');
   nodeKeys.forEach( nodeKey => {
     check(nodeKey!=='', `${errMsg} contains invalid empty string`);
-    check(nodeKey.match(/^[a-zA-Z][a-zA-Z0-9]*$/)!==null, `${errMsg} contains invalid chars, each node requires: alpha, followed by any number of alpha-numerics`);
+    check(nodeKey.match(regexCheck)!==null, `${errMsg} contains invalid chars, each node requires: alpha, followed by any number of alpha-numerics`);
   });
 
+}
+
+
+
+/**
+ * An internal function that deciphers the supplied useEntry,
+ * validating, applying default semantics, and interpreting the two
+ * options:
+ *
+ * - a string
+ * - a string/options in a two element array
+ *
+ * @param {string||[string,options]} useEntry the use entry to
+ * decipher.
+ *
+ * @param {assertionFn} check an assertion function (with context),
+ * used to perform validation.
+ *
+ * @return defaulted object with following entries: {useKey, required, validationFn}
+ * 
+ * @private
+ */
+function decipherDefaultedUseEntry(useEntry, check) {
+
+  // decipher various formats of useEntry
+  const use = {};
+  if (isString(useEntry)) {
+    use.useKey     = useEntry;
+    use.required   = true;
+    use.validateFn = fassetValidations.any;
+  }
+  else if (Array.isArray(useEntry)) {
+    check(useEntry.length === 2, `"use" entry must either be a string or a string/options in a two element array ... incorrect array size: ${useEntry.length}`);
+
+    const [useKey, useOptions] = useEntry;
+
+    check(isString(useKey),          `"use" entry with options (two element array), first element is NOT a string`);
+    check(isPlainObject(useOptions), `"use" entry with options (two element array), second element is NOT an object`);
+
+    const {required = true, type:validateFn = fassetValidations.any, ...unknownOptions} = useOptions;
+
+    const unknownOptionsKeys = Object.keys(unknownOptions);
+    check(unknownOptionsKeys.length === 0, `"use" entry with options (two element array), options have unrecognized entries: ${unknownOptionsKeys} ... expecting only: required/type`);
+
+    use.useKey     = useKey;
+    use.required   = required;
+    use.validateFn = validateFn;
+  }
+  else {
+    // unconditional error
+    check(false, `"use" entry must either be a string or a string/options in a two element array`);
+  }
+
+  // validate individual items
+  // ... use.useKey
+  checkProgrammaticStruct(use.useKey, check, true); // allowWildcards
+  // ... use.required
+  check(use.required===true || use.required===false, `"use" entry with options ('${use.useKey}'), 'required' entry must be true/false`);
+  // ... use.validateFn
+  check(isFunction(use.validateFn), `"use" entry with options ('${use.useKey}'), 'type' entry must be a fassetValidationFn`);
+
+  // that's all folks
+  return use;
 }
