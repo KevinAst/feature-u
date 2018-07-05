@@ -2,6 +2,9 @@ import verify        from '../util/verify';
 import isString      from 'lodash.isstring';
 import isPlainObject from 'lodash.isplainobject';
 
+// ?? is it OK to have empty directives (define/use/defineUse)
+// ?? Wow: must introduce diagnostic logs to track what the heck this is doing :-(
+
 /**
  * An internal creator of the {{book.api.fassets}} object, by
  * accumulating the public fassets promoted by the set of supplied
@@ -33,7 +36,7 @@ export default function createFassets(activeFeatures) {
 
   // PRIVATE: fassets resources (with meta data)
   // ... maintained via Feature.fassets.define/defineUse
-  const _resources = { /* dynamically maintained ... SAMPLE: TODO: ?? fill in
+  const _resources = { /* dynamically maintained ... SAMPLE:
 
     '{fassetsKey}': {                    // ex: 'action.openView' ... NO wildcards allowed
       val:             {whatever},       // resource value
@@ -72,7 +75,7 @@ export default function createFassets(activeFeatures) {
     // *** normalized fassets accumulation over all features
     // ***
 
-    /* dynamically maintained ... SAMPLE: TODO: ?? fill in
+    /* dynamically maintained ... SAMPLE:
 
     MainPage: {
       cart: {
@@ -132,7 +135,7 @@ export default function createFassets(activeFeatures) {
 
   activeFeatures.filter(  feature => feature.fassets !== undefined ) // filter features with the fassets aspect
                 .forEach( feature => {
-  { // HELP_EMACS: extra bracket - emacs can't handle indentation with nested filter/forEach (above)
+  { // HELP_EMACS: extra bracket - sorry to say, emacs web-mode can't handle indentation with nested filter/forEach (above) :-(
 
     const check = verify.prefix(`Feature.name: '${feature.name}' ... ERROR in "fassets" aspect: `);
 
@@ -177,11 +180,11 @@ export default function createFassets(activeFeatures) {
         // NOTE: resource validation is postponed to subsequent Pass
         //       ... because we need BOTH _resources and _usage
 
-        // ... insure it will not overwrite our fasset method names (get/isFeature)
+        // ... insure it will not overwrite our reserved fasset methods (get/isFeature)
         check(resourceKey!=='get' && resourceKey!=='isFeature', `fassets.${directiveKey}.'${resourceKey}' is a reserved word`);
 
-        // ... cannot contain wildcards ?? or other special characters (I THINK) ?? or spaces ?? or be an empty string
-        // ??$$ add/test checks
+        // ... restrict to a programmatic structure, because we normalize it (with depth)
+        checkProgrammaticStruct(resourceKey, check);
 
         // ... must be unique (i.e. cannot be defined more than once)
         //     ... these are individual "single-use" keys
@@ -212,9 +215,6 @@ export default function createFassets(activeFeatures) {
   } // HELP_EMACS
   });
 
-  // ??$$ TEST POINT (all code tested) ****************************************************************************************************************************************************************
-  // console.log(`?? fassets NOW: `, _fassets);
-
 
   //*---------------------------------------------------------------------------
   // Pass 3: accumulate usage contracts
@@ -231,6 +231,8 @@ export default function createFassets(activeFeatures) {
   //                     multiple expected types.  This will be caught (indirectly) through
   //                     the resource validation (Pass 4).
   //*---------------------------------------------------------------------------
+
+  // ??$$ TEST POINT ****************************************************************************************************************************************************************
 
   // ??
   _usage.temp = '??temporary remove lint error';
@@ -265,8 +267,23 @@ export default function createFassets(activeFeatures) {
 }
 
 
-// inject the supplied key/val into obj,
-// normalized into a structure with depth (by interpreting the key's federated namespace)
+/**
+ * An internal function that injects the supplied key/val into obj,
+ * normalized into a structure with depth (by interpreting the key's
+ * federated namespace).
+ *
+ * @param {string} key the injection key.  Can contain DOTs (.) which
+ * will be normalized into a structure with depth.
+ *
+ * @param {Any} valdobj the value to inject.
+ *
+ * @param {Object} obj the injection object.
+ *
+ * @param {assertionFn} check an assertion function (with context),
+ * used to perform validation.
+ * 
+ * @private
+ */
 function injectFassetsResource(key, val, obj, check) {
 
   const nodeKeys   = key.split('.'); // interpret federated namespace (delimited with DOTs)
@@ -285,15 +302,59 @@ function injectFassetsResource(key, val, obj, check) {
   }, obj);
 
   // inject the val indexed by the lastNode
-  // ??NO: DO NOT THINK THIS IS A THING
-  // ??    ... must be a plain object ... otherwise it represents a conflict
-  // ??    check(isPlainObject(runningObj), `while normalizing the fassets '${key}' key, a conflict was detected with another feature at the '${lastNode}' node (?? parent is NOT an object)`);
   // ... cannot clober (i.e. cover up or overwrite) existing data
   check(!runningObj[lastNode],  `while normalizing the fassets '${key}' key, a conflict was detected with another feature at the '${lastNode}' node (overwriting existing data)`);
   runningObj[lastNode] = val;
 
 }
 
+/**
+ * An internal function that validates supplied key, to be a
+ * programmatic structure, as follows:
+ *
+ * ```
+ *   - allow embedded DOTS "."
+ *   - dissallow wildcards "*"
+ *   - valid:   "a"
+ *              "a1"
+ *              "a1.b"
+ *              "a1.b2.c"
+ *   - invalid: ""           // empty string
+ *              "123"        // must start with alpha
+ *              ".a"         // beginning empty string
+ *              "a."         // ending empty string
+ *              "a..b"       // embedded empty string
+ *              "a.b."       // ending empty string (again)
+ *              "a.b.1"      // each node must start with alpha
+ *              "a.b\n.c"    // cr/lf NOT supported
+ *              "a.b .c"     // spaces NOT supported
+ *              "a.*.c"      // wildcards NOT supported
+ *              ""
+ * ```
+ *
+ * @param {string} key the key to validate.
+ *
+ * @param {assertionFn} check an assertion function (with context),
+ * used to perform validation.
+ * 
+ * @private
+ */
+function checkProgrammaticStruct(key, check) {
 
-// ?? is it OK to have empty directives (define/use/defineUse)
-// ??? Wow: must introduce diagnostic logs to track what the heck this is doing :-(
+  const errMsg = `fassetsKey: '${key}' is invalid (NOT a programmatic structure) ...`;
+
+  // insure NO cr/lf
+  check(key.match(/[\n\r]/)===null, `${errMsg} contains unsupported cr/lf`);
+
+  // insure NO wildcards
+  // ... this is covered through our regex (below) but we want a more explicit message
+  check(key.match(/\*/)===null, `${errMsg} wildcards are not supported`);
+
+  // analyze each node of the federated namespace
+  const nodeKeys = key.split('.');
+  nodeKeys.forEach( nodeKey => {
+    check(nodeKey!=='', `${errMsg} contains invalid empty string`);
+    check(nodeKey.match(/^[a-zA-Z][a-zA-Z0-9]*$/)!==null, `${errMsg} contains invalid chars, each node requires: alpha, followed by any number of alpha-numerics`);
+  });
+
+}

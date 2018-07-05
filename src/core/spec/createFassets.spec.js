@@ -113,7 +113,35 @@ describe('createFassets(activeFeatures): fassets', () => {
       });
 
 
-      // TODO: ?? test cannot contain wildcards (when implemented) ?? and other constraints
+      const programmaticTests = {
+        '':          'contains invalid empty string',                    // empty string
+        '123':       'alpha, followed by any number of alpha-numerics',  // must start with alpha
+        '.a':        'contains invalid empty string',                    // beginning empty string
+        'a.':        'contains invalid empty string',                    // ending empty string
+        'a..b':      'contains invalid empty string',                    // embedded empty string
+        'a.b.':      'contains invalid empty string',                    // ending empty string (again)
+        'a.b.1':     'alpha, followed by any number of alpha-numerics',  // each node must start with alpha
+        'a.b\n.c':   'contains unsupported cr/lf',                       // cr/lf NOT supported
+        'a.b .c':    'alpha, followed by any number of alpha-numerics',  // spaces NOT supported
+        'a.*.c':     'wildcards are not supported',                      // wildcards NOT supported
+      };
+      for (const fassetsKey in programmaticTests) {
+        const expectedError = programmaticTests[fassetsKey];
+        test(`fassets key programmatic structure check for '${fassetsKey}': ${expectedError}`, () => {
+          expect(()=> createFassets([
+            createFeature({
+              name:       'featureTest',
+              fassets:    {
+                define: {
+                  [fassetsKey]: 'value insignificant',
+                },
+              },
+            }),
+          ]) )
+            .toThrow( new RegExp(`Feature.name: 'featureTest'.*ERROR in "fassets" aspect: fassetsKey.*\n*.*is invalid.*NOT a programmatic structure.*${expectedError}`) );
+          // THROW: Feature.name: 'featureTest' ... ERROR in "fassets" aspect: fassetsKey: '' is invalid (NOT a programmatic structure) ... ${expectedError}
+        });
+      }
 
       test('fassets must be unique (cannot be defined more than once)', () => {
         expect(()=> createFassets([
