@@ -52,7 +52,7 @@ export default function createFassets(activeFeatures) {
 
   // PRIVATE: fassets usage contract (with meta data)
   // ... maintained via Feature.fassets.use
-  const _usage = { /* dynamically maintained ... SAMPLE: TODO: ?? fill in
+  const _usage = { /* dynamically maintained ... SAMPLE:
 
     '{useKey}': {                          // ex: 'MainPage.*.link' ... wildcards allowed
       regex:            {from_useKey},     // the resolved regex for this useKey (null when useKey has NO wildcards)
@@ -122,15 +122,19 @@ export default function createFassets(activeFeatures) {
   //*---------------------------------------------------------------------------
   // Pass 2: gather/pre-process all resource definitions
   //         - BOTH via fassets.define/defineUse directives
-  //         - maintain _resources entries
+  //         - maintain _resources entries (with meta data)
+  //         - normalize resource directly in _fassets object
   //         - validation:
-  //           * cannot contain wildcards
-  //           * must be unique (i.e. cannot be defined more than once)
+  //           * may contain federated namespace (with dots ".")
+  //             ... ex: 'MainPage.launch'
+  //           * MAY NOT contain wildcards
+  //             ... must be defined completely
+  //           * must be unique
+  //             ... cannot be defined more than once
   //             ... these are individual "single-use" keys
   //                 In other words, we do NOT support the "pull" (bucket) philosophy
   //           * NOTE: resource validation is postponed to subsequent Pass
   //                   ... because we need BOTH _resources and _usage
-  //         - normalize resource directly in fassets object
   //*---------------------------------------------------------------------------
 
   activeFeatures.filter(  feature => feature.fassets !== undefined ) // filter features with the fassets aspect
@@ -219,23 +223,44 @@ export default function createFassets(activeFeatures) {
   //*---------------------------------------------------------------------------
   // Pass 3: accumulate usage contracts
   //         - via fassets.use directive
-  //         - maintain _usage entries (minus _usage.resolution)
+  //         - maintain _usage entries
   //         - interpret options directives (used in validation of optionality and type)
   //         - validation:
+  //           * may contain federated namespace (with dots ".")
+  //             ... ex: 'MainPage.launch'
+  //           * may contain wildcards (with "*")
+  //             ... ex: 'MainPage.*.link'
   //           * the uniqueness of "use" keys is NOT a requirement
   //             ... IN OTHER WORDS: multiple features can specify the same (or overlapping) "use" keys
-  //           * HOWEVER, for duplicate keys: 
-  //             - the optionality can vary (required simply takes precedence)
-  //             - the expected data types MUST be the same
-  //               NOTE: For overlapping wildcard items, there is an opportunity to have
-  //                     multiple expected types.  This will be caught (indirectly) through
-  //                     the resource validation (Pass 4).
+  //             ... HOWEVER, for duplicate keys: 
+  //                 - the optionality can vary (required simply takes precedence)
+  //                 - the expected data types MUST be the same
+  //                   NOTE: For overlapping wildcard items, there is an opportunity to have
+  //                         multiple expected types.  This will be caught (indirectly) through
+  //                         the resource validation (Pass 4).
   //*---------------------------------------------------------------------------
 
   // ??$$ TEST POINT ****************************************************************************************************************************************************************
 
+
+
+  // maintain each use contract in our _usage object
   // ??
   _usage.temp = '??temporary remove lint error';
+
+  // _usage = {
+  // 
+  // ? '{useKey}': {                          // ex: 'MainPage.*.link' ... wildcards allowed
+  // ?   regex:            {from_useKey},     // the resolved regex for this useKey (null when useKey has NO wildcards)
+  // ?   required:         true/false,        // optionality (required takes precedence for multiple entries)
+  // ?   validateFn:       func,              // validation function (based on registered keywords)
+  // ?   definingFeatures: [{featureName}],   // what feature(s) defined this "use" contract
+  // ?   resolution:       resourceVal,       // pre-resolved resource values matching useKey
+  //                                          // ... wrapped in [] when wildcards in use
+  //                                          // ... optionality, validation, and order applied (in Pass 4)
+  //   },
+  // };
+
 
 
   //*---------------------------------------------------------------------------
