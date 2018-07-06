@@ -4,8 +4,7 @@ import isPlainObject      from 'lodash.isplainobject';
 import isFunction         from 'lodash.isfunction';
 import fassetValidations  from './fassetValidations';
 
-// ?? is it OK to have empty directives (define/use/defineUse)
-// ?? Wow: must introduce diagnostic logs to track what the heck this is doing :-(
+// ?? resolve all logfs (below) and add more
 
 /**
  * An internal creator of the {{book.api.fassets}} object, by
@@ -57,13 +56,13 @@ export default function createFassets(activeFeatures) {
   const _usage = { /* dynamically maintained ... SAMPLE:
 
     '{useKey}': {                          // ex: 'MainPage.*.link' ... wildcards allowed
-      regex:            {from_useKey},     // the resolved regex for this useKey (null when useKey has NO wildcards)
+      regex:            {from_useKey},     // the resolved regex for this useKey (null when useKey has NO wildcards) ?? prob OBSOLETE
       required:         true/false,        // optionality (required takes precedence for multiple entries)
       validateFn:       func,              // validation function (based on registered keywords)
       definingFeatures: [{featureName}],   // what feature(s) defined this "use" contract
-      resolution:       resourceVal,       // pre-resolved resource values matching useKey
+      resolution:       resourceVal,       // pre-resolved resource values matching useKey ?? OBSOLETE - handled with get() cache
                                            // ... wrapped in [] when wildcards in use
-                                           // ... optionality, validation, and order applied (in Pass 4)
+                                           // ... optionality, validation, and order applied (in later stage)
     },
     ... */
 
@@ -113,7 +112,23 @@ export default function createFassets(activeFeatures) {
 
 
   //*---------------------------------------------------------------------------
-  // Pass 1: maintain "active features" indicator (in support of isFeature())
+  // OK: We are now ready to interpret/accumulate all feature fassets!!
+  //     - This requires multiple passes through our features.
+  //       ... As a simple example:
+  //           We cannot validate the usage contracts (found in fassets.use),
+  //           until all resources are accumulated (via fassets.define/defineUse)
+  //     - The comment blocks (below) breaks the process down in "stages".
+  //       ... Think of the mighty Saturn V rocket, which powered the Apollo
+  //           mission to the moon!
+  //       ... OK: I know this is corny, but geeks have to have some fun :-)
+  //     - Hopefully, this provides insight as to why there are multiple passes,
+  //       and allows you to follow the code more intuitively.
+  //*---------------------------------------------------------------------------
+
+
+  //*---------------------------------------------------------------------------
+  // T Minus 2: Maintain our "active features" indicator
+  //            - in support of: fassets.isFeature()
   //*---------------------------------------------------------------------------
 
   activeFeatures.forEach( feature => {
@@ -122,8 +137,46 @@ export default function createFassets(activeFeatures) {
 
 
   //*---------------------------------------------------------------------------
-  // Pass 2: gather/pre-process all resource definitions
-  //         - BOTH via fassets.define/defineUse directives
+  // T Minus 1: Validate the basic structure of all Feature.fassets
+  //            - including the fassets directives (define/defineUse/use)
+  //*---------------------------------------------------------------------------
+
+  // filter features with the fassets aspect
+  activeFeatures.filter(  feature => feature.fassets !== undefined )
+                .forEach( feature => {
+  { // HELP_EMACS: extra bracket - sorry to say, emacs web-mode can't handle indentation with nested filter/forEach (above) :-(
+
+    const check = verify.prefix(`Feature.name: '${feature.name}' ... ERROR in "fassets" aspect: `);
+
+    const fassets = feature.fassets;
+
+    // fassets must be an object literal
+    check(isPlainObject(fassets), `the fassets aspect MUST BE an object literal`);
+
+    // insure all fassets directives are recognized
+    const {define, use, defineUse, ...unknownDirectives} = fassets;
+    const unknownDirectiveKeys = Object.keys(unknownDirectives);
+    check(unknownDirectiveKeys.length === 0,
+          `unrecognized fassets directive(s): ${unknownDirectiveKeys} ... expecting only: define/use/defineUse`);
+
+    // verify at least ONE fassets directive is supplied
+    // AI: We may want to relax this "empty" check
+    check(define!==undefined || use!==undefined || defineUse!==undefined,
+          `the fassets aspect is empty (at least one directive needed - define/use/defineUse)`);
+
+  } // HELP_EMACS
+  });
+
+
+  //*---------------------------------------------------------------------------
+  // Blast Off: Yeee Haaaa!!
+  //            - We are now off-the-ground
+  //*---------------------------------------------------------------------------
+
+
+  //*---------------------------------------------------------------------------
+  // Stage 1: Interpret fasset define/defineUse directive, accumulating resources
+  //         - via fassets.define/defineUse directives
   //         - maintain _resources entries (with meta data)
   //         - normalize resource directly in _fassets object
   //         - validation:
@@ -135,29 +188,18 @@ export default function createFassets(activeFeatures) {
   //             ... cannot be defined more than once
   //             ... these are individual "single-use" keys
   //                 In other words, we do NOT support the "pull" (bucket) philosophy
-  //           * NOTE: resource validation is postponed to subsequent Pass
+  //           * NOTE: resource validation is postponed to subsequent stage
   //                   ... because we need BOTH _resources and _usage
   //*---------------------------------------------------------------------------
 
-  activeFeatures.filter(  feature => feature.fassets !== undefined ) // filter features with the fassets aspect
+  // filter features with the fassets aspect
+  activeFeatures.filter(  feature => feature.fassets !== undefined )
                 .forEach( feature => {
   { // HELP_EMACS: extra bracket - sorry to say, emacs web-mode can't handle indentation with nested filter/forEach (above) :-(
 
-    const check = verify.prefix(`Feature.name: '${feature.name}' ... ERROR in "fassets" aspect: `);
+    const check = verify.prefix(`Feature.name: '${feature.name}' ... ERROR in "fassets" aspect, "define/defineUse" directive: `);
 
     const fassets = feature.fassets;
-
-    // ??$$ really would like to pull this out in a seperate pass ... THIS would make our check unique ... i.e. would NOT have to create new check (below)
-    // validate the fassets basic structure (done here because it is the first time we see the fassets)
-    // ... fassets must be an object literal
-    check(isPlainObject(fassets), `the fassets aspect MUST BE an object literal`);
-    const {define, use, defineUse, ...unknownDirectives} = fassets;
-    // ... all fassets directives are recognized
-    const unknownDirectiveKeys = Object.keys(unknownDirectives);
-    check(unknownDirectiveKeys.length === 0,  `unrecognized fassets directive(s): ${unknownDirectiveKeys} ... expecting only: define/use/defineUse`);
-    // ... at least ONE fassets directive is supplied
-    check(define!==undefined || use!==undefined || defineUse!==undefined,
-          `at least one directive is required (define/use/defineUse)`);
 
     // interpret BOTH define/defineUse directives
     // ... we attempt to process in same order defined within the fassets object literal
@@ -176,15 +218,19 @@ export default function createFassets(activeFeatures) {
       // validate that defineDirective is an object literal
       check(isPlainObject(defineDirective), `the ${directiveKey} directive MUST BE an object literal`);
 
+      // verify at least ONE definition is supplied
+      // AI: We may want to relax this "empty" check
+      const resourceKeys = Object.keys(defineDirective);
+      check(resourceKeys.length > 0, `the ${directiveKey} directive is empty (at least one definition is needed)`);
+
       // iterpret each resource being defined
       // ... we attempt to process in same order defined within the fassets.define object literal
-      //     - ditto discution (above) on processing order
-      const resourceKeys = Object.keys(defineDirective);
+      //     - ditto discussion (above) on processing order
       resourceKeys.forEach( resourceKey => {
         const resource = defineDirective[resourceKey];
 
         // validate resource key
-        // NOTE: resource validation is postponed to subsequent Pass
+        // NOTE: resource validation is postponed to subsequent stage
         //       ... because we need BOTH _resources and _usage
 
         // ... insure it will not overwrite our reserved fasset methods (get/isFeature)
@@ -212,8 +258,7 @@ export default function createFassets(activeFeatures) {
         };
 
         // inject resource directly in our _fassets object (normalized)
-        injectFassetsResource(resourceKey, resource, _fassets, 
-                              verify.prefix(`Feature.name: '${feature.name}' ... ERROR in "fassets" aspect, "${directiveKey}" directive: `));
+        injectFassetsResource(resourceKey, resource, _fassets, check);
       });
                    
     } // HELP_EMACS
@@ -224,7 +269,7 @@ export default function createFassets(activeFeatures) {
 
 
   //*---------------------------------------------------------------------------
-  // Pass 3: accumulate usage contracts
+  // Stage 2: Interpret fasset use directive, accumulating usage contract
   //         - via fassets.use directive
   //         - maintain _usage entries
   //         - interpret options directives (used in validation of optionality and type)
@@ -240,7 +285,7 @@ export default function createFassets(activeFeatures) {
   //                 - the expected data types MUST be the same
   //                   NOTE: For overlapping wildcard items, there is an opportunity to have
   //                         multiple expected types.  This will be caught (indirectly) through
-  //                         the resource validation (Pass 4).
+  //                         the resource validation (subsequent stage).
   //*---------------------------------------------------------------------------
 
   // filter features with the "fassets" aspect -AND- "use" directive
@@ -255,11 +300,17 @@ export default function createFassets(activeFeatures) {
     // verify the use directive is an array
     check(Array.isArray(useDirective), `the use directive MUST BE an array`);
 
+    // verify at least ONE usage contract is supplied
+    // AI: We may want to relax this "empty" check
+    check(useDirective.length > 0, `the use directive is empty (at least one usage contract is needed`);
+
     // process each "use" contract
     useDirective.forEach( useEntry => {
 
       // decipher the useEntry, validating, and applying default semantics
       const {useKey, required, validateFn} = decipherDefaultedUseEntry(useEntry, check);
+
+      // logf `processing fassets.use directive: '${useEntry}'\n:`, {useKey, required, validateFn}
 
       // maintain each use contract in our _usage object
       // NOTE: The uniqueness of "use" keys is NOT a requirement
@@ -269,7 +320,7 @@ export default function createFassets(activeFeatures) {
       //       - the expected data types MUST be the same
       //         NOTE: For overlapping wildcard items, there is an opportunity to have
       //               multiple expected types.  This will be caught (indirectly) through
-      //               the resource validation (Pass 4).
+      //               the resource validation (subsequent stage).
       if (_usage[useKey]) { // duplicate entry (from other features)
         // accumulate necessary items
         _usage[useKey].required = _usage[useKey].required || required; // required: true takes precedence
@@ -280,15 +331,17 @@ export default function createFassets(activeFeatures) {
       }
       else { // initial entry (first time introduced)
         _usage[useKey] = {                   // ex: 'MainPage.*.link' ... wildcards allowed
-          regex: 'L8TR??',                   // the resolved regex for this useKey (null when useKey has NO wildcards)
+          regex: 'L8TR??',                   // the resolved regex for this useKey (null when useKey has NO wildcards) ?? prob OBSOLETE
           required,                          // optionality (required takes precedence for multiple entries)
           validateFn,                        // validation function (based on registered keywords)
           definingFeatures: [feature.name],  // what feature(s) defined this "use" contract
-          resolution: 'resourceVal??',       // pre-resolved resource values matching useKey
+          resolution: 'resourceVal??',       // pre-resolved resource values matching useKey ?? OBSOLETE - handled with get() cache
                                              // ... wrapped in [] when wildcards in use
-                                             // ... optionality, validation, and order applied (in Pass 4)
+                                             // ... optionality, validation, and order applied (in later stage)
         };
       }
+
+      // logf console.log(`_usage['${useKey}']:`, _usage[useKey]);
 
     });
 
@@ -296,36 +349,47 @@ export default function createFassets(activeFeatures) {
   });
 
 
+  //*---------------------------------------------------------------------------
+  // Stage 3: Validate resources
+  //          >> this is done in our third stage, now that both resources and
+  //             usage contracts (with it's validation constraints) are in place
+  //          A: Apply client-supplied validation constraints
+  //             ... defined in the "use" directive
+  //          B: Insure "defineUse" resources match at least ONE usage contract
+  //             ... this is a fail-fast technique, quickly giving problem insight
+  //                 to the client
+  //*---------------------------------------------------------------------------
 
   // ??$$ TEST POINT ****************************************************************************************************************************************************************
-  // ?? WE ARE PRETTY MUCH DONE with 'use' accumulation
-  // console.log(`?? use entry: `, {useKey, required, validateFn});
-  // console.log(`?? _usage['${useKey}']:`, _usage[useKey]);
 
+  // A: Apply client-supplied validation constraints
+  //    ... defined in the "use" directive
+  //        - for each _resources entry
+  //          * for each "matching" _usage entry
+  //            - validate
+  //              * optionality
+  //              * expected data types
 
-  //*---------------------------------------------------------------------------
-  // Pass 4: insure _resources "defineUse" directives matches at least ONE usage contract
-  //         - for each _resources entry of 'defineUse' directive
-  //           * key must match at least one _usage entry
-  //             ... because "defineUse" directives are intended to fulfill a use contract
-  //*---------------------------------------------------------------------------
+  // ??
 
-  // ?? can combine with Pass 5
-
-
-  //*---------------------------------------------------------------------------
-  // Pass 5: validate _resources 
-  //         - now that we have resolved BOTH _resources and _usage
-  //         - for each _resources entry
-  //           * for each "matching" _usage entry
-  //             - validate
-  //               * optionality
-  //               * expected data types
-  //*---------------------------------------------------------------------------
+  // B: Insure "defineUse" resources match at least ONE usage contract
+  //    ... this is a fail-fast technique, quickly giving problem insight to the client
+  //        - for each _resources entry of 'defineUse' directive
+  //          * key must match at least one _usage entry
+  //            ... because "defineUse" directives are intended to fulfill a use contract
 
   // ??
 
 
+  //*---------------------------------------------------------------------------
+  // OK: Our Saturn V is "now in orbit"!!!
+  //     - Ready for a trajectory to the moon
+  //     - INTERPRETATION: the fassets object is ready for:
+  //                       - client consumption
+  //                       - and seeding the fassetsConnect() function
+  //*---------------------------------------------------------------------------
+
+  // logf: summarize _fassets resources (sorted), usage contracts (sorted), and json _fassets object (normalized) ... could be too much NOT SURE
 
   // return our public fassets object (used in cross-communication between features)
   return _fassets;
