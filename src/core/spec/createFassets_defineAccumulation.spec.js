@@ -141,6 +141,14 @@ describe('createFassets(): fassets define/defineUse directive accumulation', () 
           },
         },
       }),
+      createFeature({
+        name:    'feature3',
+        fassets: {
+          use: [ // define usage contracts to avoid contract errors
+            '*', // make it easy!
+          ],
+        },
+      }),
     ]);
 
     test('foo',         () => expect(fassets.foo         ).toBe(123) );

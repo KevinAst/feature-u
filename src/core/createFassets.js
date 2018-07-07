@@ -128,7 +128,7 @@ export default function createFassets(activeFeatures) {
         const keys = matchAll(_fassetsKeysBlob, createRegExp(fassetsKey));
         
         // convert keys to actual resource values
-        result = keys.map( key => _resources[key].val );
+        result = keys.map( key => _resources[key].val);
       }
       else { // supplied fassetsKey has NO wildcards ... dereference directly
 
@@ -242,7 +242,7 @@ export default function createFassets(activeFeatures) {
   // filter features with the fassets aspect
   activeFeatures.filter(  feature => feature.fassets !== undefined )
                 .forEach( feature => {
-  { // HELP_EMACS: extra bracket - sorry to say, emacs web-mode can't handle indentation with nested filter/forEach (above) :-(
+  { // HELP_EMACS
 
     const check = verify.prefix(`Feature.name: '${feature.name}' ... ERROR in "fassets" aspect, "define/defineUse" directive: `);
 
@@ -316,6 +316,13 @@ export default function createFassets(activeFeatures) {
   } // HELP_EMACS
   });
 
+  // purge last cr/lf from _fassetsKeysBlob to prevent an open wildcard '*'
+  // from returning a rougue empty string key ('')
+  // ... causing an internal run-time error
+  if (_fassetsKeysBlob !== '') {
+    _fassetsKeysBlob = _fassetsKeysBlob.slice(0, -1);
+  }
+
 
   //*---------------------------------------------------------------------------
   // Stage 2: Interpret fasset use directive, accumulating usage contract
@@ -340,7 +347,7 @@ export default function createFassets(activeFeatures) {
   // filter features with the "fassets" aspect -AND- "use" directive
   activeFeatures.filter(  feature => feature.fassets !== undefined && feature.fassets.use !== undefined )
                 .forEach( feature => {
-  { // HELP_EMACS: extra bracket - sorry to say, emacs web-mode can't handle indentation with nested filter/forEach (above) :-(
+  { // HELP_EMACS
 
     const check = verify.prefix(`Feature.name: '${feature.name}' ... ERROR in "fassets" aspect, "use" directive: `);
 
@@ -406,43 +413,56 @@ export default function createFassets(activeFeatures) {
   //*---------------------------------------------------------------------------
 
   // ??$$ TEST POINT ****************************************************************************************************************************************************************
+  // ?? createFassets_validateAccumulation.spec.js
+
+  // accumulator of ALL validation errors, to show all at once
+  const validationErrs = [];
 
   //***
   // A: Apply client-supplied validation constraints
   //    ... defined in the "use" directive
   //***
 
-  // ??$$ ** apply client-supplied validation constraints
-  // iterate over all resources
-/* ?? L8TR
-  for (const fassetsKey in _resources) {
-    const resource = _resources[fassetsKey];
+  // Feature.fassets.use: "type" validation
+  Object.entries(_resources) // resource iteration
+        .forEach( ([fassetsKey, resource]) => {
 
-    // iterate over all "matching" usage contracts
-    for (const useKey in _usage) {
-      const usage = _usage[useKey];
+    Object.entries(_usage)   // "matching" usage contract iteration
+          .filter(  ([useKey, usage]) => isMatch(fassetsKey, createRegExp(useKey)) )
+          .forEach( ([useKey, usage]) => {
+    { // HELP_EMACS
 
-      // if fassetsKey MATCHES useKey
-      // >>> ?? if (isMatch(fassetsKey, createRegExp(useKey)) // ?? I think should work, regardless if useKey has wildcards or not
-      {
-        // ?? apply client-supplied validation constraints
-        // ?? requires full fassetValidations.js -and- testing
-        // NOTE: this also implicitly tests conflicts between overlapping usage contracts
+      // apply client-supplied validation constraints
+      // NOTE: This also indirectly tests conflicts between overlapping usage contracts
+      //       ... i.e. two usage contracts (with varying wildcards) that both match an
+      //                entry can in fact specify different type checks
+      const errStr = usage.validateFn(resource.val);
+      if (errStr) {
+        validationErrs.push(`VALIDATION ERROR in resource: '${fassetsKey}', expecting: ${errStr} ... resource defined in Feature: '${resource.definingFeature}', usage contract '${useKey}' found in Feature: '${usage.definingFeatures}'`);
+        // EX: VALIDATION ERROR in resource: 'foo1', expecting: boolean ... resource defined in Feature: 'feature1', usage contract 'foo*' found in Feature: 'feature2'
+      }
+
+    } // HELP_EMACS
+    });
+
+  });
+  
+  // Feature.fassets.use: "required" validation
+  Object.entries(_usage) // usage contract iteration
+        .forEach( ([useKey, usage]) => {
+  { // HELP_EMACS
+
+    // when usage is contractually required, insure at least one matching resource is available
+    if (usage.required) {
+      const resource = _fassets.get(useKey);
+      if (resource === undefined || resource.length === 0) {
+        validationErrs.push(`REQUIRED RESOURCE NOT FOUND, usage contract '${useKey}' (found in Feature: '${usage.definingFeatures}') specifies a REQUIRED resource, but NO matches were found`);
+        // EX: REQUIRED RESOURCE NOT FOUND, usage contract '*a.*.c*' (found in Feature: 'featureTest') specifies a REQUIRED resource, but NO matches were found
       }
     }
-  }
 
-  // ??$$ ** validate optionality **
-  // iterate over all usage contracts
-  for (const useKey in _usage) {
-    const usage = _usage[useKey];
-
-    // when usage contract specifies an optionality of required, insure at least resource matches
-    if (usage.required) {
-      // ?? get(useKey); // ?? requires get implementation
-      // ?? must be NOT undefined, or if array .length>0
-    }
-  }
+  } // HELP_EMACS
+  });
 
 
   //***
@@ -450,30 +470,39 @@ export default function createFassets(activeFeatures) {
   //    ... this is a fail-fast technique, quickly giving problem insight to the client
   //***
 
-  // iterate over all "defineUse" resources
-  for (const fassetsKey in _resources) {
-    const resource = _resources[fassetsKey];
-    if (resource.defineUse) {
+  Object.entries(_resources) // defineUse resource iteration
+        .filter(  ([fassetsKey, resource]) => resource.defineUse )
+        .forEach( ([fassetsKey, definedUseResource]) => {
+  { // HELP_EMACS
 
-      // key must match at least one _usage entry
-      // ... because "defineUse" directives are intended to fulfill a use contract
-
-      // iterate over all usage contracts
-      for (const useKey in _usage) {
-        const usage = _usage[useKey];
-
-        // ?? check ... fassetsKey matches at least one _usage.useKey
-        //    >>> fassetsKey.??
-        // ?? gory set var and break ... employing wildcard stuff in prior step
-        //    ?? alternative NONE WORKS
-        //       1) forEach filter ... but must convert to array and it too would be messy
-        //       2) is it possible for regEx to operate on an array <<< I don't think so
-
+    // fassetsKey must match at least one usage entry
+    // ... because "defineUse" directives are intended to fulfill a use contract
+    var matchFound = false;
+    for (const useKey in _usage) { // usage contract iteration
+      if (isMatch(fassetsKey, createRegExp(useKey))) {
+        matchFound = true;
+        break;
       }
     }
+    // ERROR, when NO usage contracts match defineUse
+    if (!matchFound) {
+      validationErrs.push(`ERROR defineUse '${fassetsKey}' directive MUST match at least one usage contract, but does NOT ... is this misspelled? (found in Feature: '${definedUseResource.definingFeature}')`);
+      // EX: ERROR defineUse 'wow.bbb' directive MUST match at least one usage contract, but does NOT ... is this misspelled? (found in Feature: 'feature1')
+    }
+
+  } // HELP_EMACS
+  });
+
+
+  //***
+  //*** expose ALL validation issues in ONE Error
+  //***
+  if (validationErrs.length) {
+    verify(false, 
+           `${validationErrs.length} validation error(s) were found during Feature.fasset resource accumulation:\n` +
+           validationErrs.join('\n'));
   }
 
-??? L8TR */
 
   //*---------------------------------------------------------------------------
   // OK: Our Saturn V is "now in orbit"!!!
@@ -482,6 +511,11 @@ export default function createFassets(activeFeatures) {
   //                       - client consumption
   //                       - and seeding the fassetsConnect() function
   //*---------------------------------------------------------------------------
+
+  // SideBar: To free up space, our regexp cache is deleted now that createFassets() is complete
+  //          ... the fassets.get() maintains results cache, 
+  //              so regexp will be rarely needed (if at all)
+  _regExpCache = {};
 
   // logf: summarize _fassets resources (sorted), usage contracts (sorted), and json _fassets object (normalized) ... could be too much NOT SURE
 
@@ -694,6 +728,12 @@ export function containsWildCard(str) { // ... exported for unit tests only
  * @private
  */
 export function matchAll(str, regexp) { // ... exported for unit tests only
+
+  // NOTE: Because we re-use our regexps (for optimization)
+  //       -AND- we use the "global" regexp modifier, 
+  //       WE MUST RESET IT (so as to NOT pick up where it last left off)
+  regexp.lastIndex = 0;
+
   return str.match(regexp) || []; // simple pass-through -BUT- convert null to empty array
 }
 
@@ -711,14 +751,22 @@ export function matchAll(str, regexp) { // ... exported for unit tests only
  * @private
  */
 export function isMatch(str, regexp) { // ... exported for unit tests only
+
+  // NOTE: Because we re-use our regexps (for optimization)
+  //       -AND- we use the "global" regexp modifier, 
+  //       WE MUST RESET IT (so as to NOT pick up where it last left off)
+  regexp.lastIndex = 0;
+
   return regexp.test(str); // simple pass-through
 }
 
 
 // regexp cache used by createRegExp()
 //  - optimizes repeated iteration in createFassets() "Stage 3: VALIDATION"
-//  - NOTE: ?? to free up space, this cache can be deleted at end of createFassets()
-const _regExpCache = { /* dynamically maintained ... SAMPLE:
+//  - SideBar: To free up space, this cache is deleted at end of createFassets()
+//             ... the fassets.get() maintains results cache, 
+//                 so regexp will be rarely needed (if at all)
+var _regExpCache = { /* dynamically maintained ... SAMPLE:
   'MainPage.*.link':      /^MainPage\..*\.link$/gm,
   'selector.currentView': /^selector\.currentView$/gm,
   ... */

@@ -123,7 +123,8 @@ describe('createFassets(): fassets use directive accumulation', () => {
             name:       'featureTest',
             fassets:    {
               use: [
-                useKey
+                // make optional so as to not run into other validation constraints
+                [useKey, {required: false}],
               ],
             },
           }),
@@ -198,6 +199,9 @@ describe('createFassets(): fassets use directive accumulation', () => {
         createFeature({
           name:    'feature1',
           fassets: {
+            define: {
+              'a.x.b': 'needed ... it is required in other feature',
+            },
             use: [
               ['a.*.b', {required: false, type: fassetValidations.any}],
             ],

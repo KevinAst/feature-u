@@ -26,23 +26,24 @@ describe('createFassets(): regexp tests', () => {
 
   });
 
-
-  //***-------------------------------------------------------------------------
-  // matchAll(str, regexp): []
-  // isMatch(str, regexp):  boolean
-  describe('match tests', () => {
-
-    const cartLink   = 'MainPage.cart.link';
-    const cartBody   = 'MainPage.cart.body';
-    const searchLink = 'MainPage.search.link';
-    const searchBody = 'MainPage.search.body';
-    
-    const blob = `
+  // resources used in various tests
+  const cartLink   = 'MainPage.cart.link';
+  const cartBody   = 'MainPage.cart.body';
+  const searchLink = 'MainPage.search.link';
+  const searchBody = 'MainPage.search.body';
+  
+  const blob = `
 ${cartLink}
 ${cartBody}
 ${searchLink}
 ${searchBody}
 `;
+
+
+  //***-------------------------------------------------------------------------
+  // matchAll(str, regexp): []
+  // isMatch(str, regexp):  boolean
+  describe('match tests', () => {
 
     [
       // str           pattern                 expected
@@ -76,5 +77,34 @@ ${searchBody}
   // createRegExp(pattern): RegExp
   // ... tested indirectly (above)
   // ... NOTE: tests (above) excersise BOTH single and multi-line cases (i.e. our blob)
+
+
+  //***-------------------------------------------------------------------------
+  describe('insure our regexp can be re-used', () => {
+
+    // NOTE: Because we re-use our regexps (for optimization)
+    //       -AND- we use the "global" regexp modifier, 
+    //       IT MUST BE RESET (so as to NOT pick up where it last left off)
+
+    const regexp = createRegExp('MainPage.*.link');
+
+    test(`FIRST isMatch() should work`, () => {
+      expect( isMatch(blob, regexp) ).toBe(true);
+    });
+
+    test(`SECOND isMatch() should work`, () => {
+      expect( isMatch(blob, regexp) ).toBe(true);
+    });
+    
+    test(`FIRST matchAll() should work`, () => {
+      expect( matchAll(blob, regexp).length).toBe(2);
+    });
+    
+    test(`SECOND matchAll() should work`, () => {
+      expect( matchAll(blob, regexp).length).toBe(2);
+    });
+
+
+  });
 
 });
