@@ -107,16 +107,16 @@ describe('createFassets(): fassets use directive accumulation', () => {
       // THROW:    Feature.name: 'featureTest' ... ERROR in "fassets" aspect, "use" directive: "use" entry with options (two element array), options have unrecognized entries: WowZee,WooWoo ... expecting only: required/type
     });
 
-    const validTests = {
-      'a':         'just because',
-      'a1':        'just because',
-      'a1.b':      'just because',
-      'a1.b2.c':   'just because',
-      'a.*.c':     'wildcards are supported',
-      '*a.*.c*':   'wildcards are supported',
-    };
-    for (const useKey in validTests) {
-      const reason = validTests[useKey];
+    [
+     // useKey       reason
+     // ===========  ========================
+      [ 'a',         'just because'            ],
+      [ 'a1',        'just because'            ],
+      [ 'a1.b',      'just because'            ],
+      [ 'a1.b2.c',   'just because'            ],
+      [ 'a.*.c',     'wildcards are supported' ],
+      [ '*a.*.c*',   'wildcards are supported' ],
+    ].forEach( ([useKey, reason]) => {
       test(`useKey valid check '${useKey}': ${reason}`, () => {
         expect(()=> createFassets([
           createFeature({
@@ -130,21 +130,22 @@ describe('createFassets(): fassets use directive accumulation', () => {
         ]) )
           .not.toThrow();
       });
-    }
+    });
 
-    const invalidTests = {
-      '':          'contains invalid empty string',                    // empty string
-      '123':       'alpha, followed by any number of alpha-numerics',  // must start with alpha
-      '.a':        'contains invalid empty string',                    // beginning empty string
-      'a.':        'contains invalid empty string',                    // ending empty string
-      'a..b':      'contains invalid empty string',                    // embedded empty string
-      'a.b.':      'contains invalid empty string',                    // ending empty string (again)
-      'a.b.1':     'alpha, followed by any number of alpha-numerics',  // each node must start with alpha
-      'a.b\n.c':   'contains unsupported cr/lf',                       // cr/lf NOT supported
-      'a.b .c':    'alpha, followed by any number of alpha-numerics',  // spaces NOT supported
-    };
-    for (const useKey in invalidTests) {
-      const expectedError = invalidTests[useKey];
+    [
+     // useKey       expectedError                                       reason
+     // ===========  ==================================================  =================================
+      [ '',          'contains invalid empty string',                    'empty string'                    ],
+      [ '123',       'alpha, followed by any number of alpha-numerics',  'must start with alpha'           ],
+      [ '.a',        'contains invalid empty string',                    'beginning empty string'          ],
+      [ 'a.',        'contains invalid empty string',                    'ending empty string'             ],
+      [ 'a..b',      'contains invalid empty string',                    'embedded empty string'           ],
+      [ 'a.b.',      'contains invalid empty string',                    'ending empty string (again)'     ],
+      [ 'a.b.1',     'alpha, followed by any number of alpha-numerics',  'each node must start with alpha' ],
+      [ 'a.b\n.c',   'contains unsupported cr/lf',                       'cr/lf NOT supported'             ],
+      [ 'a.b .c',    'alpha, followed by any number of alpha-numerics',  'spaces NOT supported'            ],
+    ].forEach( ([useKey, expectedError, reason]) => {
+
       test(`useKey invalid check '${useKey}': ${expectedError}`, () => {
         expect(()=> createFassets([
           createFeature({
@@ -159,7 +160,8 @@ describe('createFassets(): fassets use directive accumulation', () => {
           .toThrow( new RegExp(`Feature.name: 'featureTest'.*ERROR in "fassets" aspect, "use" directive.*\n*.*is invalid.*NOT a programmatic structure.*${expectedError}`) );
         // THROW:  Feature.name: 'featureTest' ... ERROR in "fassets" aspect, "use" directive: fassetsKey: '' is invalid (NOT a programmatic structure) ... contains invalid empty string
       });
-    }
+
+    });
 
     test(`use directive with options: 'required' must be a boolean`, () => {
       expect(()=> createFassets([

@@ -58,21 +58,22 @@ describe('createFassets(): fassets define/defineUse directive accumulation', () 
     });
 
 
-    const programmaticTests = {
-      '':          'contains invalid empty string',                    // empty string
-      '123':       'alpha, followed by any number of alpha-numerics',  // must start with alpha
-      '.a':        'contains invalid empty string',                    // beginning empty string
-      'a.':        'contains invalid empty string',                    // ending empty string
-      'a..b':      'contains invalid empty string',                    // embedded empty string
-      'a.b.':      'contains invalid empty string',                    // ending empty string (again)
-      'a.b.1':     'alpha, followed by any number of alpha-numerics',  // each node must start with alpha
-      'a.b\n.c':   'contains unsupported cr/lf',                       // cr/lf NOT supported
-      'a.b .c':    'alpha, followed by any number of alpha-numerics',  // spaces NOT supported
-      'a.*.c':     'wildcards are not supported',                      // wildcards NOT supported
-    };
-    for (const fassetsKey in programmaticTests) {
-      const expectedError = programmaticTests[fassetsKey];
-      test(`resource key programmatic structure check for '${fassetsKey}': ${expectedError}`, () => {
+    [
+    // fassetsKey    expectedError                                       reason
+    // ===========   ==================================================  =================================
+      [ '',          'contains invalid empty string',                    'empty string'                    ],
+      [ '123',       'alpha, followed by any number of alpha-numerics',  'must start with alpha'           ],
+      [ '.a',        'contains invalid empty string',                    'beginning empty string'          ],
+      [ 'a.',        'contains invalid empty string',                    'ending empty string'             ],
+      [ 'a..b',      'contains invalid empty string',                    'embedded empty string'           ],
+      [ 'a.b.',      'contains invalid empty string',                    'ending empty string (again)'     ],
+      [ 'a.b.1',     'alpha, followed by any number of alpha-numerics',  'each node must start with alpha' ],
+      [ 'a.b\n.c',   'contains unsupported cr/lf',                       'cr/lf NOT supported'             ],
+      [ 'a.b .c',    'alpha, followed by any number of alpha-numerics',  'spaces NOT supported'            ],
+      [ 'a.*.c',     'wildcards are not supported',                      'wildcards NOT supported'         ],
+    ].forEach( ([fassetsKey, expectedError, reason]) => {
+
+      test(`resource key programmatic structure check for '${fassetsKey}', expectedError: '${expectedError}', reason: ${reason}`, () => {
         expect(()=> createFassets([
           createFeature({
             name:       'featureTest',
@@ -86,7 +87,8 @@ describe('createFassets(): fassets define/defineUse directive accumulation', () 
           .toThrow( new RegExp(`Feature.name: 'featureTest'.*ERROR in "fassets" aspect.*fassetsKey.*\n*.*is invalid.*NOT a programmatic structure.*${expectedError}`) );
         // THROW: Feature.name: 'featureTest' ... ERROR in "fassets" aspect, "define/defineUse" directive: fassetsKey: 'a.*.c' is invalid (NOT a programmatic structure) ... wildcards are not supported
       });
-    }
+
+    });
 
     test('resource must be unique (cannot be defined more than once)', () => {
       expect(()=> createFassets([

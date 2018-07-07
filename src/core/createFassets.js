@@ -674,8 +674,7 @@ function decipherDefaultedUseEntry(useEntry, check) {
  * 
  * @private
  */
-// ?? TESTED INDIRECTLY
-function containsWildCard(str) {
+export function containsWildCard(str) { // ... exported for unit tests only
   // check for fassets-based wildcards (only *)
   return str.includes('*'); // ?? question: see if transpiled code transforms to indexOf() !== -1 ... if not, a) use indexOf() b) require polyfill stratagy
 }
@@ -694,8 +693,7 @@ function containsWildCard(str) {
  * 
  * @private
  */
-// ?? TESTED INDIRECTLY ??$$ unit test this and remove this comment
-function matchAll(str, regexp) {
+export function matchAll(str, regexp) { // ... exported for unit tests only
   return str.match(regexp) || []; // simple pass-through -BUT- convert null to empty array
 }
 
@@ -712,8 +710,7 @@ function matchAll(str, regexp) {
  * 
  * @private
  */
-// ?? TESTED INDIRECTLY ??$$ unit test this and remove this comment
-function isMatch(str, regexp) {
+export function isMatch(str, regexp) { // ... exported for unit tests only
   return regexp.test(str); // simple pass-through
 }
 
@@ -732,16 +729,13 @@ const _regExpCache = { /* dynamically maintained ... SAMPLE:
  * pattern string, employing all the heuristics required by fassets
  * usage.
  *
- * NOTE: This has been manually tested to work in both our single and
- *       multi-line cases (i.e. our blob). ??$$ unit test this and remove this comment
- *
  * @param {string} pattern the string to seed the regexp from.
  *
  * @return {RegExp} the newly created regexp.
  * 
  * @private
  */
-function createRegExp(pattern) {
+export function createRegExp(pattern) { // ... exported for unit tests only
 
   var wrkStr = pattern;
 
