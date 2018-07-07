@@ -3,6 +3,7 @@ import isString           from 'lodash.isstring';
 import isPlainObject      from 'lodash.isplainobject';
 import isFunction         from 'lodash.isfunction';
 import fassetValidations  from './fassetValidations';
+import {MyObj}            from '../util/mySpace';
 
 // ?? resolve all logfs (below) and add more
 
@@ -424,12 +425,12 @@ export default function createFassets(activeFeatures) {
   //***
 
   // Feature.fassets.use: "type" validation
-  Object.entries(_resources) // resource iteration
-        .forEach( ([fassetsKey, resource]) => {
+  MyObj.entries(_resources) // resource iteration
+       .forEach( ([fassetsKey, resource]) => {
 
-    Object.entries(_usage)   // "matching" usage contract iteration
-          .filter(  ([useKey, usage]) => isMatch(fassetsKey, createRegExp(useKey)) )
-          .forEach( ([useKey, usage]) => {
+    MyObj.entries(_usage)   // "matching" usage contract iteration
+         .filter(  ([useKey, usage]) => isMatch(fassetsKey, createRegExp(useKey)) )
+         .forEach( ([useKey, usage]) => {
     { // HELP_EMACS
 
       // apply client-supplied validation constraints
@@ -448,8 +449,8 @@ export default function createFassets(activeFeatures) {
   });
   
   // Feature.fassets.use: "required" validation
-  Object.entries(_usage) // usage contract iteration
-        .forEach( ([useKey, usage]) => {
+  MyObj.entries(_usage) // usage contract iteration
+       .forEach( ([useKey, usage]) => {
   { // HELP_EMACS
 
     // when usage is contractually required, insure at least one matching resource is available
@@ -470,9 +471,9 @@ export default function createFassets(activeFeatures) {
   //    ... this is a fail-fast technique, quickly giving problem insight to the client
   //***
 
-  Object.entries(_resources) // defineUse resource iteration
-        .filter(  ([fassetsKey, resource]) => resource.defineUse )
-        .forEach( ([fassetsKey, definedUseResource]) => {
+  MyObj.entries(_resources) // defineUse resource iteration
+       .filter(  ([fassetsKey, resource]) => resource.defineUse )
+       .forEach( ([fassetsKey, definedUseResource]) => {
   { // HELP_EMACS
 
     // fassetsKey must match at least one usage entry
