@@ -22,11 +22,6 @@ import fassetValidations  from './fassetValidations';
  */
 export default function createFassets(activeFeatures) {
 
-  // PRIVATE: running order of feature expansion and fassets aspects (within feature)
-  //          ... used in ordering wildcard accumulation
-  var _runningExpansionOrder = 0;
-
-
   // PRIVATE: active features (used in isFeature())
   const _isFeature = { /* dynamically maintained ... SAMPLE:
     feature1: true,
@@ -36,37 +31,58 @@ export default function createFassets(activeFeatures) {
 
 
   // PRIVATE: fassets resources (with meta data)
-  // ... maintained via Feature.fassets.define/defineUse
+  //          - maintained via Feature.fassets.define/defineUse
   const _resources = { /* dynamically maintained ... SAMPLE:
 
     '{fassetsKey}': {                    // ex: 'action.openView' ... NO wildcards allowed
       val:             {whatever},       // resource value
       definingFeature: {featureName},    // the feature defining this resource
       defineUse:       boolean,          // directive used in defining this resource (false: define. true: defineUse)
-      order:           {num},            // order of feature expansion and fassets aspects (within feature)
-                                         // ... used in ordering wildcard accumulation
     },
     ... */
 
   };
+
+
+  // PRIVATE: a string blob of all resolved fassetKeys delimited by new-line
+  //          - used by fassets.get() method to fetch all keys matching a regexp
+  //          - maintained in feature expansion order - the same order fassets.get() exposes multiple entries
+  //          - highly optimal technique, where a single regexp search is used per fassets.get(wildcard)
+  //            ... and even that is cached!!
+  var _fassetsKeysBlob = '';
 
 
   // PRIVATE: fassets usage contract (with meta data)
-  // ... maintained via Feature.fassets.use
+  //          - maintained via Feature.fassets.use
   const _usage = { /* dynamically maintained ... SAMPLE:
 
     '{useKey}': {                          // ex: 'MainPage.*.link' ... wildcards allowed
-      regex:            {from_useKey},     // the resolved regex for this useKey (null when useKey has NO wildcards) ?? prob OBSOLETE
       required:         true/false,        // optionality (required takes precedence for multiple entries)
       validateFn:       func,              // validation function (based on registered keywords)
       definingFeatures: [{featureName}],   // what feature(s) defined this "use" contract
-      resolution:       resourceVal,       // pre-resolved resource values matching useKey ?? OBSOLETE - handled with get() cache
-                                           // ... wrapped in [] when wildcards in use
-                                           // ... optionality, validation, and order applied (in later stage)
     },
     ... */
 
   };
+
+
+  // PRIVATE: cache all fassets.get() searches, providing a significant optimization
+  //          - especially in the context of React Component usage, 
+  //            which repeats frequently within each UI render
+  //          - this is feasable because fasset resources are pre-loaded up-front,
+  //            and these set of resources will not change
+  const _searchCache = { /* dynamically maintained ... SAMPLE:
+                            'MainPage.*.link':      [...results],
+                            'MainPage.*.body':      [],            // empty array for no results
+                            'selector.currentView': result,
+                            'selector.currentView': UNDEFINED,     // special UNDEFINED for no results (to distguish from entry NOT in cache)
+                            ... */
+  };
+
+
+  // PRIVATE: special value used in cache to allow not-found (undefined) entry 
+  //          to be cached in a recognizable way
+  const UNDEFINED = 'UNDEFINED';
 
 
   // PUBLIC: fassets object used in cross-communication between features
@@ -95,7 +111,33 @@ export default function createFassets(activeFeatures) {
     // ***
 
     // fassets.get(fassetsKey): resource || resource[]
-    // TODO: ?? add this
+    get: (fassetsKey) => {
+      // ??$$ TEST POINT ****************************************************************************************************************************************************************
+      // use cached value (if exists)
+      var result = _searchCache[fassetsKey];
+      if (result) {
+        return result===UNDEFINED ? undefined : result;
+      }
+
+      // resolve get() when not seen before
+      if (containsWildCard(fassetsKey)) { // supplied fassetsKey has wildcards ... do regexp search
+        const regexp = fassetsRegExp(fassetsKey);
+        const keys   = regExpAll(_fassetsKeysBlob, regexp);
+        
+        // convert keys to actual resource value
+        result = keys.map( key => _resources[key].val );
+      }
+      else { // supplied fassetsKey has NO wildcards ... directly dereference
+        // convert dereferenced resource (when found) to actual resource value, undefined when NOT found
+        result = _resources[fassetsKey] ? _resources[fassetsKey].val : undefined;
+      }
+
+      // maintain cache
+      _searchCache[fassetsKey] = result===undefined ? UNDEFINED : result;
+
+      // that's all folks
+      return result;
+    },
 
     // fassets.isFeature(featureName): boolean
     isFeature: (featureName) => {
@@ -253,9 +295,11 @@ export default function createFassets(activeFeatures) {
           val:             resource,                       // resource value
           definingFeature: feature.name,                   // the feature defining this resource
           defineUse:       directiveKey === 'defineUse',   // directive used in defining this resource (false: define. true: defineUse)
-          order:           ++_runningExpansionOrder,       // order of feature expansion and fassets aspects (within feature)
-                                                           // ... used in ordering wildcard accumulation
         };
+
+        // retain our key in our string blob (delimited by new-line)
+        _fassetsKeysBlob += resourceKey + '\n';
+
 
         // inject resource directly in our _fassets object (normalized)
         injectFassetsResource(resourceKey, resource, _fassets, check);
@@ -331,13 +375,9 @@ export default function createFassets(activeFeatures) {
       }
       else { // initial entry (first time introduced)
         _usage[useKey] = {                   // ex: 'MainPage.*.link' ... wildcards allowed
-          regex: 'L8TR??',                   // the resolved regex for this useKey (null when useKey has NO wildcards) ?? prob OBSOLETE
           required,                          // optionality (required takes precedence for multiple entries)
           validateFn,                        // validation function (based on registered keywords)
           definingFeatures: [feature.name],  // what feature(s) defined this "use" contract
-          resolution: 'resourceVal??',       // pre-resolved resource values matching useKey ?? OBSOLETE - handled with get() cache
-                                             // ... wrapped in [] when wildcards in use
-                                             // ... optionality, validation, and order applied (in later stage)
         };
       }
 
@@ -350,9 +390,9 @@ export default function createFassets(activeFeatures) {
 
 
   //*---------------------------------------------------------------------------
-  // Stage 3: Validate resources
+  // Stage 3: VALIDATION: Apply client-supplied validation constraints
   //          >> this is done in our third stage, now that both resources and
-  //             usage contracts (with it's validation constraints) are in place
+  //             usage contracts are in place (with it's validation constraints)
   //          A: Apply client-supplied validation constraints
   //             ... defined in the "use" directive
   //          B: Insure "defineUse" resources match at least ONE usage contract
@@ -362,24 +402,73 @@ export default function createFassets(activeFeatures) {
 
   // ??$$ TEST POINT ****************************************************************************************************************************************************************
 
+  //***
   // A: Apply client-supplied validation constraints
   //    ... defined in the "use" directive
-  //        - for each _resources entry
-  //          * for each "matching" _usage entry
-  //            - validate
-  //              * optionality
-  //              * expected data types
+  //***
 
-  // ??
+  // ??$$ ** apply client-supplied validation constraints
+  // iterate over all resources
+/* ?? L8TR
+  for (const fassetsKey in _resources) {
+    const resource = _resources[fassetsKey];
 
+    // iterate over all "matching" usage contracts
+    for (const useKey in _usage) {
+      const usage = _usage[useKey];
+
+      // if fassetsKey MATCHES useKey
+      // >>> ?? if (regexpTest(fassetsKey, fassetsRegExp(useKey)) // ?? I think should work, regardless if useKey has wildcards or not
+      {
+        // ?? apply client-supplied validation constraints
+        // ?? requires full fassetValidations.js -and- testing
+        // NOTE: this also implicitly tests conflicts between overlapping usage contracts
+      }
+    }
+  }
+
+  // ??$$ ** validate optionality **
+  // iterate over all usage contracts
+  for (const useKey in _usage) {
+    const usage = _usage[useKey];
+
+    // when usage contract specifies an optionality of required, insure at least resource matches
+    if (usage.required) {
+      // ?? get(useKey); // ?? requires get implementation
+      // ?? must be NOT undefined, or if array .length>0
+    }
+  }
+
+
+  //***
   // B: Insure "defineUse" resources match at least ONE usage contract
   //    ... this is a fail-fast technique, quickly giving problem insight to the client
-  //        - for each _resources entry of 'defineUse' directive
-  //          * key must match at least one _usage entry
-  //            ... because "defineUse" directives are intended to fulfill a use contract
+  //***
 
-  // ??
+  // iterate over all "defineUse" resources
+  for (const fassetsKey in _resources) {
+    const resource = _resources[fassetsKey];
+    if (resource.defineUse) {
 
+      // key must match at least one _usage entry
+      // ... because "defineUse" directives are intended to fulfill a use contract
+
+      // iterate over all usage contracts
+      for (const useKey in _usage) {
+        const usage = _usage[useKey];
+
+        // ?? check ... fassetsKey matches at least one _usage.useKey
+        //    >>> fassetsKey.??
+        // ?? gory set var and break ... employing wildcard stuff in prior step
+        //    ?? alternative NONE WORKS
+        //       1) forEach filter ... but must convert to array and it too would be messy
+        //       2) is it possible for regEx to operate on an array <<< I don't think so
+
+      }
+    }
+  }
+
+??? L8TR */
 
   //*---------------------------------------------------------------------------
   // OK: Our Saturn V is "now in orbit"!!!
@@ -395,6 +484,13 @@ export default function createFassets(activeFeatures) {
   return _fassets;
 }
 
+
+
+//******************************************************************************
+//******************************************************************************
+//* Internal Utility Functions
+//******************************************************************************
+//******************************************************************************
 
 /**
  * An internal function that injects the supplied key/val into obj,
@@ -476,27 +572,27 @@ function checkProgrammaticStruct(key, check, allowWildcards=false) {
 
   const errMsg = `fassetsKey: '${key}' is invalid (NOT a programmatic structure) ...`;
 
-  const regexAllowingWildcards    = /^[a-zA-Z\*][a-zA-Z0-9\*]*$/;
-  const regexDisallowingWildcards = /^[a-zA-Z][a-zA-Z0-9]*$/;
-  var   regexCheck = regexAllowingWildcards;
+  const regexpAllowingWildcards    = /^[a-zA-Z\*][a-zA-Z0-9\*]*$/;
+  const regexpDisallowingWildcards = /^[a-zA-Z][a-zA-Z0-9]*$/;
+  var   regexpCheck                = regexpAllowingWildcards;
 
   // insure NO cr/lf
-  check(key.match(/[\n\r]/)===null, `${errMsg} contains unsupported cr/lf`);
+  check(!regExpTest(key, /[\n\r]/), `${errMsg} contains unsupported cr/lf`);
 
   // validate wildcards, per parameter
-  // ... must also accomodate in our regex check (below) but this check provides a more explicit message
+  // ... must also accomodate in our regexp check (below) but this check provides a more explicit message
   if (!allowWildcards) {
-    check(key.match(/\*/)===null, `${errMsg} wildcards are not supported`);
-    regexCheck = regexDisallowingWildcards;
+    check(!regExpTest(key, /\*/), `${errMsg} wildcards are not supported`);
+    regexpCheck = regexpDisallowingWildcards;
   }
 
   // analyze each node of the federated namespace
   const nodeKeys = key.split('.');
   nodeKeys.forEach( nodeKey => {
     check(nodeKey!=='', `${errMsg} contains invalid empty string`);
-    check(nodeKey.match(regexCheck)!==null, `${errMsg} contains invalid chars, each node requires: alpha, followed by any number of alpha-numerics`);
+    check(regExpTest(nodeKey, regexpCheck),
+          `${errMsg} contains invalid chars, each node requires: alpha, followed by any number of alpha-numerics`);
   });
-
 }
 
 
@@ -560,4 +656,116 @@ function decipherDefaultedUseEntry(useEntry, check) {
 
   // that's all folks
   return use;
+}
+
+/**
+ * Return an indicator as to whether fassets-based wildcards are
+ * present in supplied str.
+ *
+ * @param {string} str the string to check for wildcards.
+ *
+ * @return {boolean} true: wildcards present, false: no wildcards
+ * detected
+ * 
+ * @private
+ */
+// ?? TESTED INDIRECTLY
+function containsWildCard(str) {
+  // check for fassets-based wildcards (only *)
+  return str.includes('*'); // ?? question: see if transpiled code transforms to indexOf() !== -1 ... if not, a) use indexOf() b) require polyfill stratagy
+}
+
+
+/**
+ * Perform a regular expression search of the supplied string using
+ * the regexp, returning all matches.
+ *
+ * @param {string} str the string to search.
+ *
+ * @param {RegExp} regexp the regular expression to match.
+ *
+ * @return {string[]} a string array of all matches, empty array for
+ * no match.
+ * 
+ * @private
+ */
+// ?? TESTED INDIRECTLY
+function regExpAll(str, regexp) {
+  return str.match(regexp) || []; // convert null to empty array
+}
+
+
+/**
+ * Return an indicator as to whether the supplied regexp has a match
+ * in str.
+ *
+ * @param {string} str the string to search.
+ *
+ * @param {RegExp} regexp the regular expression to match.
+ *
+ * @return {boolean} true: match, false: no match
+ * 
+ * @private
+ */
+// ?? TESTED INDIRECTLY
+function regExpTest(str, regexp) {
+  return regexp.test(str);
+}
+
+
+// regexp cache used by fassetsRegExp()
+//  - optimizes repeated iteration in createFassets() "Stage 3: VALIDATION"
+//  - NOTE: ?? to free up space, this cache can be deleted at end of createFassets()
+const _regexpCache = { /* dynamically maintained ... SAMPLE:
+  'MainPage.*.link':      /^MainPage\..*\.link$/gm,
+  'selector.currentView': /^selector\.currentView$/gm,
+  ... */
+};
+
+/**
+ * Builds a fassets-specific regular expression from the supplied
+ * pattern string, employing all the heuristics required by fassets
+ * usage.
+ *
+ * NOTE: This has been manually tested to work in both our single and
+ *       multi-line cases (i.e. our blob).
+ *
+ * @param {string} pattern the string to seed the regexp from.
+ *
+ * @return {RegExp} the newly created regexp.
+ * 
+ * @private
+ */
+// ?? TESTED INDIRECTLY
+function fassetsRegExp(pattern) {
+
+  var wrkStr = pattern;
+
+  // utilize _regexpCache
+  var regexp = _regexpCache[pattern];
+  if (regexp) {
+    return regexp;
+  }
+
+  // convert all federated namespace delimiters (DOT ".") to their literal representation
+  wrkStr = wrkStr.replace(/\./g, '\\.');
+
+  // convert all fasset wildcards ("*") to their RegExp equilivant (".*")
+  wrkStr = wrkStr.replace(/\*/g, '.*');
+
+  // start/end anchors are required to match entire entry
+  // ... NOTE: the user is in control (can disable by placing * at beginning or end)
+  wrkStr = `^${wrkStr}$`;
+
+  // construct the RegExp
+  // ... in support of multi-line blob, we require modifiers (g: global, m: multiline)
+  //      NOTE: This has been manually tested to work in both our single and
+  //      multi-line cases (i.e. our blob).
+  regexp = new RegExp(wrkStr, 'gm');
+
+  // maintain cache
+  _regexpCache[pattern] = regexp;
+
+  // that's all folks
+  return regexp;
 }
