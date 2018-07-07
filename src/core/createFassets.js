@@ -121,14 +121,19 @@ export default function createFassets(activeFeatures) {
 
       // resolve get() when not seen before
       if (containsWildCard(fassetsKey)) { // supplied fassetsKey has wildcards ... do regexp search
-        const regexp = fassetsRegExp(fassetsKey);
-        const keys   = regExpAll(_fassetsKeysBlob, regexp);
+
+        // locate all keys matching the fassetsKey (with wildcards)
+        // ... order is same as feature expansion order
+        // ... empty array for NO match
+        const keys = matchAll(_fassetsKeysBlob, createRegExp(fassetsKey));
         
-        // convert keys to actual resource value
+        // convert keys to actual resource values
         result = keys.map( key => _resources[key].val );
       }
-      else { // supplied fassetsKey has NO wildcards ... directly dereference
-        // convert dereferenced resource (when found) to actual resource value, undefined when NOT found
+      else { // supplied fassetsKey has NO wildcards ... dereference directly
+
+        // convert dereferenced resource (when found) to actual resource value
+        // ... undefined for NOT found
         result = _resources[fassetsKey] ? _resources[fassetsKey].val : undefined;
       }
 
@@ -418,7 +423,7 @@ export default function createFassets(activeFeatures) {
       const usage = _usage[useKey];
 
       // if fassetsKey MATCHES useKey
-      // >>> ?? if (regexpTest(fassetsKey, fassetsRegExp(useKey)) // ?? I think should work, regardless if useKey has wildcards or not
+      // >>> ?? if (regexpTest(fassetsKey, createRegExp(useKey)) // ?? I think should work, regardless if useKey has wildcards or not
       {
         // ?? apply client-supplied validation constraints
         // ?? requires full fassetValidations.js -and- testing
@@ -577,12 +582,12 @@ function checkProgrammaticStruct(key, check, allowWildcards=false) {
   var   regexpCheck                = regexpAllowingWildcards;
 
   // insure NO cr/lf
-  check(!regExpTest(key, /[\n\r]/), `${errMsg} contains unsupported cr/lf`);
+  check(!isMatch(key, /[\n\r]/), `${errMsg} contains unsupported cr/lf`);
 
   // validate wildcards, per parameter
   // ... must also accomodate in our regexp check (below) but this check provides a more explicit message
   if (!allowWildcards) {
-    check(!regExpTest(key, /\*/), `${errMsg} wildcards are not supported`);
+    check(!isMatch(key, /\*/), `${errMsg} wildcards are not supported`);
     regexpCheck = regexpDisallowingWildcards;
   }
 
@@ -590,7 +595,7 @@ function checkProgrammaticStruct(key, check, allowWildcards=false) {
   const nodeKeys = key.split('.');
   nodeKeys.forEach( nodeKey => {
     check(nodeKey!=='', `${errMsg} contains invalid empty string`);
-    check(regExpTest(nodeKey, regexpCheck),
+    check(isMatch(nodeKey, regexpCheck),
           `${errMsg} contains invalid chars, each node requires: alpha, followed by any number of alpha-numerics`);
   });
 }
@@ -689,9 +694,9 @@ function containsWildCard(str) {
  * 
  * @private
  */
-// ?? TESTED INDIRECTLY
-function regExpAll(str, regexp) {
-  return str.match(regexp) || []; // convert null to empty array
+// ?? TESTED INDIRECTLY ??$$ unit test this and remove this comment
+function matchAll(str, regexp) {
+  return str.match(regexp) || []; // simple pass-through -BUT- convert null to empty array
 }
 
 
@@ -707,13 +712,13 @@ function regExpAll(str, regexp) {
  * 
  * @private
  */
-// ?? TESTED INDIRECTLY
-function regExpTest(str, regexp) {
-  return regexp.test(str);
+// ?? TESTED INDIRECTLY ??$$ unit test this and remove this comment
+function isMatch(str, regexp) {
+  return regexp.test(str); // simple pass-through
 }
 
 
-// regexp cache used by fassetsRegExp()
+// regexp cache used by createRegExp()
 //  - optimizes repeated iteration in createFassets() "Stage 3: VALIDATION"
 //  - NOTE: ?? to free up space, this cache can be deleted at end of createFassets()
 const _regexpCache = { /* dynamically maintained ... SAMPLE:
@@ -723,12 +728,12 @@ const _regexpCache = { /* dynamically maintained ... SAMPLE:
 };
 
 /**
- * Builds a fassets-specific regular expression from the supplied
+ * Creates a fassets-specific regular expression from the supplied
  * pattern string, employing all the heuristics required by fassets
  * usage.
  *
  * NOTE: This has been manually tested to work in both our single and
- *       multi-line cases (i.e. our blob).
+ *       multi-line cases (i.e. our blob). ??$$ unit test this and remove this comment
  *
  * @param {string} pattern the string to seed the regexp from.
  *
@@ -736,8 +741,7 @@ const _regexpCache = { /* dynamically maintained ... SAMPLE:
  * 
  * @private
  */
-// ?? TESTED INDIRECTLY
-function fassetsRegExp(pattern) {
+function createRegExp(pattern) {
 
   var wrkStr = pattern;
 
