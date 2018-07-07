@@ -113,7 +113,7 @@ export default function createFassets(activeFeatures) {
     // fassets.get(fassetsKey): resource || resource[]
     get: (fassetsKey) => {
       // ??$$ TEST POINT ****************************************************************************************************************************************************************
-      // use cached value (if exists)
+      // use cached value (when available)
       var result = _searchCache[fassetsKey];
       if (result) {
         return result===UNDEFINED ? undefined : result;
@@ -423,7 +423,7 @@ export default function createFassets(activeFeatures) {
       const usage = _usage[useKey];
 
       // if fassetsKey MATCHES useKey
-      // >>> ?? if (regexpTest(fassetsKey, createRegExp(useKey)) // ?? I think should work, regardless if useKey has wildcards or not
+      // >>> ?? if (isMatch(fassetsKey, createRegExp(useKey)) // ?? I think should work, regardless if useKey has wildcards or not
       {
         // ?? apply client-supplied validation constraints
         // ?? requires full fassetValidations.js -and- testing
@@ -577,9 +577,9 @@ function checkProgrammaticStruct(key, check, allowWildcards=false) {
 
   const errMsg = `fassetsKey: '${key}' is invalid (NOT a programmatic structure) ...`;
 
-  const regexpAllowingWildcards    = /^[a-zA-Z\*][a-zA-Z0-9\*]*$/;
-  const regexpDisallowingWildcards = /^[a-zA-Z][a-zA-Z0-9]*$/;
-  var   regexpCheck                = regexpAllowingWildcards;
+  const regExpAllowingWildcards    = /^[a-zA-Z\*][a-zA-Z0-9\*]*$/;
+  const regExpDisallowingWildcards = /^[a-zA-Z][a-zA-Z0-9]*$/;
+  var   regExpCheck                = regExpAllowingWildcards;
 
   // insure NO cr/lf
   check(!isMatch(key, /[\n\r]/), `${errMsg} contains unsupported cr/lf`);
@@ -588,14 +588,14 @@ function checkProgrammaticStruct(key, check, allowWildcards=false) {
   // ... must also accomodate in our regexp check (below) but this check provides a more explicit message
   if (!allowWildcards) {
     check(!isMatch(key, /\*/), `${errMsg} wildcards are not supported`);
-    regexpCheck = regexpDisallowingWildcards;
+    regExpCheck = regExpDisallowingWildcards;
   }
 
   // analyze each node of the federated namespace
   const nodeKeys = key.split('.');
   nodeKeys.forEach( nodeKey => {
     check(nodeKey!=='', `${errMsg} contains invalid empty string`);
-    check(isMatch(nodeKey, regexpCheck),
+    check(isMatch(nodeKey, regExpCheck),
           `${errMsg} contains invalid chars, each node requires: alpha, followed by any number of alpha-numerics`);
   });
 }
@@ -721,7 +721,7 @@ function isMatch(str, regexp) {
 // regexp cache used by createRegExp()
 //  - optimizes repeated iteration in createFassets() "Stage 3: VALIDATION"
 //  - NOTE: ?? to free up space, this cache can be deleted at end of createFassets()
-const _regexpCache = { /* dynamically maintained ... SAMPLE:
+const _regExpCache = { /* dynamically maintained ... SAMPLE:
   'MainPage.*.link':      /^MainPage\..*\.link$/gm,
   'selector.currentView': /^selector\.currentView$/gm,
   ... */
@@ -745,8 +745,8 @@ function createRegExp(pattern) {
 
   var wrkStr = pattern;
 
-  // utilize _regexpCache
-  var regexp = _regexpCache[pattern];
+  // use cached value (when available)
+  var regexp = _regExpCache[pattern];
   if (regexp) {
     return regexp;
   }
@@ -768,7 +768,7 @@ function createRegExp(pattern) {
   regexp = new RegExp(wrkStr, 'gm');
 
   // maintain cache
-  _regexpCache[pattern] = regexp;
+  _regExpCache[pattern] = regexp;
 
   // that's all folks
   return regexp;
