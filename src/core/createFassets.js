@@ -427,8 +427,6 @@ export default function createFassets(activeFeatures) {
   //    ... defined in the "use" directive
   //***
 
-  // ??$$ TEST POINT ****************************************************************************************************************************************************************
-
   // Feature.fassets.use: "type" validation
   MyObj.entries(_resources) // resource iteration
        .forEach( ([fassetsKey, resource]) => {
@@ -503,9 +501,13 @@ export default function createFassets(activeFeatures) {
   //***
   //*** expose ALL validation issues in ONE Error
   //***
-  if (validationErrs.length) {
+
+  if (validationErrs.length===1) {    // for a single error, just spit it out
+    verify(false, validationErrs[0]); 
+  }
+  else if (validationErrs.length>1) { // for multiple errors, combine all of them with a preamble
     verify(false, 
-           `${validationErrs.length} validation error(s) were found during Feature.fasset resource accumulation:\n` +
+           `${validationErrs.length} validation errors were found during Feature.fasset resource accumulation:\n` +
            validationErrs.join('\n'));
   }
 
