@@ -2,6 +2,7 @@ import createFeature,
        {extendFeatureProperty}  from './core/createFeature';
 import launchApp                from './core/launchApp';
 import managedExpansion         from './core/managedExpansion';
+import fassetValidations        from './core/fassetValidations';
 import createAspect,
        {extendAspectProperty}   from './extend/createAspect';
 
@@ -19,6 +20,7 @@ export {
   createFeature,
   launchApp,
   managedExpansion,
+  fassetValidations,
   createAspect,
   extendAspectProperty,
   extendFeatureProperty,
@@ -33,6 +35,7 @@ export default {
   createFeature,
   launchApp,
   managedExpansion,
+  fassetValidations,
   createAspect,
   extendAspectProperty,
   extendFeatureProperty,

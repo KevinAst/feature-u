@@ -5,15 +5,21 @@ import isFunction  from 'lodash.isfunction';
  * A pre-defined set of fasset validation functions, which can be
  * employed in the `Feature.fassets.use` usage contract.
  *
- * Thes validation functions can be used as is, and additional ones
+ * These validation functions can be used as is, and additional ones
  * can be created by the client.
  *
- * The validation API should adhear to the following signature:
+ * The validation API should adhere to the following signature:
  *
  * ```
  *  + fassetValidationFn(fassetsValue): string || null
- *     ... A return value of null is valid, while a string specifies a
- *         validation error as follows: '$fassetsKey is invalid, expecting $return-value'.
+ *     ... A return value of null is valid, while a string
+ *         specifies a validation error that feature-u
+ *         will format as follows (see ${returnStr}):
+ *
+ *         `VALIDATION ERROR in resource: '${fassetsKey}',
+ *            expecting: ${returnStr} ... 
+ *            resource defined in Feature: '${resource.definingFeature}',
+ *            usage contract '${useKey}' found in Feature: '${featureName}'`
  * ```
  *
  * The following predefined validation functions are promoted:
@@ -32,14 +38,17 @@ export default {
   bool,
 };
 
-// ?? test each of these
-
 function any(fassetsValue) {
   return fassetsValue!==undefined ? null : 'anthing but: undefined';
 }
 
 function comp(fassetsValue) {
-  return isFunction(fassetsValue) ? null : 'react comp'; // ?? do more with this
+  // TODO: handle all three of the various ways React components are defined
+  //       - legacy React.createClass()
+  //       - class derivation
+  //       - Stateless Functional Component
+  // for now, just punt with ANY:
+  return fassetsValue!==undefined ? null : 'React Component';
 }
 
 function fn(fassetsValue) {
