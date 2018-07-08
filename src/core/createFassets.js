@@ -32,7 +32,7 @@ export default function createFassets(activeFeatures) {
 
 
   // PRIVATE: fassets resources (with meta data)
-  //          - maintained via Feature.fassets.define/defineUse
+  //          - defined via Feature.fassets.define/defineUse
   const _resources = { /* dynamically maintained ... SAMPLE:
 
     '{fassetsKey}': {                    // ex: 'action.openView' ... NO wildcards allowed
@@ -47,14 +47,16 @@ export default function createFassets(activeFeatures) {
 
   // PRIVATE: a string blob of all resolved fassetKeys delimited by new-line
   //          - used by fassets.get() method to fetch all keys matching a regexp
-  //          - maintained in feature expansion order - the same order fassets.get() exposes multiple entries
-  //          - highly optimal technique, where a single regexp search is used per fassets.get(wildcard)
-  //            ... and even that is cached!!
+  //          - maintained in feature expansion order
+  //            ... the same order fassets.get() exposes multiple entries
+  //          - highly optimal technique, where a single regexp search 
+  //            is used per fassets.get(wildcard)
+  //            ... for even better performance, get() also caches it's results!!
   var _fassetsKeysBlob = '';
 
 
   // PRIVATE: fassets usage contract (with meta data)
-  //          - maintained via Feature.fassets.use
+  //          - defined via Feature.fassets.use
   const _usage = { /* dynamically maintained ... SAMPLE:
 
     '{useKey}': {                          // ex: 'MainPage.*.link' ... wildcards allowed
@@ -70,16 +72,15 @@ export default function createFassets(activeFeatures) {
   // PRIVATE: cache all fassets.get() searches, providing a significant optimization
   //          - especially in the context of React Component usage, 
   //            which repeats frequently within each UI render
-  //          - this is feasable because fasset resources are pre-loaded up-front,
+  //          - this is feasible because fasset resources are pre-loaded up-front,
   //            and these set of resources will not change
   const _searchCache = { /* dynamically maintained ... SAMPLE:
-                            'MainPage.*.link':      [...results],
-                            'MainPage.*.body':      [],            // empty array for no results
-                            'selector.currentView': result,
-                            'selector.currentView': UNDEFINED,     // special UNDEFINED for no results (to distguish from entry NOT in cache)
-                            ... */
+    'MainPage.*.link':      [...results],
+    'MainPage.*.body':      [],            // empty array for no results
+    'selector.currentView': result,
+    'selector.currentView': UNDEFINED,     // special UNDEFINED for no results (to distguish from entry NOT in cache)
+    ... */
   };
-
 
   // PRIVATE: special value used in cache to allow not-found (undefined) entry 
   //          to be cached in a recognizable way
@@ -114,6 +115,13 @@ export default function createFassets(activeFeatures) {
     // fassets.get(fassetsKey): resource || resource[]
     get: (fassetsKey) => {
       // ??$$ TEST POINT ****************************************************************************************************************************************************************
+
+      // validate parameters
+      const check = verify.prefix('fassets.get() parameter violation: ');
+
+      check(fassetsKey,           'fassetsKey is required');
+      check(isString(fassetsKey), 'fassetsKey must be a string');
+
       // use cached value (when available)
       var result = _searchCache[fassetsKey];
       if (result) {
@@ -185,7 +193,7 @@ export default function createFassets(activeFeatures) {
 
 
   //*---------------------------------------------------------------------------
-  // T Minus 1: Validate the basic structure of all Feature.fassets
+  // T Minus 1: Validate the basic structure of all Feature.fassets aspects
   //            - including the fassets directives (define/defineUse/use)
   //*---------------------------------------------------------------------------
 
@@ -223,8 +231,7 @@ export default function createFassets(activeFeatures) {
 
 
   //*---------------------------------------------------------------------------
-  // Stage 1: Interpret fasset define/defineUse directive, accumulating resources
-  //         - via fassets.define/defineUse directives
+  // Stage 1: Interpret fasset "define"/"defineUse" directive, accumulating resources
   //         - maintain _resources entries (with meta data)
   //         - normalize resource directly in _fassets object
   //         - validation:
@@ -316,9 +323,9 @@ export default function createFassets(activeFeatures) {
 
   } // HELP_EMACS
   });
-
+  
   // purge last cr/lf from _fassetsKeysBlob to prevent an open wildcard '*'
-  // from returning a rougue empty string key ('')
+  // from returning a rogue empty string key ('')
   // ... causing an internal run-time error
   if (_fassetsKeysBlob !== '') {
     _fassetsKeysBlob = _fassetsKeysBlob.slice(0, -1);
@@ -326,8 +333,7 @@ export default function createFassets(activeFeatures) {
 
 
   //*---------------------------------------------------------------------------
-  // Stage 2: Interpret fasset use directive, accumulating usage contract
-  //         - via fassets.use directive
+  // Stage 2: Interpret fasset "use" directive, accumulating usage contract
   //         - maintain _usage entries
   //         - interpret options directives (used in validation of optionality and type)
   //         - validation:
@@ -413,9 +419,6 @@ export default function createFassets(activeFeatures) {
   //                 to the client
   //*---------------------------------------------------------------------------
 
-  // ??$$ TEST POINT ****************************************************************************************************************************************************************
-  // ?? createFassets_validateAccumulation.spec.js
-
   // accumulator of ALL validation errors, to show all at once
   const validationErrs = [];
 
@@ -423,6 +426,8 @@ export default function createFassets(activeFeatures) {
   // A: Apply client-supplied validation constraints
   //    ... defined in the "use" directive
   //***
+
+  // ??$$ TEST POINT ****************************************************************************************************************************************************************
 
   // Feature.fassets.use: "type" validation
   MyObj.entries(_resources) // resource iteration
@@ -514,8 +519,8 @@ export default function createFassets(activeFeatures) {
   //*---------------------------------------------------------------------------
 
   // SideBar: To free up space, our regexp cache is deleted now that createFassets() is complete
-  //          ... the fassets.get() maintains results cache, 
-  //              so regexp will be rarely needed (if at all)
+  //          ... because the fassets.get() maintains it's own results cache, 
+  //              the regexps built up in this cache will rarely be needed (if at all)
   _regExpCache = {};
 
   // logf: summarize _fassets resources (sorted), usage contracts (sorted), and json _fassets object (normalized) ... could be too much NOT SURE
@@ -540,7 +545,7 @@ export default function createFassets(activeFeatures) {
  * @param {string} key the injection key.  Can contain DOTs (.) which
  * will be normalized into a structure with depth.
  *
- * @param {Any} valdobj the value to inject.
+ * @param {Any} val the value to inject.
  *
  * @param {Object} obj the injection object.
  *
@@ -579,7 +584,7 @@ function injectFassetsResource(key, val, obj, check) {
  *
  * ```
  *   - allow embedded DOTS "."
- *   - dissallow wildcards "*"
+ *   - disallow wildcards "*"
  *   - valid:      "a"
  *                 "a1"
  *                 "a1.b"
@@ -640,10 +645,10 @@ function checkProgrammaticStruct(key, check, allowWildcards=false) {
 /**
  * An internal function that deciphers the supplied useEntry,
  * validating, applying default semantics, and interpreting the two
- * options:
+ * formats:
  *
  * - a string
- * - a string/options in a two element array
+ * - a string/options in a two-element array
  *
  * @param {string||[string,options]} useEntry the use entry to
  * decipher.
@@ -665,17 +670,17 @@ function decipherDefaultedUseEntry(useEntry, check) {
     use.validateFn = fassetValidations.any;
   }
   else if (Array.isArray(useEntry)) {
-    check(useEntry.length === 2, `"use" entry must either be a string or a string/options in a two element array ... incorrect array size: ${useEntry.length}`);
+    check(useEntry.length === 2, `"use" entry must either be a string or a string/options in a two-element array ... incorrect array size: ${useEntry.length}`);
 
     const [useKey, useOptions] = useEntry;
 
-    check(isString(useKey),          `"use" entry with options (two element array), first element is NOT a string`);
-    check(isPlainObject(useOptions), `"use" entry with options (two element array), second element is NOT an object`);
+    check(isString(useKey),          `"use" entry with options (two-element array), first element is NOT a string`);
+    check(isPlainObject(useOptions), `"use" entry with options (two-element array), second element is NOT an object`);
 
     const {required = true, type:validateFn = fassetValidations.any, ...unknownOptions} = useOptions;
 
     const unknownOptionsKeys = Object.keys(unknownOptions);
-    check(unknownOptionsKeys.length === 0, `"use" entry with options (two element array), options have unrecognized entries: ${unknownOptionsKeys} ... expecting only: required/type`);
+    check(unknownOptionsKeys.length === 0, `"use" entry with options (two-element array), options have unrecognized entries: ${unknownOptionsKeys} ... expecting only: required/type`);
 
     use.useKey     = useKey;
     use.required   = required;
@@ -683,7 +688,7 @@ function decipherDefaultedUseEntry(useEntry, check) {
   }
   else {
     // unconditional error
-    check(false, `"use" entry must either be a string or a string/options in a two element array`);
+    check(false, `"use" entry must either be a string or a string/options in a two-element array`);
   }
 
   // validate individual items

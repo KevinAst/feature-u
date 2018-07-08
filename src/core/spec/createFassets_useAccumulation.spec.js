@@ -32,7 +32,7 @@ describe('createFassets(): fassets use directive accumulation', () => {
       // THROW:   Feature.name: 'featureTest' ... ERROR in "fassets" aspect, "use" directive: the use directive is empty (at least one usage contract is needed
     });
 
-    test(`use directive entries must either be a string or a string/options in a two element array`, () => {
+    test(`use directive entries must either be a string or a string/options in a two-element array`, () => {
       expect(()=> createFassets([
         createFeature({
           name:       'featureTest',
@@ -43,8 +43,8 @@ describe('createFassets(): fassets use directive accumulation', () => {
           },
         }),
       ]) )
-        .toThrow(/Feature.name: 'featureTest'.*entry must either be a string or a string.*options in a two element array/);
-      // THROW:   Feature.name: 'featureTest' ... ERROR in "fassets" aspect, "use" directive: "use" entry must either be a string or a string/options in a two element array
+        .toThrow(/Feature.name: 'featureTest'.*entry must either be a string or a string.*options in a two-element array/);
+      // THROW:   Feature.name: 'featureTest' ... ERROR in "fassets" aspect, "use" directive: "use" entry must either be a string or a string/options in a two-element array
     });
 
     test(`use directive with options must be a 2 element array`, () => {
@@ -59,7 +59,7 @@ describe('createFassets(): fassets use directive accumulation', () => {
         }),
       ]) )
         .toThrow(/Feature.name: 'featureTest'.*incorrect array size: 3/);
-      // THROW:   Feature.name: 'featureTest' ... ERROR in "fassets" aspect, "use" directive: "use" entry must either be a string or a string/options in a two element array ... incorrect array size: 3
+      // THROW:   Feature.name: 'featureTest' ... ERROR in "fassets" aspect, "use" directive: "use" entry must either be a string or a string/options in a two-element array ... incorrect array size: 3
     });
 
     test(`use directive with options first elm must be a string`, () => {
@@ -74,7 +74,7 @@ describe('createFassets(): fassets use directive accumulation', () => {
         }),
       ]) )
         .toThrow(/Feature.name: 'featureTest'.*first element is NOT a string/);
-      // THROW:   Feature.name: 'featureTest' ... ERROR in "fassets" aspect, "use" directive: "use" entry with options (two element array), first element is NOT a string
+      // THROW:   Feature.name: 'featureTest' ... ERROR in "fassets" aspect, "use" directive: "use" entry with options (two-element array), first element is NOT a string
     });
 
     test(`use directive with options second elm must be an object`, () => {
@@ -89,7 +89,7 @@ describe('createFassets(): fassets use directive accumulation', () => {
         }),
       ]) )
         .toThrow(/Feature.name: 'featureTest'.*second element is NOT an object/);
-      // THROW:   Feature.name: 'featureTest' ... ERROR in "fassets" aspect, "use" directive: "use" entry with options (two element array), second element is NOT an object
+      // THROW:   Feature.name: 'featureTest' ... ERROR in "fassets" aspect, "use" directive: "use" entry with options (two-element array), second element is NOT an object
     });
 
     test(`use directive with options second elm object with unrecognized items`, () => {
@@ -104,7 +104,7 @@ describe('createFassets(): fassets use directive accumulation', () => {
         }),
       ]) )
         .toThrow(/Feature.name: 'featureTest'.*options have unrecognized entries: WowZee,WooWoo/);
-      // THROW:    Feature.name: 'featureTest' ... ERROR in "fassets" aspect, "use" directive: "use" entry with options (two element array), options have unrecognized entries: WowZee,WooWoo ... expecting only: required/type
+      // THROW:    Feature.name: 'featureTest' ... ERROR in "fassets" aspect, "use" directive: "use" entry with options (two-element array), options have unrecognized entries: WowZee,WooWoo ... expecting only: required/type
     });
 
     [
