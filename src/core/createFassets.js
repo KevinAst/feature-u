@@ -114,13 +114,12 @@ export default function createFassets(activeFeatures) {
 
     // fassets.get(fassetsKey): resource || resource[]
     get: (fassetsKey) => {
-      // ??$$ TEST POINT ****************************************************************************************************************************************************************
 
       // validate parameters
       const check = verify.prefix('fassets.get() parameter violation: ');
 
       check(fassetsKey,           'fassetsKey is required');
-      check(isString(fassetsKey), 'fassetsKey must be a string');
+      check(isString(fassetsKey), `fassetsKey must be a string ... ${fassetsKey}`);
 
       // use cached value (when available)
       var result = _searchCache[fassetsKey];
@@ -718,7 +717,7 @@ function decipherDefaultedUseEntry(useEntry, check) {
  */
 export function containsWildCard(str) { // ... exported for unit tests only
   // check for fassets-based wildcards (only *)
-  return str.includes('*'); // ?? question: see if transpiled code transforms to indexOf() !== -1 ... if not, a) use indexOf() b) require polyfill stratagy
+  return str.includes('*');
 }
 
 
