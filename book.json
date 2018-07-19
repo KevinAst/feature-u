@@ -132,12 +132,15 @@
 
     "api": {
 
-      "Feature":        "[`Feature`](/api.md#Feature)",
-      "Features":       "[`Features`](/api.md#Feature)",
-      "App":            "[`App`](/api.md#App)",
-      "Aspect":         "[`Aspect`](/api.md#Aspect)",
-      "Aspects":        "[`Aspects`](/api.md#Aspect)",
-      "AspectContent":  "[`AspectContent`](/api.md#AspectContent)",
+      "Feature":           "[`Feature`](/api.md#Feature)",
+      "Features":          "[`Features`](/api.md#Feature)",
+      "App":               "[`App`](/api.md#App)",
+      "Fassets":           "[`Fassets`](/api.md#Fassets)",
+      "Fassets_get":       "[`Fassets.get()`](/api.md#Fassets_get)",
+      "Fassets_isFeature": "[`Fassets.isFeature()`](/api.md#Fassets_isFeature)",
+      "Aspect":            "[`Aspect`](/api.md#Aspect)",
+      "Aspects":           "[`Aspects`](/api.md#Aspect)",
+      "AspectContent":     "[`AspectContent`](/api.md#AspectContent)",
 
       "coreApi":                    "[`Core API`](/coreApi.md)",
         "createFeature":            "[`createFeature()`](/api.md#createFeature)",

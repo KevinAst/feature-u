@@ -29,6 +29,9 @@ this list:_
 ## feature-u Objects
 
 * {{book.api.Feature}}
+* {{book.api.Fassets}}
+  * {{book.api.Fassets_get}}
+  * {{book.api.Fassets_isFeature}}
 * {{book.api.App}}
 * {{book.api.Aspect}}
 * {{book.api.AspectContent}}

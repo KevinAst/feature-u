@@ -115,6 +115,50 @@ Extend valid Aspect properties to include the supplied name... used when extend
 
 <br/><br/><br/>
 
+<a id="Fassets"></a>
+
+<h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
+  Fassets : Object</h5>
+The `fassets` object _(emitted from {{book.api.launchApp}})_ isan accumulation of feature assets gathered from all features.  Itfacilitates {{book.guide.crossCom}} by promoting the publicresources of any given feature.There are 3 different ways to reference the catalogedresources in `fassets`:1. You may directly dereference them. As an example, an   '`action.openView`' resource can be dereferenced as follows:   ```js   fassets.action.openView('mainView');   ```2. You may use the {{book.api.Fassets_get}} method, which   can collect multiple resources (using wildcards).3. Your UI components may indirectly access `fassets` resources   through the `withFassets()` higher-order-component.There are several ways to access the `fassets` object _(see{{book.guide.crossCom_accessingApp}})_. ??UPDATE_LINKFor more information, please refer to{{book.guide.crossCom_publicFaceApp}} and{{book.guide.detail_appObject}}. ??UPDATE_LINK
+
+
+* [Fassets](#Fassets) : Object
+    * [.get(fassetsKey)](#Fassets.get) ⇒ resource \| Array.&lt;resource&gt;
+    * [.isFeature(featureName)](#Fassets.isFeature) ⇒ boolean \| boolean
+
+
+<br/><br/><br/>
+
+<a id="Fassets_get"></a>
+
+<h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
+  Fassets.get(fassetsKey) ⇒ resource \| Array.&lt;resource&gt;</h5>
+Get (i.e. fetch) the supplied fassets resource(s).  This is analternative to directly dereferencing them on the `fassets`object.The advantage of this method is: 1. It can accumulate a series of resources (when the   `fassetsKey` contains wildcards). 2. It can more gracefully return undefined at any path within    a federated namespace.**SideBar**: this method is the basis of the `withFassets()`higher-order-component.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| fassetsKey | string | the key of the resource(s) to fetch. Wildcards (`*`) are supported _(collecting multiple resources)_. |
+
+**Returns**: resource \| Array.&lt;resource&gt; - the requested fassets resource(s).- **without wildcards**, a single resource is returned  _(`undefined` for none)_.- **with wildcards**, the return is a resource array, in order  of feature expansion _(empty array for none)_.  
+
+<br/><br/><br/>
+
+<a id="Fassets_isFeature"></a>
+
+<h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
+  Fassets.isFeature(featureName) ⇒ boolean \| boolean</h5>
+Return an indicator as to whether the supplied feature isactive.**Note**: As an alternative to using this method, you canconditionally reason over the existence of "well-known fassetresources" specific to a given feature.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| featureName | string | the name of the feature to check. |
+
+**Returns**: boolean - **true**: the supplied feature is active,**false**: not active (or doesn't exist).boolean - the supplied feature is active (true), or thenot (false).  
+
+<br/><br/><br/>
+
 <a id="Feature"></a>
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">

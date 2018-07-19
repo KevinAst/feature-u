@@ -5,8 +5,6 @@ import isFunction         from 'lodash.isfunction';
 import fassetValidations  from './fassetValidations';
 import {MyObj}            from '../util/mySpace';
 
-// ?? resolve all logfs (below) and add more
-
 /**
  * An internal creator of the {{book.api.fassets}} object, by
  * accumulating the public fassets promoted by the set of supplied
@@ -87,7 +85,37 @@ export default function createFassets(activeFeatures) {
   const UNDEFINED = 'UNDEFINED';
 
 
-  // PUBLIC: fassets object used in cross-communication between features
+  /**
+   * @typedef {Object} Fassets
+   *
+   * The `fassets` object _(emitted from {{book.api.launchApp}})_ is
+   * an accumulation of feature assets gathered from all features.  It
+   * facilitates {{book.guide.crossCom}} by promoting the public
+   * resources of any given feature.
+   * 
+   * There are 3 different ways to reference the cataloged
+   * resources in `fassets`:
+   *
+   * 1. You may directly dereference them. As an example, an
+   *    '`action.openView`' resource can be dereferenced as follows:
+   *
+   *    ```js
+   *    fassets.action.openView('mainView');
+   *    ```
+   * 
+   * 2. You may use the {{book.api.Fassets_get}} method, which
+   *    can collect multiple resources (using wildcards).
+   * 
+   * 3. Your UI components may indirectly access `fassets` resources
+   *    through the `withFassets()` higher-order-component.
+   * 
+   * There are several ways to access the `fassets` object _(see
+   * {{book.guide.crossCom_accessingApp}})_. ??UPDATE_LINK
+   * 
+   * For more information, please refer to
+   * {{book.guide.crossCom_publicFaceApp}} and
+   * {{book.guide.detail_appObject}}. ??UPDATE_LINK
+   */
   const _fassets = {
 
     // ***
@@ -108,11 +136,40 @@ export default function createFassets(activeFeatures) {
     },
     ... */
 
+
+
     // ***
     // *** pre-defined API (methods)
     // ***
 
-    // fassets.get(fassetsKey): resource || resource[]
+    /**
+     * Get (i.e. fetch) the supplied fassets resource(s).  This is an
+     * alternative to directly dereferencing them on the `fassets`
+     * object.
+     * 
+     * The advantage of this method is:
+     * 
+     *  1. It can accumulate a series of resources (when the
+     *    `fassetsKey` contains wildcards).
+     * 
+     *  2. It can more gracefully return undefined at any path within
+     *     a federated namespace.
+     *
+     * **SideBar**: this method is the basis of the `withFassets()`
+     * higher-order-component.
+     *
+     * @param {string} fassetsKey the key of the resource(s) to fetch.
+     * Wildcards (`*`) are supported _(collecting multiple
+     * resources)_.
+     *
+     * @return {resource|resource[]} the requested fassets resource(s).
+     * - **without wildcards**, a single resource is returned
+     *   _(`undefined` for none)_.
+     * - **with wildcards**, the return is a resource array, in order
+     *   of feature expansion _(empty array for none)_.
+     * 
+     * @method Fassets.get
+     */
     get: (fassetsKey) => {
 
       // validate parameters
@@ -152,7 +209,25 @@ export default function createFassets(activeFeatures) {
       return result;
     },
 
-    // fassets.isFeature(featureName): boolean
+
+    /**
+     * Return an indicator as to whether the supplied feature is
+     * active.
+     *
+     * **Note**: As an alternative to using this method, you can
+     * conditionally reason over the existence of "well-known fasset
+     * resources" specific to a given feature.
+     *
+     * @param {string} featureName the name of the feature to check.
+     *
+     * @return {boolean} **true**: the supplied feature is active,
+     * **false**: not active (or doesn't exist).
+     *
+     * @return {boolean} the supplied feature is active (true), or the
+     * not (false).
+     * 
+     * @method Fassets.isFeature
+     */
     isFeature: (featureName) => {
       // validate parameters
       const check = verify.prefix('fassets.isFeature() parameter violation: ');
@@ -651,13 +726,14 @@ function checkProgrammaticStruct(key, check, allowWildcards=false) {
  * - a string
  * - a string/options in a two-element array
  *
- * @param {string||[string,options]} useEntry the use entry to
- * decipher.
+ * @param {string-or-arrayOfStringOptionPairs} useEntry the use
+ * entry to decipher.
  *
  * @param {assertionFn} check an assertion function (with context),
  * used to perform validation.
  *
- * @return defaulted object with following entries: {useKey, required, validationFn}
+ * @return {Object} defaulted object with following entries: {useKey,
+ * required, validationFn}
  * 
  * @private
  */
