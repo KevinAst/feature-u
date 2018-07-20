@@ -5,7 +5,11 @@
     "node":    true,
     "jest":    true
   },
-  "extends": "eslint:recommended",
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended"
+  ],
+  "plugins": [ "react" ],
   "parserOptions": {
     "sourceType": "module",
     "ecmaFeatures": {
@@ -24,6 +28,7 @@
     "no-unused-vars":  ["error", {"args": "none"}], // allow unsed parameter declaration 
     "linebreak-style": "off",                       // allow both unix/windows carriage returns
     "quotes":          "off",                       // allow single or double quotes string literals
-    "semi":            ["error", "always"]          // enforce semicolons
+    "semi":            ["error", "always"],         // enforce semicolons
+    "react/prop-types": "off"                       // do NOT inforce prop-types (it is all internally controled)
   }
 }
