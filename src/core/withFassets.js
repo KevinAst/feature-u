@@ -7,17 +7,11 @@ import isString             from 'lodash.isstring';
 import {MyObj}              from '../util/mySpace';
 import isComponent          from '../util/isComponent';
 
-// ?? OVERALL TEST:
-// 0) create fassets
-// 1) create component withFassets()
-// 2) inject Provider at root
-//    <FassetsContext.Provider value={fassets}>
-//      {curRootAppElm}
-//    </FassetsContext.Provider>
-// 3) ?? I think we may need to use jest snapshot
+
+const fassetsNotDefined = 'NO FassetsContext.Provider';
 
 // publically exposed (in rare case when app code defines their own DOM via registerRootAppElm())
-export const FassetsContext = React_createContext(); // ?? defaultValue ... provide a defaultValue that we can reason about for ERROR
+export const FassetsContext = React_createContext(fassetsNotDefined); // specify a defaultValue we can detect ERROR conditions (need FassetsContext.Provider at root)
 
 
 /**
@@ -143,11 +137,20 @@ export function withFassets({mapFassetsToProps, ...unknownArgs}={}) {
       // and inject the desired fassets props
       return (
         <FassetsContext.Consumer> 
-        { (fassets) => {  // React Context Consumer expects single function, passing it's context value (i.e. our fassets)
-          // ??$$ TEST point
-          // ?? ERROR if fassets not there
-          return <Component {...fassetsProps(fassetsToPropsMap, fassets)} {...props}/>;
-        }}
+          { (fassets) => {  // React Context Consumer expects single function, passing it's context value (i.e. our fassets)
+
+              // ERROR when fassets is NOT defined
+              verify(fassets !== fassetsNotDefined,
+                     'withFassets() cannot be used when no <FassetsContext.Provider> is in the root DOM.  ' +
+                     'Normally feature-u auto configures this, except when NO Aspects/Features inject UI content.  ' + 
+                     'In this case the app must do this in launchApp() registerRootAppElm() callback.  ' + 
+                     '... see: https://feature-u.js.org/cur/detail.html#react-registration');
+              
+              // inject fasset resource props into the supplied Component
+              // ... THIS IS WHAT WE ARE HERE FOR!!
+              return <Component {...fassetsProps(fassetsToPropsMap, fassets)} {...props}/>;
+            }
+          }
         </FassetsContext.Consumer>
       );
     };
