@@ -107,7 +107,8 @@ export default function createFassets(activeFeatures) {
    *    can collect multiple resources (using wildcards).
    * 
    * 3. Your UI components may indirectly access `fassets` resources
-   *    through the `withFassets()` higher-order-component.
+   *    through the {{book.api.withFassets}} Higher-order Component
+   *    (HoC).
    * 
    * There are several ways to access the `fassets` object _(see
    * {{book.guide.crossCom_accessingApp}})_. ??UPDATE_LINK
@@ -155,8 +156,8 @@ export default function createFassets(activeFeatures) {
      *  2. It can more gracefully return undefined at any path within
      *     a federated namespace.
      *
-     * **SideBar**: this method is the basis of the `withFassets()`
-     * higher-order-component.
+     * **SideBar**: this method is the basis of the {{book.api.withFassets}}
+     * Higher-order Component (HoC).
      *
      * @param {string} fassetsKey the key of the resource(s) to fetch.
      * Wildcards (`*`) are supported _(collecting multiple

@@ -272,7 +272,7 @@ export function extendAspectProperty(name, owner) {
  * 
  * The Aspect object promotes a series of life-cycle methods that
  * **feature-u** invokes in a controlled way.  This life-cycle is
- * controlled by {{book.api.launchApp}}` _... it is supplied the
+ * controlled by {{book.api.launchApp}} _... it is supplied the
  * Aspects, and it invokes their methods._
  * 
  * Typically Aspects are packaged separately _(as an external npm

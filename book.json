@@ -132,7 +132,7 @@
 
     "api": {
 
-      "Feature":           "[`Feature`](/api.md#Feature)",
+      "Feature":           "<a href='/api.html#Feature'><code>Feature</code></a>",
       "Features":          "[`Features`](/api.md#Feature)",
       "App":               "[`App`](/api.md#App)",
       "Fassets":           "[`Fassets`](/api.md#Fassets)",
@@ -153,6 +153,10 @@
         "launchApp$":               "[`launchApp({[aspects], features, registerRootAppElm}): App`](/api.md#launchApp)",
           "registerRootAppElmCB":   "[`registerRootAppElm()`](/api.md#registerRootAppElmCB)",
           "registerRootAppElmCB$":  "[`registerRootAppElm(rootAppElm): void`](/api.md#registerRootAppElmCB)",
+        "withFassets":              "[`withFassets()`](/api.md#withFassets)",
+        "withFassets$":             "[`withFassets({mapFassetsToProps}): HoC`](/api.md#withFassets)",
+          "mapFassetsToPropsStruct":  "[`mapFassetsToPropsStruct`](/api.md#mapFassetsToPropsStruct)",
+          "mapFassetsToPropsFn":      "[`mapFassetsToPropsFn`](/api.md#mapFassetsToPropsFn)",
         "managedExpansion":         "[`managedExpansion()`](/api.md#managedExpansion)",
         "managedExpansion$":        "[`managedExpansion(managedExpansionCB): managedExpansionCB`](/api.md#managedExpansion)",
           "managedExpansionCB":     "[`managedExpansionCB()`](/api.md#managedExpansionCB)",

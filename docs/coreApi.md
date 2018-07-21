@@ -21,6 +21,9 @@ this list:_
   * {{book.api.registerRootAppElmCB$}}
 
 
+* {{book.api.withFassets$}}
+
+
 * {{book.api.managedExpansion$}}
   * {{book.api.managedExpansionCB$}}
 

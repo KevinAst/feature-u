@@ -543,9 +543,17 @@ op.helper.defineRootAppElm = function(app, activeFeatures, aspects) {
   // THIRD: DOM injection via Aspect.injectRootAppElm()
   rootAppElm = op.alch.injectRootAppElm(app, aspects, rootAppElm);
 
-  // ?? is this true anymore ... we need to inject <FassetsContext.Provider>
-  //    ?? I suppose we can conditionally add it (when rootAppElm is non-null),
-  //    ?? and if app wants to do it's own thing, then they must inject <FassetsContext.Provider>
+  // ?? import React                from 'react';
+  // ?? import {FassetsContext}     from './withFassets';
+  // ?? must pass fassets param ... in place of app
+  // FOURTH: inject our FassetsContext in support of withFassets() HOC
+  //         NOTE: We conditionally do this if a rootAppElm has been defined.
+  //               Otherwise, the App is responible for this in the registerRootAppElm() hook.
+  // ?? TODO: here it is
+  // if (rootAppElm) {
+  //   rootAppElm = <FassetsContext.Provider value={fassets}>{rootAppElm}</FassetsContext.Provider>;
+  // }
+
   // NOTE: We do NOT validate rootAppElm to insure it is non-null!
   //       - at first glance it would appear that a null rootAppElm would render NOTHING
   //       - HOWEVER, ULTIMATLY the app code (found in the registerRootAppElm() hook) 
