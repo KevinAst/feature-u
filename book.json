@@ -138,6 +138,7 @@
       "Fassets":           "[`Fassets`](/api.md#Fassets)",
       "Fassets_get":       "[`Fassets.get()`](/api.md#Fassets_get)",
       "Fassets_isFeature": "[`Fassets.isFeature()`](/api.md#Fassets_isFeature)",
+      "fassetValidations": "[`fassetValidations`](/api.md#fassetValidations)",
       "Aspect":            "[`Aspect`](/api.md#Aspect)",
       "Aspects":           "[`Aspects`](/api.md#Aspect)",
       "AspectContent":     "[`AspectContent`](/api.md#AspectContent)",

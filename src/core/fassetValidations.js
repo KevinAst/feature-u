@@ -1,35 +1,55 @@
 import isString    from 'lodash.isstring';
 import isFunction  from 'lodash.isfunction';
+import isComponent from '../util/isComponent';
+
 
 /**
- * A pre-defined set of fasset validation functions, which can be
- * employed in the `Feature.fassets.use` usage contract.
+ * @typedef {Object} fassetValidations
  *
- * These validation functions can be used as is, and additional ones
- * can be created by the client.
+ * A pre-defined container of fasset validation functions, which can
+ * be employed in the `Feature.fassets.use` usage contract.  This
+ * allows the `use` directive to specify what type of resource it is
+ * expecting.
+ *
+ * These validations are available as a convenience.  Additional
+ * validations can be created as needed.
  *
  * The validation API should adhere to the following signature:
  *
  * ```
  *  + fassetValidationFn(fassetsValue): string || null
- *     ... A return value of null is valid, while a string
- *         specifies a validation error that feature-u
- *         will format as follows (see ${returnStr}):
+ * ```
+ * 
+ * A return value of null represents a valid value, while a string
+ * specifies a validation error that feature-u will format as follows
+ * (see ${returnStr}):
  *
- *         `VALIDATION ERROR in resource: '${fassetsKey}',
- *            expecting: ${returnStr} ... 
- *            resource defined in Feature: '${resource.definingFeature}',
- *            usage contract '${useKey}' found in Feature: '${featureName}'`
+ * ```
+ *   VALIDATION ERROR in resource: '${fassetsKey}',
+ *     expecting: ${returnStr} ... 
+ *     resource defined in Feature: '${resource.definingFeature}',
+ *     usage contract '${useKey}' found in Feature: '${featureName}'
  * ```
  *
- * The following predefined validation functions are promoted:
+ * The following pre-defined validations are promoted:
  *  - any:  any type (except undefined)
  *  - comp: a react component
  *  - fn:   a function
  *  - str:  a string
  *  - bool: a boolean
+ *
+ * **Example**:
+ * ```js
+ * createFeature({
+ *   fassets: {
+ *     use: [
+ *        'MainPage.*.link', // DEFAULT: required of type any
+ *       ['MainPage.*.body', {required: false, type: fassetValidations.comp}],
+ *     ],
+ *   },
+ * });
+ * ```
  */
-
 export default {
   any,
   comp,
@@ -43,12 +63,7 @@ function any(fassetsValue) {
 }
 
 function comp(fassetsValue) {
-  // TODO: handle all three of the various ways React components are defined
-  //       - legacy React.createClass()
-  //       - class derivation
-  //       - Stateless Functional Component
-  // for now, just punt with ANY:
-  return fassetsValue!==undefined ? null : 'React Component';
+  return isComponent(fassetsValue) ? null : 'React Component';
 }
 
 function fn(fassetsValue) {

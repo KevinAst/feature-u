@@ -35,7 +35,7 @@ describe('isComponent() tests', () => {
   test('Class Component (extending from React.Component)', () => {
     class MyComponent extends React.Component{
       render() {
-        return <p>Stateless Functional Component (function)</p>;
+        return <p>Class Component (extending from React.Component)</p>;
       }
     }
     expect(isComponent(MyComponent)).toBe(true);
@@ -49,7 +49,7 @@ describe('isComponent() tests', () => {
   test('Legacy React.createClass()', () => {
     const MyComponent = createReactClass({ // legacy: React.createClass()
       render() {
-        return <p>Stateless Functional Component (function)</p>;
+        return <p>Legacy React.createClass()</p>;
       }
     });
     expect(isComponent(MyComponent)).toBe(true);

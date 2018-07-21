@@ -443,6 +443,15 @@ redux is in use).</p>
 
 <br/><br/><br/>
 
+<a id="fassetValidations"></a>
+
+<h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
+  fassetValidations : Object</h5>
+A pre-defined container of fasset validation functions, which canbe employed in the `Feature.fassets.use` usage contract.  Thisallows the `use` directive to specify what type of resource it isexpecting.These validations are available as a convenience.  Additionalvalidations can be created as needed.The validation API should adhere to the following signature:``` + fassetValidationFn(fassetsValue): string || null```A return value of null represents a valid value, while a stringspecifies a validation error that feature-u will format as follows(see ${returnStr}):```  VALIDATION ERROR in resource: '${fassetsKey}',    expecting: ${returnStr} ...     resource defined in Feature: '${resource.definingFeature}',    usage contract '${useKey}' found in Feature: '${featureName}'```The following pre-defined validations are promoted: - any:  any type (except undefined) - comp: a react component - fn:   a function - str:  a string - bool: a boolean**Example**:```jscreateFeature({  fassets: {    use: [       'MainPage.*.link', // DEFAULT: required of type any      ['MainPage.*.body', {required: false, type: fassetValidations.comp}],    ],  },});```
+
+
+<br/><br/><br/>
+
 <a id="registerRootAppElmCB"></a>
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">

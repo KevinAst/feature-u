@@ -1,4 +1,6 @@
 import fassetValidations  from '../fassetValidations';  // module under test
+import React              from 'react';
+import createReactClass   from 'create-react-class'; // see: NOTE (below)
 
 describe('fassetValidations', () => {
 
@@ -32,18 +34,35 @@ describe('fassetValidations', () => {
 
   describe('comp', () => {
     const INVALID = 'React Component';
+
+    class ClassComp extends React.Component{
+      render() {
+        return <p>Class Component (extending from React.Component)</p>;
+      }
+    }
+
+    // NOTE: because this legacy technique has been deprecated (as of v16)
+    //       it has been moved to a separate package: 'create-react-class'
+    //       ... see: https://reactjs.org/docs/react-without-es6.html
+    //       ... we are only using this for testing our isComponent() function
+    //           SOOO: it can be a devDependency
+    const ReactClassComponent = createReactClass({ // legacy: React.createClass()
+      render() {
+        return <p>Legacy React.createClass()</p>;
+      }
+    });
+
     doTest(fassetValidations.comp, [
-     // fassetsValue  expected  testing
-     // ============  ========  =================================================
-      [ (p)=>p,       VALID,    'Stateless Functional Component (arrow function)', ],
-      [ function(){}, VALID,    'Stateless Functional Component (function)',       ],
-//    [ 123,          VALID,    'number',              ],
-      [ undefined,    INVALID,  'undefined',           ],
-      // TODO: This is just a placebo for now (implemented as ANY)
-      //       MUST handle all three of the various ways React components are defined
-      //       - legacy React.createClass()
-      //       - class derivation
-      //       - Stateless Functional Component
+     // fassetsValue          expected  testing
+     // ============          ========  =================================================
+      [ (p)=>p,               VALID,    'Stateless Functional Component (arrow function)', ],
+      [ function(){},         VALID,    'Stateless Functional Component (function)',       ],
+      [ ClassComp,            VALID,    'Class Component (extending from React.Component)',],
+      [ ReactClassComponent,  VALID,    'Legacy React.createClass()', ],
+      [ null,                 INVALID,  'null',                       ],
+      [ undefined,            INVALID,  'undefined',                  ],
+      [ 123,                  INVALID,  'number',                     ],
+      [ new Date(),           INVALID,  'Date',                       ],
     ]);
   });
 
