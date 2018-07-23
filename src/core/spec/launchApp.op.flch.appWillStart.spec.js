@@ -21,9 +21,9 @@ describe('launchApp.op.flch.appWillStart(fassets, activeFeatures, curRootAppElm)
         // include curRootAppElm ... and interpret the initial null value
         let rootAppElm = curRootAppElm || '';
 
-        // accumulate our app
+        // accumulate our fassets
         // ... unconventional, but for our testing it proves that correct fassets was supplied
-        rootAppElm += `App:${fassets}`;
+        rootAppElm += `Fassets:${fassets}`;
 
         // accumulate our desired rootAppElm injection
         rootAppElm += `...rootAppElmFrom-feature1`;
@@ -44,9 +44,9 @@ describe('launchApp.op.flch.appWillStart(fassets, activeFeatures, curRootAppElm)
         // include curRootAppElm ... and interpret the initial null value
         let rootAppElm = curRootAppElm || '';
 
-        // accumulate our app
+        // accumulate our fassets
         // ... unconventional, but for our testing it proves that correct fassets was supplied
-        rootAppElm += `App:${fassets}`;
+        rootAppElm += `Fassets:${fassets}`;
 
         // accumulate our desired rootAppElm injection
         rootAppElm += `...rootAppElmFrom-feature3`;
@@ -64,8 +64,8 @@ describe('launchApp.op.flch.appWillStart(fassets, activeFeatures, curRootAppElm)
 
   test('confirm the accumulated feature.appWillStart()', () => {
     expect(rootAppElm)
-      .toBe('App:fassets-pass-through-for-testing...rootAppElmFrom-feature1' +
-            'App:fassets-pass-through-for-testing...rootAppElmFrom-feature3');
+      .toBe('Fassets:fassets-pass-through-for-testing...rootAppElmFrom-feature1' +
+            'Fassets:fassets-pass-through-for-testing...rootAppElmFrom-feature3');
   });
 
 });

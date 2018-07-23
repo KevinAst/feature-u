@@ -36,7 +36,6 @@ describe('launchApp.op.alch.validateFeatureContent(features, aspectMap): void', 
         createFeature({
           name:         'feature1',
           enabled:      true,
-          publicFace:   {my: 'public', face: ':-)'},
           appWillStart: ()=>'placebo-func',
           appDidStart:  ()=>'placebo-func',
         }),

@@ -38,7 +38,7 @@ describe('createFeature() tests', () => {
       });
     });
 
-    // publicFace: nothing to validate (it can be anything)
+    // fassets: tested within createFassets()
 
     describe('feature.appWillStart', () => {
       test('appWillStart must be a function', () => {
@@ -78,12 +78,9 @@ describe('createFeature() tests', () => {
   //***--------------------------------------------------------------------------------
   describe('VERIFY content pass through', () => {
 
-    const publicFace = { my: 'public', face: ':-)' };
-
     const feature = createFeature({
       name:            'myFeatureName',
       enabled:         false,
-      publicFace,
       appWillStart:    () => 'MY appWillStart',
       appDidStart:     () => 'MY appDidStart',
       additionalStuff: 'typically extended AspectContent',
@@ -97,10 +94,6 @@ describe('createFeature() tests', () => {
       expect(feature.enabled).toBe(false);
     });
 
-    test('feature.publicFace', () => {
-      expect(feature.publicFace).toEqual(publicFace);
-    });
-    
     test('feature.appWillStart', () => {
       expect(feature.appWillStart()).toEqual('MY appWillStart');
     });
