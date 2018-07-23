@@ -143,7 +143,7 @@ left-nav menu available throughout the application.
 
    **`leftNav: Feature.appWillStart()`**
    ```js
-   function appWillStart({app, curRootAppElm}) {
+   function appWillStart({fassets, curRootAppElm}) {
      return (
        <Drawer ref={ ref => registerDrawer(ref) }
                content={<SideBar/>}
@@ -342,7 +342,7 @@ discussion of each:
 - **App Parameter**: 
 
   You will notice that the `app` parameter is supplied on many of these
-  life cycle methods.  As you know the {{book.api.App}} object is used
+  life cycle methods.  As you know the {{book.api.Fassets}} object is used
   in promoting {{book.guide.crossCom}}.  
 
   While it is most likely an anti-pattern to directly interrogate the

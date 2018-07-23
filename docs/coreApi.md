@@ -13,6 +13,7 @@ this list:_
 ## Core API Summary
 
 * {{book.api.createFeature$}}
+  * {{book.api.fassets}}
   * {{book.api.appWillStartCB$}}
   * {{book.api.appDidStartCB$}}
 
@@ -36,6 +37,5 @@ this list:_
   * {{book.api.Fassets_get}}
   * {{book.api.Fassets_isFeature}}
 * {{book.api.fassetValidations}}
-* {{book.api.App}}
 * {{book.api.Aspect}}
 * {{book.api.AspectContent}}

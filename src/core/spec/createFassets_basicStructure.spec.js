@@ -3,6 +3,31 @@ import {createFeature}    from '../..';
 
 describe('createFassets(): fassets basic structure', () => {
 
+  describe('reject obsolete publicFace built-in aspects', () => {
+
+    test('publicFace is OBSOLETE as of feature-u@1', () => {
+      expect(()=> createFassets([
+        createFeature({
+          name:       'feature1',
+          publicFace: 'publicFace BAD 1',
+        }),
+        createFeature({
+          name:       'feature2',
+        }),
+        createFeature({
+          name:       'feature3',
+          publicFace: 'publicFace BAD 3',
+        }),
+      ]) )
+        .toThrow(/OBSOLETE Feature.publicFace is still in-use in the following features: feature1,feature3/);
+      // THROW:  The OBSOLETE Feature.publicFace is still in-use in the following features: feature1,feature3
+      //         ... as of @feature-u@1 the publicFace builtin aspect has been replaced with fassets
+      //         ... see: https://feature-u.js.org/cur/history.html#v1_0_0
+    });
+    
+  });
+
+
   describe('fassets basic structure error conditions', () => {
 
     // drive test with various invalid top-level fassets (must be an object literal)

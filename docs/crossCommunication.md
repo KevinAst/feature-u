@@ -18,7 +18,7 @@ cross-communication between features.
 A **best practice** is to treat each of your features as isolated
 implementations.  As a result, a feature **should never** directly
 import resources from other features, **rather** they should utilize
-the public feature promotion of the {{book.api.App}} object
+the public feature promotion of the {{book.api.Fassets}} object
 (_discussed here_).  In doing this **a:** only the public aspects of a
 feature are exposed/used, and **b:** your features become truly
 plug-and-play.
@@ -65,7 +65,7 @@ export default createFeature({
 ```
 
 The `publicFace` of all features are accumulated and exposed through
-the {{book.api.App}} Object (emitted from {{book.api.launchApp}}), as
+the {{book.api.Fassets}} Object (emitted from {{book.api.launchApp}}), as
 follows:
 
 ```js
@@ -80,9 +80,9 @@ As an example, the sample above can be referenced like this:
 
 ## Accessing the App Object
 
-The {{book.api.App}} object can be accessed in several different ways.
+The {{book.api.Fassets}} object can be accessed in several different ways.
 
-1. The simplest way to access the {{book.api.App}} object is to merely
+1. The simplest way to access the {{book.api.Fassets}} object is to merely
    import it.
 
    Your application mainline exports the {{book.api.launchApp}} return
@@ -129,14 +129,14 @@ The {{book.api.App}} object can be accessed in several different ways.
    });
    ```
 
-2. Another way to access the {{book.api.App}} object is through the
+2. Another way to access the {{book.api.Fassets}} object is through the
    programmatic APIs of **feature-u**, where the `app` object is supplied
    as a parameter.
 
    * app life-cycle hooks:
      ```js
-     appWillStart({app, curRootAppElm}): rootAppElm || null
-     appDidStart({app, appState, dispatch}): void                        
+     appWillStart({fassets, curRootAppElm}): rootAppElm || null
+     appDidStart({fassets, appState, dispatch}): void                        
      ```
    
    * route hooks (PKG: {{book.ext.featureRouter}}):
@@ -157,7 +157,7 @@ The {{book.api.App}} object can be accessed in several different ways.
      })
      ```
 
-3. There is a third technique to access the {{book.api.App}} object,
+3. There is a third technique to access the {{book.api.Fassets}} object,
 that provides **early access** _during code expansion time_, that is
 provided through **Managed Code Expansion** (_see next section_).
 
@@ -165,7 +165,7 @@ provided through **Managed Code Expansion** (_see next section_).
 ## Managed Code Expansion
 
 In the previous discussion, we detailed two ways to access the
-{{book.api.App}} object, and referred to a third technique (_discussed
+{{book.api.Fassets}} object, and referred to a third technique (_discussed
 here_).
 
 There are two situations that make accessing the `app` object
@@ -245,7 +245,7 @@ used (_over and above app injection during code expansion_) is to
 
 ## App Access Summary
 
-To summarize our discussion of how to access the {{book.api.App}}
+To summarize our discussion of how to access the {{book.api.Fassets}}
 object, it is really very simple:
 
 1. Simply import the app (_for run-time functions outside the control

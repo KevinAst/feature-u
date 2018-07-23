@@ -67,7 +67,7 @@ configure it's slice of the frameworks in use._
 
 In turn, these {{book.api.Feature}} objects are supplied to
 {{book.api.launchApp}}, which configures and starts your application,
-returning an {{book.api.App}} object (_which promotes the public API
+returning an {{book.api.Fassets}} object (_which promotes the public API
 of each feature_).
 
 ### aspects ...

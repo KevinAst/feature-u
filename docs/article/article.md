@@ -558,12 +558,12 @@ service API &bull; inject a utility react component at the App root
 To solve this, **feature-u** introduces two [Application Life Cycle
 Hooks], injected through the following Feature aspects:
 
-1. [`Feature.appWillStart({app, curRootAppElm}): rootAppElm || falsy`]
+1. [`Feature.appWillStart({fassets, curRootAppElm}): rootAppElm || falsy`]
    ...  invoked one time, just before the app starts up.  This can do
    any type of initialization, including supplementing the app's
    top-level root element (i.e. react component instance).
 
-2. [`Feature.appDidStart({app, appState, dispatch}): void`] ...
+2. [`Feature.appDidStart({fassets, appState, dispatch}): void`] ...
    invoked one time immediately after the app has started.  A typical
    usage for this hook is to dispatch some type of bootstrap action.
 
@@ -598,7 +598,7 @@ YES: firebase/appWillStart . initFireBase()
   export default createFeature({
     name: 'firebase',
 
-    appWillStart({app, curRootAppElm}) {
+    appWillStart({fassets, curRootAppElm}) {
       initFireBase(); // initialize FireBase
     },
   });
@@ -617,7 +617,7 @@ YES: firebase/appWillStart . initFireBase()
    * An app-level life-cycle hook that dispatches our bootstrap action
    * that gets the ball rolling!
    */
-  export default function appDidStart({app, appState, dispatch}) {
+  export default function appDidStart({fassets, appState, dispatch}) {
     dispatch( actions.bootstrap() );
   }
   ```
@@ -638,7 +638,7 @@ YES: firebase/appWillStart . initFireBase()
   /**
    * Inject our Drawer/SideBar component at the root of our app
    */
-  export default function appWillStart({app, curRootAppElm}) {
+  export default function appWillStart({fassets, curRootAppElm}) {
     return (
       <Drawer ref={ ref => registerDrawer(ref) }
               content={<SideBar/>}
@@ -1278,11 +1278,11 @@ end" of your features!** _Go forth and compute!!_
 [`launchApp()`]:           https://feature-u.js.org/cur/api.html#launchApp
 [`registerRootAppElm()`]:  https://feature-u.js.org/cur/api.html#registerRootAppElmCB
 
-[`Feature.appWillStart()`]:                                           https://feature-u.js.org/cur/appLifeCycle.html#appwillstart
-[`Feature.appWillStart({app, curRootAppElm}): rootAppElm || falsy`]:  https://feature-u.js.org/cur/appLifeCycle.html#appwillstart
+[`Feature.appWillStart()`]:                                               https://feature-u.js.org/cur/appLifeCycle.html#appwillstart
+[`Feature.appWillStart({fassets, curRootAppElm}): rootAppElm || falsy`]:  https://feature-u.js.org/cur/appLifeCycle.html#appwillstart
 
-[`Feature.appDidStart()`]:                                https://feature-u.js.org/cur/appLifeCycle.html#appDidStart
-[`Feature.appDidStart({app, appState, dispatch}): void`]: https://feature-u.js.org/cur/appLifeCycle.html#appDidStart
+[`Feature.appDidStart()`]:                                    https://feature-u.js.org/cur/appLifeCycle.html#appDidStart
+[`Feature.appDidStart({fassets, appState, dispatch}): void`]: https://feature-u.js.org/cur/appLifeCycle.html#appDidStart
 
 [`managedExpansion()`]:    https://feature-u.js.org/cur/api.html#managedExpansion
 

@@ -16,10 +16,9 @@ import logf        from '../util/logf';
  * **Please Note** this function uses named parameters.
  *
  * @param {string} name the identity of the feature.  Feature names
- * are used to index the {{book.api.App}} Object _(in support of
- * {{book.guide.crossCom}})_, and are therefore guaranteed to be
- * unique.  Application code can also use the Feature name in various
- * **single-source-of-truth** operations _(see {{book.guide.bestPractices}})_.
+ * are guaranteed to be unique.  Application code can use the Feature
+ * name in various **single-source-of-truth** operations _(see
+ * {{book.guide.bestPractices}})_.
  * 
  * @param {boolean} [enabled=true] an indicator as to whether this
  * feature is enabled (true) or not (false).  When used, this
@@ -27,11 +26,14 @@ import logf        from '../util/logf';
  * packaged code to be dynamically enabled/disabled at run-time
  * _(please refer to: {{book.guide.enablement}})_.
  *
- * @param {Any} [publicFace] an optional resource object that is the
- * feature's Public API, promoting {{book.guide.crossCom}}.  This
- * object is exposed through the {{book.api.App}} object as:
- * `app.{featureName}.{publicFace}` _(please refer to:
- * {{book.guide.crossCom_publicFaceApp}})_.
+ * @param {fassets} [fassets] 
+ * an optional aspect that promotes feature assets used in
+ * {{book.guide.crossCom}} (i.e. the Public Face of a feature).
+ * `fassets` directives can both define resources, and/or declare a
+ * resource contract (the intention to use a set of fasset resources).
+ * Resources are accumulated across all features, and exposed through
+ * the {{book.api.Fassets}} object, and the {{book.api.withFassets}}
+ * HoC.
  *
  * @param {appWillStartCB} [appWillStart] an optional
  * {{book.guide.appLifeCycle}} invoked one time, just before the app
@@ -59,7 +61,7 @@ import logf        from '../util/logf';
 export default function createFeature({name,
                                        enabled=true,
 
-                                       publicFace,
+                                       fassets, // ?xRETRO-TO-fassets
 
                                        appWillStart,
                                        appDidStart,
@@ -76,7 +78,7 @@ export default function createFeature({name,
   // ... enabled
   check(enabled===true || enabled===false, 'enabled must be a boolean');
 
-  // ... publicFace: nothing to validate (it can be anything)
+  // ... fasset: validation occurs in createFasset()
 
   // ... appWillStart
   if (appWillStart) {
@@ -97,7 +99,7 @@ export default function createFeature({name,
     name,
     enabled,
 
-    publicFace,
+    fassets, // ?xRETRO-TO-fassets
 
     appWillStart,
     appDidStart,
@@ -127,7 +129,8 @@ const validFeatureProps = {
   //            =========
   name:         'builtin',
   enabled:      'builtin',
-  publicFace:   'builtin', // ?? now fassets
+  publicFace:   'builtin',  // OBSOLETE as of feature-u@1 ... still registered for the sole purpose of generating more specific error (see: createFassets.js)
+  fassets:      'builtin',  // ?xRETRO-TO-fassets
   appWillStart: 'builtin',
   appDidStart:  'builtin',
 
@@ -238,7 +241,7 @@ export function extendFeatureProperty(name, owner) {
  *
  * @callback appWillStartCB
  * 
- * @param {App} app the App object used in feature cross-communication.
+ * @param {Fassets} fassets the Fassets object used in cross-feature-communication. ?xRETRO-TO-fassets - param
  * 
  * @param {reactElm} curRootAppElm - the current react app element
  * root.
@@ -267,7 +270,7 @@ export function extendFeatureProperty(name, owner) {
  *
  * @callback appDidStartCB
  * 
- * @param {App} app the App object used in feature cross-communication.
+ * @param {Fassets} fassets the Fassets object used in cross-feature-communication. ?xRETRO-TO-fassets - param
  * 
  * @param {Any} [appState] - the redux top-level app state (when redux
  * is in use).
@@ -276,4 +279,128 @@ export function extendFeatureProperty(name, owner) {
  * redux is in use).
  *
  * @return void
+ */
+
+
+//***
+//*** Specification: fassets // ?xRETRO-TO-fassets ... NEW
+//***
+
+/**
+ * @typedef {BuiltInAspect} fassets
+ * 
+ * A builtin aspect that publicly promotes feature-based resources
+ * called `fassets` (feature assets).  These resources are the basis
+ * of {{book.guide.crossCom}}. You can think of this as the Public Face
+ * of a feature.
+ * 
+ * **SideBar**: The term `fassets` is a play on words.  While it is
+ * pronounced "facet" _and is loosely related to this term_, it is
+ * spelled fassets (i.e. feature assets).
+ * 
+ * Feature resources are accumulated across all features, and exposed
+ * through the {{book.api.Fassets}} object.  They can also be referenced
+ * via the {{book.api.withFassets}} HoC.
+ * 
+ * The `fassets` aspect can both define resources, and/or declare a
+ * resource contract (i.e. the intention to use a set of fasset
+ * resources).  This is accomplished via three separate `fassets`
+ * directives:
+ * 
+ * 1. **define**: define public resources, held in the
+ *    {{book.api.Fassets}} object
+ *    
+ *    ```js
+ *    fassets: {
+ *      define: {
+ *        '{fassetsKey}': {fassetsValue}
+ *    
+ *        ... 
+ *    
+ *        NOTES:
+ *         - fassetsKey MUST be unique
+ *         - may contain federated namespace (via dots ".")
+ *           ... normalized in fassets object
+ *           ... ex: 'MainPage.launch'
+ *         - may NOT contain wildcards
+ *           ... i.e. must be defined completely
+ *
+ *        // examples ...
+ *        'openView': actions.view.open, // fassets.openView(viewName): Action
+ *    
+ *        // federated namespace example
+ *        'selector.currentView': selector.currentView, // fassets.selector.currentView(appState): viewName
+ *    
+ *        // UI Component example
+ *        'MainPage.cart.link': () => <Link to="/cart">Cart</Link>,
+ *        'MainPage.cart.body': () => <Route path="/cart" component={ShoppingCart}/>,
+ *      }
+ *    }
+ *    ```
+ *    
+ * 2. **use**: specify public resource keys that will be **used** by the
+ *    containing feature (i.e. a resource contract)
+ *    
+ *    ```js
+ *    fassets: {
+ *      use: [
+ *        '{fassetsKey}',
+ *        -or-
+ *        ['$fassetsKey', {required: true/false, type: $validationFn}],
+ *    
+ *        ... 
+ *    
+ *        NOTES:
+ *         - each key will be supplied by other features
+ *         - this is a communication to other features (i.e. a contract)
+ *           ... saying: I plan to "use" these injections
+ *           HOWEVER: feature-u cannot strictly enforce this usage
+ *                    ... enclosed feature should reference this
+ *                        {fassetsKey} through fassets.get(), or withFassets()
+ *         - may contain federated namespace (with dots ".")
+ *           ... ex: 'MainPage.launch'
+ *         - may contain wildcards (with "*")
+ *           ... ex: 'MainPage.*.link'
+ *
+ *        // examples ...
+ *        'MainPage.launch',
+ *       
+ *        // may contain wildcards ...
+ *        'MainPage.*.link',
+ *        'MainPage.*.body',
+ *       
+ *        // optionally supply options object, controlling optionality and data types
+ *        ['MainPage.*.link',  { required: true,   type: any  }], // same as DEFAULTS
+ *        ['MainPage.*.link',  { required: false,             }], // optional of any type
+ *        ['MainPage.*.link',  {                   type: comp }], // required of react component type
+ *        ['MainPage.*.link',  { required: false,  type: comp }], // optional of react component type
+ *      ]
+ *    }
+ *    ```
+ *    
+ * 3. **defineUse**: define public resources specified by other features (via
+ *    the `use` directive)
+ *    
+ *    ```js
+ *    fassets: {
+ *      defineUse: {
+ *        '{fassetsKey}': {fassetsValue}
+ *    
+ *        ... 
+ *    
+ *        NOTES:
+ *         - this is identical to fassets.define EXCEPT:
+ *         - it MUST MATCH a fassets.use directive
+ *           ... using this directive, feature-u will perform additional
+ *               validation to unsure these entries match a use contract
+ *    
+ *        // examples ...
+ *        'MainPage.cart.link': () => <Link to="/cart">Cart</Link>,
+ *        'MainPage.cart.body': () => <Route path="/cart" component={ShoppingCart}/>,
+ *      }
+ *    }
+ *    ```
+ * 
+ * For more information, please refer to {{book.guide.crossCom}},
+ * {{book.api.Fassets}} object, and the {{book.api.withFassets}} HoC.
  */

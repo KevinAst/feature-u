@@ -4,7 +4,7 @@
 <a id="createFeature"></a>
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
-  createFeature(name, [enabled], [publicFace], [appWillStart], [appDidStart], [extendedAspect]) ⇒ [`Feature`](#Feature)</h5>
+  createFeature(name, [enabled], [fassets], [appWillStart], [appDidStart], [extendedAspect]) ⇒ [`Feature`](#Feature)</h5>
 Create a new {{book.api.Feature}} object, cataloging{{book.api.AspectContent}} to be consumed by{{book.api.launchApp}}.  Each feature within an applicationpromotes it's own {{book.api.Feature}} object.For more information, please refer to{{book.guide.detail_featureAndAspect}}, with examples at{{book.guide.usage_featureObject}}.**Please Note** this function uses named parameters.
 
 <table>
@@ -16,10 +16,9 @@ Create a new {{book.api.Feature}} object, cataloging{{book.api.AspectContent}} 
   <tbody>
 <tr>
     <td>name</td><td>string</td><td></td><td><p>the identity of the feature.  Feature names
-are used to index the {{book.api.App}} Object <em>(in support of
-{{book.guide.crossCom}})</em>, and are therefore guaranteed to be
-unique.  Application code can also use the Feature name in various
-<strong>single-source-of-truth</strong> operations <em>(see {{book.guide.bestPractices}})</em>.</p>
+are guaranteed to be unique.  Application code can use the Feature
+name in various <strong>single-source-of-truth</strong> operations <em>(see
+{{book.guide.bestPractices}})</em>.</p>
 </td>
     </tr><tr>
     <td>[enabled]</td><td>boolean</td><td><code>true</code></td><td><p>an indicator as to whether this
@@ -29,11 +28,13 @@ packaged code to be dynamically enabled/disabled at run-time
 <em>(please refer to: {{book.guide.enablement}})</em>.</p>
 </td>
     </tr><tr>
-    <td>[publicFace]</td><td>Any</td><td></td><td><p>an optional resource object that is the
-feature&#39;s Public API, promoting {{book.guide.crossCom}}.  This
-object is exposed through the {{book.api.App}} object as:
-<code>app.{featureName}.{publicFace}</code> _(please refer to:
-{{book.guide.crossCom_publicFaceApp}})_.</p>
+    <td>[fassets]</td><td><a href="#fassets"><code>fassets</code></a></td><td></td><td><p>an optional aspect that promotes feature assets used in
+{{book.guide.crossCom}} (i.e. the Public Face of a feature).
+<code>fassets</code> directives can both define resources, and/or declare a
+resource contract (the intention to use a set of fasset resources).
+Resources are accumulated across all features, and exposed through
+the {{book.api.Fassets}} object, and the {{book.api.withFassets}}
+HoC.</p>
 </td>
     </tr><tr>
     <td>[appWillStart]</td><td><a href="#appWillStartCB"><code>appWillStartCB</code></a></td><td></td><td><p>an optional
@@ -97,7 +98,7 @@ request.  Use any string that uniquely identifies your utility
 <a id="launchApp"></a>
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
-  launchApp([aspects], features, registerRootAppElm) ⇒ [`App`](#App)</h5>
+  launchApp([aspects], features, registerRootAppElm) ⇒ [`Fassets`](#Fassets)</h5>
 Launch an application by assembling the supplied features, drivingthe configuration of the frameworks in use _(as orchestrated by thesupplied set of plugable Aspects)_.For more information _(with examples)_, please refer to{{book.guide.detail_launchingApp}}.**Please Note** this function uses named parameters.
 
 <table>
@@ -112,7 +113,7 @@ Launch an application by assembling the supplied features, drivingthe configura
 <strong>feature-u</strong>, integrating other frameworks to match your specific
 run-time stack.<br/><br/></p>
 <p>When NO Aspects are supplied <em>(an atypical case)</em>, only the very
-basic <strong>feature-u</strong> characteristics are in effect (like publicFace
+basic <strong>feature-u</strong> characteristics are in effect (like fassets
 and life-cycle hooks).</p>
 </td>
     </tr><tr>
@@ -133,7 +134,7 @@ details and complete examples.</p>
     </tr>  </tbody>
 </table>
 
-**Returns**: [`App`](#App) - the App object used to promote{{book.guide.crossCom}}.  
+**Returns**: [`Fassets`](#Fassets) - the Fassets object used in cross-feature-communication. ?xRETRO-TO-fassets  
 
 <br/><br/><br/>
 
@@ -141,7 +142,7 @@ details and complete examples.</p>
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
   managedExpansion(managedExpansionCB) ⇒ [`managedExpansionCB`](#managedExpansionCB)</h5>
-Mark the supplied {{book.api.managedExpansionCB}} as a "ManagedExpansion Callback", distinguishing it from other functions _(suchas reducer functions)_.Features may communicate {{book.api.AspectContent}} directly, orthrough a {{book.api.managedExpansionCB}}.  In other words, the{{book.api.AspectContent}} can either be the actual content itself_(ex: reducer, logic modules, etc.)_, or a function that returnsthe content.  The latter: 1. supports {{book.guide.crossCom}} _(through app object    injection)_, and 2. minimizes circular dependency issues (of ES6 modules).Managed Expansion Callbacks are used when a fully resolved{{book.api.App}} object is required during in-line code expansion.They are merely functions that when invoked _(under the control of**feature-u**)_, are supplied the {{book.api.App}} object andreturn the expanded {{book.api.AspectContent}} _(ex: reducer, logicmodules, etc.)_.**For more information _(with examples)_**, please refer to{{book.guide.crossCom_managedCodeExpansion}}.The {{book.api.managedExpansionCB}} function should conform to thefollowing signature:**API:** {{book.api.managedExpansionCB$}}
+Mark the supplied {{book.api.managedExpansionCB}} as a "ManagedExpansion Callback", distinguishing it from other functions _(suchas reducer functions)_.Features may communicate {{book.api.AspectContent}} directly, orthrough a {{book.api.managedExpansionCB}}.  In other words, the{{book.api.AspectContent}} can either be the actual content itself_(ex: reducer, logic modules, etc.)_, or a function that returnsthe content.  The latter: 1. supports {{book.guide.crossCom}} _(through fassets object    injection)_, and 2. minimizes circular dependency issues (of ES6 modules).Managed Expansion Callbacks are used when a fully resolved{{book.api.Fassets}} object is required during in-line code expansion.They are merely functions that when invoked _(under the control of**feature-u**)_, are supplied the {{book.api.Fassets}} object andreturn the expanded {{book.api.AspectContent}} _(ex: reducer, logicmodules, etc.)_.**For more information _(with examples)_**, please refer to{{book.guide.crossCom_managedCodeExpansion}}.The {{book.api.managedExpansionCB}} function should conform to thefollowing signature:**API:** {{book.api.managedExpansionCB$}}
 
 <table>
   <thead>
@@ -323,7 +324,7 @@ The `fassets` object _(emitted from {{book.api.launchApp}})_ isan accumulation 
 
 * [Fassets](#Fassets) : Object
     * [.get(fassetsKey)](#Fassets.get) ⇒ resource \| Array.&lt;resource&gt;
-    * [.isFeature(featureName)](#Fassets.isFeature) ⇒ boolean \| boolean
+    * [.isFeature(featureName)](#Fassets.isFeature) ⇒ boolean
 
 
 <br/><br/><br/>
@@ -356,8 +357,8 @@ resources)</em>.</p>
 <a id="Fassets_isFeature"></a>
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
-  Fassets.isFeature(featureName) ⇒ boolean \| boolean</h5>
-Return an indicator as to whether the supplied feature isactive.**Note**: As an alternative to using this method, you canconditionally reason over the existence of "well-known fassetresources" specific to a given feature.
+  Fassets.isFeature(featureName) ⇒ boolean</h5>
+Return an indicator as to whether the supplied feature isactive or not.**Note**: As an alternative to using this method, you canconditionally reason over the existence of "well-known fassetresources" specific to a given feature.
 
 <table>
   <thead>
@@ -372,7 +373,7 @@ Return an indicator as to whether the supplied feature isactive.**Note**: As 
     </tr>  </tbody>
 </table>
 
-**Returns**: boolean - **true**: the supplied feature is active,**false**: not active (or doesn't exist).boolean - the supplied feature is active (true), or thenot (false).  
+**Returns**: boolean - **true**: is active, **false**: is not active(or doesn't exist).  
 
 <br/><br/><br/>
 
@@ -399,7 +400,7 @@ An optional {{book.guide.appLifeCycle}} invoked one time, justbefore the app st
   </thead>
   <tbody>
 <tr>
-    <td>app</td><td><a href="#App"><code>App</code></a></td><td><p>the App object used in feature cross-communication.</p>
+    <td>fassets</td><td><a href="#Fassets"><code>Fassets</code></a></td><td><p>the Fassets object used in cross-feature-communication. ?xRETRO-TO-fassets - param</p>
 </td>
     </tr><tr>
     <td>curRootAppElm</td><td>reactElm</td><td><p>the current react app element
@@ -426,7 +427,7 @@ An optional {{book.guide.appLifeCycle}} invoked one time,immediately after the 
   </thead>
   <tbody>
 <tr>
-    <td>app</td><td><a href="#App"><code>App</code></a></td><td><p>the App object used in feature cross-communication.</p>
+    <td>fassets</td><td><a href="#Fassets"><code>Fassets</code></a></td><td><p>the Fassets object used in cross-feature-communication. ?xRETRO-TO-fassets - param</p>
 </td>
     </tr><tr>
     <td>[appState]</td><td>Any</td><td><p>the redux top-level app state (when redux
@@ -440,6 +441,15 @@ redux is in use).</p>
 </table>
 
 **Returns**: void  
+
+<br/><br/><br/>
+
+<a id="fassets"></a>
+
+<h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
+  fassets : BuiltInAspect</h5>
+A builtin aspect that publicly promotes feature-based resourcescalled `fassets` (feature assets).  These resources are the basisof {{book.guide.crossCom}}. You can think of this as the Public APIof a feature.**SideBar**: The term `fassets` is a play on words.  While it ispronounced "facet" _and is loosely related to this term_, it isspelled fassets (i.e. feature assets).Feature resources are accumulated across all features, and exposedthrough the {{book.api.Fassets}} object.  They can also be referencedvia the {{book.api.withFassets}} HoC.The `fassets` aspect can both define resources, and/or declare aresource contract (i.e. the intention to use a set of fassetresources).  This is accomplished via three separate `fassets`directives:1. **define**: define public resources, held in the   {{book.api.Fassets}} object      ```js   fassets: {     define: {       '{fassetsKey}': {fassetsValue}          ...           NOTES:        - fassetsKey MUST be unique        - may contain federated namespace (via dots ".")          ... normalized in fassets object          ... ex: 'MainPage.launch'        - may NOT contain wildcards          ... i.e. must be defined completely       // examples ...       'openView': actions.view.open, // fassets.openView(viewName): Action          // federated namespace example       'selector.currentView': selector.currentView, // fassets.selector.currentView(appState): viewName          // UI Component example       'MainPage.cart.link': () => <Link to="/cart">Cart</Link>,       'MainPage.cart.body': () => <Route path="/cart" component={ShoppingCart}/>,     }   }   ```   2. **use**: specify public resource keys that will be **used** by the   containing feature (i.e. a resource contract)      ```js   fassets: {     use: [       '{fassetsKey}',       -or-       ['$fassetsKey', {required: true/false, type: $validationFn}],          ...           NOTES:        - each key will be supplied by other features        - this is a communication to other features (i.e. a contract)          ... saying: I plan to "use" these injections          HOWEVER: feature-u cannot strictly enforce this usage                   ... enclosed feature should reference this                       {fassetsKey} through fassets.get(), or withFassets()        - may contain federated namespace (with dots ".")          ... ex: 'MainPage.launch'        - may contain wildcards (with "*")          ... ex: 'MainPage.*.link'       // examples ...       'MainPage.launch',             // may contain wildcards ...       'MainPage.*.link',       'MainPage.*.body',             // optionally supply options object, controlling optionality and data types       ['MainPage.*.link',  { required: true,   type: any  }], // same as DEFAULTS       ['MainPage.*.link',  { required: false,             }], // optional of any type       ['MainPage.*.link',  {                   type: comp }], // required of react component type       ['MainPage.*.link',  { required: false,  type: comp }], // optional of react component type     ]   }   ```   3. **defineUse**: define public resources specified by other features (via   the `use` directive)      ```js   fassets: {     defineUse: {       '{fassetsKey}': {fassetsValue}          ...           NOTES:        - this is identical to fassets.define EXCEPT:        - it MUST MATCH a fassets.use directive          ... using this directive, feature-u will perform additional              validation to unsure these entries match a use contract          // examples ...       'MainPage.cart.link': () => <Link to="/cart">Cart</Link>,       'MainPage.cart.body': () => <Route path="/cart" component={ShoppingCart}/>,     }   }   ```For more information, please refer to {{book.guide.crossCom}},{{book.api.Fassets}} object, and the {{book.api.withFassets}} HoC.
+
 
 <br/><br/><br/>
 
@@ -469,19 +479,15 @@ The {{book.api.launchApp}} callback hook that registers thesupplied root applic
     <td>rootAppElm</td><td>reactElm</td><td><p>the root application element to be
 registered.</p>
 </td>
+    </tr><tr>
+    <td>fassets</td><td><a href="#Fassets"><code>Fassets</code></a></td><td><p>the Fassets object used in cross-feature-communication
+(rarely needed except to allow client to inject their own
+FassetsContext.Provider for a null rootAppElm).</p>
+</td>
     </tr>  </tbody>
 </table>
 
 **Returns**: void  
-
-<br/><br/><br/>
-
-<a id="App"></a>
-
-<h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
-  App : Object</h5>
-The App object _(emitted from {{book.api.launchApp}})_ facilitates{{book.guide.crossCom}} by accumulating the Public API of allfeatures, through named feature nodes structured as follows:```jsApp.{featureName}.{publicFace}```For more information, please refer to{{book.guide.crossCom_publicFaceApp}} and{{book.guide.detail_appObject}}.
-
 
 <br/><br/><br/>
 
@@ -499,8 +505,7 @@ A "managed expansion callback" (defined by{{book.api.managedExpansion}}) that w
   </thead>
   <tbody>
 <tr>
-    <td>app</td><td><a href="#App"><code>App</code></a></td><td><p>The <strong>feature-u</strong> app object, promoting the
-publicFace of each feature.</p>
+    <td>fassets</td><td><a href="#Fassets"><code>Fassets</code></a></td><td><p>the Fassets object used in cross-feature-communication.</p>
 </td>
     </tr>  </tbody>
 </table>
@@ -598,7 +603,7 @@ to contain this aspect.</p>
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
   expandFeatureContentMeth ⇒ string</h5>
-Expand self's {{book.api.AspectContent}} in the supplied feature,replacing that content (within the feature).  Once expansion iscomplete, **feature-u** will perform a delayed validation of theexpanded content.**API:** {{book.api.expandFeatureContentMeth$}}The default behavior simply implements the expansion algorithmdefined by {{book.api.managedExpansion}}:```jsfeature[this.name] = feature[this.name](app);```This default behavior rarely needs to change.  It however providesa hook for aspects that need to transfer additional content fromthe expansion function to the expanded content.  As an example, the`reducer` aspect must transfer the slice property from theexpansion function to the expanded reducer.
+Expand self's {{book.api.AspectContent}} in the supplied feature,replacing that content (within the feature).  Once expansion iscomplete, **feature-u** will perform a delayed validation of theexpanded content.**API:** {{book.api.expandFeatureContentMeth$}}The default behavior simply implements the expansion algorithmdefined by {{book.api.managedExpansion}}:```jsfeature[this.name] = feature[this.name](fassets);```This default behavior rarely needs to change.  It however providesa hook for aspects that need to transfer additional content fromthe expansion function to the expanded content.  As an example, the`reducer` aspect must transfer the slice property from theexpansion function to the expanded reducer.
 
 <table>
   <thead>
@@ -608,7 +613,7 @@ Expand self's {{book.api.AspectContent}} in the supplied feature,replacing that
   </thead>
   <tbody>
 <tr>
-    <td>app</td><td><a href="#App"><code>App</code></a></td><td><p>the App object used in feature
+    <td>fassets</td><td><a href="#Fassets"><code>Fassets</code></a></td><td><p>the Fassets object used in feature
 cross-communication.</p>
 </td>
     </tr><tr>
@@ -637,7 +642,8 @@ The required Aspect method that assembles content for this aspectacross all fea
   </thead>
   <tbody>
 <tr>
-    <td>app</td><td><a href="#App"><code>App</code></a></td><td><p>the App object used in feature cross-communication.</p>
+    <td>fassets</td><td><a href="#Fassets"><code>Fassets</code></a></td><td><p>the Fassets object used in feature
+cross-communication.</p>
 </td>
     </tr><tr>
     <td>activeFeatures</td><td><a href="#Feature"><code>Array.&lt;Feature&gt;</code></a></td><td><p>The set of active (enabled)
@@ -664,7 +670,8 @@ An optional Aspect method that assembles resources for this aspectacross all ot
   </thead>
   <tbody>
 <tr>
-    <td>app</td><td><a href="#App"><code>App</code></a></td><td><p>the App object used in feature cross-communication.</p>
+    <td>fassets</td><td><a href="#Fassets"><code>Fassets</code></a></td><td><p>the Fassets object used in feature
+cross-communication.</p>
 </td>
     </tr><tr>
     <td>aspects</td><td><a href="#Aspect"><code>Array.&lt;Aspect&gt;</code></a></td><td><p>The set of <strong>feature-u</strong> Aspect objects
@@ -691,7 +698,8 @@ An optional callback hook that promotes some characteristic of thisaspect withi
   </thead>
   <tbody>
 <tr>
-    <td>app</td><td><a href="#App"><code>App</code></a></td><td><p>the App object used in feature cross-communication.</p>
+    <td>fassets</td><td><a href="#Fassets"><code>Fassets</code></a></td><td><p>the Fassets object used in feature
+cross-communication.</p>
 </td>
     </tr><tr>
     <td>curRootAppElm</td><td>reactElm</td><td><p>the current react app element root.</p>
@@ -717,7 +725,8 @@ An optional callback hook that promotes some characteristic of thisaspect withi
   </thead>
   <tbody>
 <tr>
-    <td>app</td><td><a href="#App"><code>App</code></a></td><td><p>the App object used in feature cross-communication.</p>
+    <td>fassets</td><td><a href="#Fassets"><code>Fassets</code></a></td><td><p>the Fassets object used in feature
+cross-communication.</p>
 </td>
     </tr><tr>
     <td>curRootAppElm</td><td>reactElm</td><td><p>the current react app element root.</p>

@@ -38,7 +38,7 @@
 
     "guide": {
 
-      "devGuide":  "<a href='/index.html'><b>xxx</b></a>",
+      "devGuide":  "<a href='/index.html'><b>Dev Guide</b></a>",
 
       "start":           "<a href='/start.html'><code>Getting Started</code></a>",
       "start_polyfill":  "<a href='/start.html#potential-need-for-polyfills'><code>Potential Need for Polyfills</code></a>",
@@ -60,7 +60,7 @@
       "detail_extendableAspects":  "<a href='/detail.html#extendable-aspects'><code>Extendable aspects</code></a>",
       "detail_launchingApp":       "<a href='/detail.html#launching-your-application'><code>Launching Your Application</code></a>",
       "detail_reactRegistration":  "<a href='/detail.html#react-registration'><code>React Registration</code></a>",
-      "detail_appObject":          "<a href='/detail.html#app-object'><code>App Object</code></a>",
+      "detail_appObject":          "<a href='/detail.html#app-object'><code>App Object??OBSOLETE</code></a>",
       "detail_featurePublicAPI":   "<a href='/detail.html#feature-public-api'><code>Feature Public API</code></a>",
       "detail_doesFeatureExist":   "<a href='/detail.html#does-feature-exist'><code>Does Feature Exist</code></a>",
 
@@ -68,18 +68,18 @@
 
       "appWillStart":     "<a href='/appLifeCycle.html#appwillstart'><code>appWillStart</code></a>",
       "appWillStartCB":   "<a href='/appLifeCycle.html#appwillstart'><code>Feature.appWillStart()</code></a>",
-      "appWillStartCB$":  "<a href='/appLifeCycle.html#appwillstart'><code>Feature.appWillStart({app, curRootAppElm}): rootAppElm || falsy</code></a>",
+      "appWillStartCB$":  "<a href='/appLifeCycle.html#appwillstart'><code>Feature.appWillStart({fassets, curRootAppElm}): rootAppElm || falsy</code></a>",
 
       "appDidStart":      "<a href='/appLifeCycle.html#appDidStart'><code>appDidStart</code></a>",
       "appDidStartCB":    "<a href='/appLifeCycle.html#appDidStart'><code>Feature.appDidStart()</code></a>",
-      "appDidStartCB$":   "<a href='/appLifeCycle.html#appDidStart'><code>Feature.appDidStart({app, [appState], [dispatch]}): void</code></a>",
+      "appDidStartCB$":   "<a href='/appLifeCycle.html#appDidStart'><code>Feature.appDidStart({fassets, [appState], [dispatch]}): void</code></a>",
 
       "crossCom":                       "<a href='/crossCommunication.html'><code>Cross Feature Communication</code></a>",
-      "crossCom_publicFaceApp":         "<a href='/crossCommunication.html#publicface-and-the-app-object'><code>publicFace and the App Object</code></a>",
-      "crossCom_publicFace":            "<a href='/crossCommunication.html#publicface-and-the-app-object'><code>publicFace</code></a>",
+      "crossCom_publicFaceApp":         "<a href='/crossCommunication.html#publicface-and-the-app-object'><code>publicFace and the App Object??OBSOLETE</code></a>",
+      "crossCom_publicFace":            "<a href='/crossCommunication.html#publicface-and-the-app-object'><code>publicFace??OBSOLETE</code></a>",
       "crossCom_accessingApp":          "<a href='/crossCommunication.html#accessing-the-app-object'><code>Accessing App</code></a>",
       "crossCom_managedCodeExpansion":  "<a href='/crossCommunication.html#managed-code-expansion'><code>Managed Code Expansion</code></a>",
-      "crossCom_appAccessSummary":      "<a href='/crossCommunication.html#app-access-summary'><code>App Access Summary</code></a>",
+      "crossCom_appAccessSummary":      "<a href='/crossCommunication.html#app-access-summary'><code>App Access Summary??OBSOLETE</code></a>",
 
       "featureRouter":  "<a href='/featureRouter.html'><code>Feature Based Routes</code></a>",
 
@@ -101,22 +101,22 @@
         "genesisMeth$":  "<a href='/extending.html#aspectgenesis'><code>Aspect.genesis(): string</code></a>",
 
         "expandFeatureContentMeth":      "<a href='/extending.html#aspectexpandfeaturecontent'><code>Aspect.expandFeatureContent()</code></a>",
-        "expandFeatureContentMeth$":     "<a href='/extending.html#aspectexpandfeaturecontent'><code>Aspect.expandFeatureContent(app, feature): string</code></a>",
+        "expandFeatureContentMeth$":     "<a href='/extending.html#aspectexpandfeaturecontent'><code>Aspect.expandFeatureContent(fassets, feature): string</code></a>",
 
         "validateFeatureContentMeth":    "<a href='/extending.html#aspectvalidatefeaturecontent'><code>Aspect.validateFeatureContent()</code></a>",
         "validateFeatureContentMeth$":   "<a href='/extending.html#aspectvalidatefeaturecontent'><code>Aspect.validateFeatureContent(feature): string</code></a>",
 
         "assembleFeatureContentMeth":    "<a href='/extending.html#aspectassemblefeaturecontent'><code>Aspect.assembleFeatureContent()</code></a>",
-        "assembleFeatureContentMeth$":   "<a href='/extending.html#aspectassemblefeaturecontent'><code>Aspect.assembleFeatureContent(app, activeFeatures): void</code></a>",
+        "assembleFeatureContentMeth$":   "<a href='/extending.html#aspectassemblefeaturecontent'><code>Aspect.assembleFeatureContent(fassets, activeFeatures): void</code></a>",
 
         "assembleAspectResourcesMeth":   "<a href='/extending.html#aspectassembleaspectresources'><code>Aspect.assembleAspectResources()</code></a>",
-        "assembleAspectResourcesMeth$":  "<a href='/extending.html#aspectassembleaspectresources'><code>Aspect.assembleAspectResources(app, aspects): void</code></a>",
+        "assembleAspectResourcesMeth$":  "<a href='/extending.html#aspectassembleaspectresources'><code>Aspect.assembleAspectResources(fassets, aspects): void</code></a>",
 
         "initialRootAppElmMeth":         "<a href='/extending.html#aspectinitialrootappelm'><code>Aspect.initialRootAppElm()</code></a>",
-        "initialRootAppElmMeth$":        "<a href='/extending.html#aspectinitialrootappelm'><code>Aspect.initialRootAppElm(app, curRootAppElm): rootAppElm</code></a>",
+        "initialRootAppElmMeth$":        "<a href='/extending.html#aspectinitialrootappelm'><code>Aspect.initialRootAppElm(fassets, curRootAppElm): rootAppElm</code></a>",
 
         "injectRootAppElmMeth":          "<a href='/extending.html#aspectinjectrootappelm'><code>Aspect.injectRootAppElm()</code></a>",
-        "injectRootAppElmMeth$":         "<a href='/extending.html#aspectinjectrootappelm'><code>Aspect.injectRootAppElm(app, curRootAppElm): rootAppElm</code></a>",
+        "injectRootAppElmMeth$":         "<a href='/extending.html#aspectinjectrootappelm'><code>Aspect.injectRootAppElm(fassets, curRootAppElm): rootAppElm</code></a>",
 
         "additionalMethods":             "<a href='/extending.html#aspectadditionalmethods'><code>Aspect.additionalMethods()</code></a>",
 
@@ -134,7 +134,9 @@
 
       "Feature":            "<a href='/api.html#Feature'><code>Feature</code></a>",
       "Features":           "<a href='/api.html#Feature'><code>Features</code></a>",
-      "App":                "<a href='/api.html#App'><code>App</code></a>",
+      "fassets":            "<a href='/api.html#fassets'><code>fassets</code></a>",
+      "fassets$":           "<a href='/api.html#fassets'><code>Feature.fassets</code></a>",
+      "App":                "<a href='/api.html#App'><code>App??OBSOLETE</code></a>",
       "Fassets":            "<a href='/api.html#Fassets'><code>Fassets</code></a>",
       "Fassets_get":        "<a href='/api.html#Fassets_get'><code>Fassets.get()</code></a>",
       "Fassets_isFeature":  "<a href='/api.html#Fassets_isFeature'><code>Fassets.isFeature()</code></a>",
@@ -145,15 +147,15 @@
 
       "coreApi":                      "<a href='/coreApi.html'><code>Core API</code></a>",
         "createFeature":              "<a href='/api.html#createFeature'><code>createFeature()</code></a>",
-        "createFeature$":             "<a href='/api.html#createFeature'><code>createFeature({name, [enabled], [publicFace], [appWillStart], [appDidStart], [pluggableAspects]}): Feature</code></a>",
+        "createFeature$":             "<a href='/api.html#createFeature'><code>createFeature({name, [enabled], [fassets], [appWillStart], [appDidStart], [pluggableAspects]}): Feature</code></a>",
           "appWillStartCB":           "<a href='/api.html#appWillStartCB'><code>appWillStart()</code></a>",
-          "appWillStartCB$":          "<a href='/api.html#appWillStartCB'><code>appWillStart({app, curRootAppElm}): rootAppElm || falsy</code></a>",
+          "appWillStartCB$":          "<a href='/api.html#appWillStartCB'><code>appWillStart({fassets, curRootAppElm}): rootAppElm || falsy</code></a>",
           "appDidStartCB":            "<a href='/api.html#appDidStartCB'><code>appDidStart()</code></a>",
-          "appDidStartCB$":           "<a href='/api.html#appDidStartCB'><code>appDidStart({app, [appState], [dispatch]}): void</code></a>",
+          "appDidStartCB$":           "<a href='/api.html#appDidStartCB'><code>appDidStart({fassets, [appState], [dispatch]}): void</code></a>",
         "launchApp":                  "<a href='/api.html#launchApp'><code>launchApp()</code></a>",
-        "launchApp$":                 "<a href='/api.html#launchApp'><code>launchApp({[aspects], features, registerRootAppElm}): App</code></a>",
+        "launchApp$":                 "<a href='/api.html#launchApp'><code>launchApp({[aspects], features, registerRootAppElm}): Fassets</code></a>",
           "registerRootAppElmCB":     "<a href='/api.html#registerRootAppElmCB'><code>registerRootAppElm()</code></a>",
-          "registerRootAppElmCB$":    "<a href='/api.html#registerRootAppElmCB'><code>registerRootAppElm(rootAppElm): void</code></a>",
+          "registerRootAppElmCB$":    "<a href='/api.html#registerRootAppElmCB'><code>registerRootAppElm(rootAppElm, fassets): void</code></a>",
         "withFassets":                "<a href='/api.html#withFassets'><code>withFassets()</code></a>",
         "withFassets$":               "<a href='/api.html#withFassets'><code>withFassets({mapFassetsToProps}): HoC</code></a>",
           "mapFassetsToPropsStruct":  "<a href='/api.html#mapFassetsToPropsStruct'><code>mapFassetsToPropsStruct</code></a>",
@@ -161,7 +163,7 @@
         "managedExpansion":           "<a href='/api.html#managedExpansion'><code>managedExpansion()</code></a>",
         "managedExpansion$":          "<a href='/api.html#managedExpansion'><code>managedExpansion(managedExpansionCB): managedExpansionCB</code></a>",
           "managedExpansionCB":       "<a href='/api.html#managedExpansionCB'><code>managedExpansionCB()</code></a>",
-          "managedExpansionCB$":      "<a href='/api.html#managedExpansionCB'><code>managedExpansionCB(app): AspectContent</code></a>",
+          "managedExpansionCB$":      "<a href='/api.html#managedExpansionCB'><code>managedExpansionCB(fassets): AspectContent</code></a>",
 
       "extensionApi":                      "<a href='/extensionApi.html'><code>Extension API</code></a>",
         "createAspect":                    "<a href='/api.html#createAspect'><code>createAspect()</code></a>",
@@ -171,22 +173,22 @@
           "genesisMeth$":                  "<a href='/api.html#genesisMeth'><code>genesis(): string</code></a>",
 
           "expandFeatureContentMeth":      "<a href='/api.html#expandFeatureContentMeth'><code>expandFeatureContent()</code></a>",
-          "expandFeatureContentMeth$":     "<a href='/api.html#expandFeatureContentMeth'><code>expandFeatureContent(app, feature): string</code></a>",
+          "expandFeatureContentMeth$":     "<a href='/api.html#expandFeatureContentMeth'><code>expandFeatureContent(fassets, feature): string</code></a>",
 
           "validateFeatureContentMeth":    "<a href='/api.html#validateFeatureContentMeth'><code>validateFeatureContent()</code></a>",
           "validateFeatureContentMeth$":   "<a href='/api.html#validateFeatureContentMeth'><code>validateFeatureContent(feature): string</code></a>",
 
           "assembleFeatureContentMeth":    "<a href='/api.html#assembleFeatureContentMeth'><code>assembleFeatureContent()</code></a>",
-          "assembleFeatureContentMeth$":   "<a href='/api.html#assembleFeatureContentMeth'><code>assembleFeatureContent(app, activeFeatures): void</code></a>",
+          "assembleFeatureContentMeth$":   "<a href='/api.html#assembleFeatureContentMeth'><code>assembleFeatureContent(fassets, activeFeatures): void</code></a>",
 
           "assembleAspectResourcesMeth":   "<a href='/api.html#assembleAspectResourcesMeth'><code>assembleAspectResources()</code></a>",
-          "assembleAspectResourcesMeth$":  "<a href='/api.html#assembleAspectResourcesMeth'><code>assembleAspectResources(app, aspects): void</code></a>",
+          "assembleAspectResourcesMeth$":  "<a href='/api.html#assembleAspectResourcesMeth'><code>assembleAspectResources(fassets, aspects): void</code></a>",
 
           "initialRootAppElmMeth":         "<a href='/api.html#initialRootAppElmMeth'><code>initialRootAppElm()</code></a>",
-          "initialRootAppElmMeth$":        "<a href='/api.html#initialRootAppElmMeth'><code>initialRootAppElm(app, curRootAppElm): rootAppElm</code></a>",
+          "initialRootAppElmMeth$":        "<a href='/api.html#initialRootAppElmMeth'><code>initialRootAppElm(fassets, curRootAppElm): rootAppElm</code></a>",
 
           "injectRootAppElmMeth":          "<a href='/api.html#injectRootAppElmMeth'><code>injectRootAppElm()</code></a>",
-          "injectRootAppElmMeth$":         "<a href='/api.html#injectRootAppElmMeth'><code>injectRootAppElm(app, curRootAppElm): rootAppElm</code></a>",
+          "injectRootAppElmMeth$":         "<a href='/api.html#injectRootAppElmMeth'><code>injectRootAppElm(fassets, curRootAppElm): rootAppElm</code></a>",
 
         "extendAspectProperty":            "<a href='/api.html#extendAspectProperty'><code>extendAspectProperty()</code></a>",
         "extendAspectProperty$":           "<a href='/api.html#extendAspectProperty'><code>extendAspectProperty(name, owner): void</code></a>",
@@ -210,7 +212,7 @@
       "reduxMiddleware":    "<a href='https://redux.js.org/docs/advanced/Middleware.html'><code>redux middleware</code></a>",
       "reduxActions":       "<a href='https://www.npmjs.com/package/redux-actions'><code>redux-actions</code></a>",
       "reduxLogic":         "<a href='https://github.com/jeffbski/redux-logic'><code>redux-logic</code></a>",
-      "jeffbski":           "<a href='https://github.com/jeffbski'><code>@jeffbski</code></a>"
+      "jeffbski":           "<a href='https://github.com/jeffbski'>@jeffbski</a>"
     }
   }
 }

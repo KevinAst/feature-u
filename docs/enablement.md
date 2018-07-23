@@ -74,7 +74,7 @@ If however one feature depends on another _(i.e. it **has a**
 {{book.guide.crossCom_publicFace}})_, then there are additional
 factors to consider.
 
-As you know, the {{book.api.App}} object is used to facilitate
+As you know, the {{book.api.Fassets}} object is used to facilitate
 {{book.guide.crossCom}}.  If a feature does not exist, or has been
 disabled, the corresponding `app.{featureName}` will NOT exist.
 
@@ -95,7 +95,7 @@ present or not.
   {{book.guide.appLifeCycle}}.
 
   ```js
-  appWillStart({app, curRootAppElm}) {
+  appWillStart({fassets, curRootAppElm}) {
     assert(app.featureD, '***ERROR*** I NEED featureD');
   }
   ```

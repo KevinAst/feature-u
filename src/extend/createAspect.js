@@ -380,7 +380,7 @@ export function extendAspectProperty(name, owner) {
  * defined by {{book.api.managedExpansion}}:
  *
  * ```js
- * feature[this.name] = feature[this.name](app);
+ * feature[this.name] = feature[this.name](fassets);
  * ```
  *
  * This default behavior rarely needs to change.  It however provides
@@ -391,7 +391,7 @@ export function extendAspectProperty(name, owner) {
  *
  * @callback expandFeatureContentMeth
  *
- * @param {App} app the App object used in feature
+ * @param {Fassets} fassets the Fassets object used in feature
  * cross-communication.
  * 
  * @param {Feature} feature - the feature which is known to contain
@@ -421,7 +421,8 @@ export function extendAspectProperty(name, owner) {
  *
  * @callback assembleFeatureContentMeth
  *
- * @param {App} app the App object used in feature cross-communication.
+ * @param {Fassets} fassets the Fassets object used in feature
+ * cross-communication.
  * 
  * @param {Feature[]} activeFeatures - The set of active (enabled)
  * features that comprise this application.
@@ -452,7 +453,8 @@ export function extendAspectProperty(name, owner) {
  *
  * @callback assembleAspectResourcesMeth
  *
- * @param {App} app the App object used in feature cross-communication.
+ * @param {Fassets} fassets the Fassets object used in feature
+ * cross-communication.
  * 
  * @param {Aspect[]} aspects - The set of **feature-u** Aspect objects
  * used in this this application.
@@ -482,7 +484,8 @@ export function extendAspectProperty(name, owner) {
  *
  * @callback initialRootAppElmMeth
  *
- * @param {App} app the App object used in feature cross-communication.
+ * @param {Fassets} fassets the Fassets object used in feature
+ * cross-communication.
  * 
  * @param {reactElm} curRootAppElm - the current react app element root.
  *
@@ -513,7 +516,8 @@ export function extendAspectProperty(name, owner) {
  *
  * @callback injectRootAppElmMeth
  *
- * @param {App} app the App object used in feature cross-communication.
+ * @param {Fassets} fassets the Fassets object used in feature
+ * cross-communication.
  * 
  * @param {reactElm} curRootAppElm - the current react app element root.
  *

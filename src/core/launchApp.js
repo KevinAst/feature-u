@@ -1,7 +1,10 @@
+import React                from 'react';
 import isFunction           from 'lodash.isfunction';
 import verify               from '../util/verify';
 import {isAspectProperty}   from '../extend/createAspect';
 import {isFeatureProperty}  from './createFeature';
+import createFassets        from './createFassets';
+import {FassetsContext}     from './withFassets';
 import logf                 from '../util/logf';
 
 let executionOrder = 1; // running counter of execution order of life-cycle-hooks (unit-test related)
@@ -21,7 +24,7 @@ let executionOrder = 1; // running counter of execution order of life-cycle-hook
  * run-time stack.<br/><br/>
  * 
  * When NO Aspects are supplied _(an atypical case)_, only the very
- * basic **feature-u** characteristics are in effect (like publicFace
+ * basic **feature-u** characteristics are in effect (like fassets
  * and life-cycle hooks).
  *
  * @param {Feature[]} features the features that comprise this
@@ -38,9 +41,9 @@ let executionOrder = 1; // running counter of execution order of life-cycle-hook
  * 
  * Please refer to {{book.guide.detail_reactRegistration}} for more
  * details and complete examples.
- *
- * @return {App} the App object used to promote
- * {{book.guide.crossCom}}.
+
+ * @return {Fassets} the Fassets object used in 
+ * cross-feature-communication. ?xRETRO-TO-fassets
  *
  * @function launchApp
  */
@@ -84,37 +87,41 @@ export default function launchApp({aspects=[],
   // prune to activeFeatures, insuring all feature.names are unique
   const activeFeatures = op.helper.pruneActiveFeatures(features);
 
-  // create our App object containing the publicFace (used in cross-communication between features)
-  // TODO: ?? RETROFIT to fassets
-  const app = op.helper.createApp(activeFeatures);
+  // ?xRETRO-TO-fassets ... OBSOLETE THIS
+  // ? // create our App object containing the publicFace (used in cross-communication between features)
+  // ? const app = op.helper.createApp(activeFeatures);
+  // ?xRETRO-TO-fassets ... NEW: invoke createFassets() -AND- gen error if publicFace is still used
+  // accumulate all feature assets in our Fassets object (used in cross-feature-communication)
+  const fassets = createFassets(activeFeatures);
 
   // expand the feature content of any aspect that relies on managedExpansion()
   // ... AND perform a delayed validation, once expansion has occurred
-  op.alch.expandFeatureContent(app, activeFeatures, aspects);
+  op.alch.expandFeatureContent(fassets, activeFeatures, aspects);  // ?xRETRO-TO-fassets - param
 
   // assemble content of each aspect across all features
-  op.alch.assembleFeatureContent(app, activeFeatures, aspects);
+  op.alch.assembleFeatureContent(fassets, activeFeatures, aspects);  // ?xRETRO-TO-fassets - param
 
   // assemble resources for each aspect across all other aspects, ONCE ALL aspects have assembled their feature content
-  op.alch.assembleAspectResources(app, aspects);
+  op.alch.assembleAspectResources(fassets, aspects);  // ?xRETRO-TO-fassets - param
 
   // define our rootAppElm via DOM injections from a combination of Aspects/Features
   // ... also apply Feature.appWillStart() life-cycle hook
-  const rootAppElm = op.helper.defineRootAppElm(app, activeFeatures, aspects);
+  const rootAppElm = op.helper.defineRootAppElm(fassets, activeFeatures, aspects);  // ?xRETRO-TO-fassets - param
 
   // start our app by registering our rootAppElm to the appropriate react framework
   // ... because this is accomplished by app-specific code, 
   //     feature-u can operate in any number of containing react frameworks,
   //     like: React Web, React Native, Expo, etc.
-  registerRootAppElm(rootAppElm);
+  registerRootAppElm(rootAppElm, fassets); // ?xRETRO-TO-fassets enhance this API by passing fassets (allowing client to inject their own <FassetsContext.Provider> for a null rootAppElm)
 
   // apply Feature.appDidStart() life-cycle hook
-  op.flch.appDidStart(app, activeFeatures, aspects);
+  op.flch.appDidStart(fassets, activeFeatures, aspects);  // ?xRETRO-TO-fassets - param
 
   logf('COMPLETE: your application has now started');
 
+  // ?xRETRO-TO-fassets
   // expose our new App object (used in feature cross-communication)
-  return app;
+  return fassets;
 }
 
 
@@ -133,6 +140,8 @@ launchApp.diag = {
 //*** Specification: registerRootAppElmCB
 //***
 
+// ?xRETRO-TO-fassets enhance this API by passing fassets (allowing client to inject their own <FassetsContext.Provider> for a null rootAppElm)
+
 /**
  * The {{book.api.launchApp}} callback hook that registers the
  * supplied root application element to the specific React framework
@@ -150,31 +159,35 @@ launchApp.diag = {
  * 
  * @param {reactElm} rootAppElm - the root application element to be
  * registered.
+ * 
+ * @param {Fassets} fassets the Fassets object used in cross-feature-communication
+ * (rarely needed except to allow client to inject their own
+ * FassetsContext.Provider for a null rootAppElm).
  *
  * @return void
  */
 
 
 
-//***
-//*** Specification: App
-//***
-
-/**
- * @typedef {Object} App
- *
- * The App object _(emitted from {{book.api.launchApp}})_ facilitates
- * {{book.guide.crossCom}} by accumulating the Public API of all
- * features, through named feature nodes structured as follows:
- * 
- * ```js
- * App.{featureName}.{publicFace}
- * ```
- * 
- * For more information, please refer to
- * {{book.guide.crossCom_publicFaceApp}} and
- * {{book.guide.detail_appObject}}.
- */
+// ? //***
+// ? //*** Specification: App  // ?xRETRO-TO-fassets - OBSOLETE ... delete it ... AND retrofit all api.App references to api.Fassets
+// ? //***
+// ? 
+// ? /**
+// ?  * @typedef {Object} App
+// ?  *
+// ?  * The App object _(emitted from {{book.api.launchApp}})_ facilitates
+// ?  * {{book.guide.crossCom}} by accumulating the Public API of all
+// ?  * features, through named feature nodes structured as follows:
+// ?  * 
+// ?  * ```js
+// ?  * App.{featureName}.{publicFace}
+// ?  * ```
+// ?  * 
+// ?  * For more information, please refer to
+// ?  * {{book.guide.crossCom_publicFaceApp}} and
+// ?  * {{book.guide.detail_appObject}}.
+// ?  */
 
 
 
@@ -368,63 +381,62 @@ op.helper.pruneActiveFeatures = function(features) {
 
 
 //*------------------------------------------
-//* helper: createApp(activeFeatures): app
+//* helper: createApp(activeFeatures): app  // ?xRETRO-TO-fassets - OBSOLETE
 //*------------------------------------------
 
-// TODO: ?? RETROFIT to fassets
-op.helper.createApp = function(activeFeatures) {
-
-  // create our App object containing the publicFace (used in cross-communication between features)
-  const app =  {
-    // EX:
-    // featureA: {
-    //   sel: {
-    //     abc(appState),
-    //   },
-    //   actions: {
-    //     xyz(...),
-    //   },
-    //   api: {
-    //     fooBar(...),
-    //   },
-    // },
-    // featureB: {
-    //   ...
-    // },
-    // etc: {
-    //   ...
-    // },
-  };
-
-  // resolve/promote the publicFace of ALL active features - held in our app object!
-  // ... this is acomplished FIRST (i.e. before other feature aspects)
-  //     so the expansion of other feature apects can use it
-  // ... this eliminates order dependency issues related to feature
-  //     expansion - EVEN in code that is expanded in-line
-  activeFeatures.forEach( feature => {
-    // promote the feature publicFace in our app
-    // ... NOTE: default to empty object, 
-    //           providing a consistent indicator that the feature is present/enabled
-    app[feature.name] = feature.publicFace || {};
-  });
-
-  // log summary
-  const hookCount   = activeFeatures.reduce( (count, feature) => feature.publicFace ? count+1 : count, 0);
-  const hookSummary = activeFeatures.map( (feature) => `\n  Feature.name:${feature.name}${feature.publicFace ? ' <-- defines: publicFace' : ''}` );
-  logf(`cross-feature-communication ... INTERPRETING: Feature.publicFace ... ${hookCount} hooks:${hookSummary}`);
-
-  logf('cross-feature-communication ... the following app is in effect: ', app);
-
-  return app;
-};
+// ? op.helper.createApp = function(activeFeatures) {
+// ? 
+// ?   // create our App object containing the publicFace (used in cross-communication between features)
+// ?   const app =  {
+// ?     // EX:
+// ?     // featureA: {
+// ?     //   sel: {
+// ?     //     abc(appState),
+// ?     //   },
+// ?     //   actions: {
+// ?     //     xyz(...),
+// ?     //   },
+// ?     //   api: {
+// ?     //     fooBar(...),
+// ?     //   },
+// ?     // },
+// ?     // featureB: {
+// ?     //   ...
+// ?     // },
+// ?     // etc: {
+// ?     //   ...
+// ?     // },
+// ?   };
+// ? 
+// ?   // resolve/promote the publicFace of ALL active features - held in our app object!
+// ?   // ... this is acomplished FIRST (i.e. before other feature aspects)
+// ?   //     so the expansion of other feature apects can use it
+// ?   // ... this eliminates order dependency issues related to feature
+// ?   //     expansion - EVEN in code that is expanded in-line
+// ?   activeFeatures.forEach( feature => {
+// ?     // promote the feature publicFace in our app
+// ?     // ... NOTE: default to empty object, 
+// ?     //           providing a consistent indicator that the feature is present/enabled
+// ?     app[feature.name] = feature.publicFace || {};
+// ?   });
+// ? 
+// ?   // log summary
+// ?   const hookCount   = activeFeatures.reduce( (count, feature) => feature.publicFace ? count+1 : count, 0);
+// ?   const hookSummary = activeFeatures.map( (feature) => `\n  Feature.name:${feature.name}${feature.publicFace ? ' <-- defines: publicFace' : ''}` );
+// ?   logf(`cross-feature-communication ... INTERPRETING: Feature.publicFace ... ${hookCount} hooks:${hookSummary}`);
+// ? 
+// ?   logf('cross-feature-communication ... the following app is in effect: ', app);
+// ? 
+// ?   return app;
+// ? };
 
 
 
 //*------------------------------------------------------------------------------------
-//* aspect-life-cycle-hook: expandFeatureContent(app, activeFeatures, aspects): void
+//* aspect-life-cycle-hook: expandFeatureContent(fassets, activeFeatures, aspects): void // ?xRETRO-TO-fassets - param
 //*------------------------------------------------------------------------------------
 
-op.alch.expandFeatureContent = function(app, activeFeatures, aspects) {
+op.alch.expandFeatureContent = function(fassets, activeFeatures, aspects) { // ?xRETRO-TO-fassets - param
 
   // maintain: running counter of execution order of life-cycle-hooks (unit-test related)
   op.alch.expandFeatureContent.executionOrder = executionOrder++;
@@ -452,14 +464,14 @@ op.alch.expandFeatureContent = function(app, activeFeatures, aspects) {
           // ... a simple process, BUT provides the hook to do more (ex: reducer tranfer of slice)
           logf(`resolving managedExpansion() [by aspect-life-cycle-hook Aspect.name:${aspect.name}'s Aspect.expandFeatureContent()] ON Feature.name:${feature.name}'s Feature.${aspect.name} AspectContent`);
 
-          errMsg = aspect.expandFeatureContent(app, feature);
+          errMsg = aspect.expandFeatureContent(fassets, feature); // ?xRETRO-TO-fassets - param
           // ... specialized validation, over-and-above the validateFeatureContent() hook
           check(!errMsg, errMsg); // truthy is considered a validation error
         }
         else {
           logf(`resolving managedExpansion() [by DEFAULT-PROCESS] ON Feature.name:${feature.name}'s Feature.${aspect.name} AspectContent`);
           // default implementation (when not done by the aspect)
-          feature[aspect.name] = feature[aspect.name](app);
+          feature[aspect.name] = feature[aspect.name](fassets); // ?xRETRO-TO-fassets - param
         }
 
         // perform our delayed validation
@@ -474,10 +486,10 @@ op.alch.expandFeatureContent = function(app, activeFeatures, aspects) {
 
 
 //*--------------------------------------------------------------------------------------
-//* aspect-life-cycle-hook: assembleFeatureContent(app, activeFeatures, aspects): void
+//* aspect-life-cycle-hook: assembleFeatureContent(fassets, activeFeatures, aspects): void // ?xRETRO-TO-fassets - param
 //*--------------------------------------------------------------------------------------
 
-op.alch.assembleFeatureContent = function(app, activeFeatures, aspects) {
+op.alch.assembleFeatureContent = function(fassets, activeFeatures, aspects) { // ?xRETRO-TO-fassets - param
 
   // maintain: running counter of execution order of life-cycle-hooks (unit-test related)
   op.alch.assembleFeatureContent.executionOrder = executionOrder++;
@@ -491,17 +503,17 @@ op.alch.assembleFeatureContent = function(app, activeFeatures, aspects) {
   // ... retaining needed state for subsequent ops
   aspects.forEach( aspect => {
     logf(`aspect-life-cycle-hook ... Aspect.name:${aspect.name} ... invoking it's required Aspect.assembleFeatureContent()`);
-    aspect.assembleFeatureContent(app, activeFeatures);
+    aspect.assembleFeatureContent(fassets, activeFeatures); // ?xRETRO-TO-fassets - param
   });
 };
 
 
 
 //*-----------------------------------------------------------------------
-//* aspect-life-cycle-hook: assembleAspectResources(app, aspects): void
+//* aspect-life-cycle-hook: assembleAspectResources(fassets, aspects): void // ?xRETRO-TO-fassets - param
 //*-----------------------------------------------------------------------
 
-op.alch.assembleAspectResources = function(app, aspects) {
+op.alch.assembleAspectResources = function(fassets, aspects) { // ?xRETRO-TO-fassets - param
 
   // maintain: running counter of execution order of life-cycle-hooks (unit-test related)
   op.alch.assembleAspectResources.executionOrder = executionOrder++;
@@ -516,7 +528,7 @@ op.alch.assembleAspectResources = function(app, aspects) {
   aspects.forEach( aspect => {
     if (aspect.assembleAspectResources) {
       logf(`aspect-life-cycle-hook ... Aspect.name:${aspect.name} ... invoking it's defined Aspect.assembleAspectResources()`);
-      aspect.assembleAspectResources(app, aspects);
+      aspect.assembleAspectResources(fassets, aspects); // ?xRETRO-TO-fassets - param
     }
   });
 };
@@ -524,35 +536,32 @@ op.alch.assembleAspectResources = function(app, aspects) {
 
 
 //*----------------------------------------------------------------------
-//* helper: defineRootAppElm(app, activeFeatures, aspects): rootAppElm
+//* helper: defineRootAppElm(fassets, activeFeatures, aspects): rootAppElm // ?xRETRO-TO-fassets - param
 //*----------------------------------------------------------------------
 
-op.helper.defineRootAppElm = function(app, activeFeatures, aspects) {
+op.helper.defineRootAppElm = function(fassets, activeFeatures, aspects) { // ?xRETRO-TO-fassets - param
 
   // define our curRootAppElm via DOM injections from a combination of Aspects/Features
   let rootAppElm = null; // we start with nothing
 
   logf('defining-rootAppElm ... starting process, rootAppElm: null');
 
-  // FIRST: DOM injection via Aspect.initialRootAppElm(app, curRootAppElm)
-  rootAppElm = op.alch.initialRootAppElm(app, aspects, rootAppElm);
+  // FIRST: DOM injection via Aspect.initialRootAppElm(fassets, curRootAppElm) // ?xRETRO-TO-fassets - param
+  rootAppElm = op.alch.initialRootAppElm(fassets, aspects, rootAppElm); // ?xRETRO-TO-fassets - param
 
   // SECOND: DOM injection via Feature.appWillStart() life-cycle hook
-  rootAppElm = op.flch.appWillStart(app, activeFeatures, rootAppElm);
+  rootAppElm = op.flch.appWillStart(fassets, activeFeatures, rootAppElm); // ?xRETRO-TO-fassets - param
 
   // THIRD: DOM injection via Aspect.injectRootAppElm()
-  rootAppElm = op.alch.injectRootAppElm(app, aspects, rootAppElm);
+  rootAppElm = op.alch.injectRootAppElm(fassets, aspects, rootAppElm); // ?xRETRO-TO-fassets - param
 
-  // ?? import React                from 'react';
-  // ?? import {FassetsContext}     from './withFassets';
-  // ?? must pass fassets param ... in place of app
-  // FOURTH: inject our FassetsContext in support of withFassets() HOC
+  // ?xRETRO-TO-fassets - NEW LOGIC
+  // FOURTH: inject our <FassetsContext.Provider> in support of withFassets() HoC
   //         NOTE: We conditionally do this if a rootAppElm has been defined.
   //               Otherwise, the App is responible for this in the registerRootAppElm() hook.
-  // ?? TODO: here it is
-  // if (rootAppElm) {
-  //   rootAppElm = <FassetsContext.Provider value={fassets}>{rootAppElm}</FassetsContext.Provider>;
-  // }
+  if (rootAppElm) {
+    rootAppElm = <FassetsContext.Provider value={fassets}>{rootAppElm}</FassetsContext.Provider>;
+  }
 
   // NOTE: We do NOT validate rootAppElm to insure it is non-null!
   //       - at first glance it would appear that a null rootAppElm would render NOTHING
@@ -566,10 +575,10 @@ op.helper.defineRootAppElm = function(app, activeFeatures, aspects) {
 
 
 //*--------------------------------------------------------------------------------------
-//* aspect-life-cycle-hook: initialRootAppElm(app, aspects, curRootAppElm): rootAppElm
+//* aspect-life-cycle-hook: initialRootAppElm(fassets, aspects, curRootAppElm): rootAppElm // ?xRETRO-TO-fassets - param
 //*--------------------------------------------------------------------------------------
 
-op.alch.initialRootAppElm = function(app, aspects, curRootAppElm) {
+op.alch.initialRootAppElm = function(fassets, aspects, curRootAppElm) { // ?xRETRO-TO-fassets - param
 
   // maintain: running counter of execution order of life-cycle-hooks (unit-test related)
   op.alch.initialRootAppElm.executionOrder = executionOrder++;
@@ -579,13 +588,13 @@ op.alch.initialRootAppElm = function(app, aspects, curRootAppElm) {
   const hookSummary = aspects.map( (aspect) => `\n  Aspect.name:${aspect.name}${aspect.initialRootAppElm ? ' <-- defines: initialRootAppElm()' : ''}` );
   logf(`aspect-life-cycle-hook ... PROCESSING: Aspect.initialRootAppElm() ... ${hookCount} hooks:${hookSummary}`);
 
-  // DOM injection via Aspect.initialRootAppElm(app, curRootAppElm)
+  // DOM injection via Aspect.initialRootAppElm(fassets, curRootAppElm) // ?xRETRO-TO-fassets - param
   return aspects.reduce( (curRootAppElm, aspect) => {
 
     if (aspect.initialRootAppElm) {
 
       logf(`aspect-life-cycle-hook ... Aspect.name:${aspect.name} ... invoking it's defined Aspect.initialRootAppElm()`);
-      const rootAppElm = aspect.initialRootAppElm(app, curRootAppElm);
+      const rootAppElm = aspect.initialRootAppElm(fassets, curRootAppElm); // ?xRETRO-TO-fassets - param
 
       if (rootAppElm !== curRootAppElm) {
         logf(`defining-rootAppElm ... Aspect.name:${aspect.name}'s Aspect.initialRootAppElm() CHANGED rootAppElm: `,
@@ -604,10 +613,10 @@ op.alch.initialRootAppElm = function(app, aspects, curRootAppElm) {
 
 
 //*-----------------------------------------------------------------------------------------
-//* feature-life-cycle-hook: appWillStart(app, activeFeatures, curRootAppElm): rootAppElm
+//* feature-life-cycle-hook: appWillStart(fassets, activeFeatures, curRootAppElm): rootAppElm // ?xRETRO-TO-fassets - param
 //*-----------------------------------------------------------------------------------------
 
-op.flch.appWillStart = function(app, activeFeatures, curRootAppElm) {
+op.flch.appWillStart = function(fassets, activeFeatures, curRootAppElm) { // ?xRETRO-TO-fassets - param
 
   // maintain: running counter of execution order of life-cycle-hooks (unit-test related)
   op.flch.appWillStart.executionOrder = executionOrder++;
@@ -626,7 +635,7 @@ op.flch.appWillStart = function(app, activeFeatures, curRootAppElm) {
     if (feature.appWillStart) {
 
       logf(`feature-life-cycle-hook ... Feature.name:${feature.name} ... invoking it's defined Feature.appWillStart()`);
-      const rootAppElm = feature.appWillStart({app, curRootAppElm}) || curRootAppElm;
+      const rootAppElm = feature.appWillStart({fassets, curRootAppElm}) || curRootAppElm; // ?xRETRO-TO-fassets - param NOTE: Feature.appWillStart uses a "fassets" NAMED PAREMETER!!!
 
       if (rootAppElm !== curRootAppElm) {
         logf(`defining-rootAppElm ... Feature.name:${feature.name}'s Feature.appWillStart() CHANGED rootAppElm: `,
@@ -645,10 +654,10 @@ op.flch.appWillStart = function(app, activeFeatures, curRootAppElm) {
 
 
 //*-------------------------------------------------------------------------------------
-//* aspect-life-cycle-hook: injectRootAppElm(app, aspects, curRootAppElm): rootAppElm
+//* aspect-life-cycle-hook: injectRootAppElm(fassets, aspects, curRootAppElm): rootAppElm // ?xRETRO-TO-fassets - param
 //*-------------------------------------------------------------------------------------
 
-op.alch.injectRootAppElm = function(app, aspects, curRootAppElm) {
+op.alch.injectRootAppElm = function(fassets, aspects, curRootAppElm) { // ?xRETRO-TO-fassets - param
 
   // maintain: running counter of execution order of life-cycle-hooks (unit-test related)
   op.alch.injectRootAppElm.executionOrder = executionOrder++;
@@ -664,7 +673,7 @@ op.alch.injectRootAppElm = function(app, aspects, curRootAppElm) {
     if (aspect.injectRootAppElm) {
 
       logf(`aspect-life-cycle-hook ... Aspect.name:${aspect.name} ... invoking it's defined Aspect.injectRootAppElm()`);
-      const rootAppElm = aspect.injectRootAppElm(app, curRootAppElm);
+      const rootAppElm = aspect.injectRootAppElm(fassets, curRootAppElm); // ?xRETRO-TO-fassets - param
 
       if (rootAppElm !== curRootAppElm) {
         logf(`defining-rootAppElm ... Aspect.name:${aspect.name}'s Aspect.injectRootAppElm() CHANGED rootAppElm: `,
@@ -683,10 +692,10 @@ op.alch.injectRootAppElm = function(app, aspects, curRootAppElm) {
 
 
 //*----------------------------------------------------------------------------
-//* feature-life-cycle-hook: appDidStart(app, activeFeatures, aspects): void
+//* feature-life-cycle-hook: appDidStart(fassets, activeFeatures, aspects): void // ?xRETRO-TO-fassets - param
 //*----------------------------------------------------------------------------
 
-op.flch.appDidStart = function(app, activeFeatures, aspects) {
+op.flch.appDidStart = function(fassets, activeFeatures, aspects) { // ?xRETRO-TO-fassets - param
 
   // maintain: running counter of execution order of life-cycle-hooks (unit-test related)
   op.flch.appDidStart.executionOrder = executionOrder++;
@@ -708,7 +717,7 @@ op.flch.appDidStart = function(app, activeFeatures, aspects) {
   activeFeatures.forEach( feature => {
     if (feature.appDidStart) {
       logf(`feature-life-cycle-hook ... Feature.name:${feature.name} ... invoking it's defined Feature.appDidStart()`);
-      feature.appDidStart({app, appState, dispatch});
+      feature.appDidStart({fassets, appState, dispatch}); // ?xRETRO-TO-fassets - param NOTE: Feature.appDidStart uses a "fassets" NAMED PAREMETER!!!
     }
   });
 };

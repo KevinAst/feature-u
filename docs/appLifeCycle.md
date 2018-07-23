@@ -23,7 +23,7 @@ This life-cycle hook can do any type of initialization.  For example:
 initialize FireBase _(say from a named DB feature's public API)_:
 
 ```js
-appWillStart({app, curRootAppElm}) {
+appWillStart({fassets, curRootAppElm}) {
   app.DB.api.init();
 }
 ```
@@ -38,7 +38,7 @@ curRootAppElm MUST be included as part of this definition
 Here is an example that injects new root-level content:
 
 ```js
-appWillStart({app, curRootAppElm}) {
+appWillStart({fassets, curRootAppElm}) {
   ... any other initialization ...
   return (
     <Drawer ...>
@@ -50,7 +50,7 @@ appWillStart({app, curRootAppElm}) {
 
 Here is an example of injecting a new sibling to curRootAppElm:
 ```js
-appWillStart: ({app, curRootAppElm}) => [React.Children.toArray(curRootAppElm), <Notify key="Notify"/>]
+appWillStart: ({fassets, curRootAppElm}) => [React.Children.toArray(curRootAppElm), <Notify key="Notify"/>]
 ```
 
 
@@ -69,7 +69,7 @@ A typical usage for this hook is to dispatch some type of bootstrap
 action.  Here is a startup feature, that issues a bootstrap action:
 
 ```js
-appDidStart({app, appState, dispatch}) {
+appDidStart({fassets, appState, dispatch}) {
   dispatch( actions.bootstrap() );
 }
 ```

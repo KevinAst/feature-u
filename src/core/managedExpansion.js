@@ -12,14 +12,14 @@ import isFunction  from 'lodash.isfunction';
  * _(ex: reducer, logic modules, etc.)_, or a function that returns
  * the content.  The latter:
  * 
- *  1. supports {{book.guide.crossCom}} _(through app object
+ *  1. supports {{book.guide.crossCom}} _(through fassets object
  *     injection)_, and
  *  2. minimizes circular dependency issues (of ES6 modules).
  *
  * Managed Expansion Callbacks are used when a fully resolved
- * {{book.api.App}} object is required during in-line code expansion.
+ * {{book.api.Fassets}} object is required during in-line code expansion.
  * They are merely functions that when invoked _(under the control of
- * **feature-u**)_, are supplied the {{book.api.App}} object and
+ * **feature-u**)_, are supplied the {{book.api.Fassets}} object and
  * return the expanded {{book.api.AspectContent}} _(ex: reducer, logic
  * modules, etc.)_.
  *
@@ -71,8 +71,7 @@ export default function managedExpansion(managedExpansionCB) {
  *
  * @callback managedExpansionCB
  * 
- * @param {App} app - The **feature-u** app object, promoting the
- * publicFace of each feature.
+ * @param {Fassets} fassets the Fassets object used in cross-feature-communication.
  * 
  * @returns {AspectContent} The desired AspectContent (ex: reducer,
  * logic module, etc.).

@@ -1,11 +1,11 @@
 import {op}             from '../launchApp';  // module under test INTERNAL 
 import {createFeature}  from '../..';
 
-describe('launchApp.op.flch.appWillStart(app, activeFeatures, curRootAppElm): rootAppElm', () => {
+describe('launchApp.op.flch.appWillStart(fassets, activeFeatures, curRootAppElm): rootAppElm', () => {
 
   // NOTE 1: for our testing purposes, we really only care that
-  //         feature.appWillStart({app, curRootAppElm})
-  //         is invoked with the correct parameters ({app, curRootAppElm})!
+  //         feature.appWillStart({fassets, curRootAppElm})
+  //         is invoked with the correct parameters ({fassets, curRootAppElm})!
   //         ... because we can't really test a client's implemantion of appWillStart()
   //         ... HOWEVER, by testing the return value of this implementation,
   //             we indirectly accomplish our desired goal!!
@@ -16,14 +16,14 @@ describe('launchApp.op.flch.appWillStart(app, activeFeatures, curRootAppElm): ro
     createFeature({
       name:     'feature1', // NOTE: feature1 HAS an appWillStart()
 
-      appWillStart({app, curRootAppElm}) {
+      appWillStart({fassets, curRootAppElm}) {
 
         // include curRootAppElm ... and interpret the initial null value
         let rootAppElm = curRootAppElm || '';
 
         // accumulate our app
-        // ... unconventional, but for our testing it proves that correct app was supplied
-        rootAppElm += `App:${app}`;
+        // ... unconventional, but for our testing it proves that correct fassets was supplied
+        rootAppElm += `App:${fassets}`;
 
         // accumulate our desired rootAppElm injection
         rootAppElm += `...rootAppElmFrom-feature1`;
@@ -39,14 +39,14 @@ describe('launchApp.op.flch.appWillStart(app, activeFeatures, curRootAppElm): ro
     createFeature({
       name:     'feature3', // NOTE: feature3 HAS an appWillStart()
 
-      appWillStart({app, curRootAppElm}) {
+      appWillStart({fassets, curRootAppElm}) {
 
         // include curRootAppElm ... and interpret the initial null value
         let rootAppElm = curRootAppElm || '';
 
         // accumulate our app
-        // ... unconventional, but for our testing it proves that correct app was supplied
-        rootAppElm += `App:${app}`;
+        // ... unconventional, but for our testing it proves that correct fassets was supplied
+        rootAppElm += `App:${fassets}`;
 
         // accumulate our desired rootAppElm injection
         rootAppElm += `...rootAppElmFrom-feature3`;
@@ -57,15 +57,15 @@ describe('launchApp.op.flch.appWillStart(app, activeFeatures, curRootAppElm): ro
 
   ];
 
-  const app = 'app-pass-through-for-testing';
+  const fassets = 'fassets-pass-through-for-testing';
 
   // function under test
-  const rootAppElm = op.flch.appWillStart(app, activeFeatures, null);
+  const rootAppElm = op.flch.appWillStart(fassets, activeFeatures, null);
 
   test('confirm the accumulated feature.appWillStart()', () => {
     expect(rootAppElm)
-      .toBe('App:app-pass-through-for-testing...rootAppElmFrom-feature1' +
-            'App:app-pass-through-for-testing...rootAppElmFrom-feature3');
+      .toBe('App:fassets-pass-through-for-testing...rootAppElmFrom-feature1' +
+            'App:fassets-pass-through-for-testing...rootAppElmFrom-feature3');
   });
 
 });

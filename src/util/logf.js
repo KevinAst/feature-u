@@ -14,7 +14,7 @@ import isString from 'lodash.isstring';
     + logf(msg [,obj]): void       ... conditionally log probe when feature-u logging is enabled
     + logf.force(msg [,obj]): void ... unconditionally log probe
     + logf.isEnabled(): true/false ... is feature-u logging enabled or disabled
-    + logf.enabled(): void         ... enable feature-u logging
+    + logf.enable(): void          ... enable feature-u logging
     + logf.disable(): void         ... disable feature-u logging
     + logf.elm2html(elm): htmlStr  ... convert react elm into nicely formatted html markup
 

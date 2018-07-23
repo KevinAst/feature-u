@@ -4,6 +4,7 @@ import isPlainObject      from 'lodash.isplainobject';
 import isFunction         from 'lodash.isfunction';
 import fassetValidations  from './fassetValidations';
 import {MyObj}            from '../util/mySpace';
+import logf               from '../util/logf';
 
 /**
  * An internal creator of the {{book.api.fassets}} object, by
@@ -213,7 +214,7 @@ export default function createFassets(activeFeatures) {
 
     /**
      * Return an indicator as to whether the supplied feature is
-     * active.
+     * active or not.
      *
      * **Note**: As an alternative to using this method, you can
      * conditionally reason over the existence of "well-known fasset
@@ -221,11 +222,8 @@ export default function createFassets(activeFeatures) {
      *
      * @param {string} featureName the name of the feature to check.
      *
-     * @return {boolean} **true**: the supplied feature is active,
-     * **false**: not active (or doesn't exist).
-     *
-     * @return {boolean} the supplied feature is active (true), or the
-     * not (false).
+     * @return {boolean} **true**: is active, **false**: is not active
+     * (or doesn't exist).
      * 
      * @method Fassets.isFeature
      */
@@ -255,6 +253,24 @@ export default function createFassets(activeFeatures) {
   //     - Hopefully, this provides insight as to why there are multiple passes,
   //       and allows you to follow the code more intuitively.
   //*---------------------------------------------------------------------------
+
+
+  //*---------------------------------------------------------------------------
+  // T Minus 3: Insure client code is no longer using the obsolete publicFace
+  //            built-in aspect
+  //            - OBSOLETE as of feature-u@1
+  //            - NOTE: publicFace is still registered as a builtin for the
+  //                    sole purpose of generating more specific error
+  //*---------------------------------------------------------------------------
+
+  const featureNamesWithObsolete_publicFace = // locate features still using publicFace
+    activeFeatures.filter(  feature => feature.publicFace !== undefined )
+                  .map( feature => feature.name );
+  if (featureNamesWithObsolete_publicFace.length > 0) {
+    verify(false, `The OBSOLETE Feature.publicFace is still in-use in the following features: ${featureNamesWithObsolete_publicFace}\n` + 
+                  '... as of @feature-u@1 the publicFace builtin aspect has been replaced with fassets\n' +
+                  '... see: https://feature-u.js.org/cur/history.html#v1_0_0');
+  }
 
 
   //*---------------------------------------------------------------------------
@@ -600,9 +616,14 @@ export default function createFassets(activeFeatures) {
   //              the regexps built up in this cache will rarely be needed (if at all)
   _regExpCache = {};
 
-  // logf: summarize _fassets resources (sorted), usage contracts (sorted), and json _fassets object (normalized) ... could be too much NOT SURE
+  // log summary
+  // TODO: consider this: summarize _fassets resources (sorted), usage contracts (sorted), and json _fassets object (normalized) ... could be too much NOT SURE
+  const hookCount   = activeFeatures.reduce( (count, feature) => feature.fassets ? count+1 : count, 0);
+  const hookSummary = activeFeatures.map( (feature) => `\n  Feature.name:${feature.name}${feature.fassets ? ' <-- defines: fassets' : ''}` );
+  logf(`cross-feature-communication ... INTERPRETING: Feature.fassets ... ${hookCount} hooks:${hookSummary}`);
+  logf('cross-feature-communication ... the following fassets are in effect: ', _fassets);
 
-  // return our public fassets object (used in cross-communication between features)
+  // return our public fassets object (used in cross-feature-communication)
   return _fassets;
 }
 

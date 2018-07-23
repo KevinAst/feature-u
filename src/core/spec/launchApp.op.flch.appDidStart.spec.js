@@ -2,12 +2,12 @@ import {op}             from '../launchApp';  // module under test INTERNAL
 import createAspect$    from './createAspect$';
 import {createFeature}  from '../..';
 
-describe('launchApp.op.flch.appDidStart(app, activeFeatures, aspects): void', () => {
+describe('launchApp.op.flch.appDidStart(fassets, activeFeatures, aspects): void', () => {
 
   function applyTest({aspects, expected}) { // reusable function
 
     // NOTE: for our testing purposes, we really only care that
-    //       feature.appDidStart({app, appState, dispatch})
+    //       feature.appDidStart({fassets, appState, dispatch})
     //       is invoked with the correct parameters!
     //       ... because we can't really test a client's implemantion of appDidStart()
     //       ... HOWEVER, by testing an accumulation value of this implementation,
@@ -15,8 +15,8 @@ describe('launchApp.op.flch.appDidStart(app, activeFeatures, aspects): void', ()
 
     let accumFromAppDidStart = '';
 
-    function appDidStart({app, appState, dispatch}) { // reusable function
-      accumFromAppDidStart += `appDidStart for feature: ${this.name} (app: ${app}, appState: ${appState}, dispatch: ${dispatch})`;
+    function appDidStart({fassets, appState, dispatch}) { // reusable function
+      accumFromAppDidStart += `appDidStart for feature: ${this.name} (fassets: ${fassets}, appState: ${appState}, dispatch: ${dispatch})`;
     }
 
     const activeFeatures = [
@@ -37,11 +37,11 @@ describe('launchApp.op.flch.appDidStart(app, activeFeatures, aspects): void', ()
 
     ];
 
-    const app = 'app-pass-through-for-testing';
+    const fassets = 'fassets-pass-through-for-testing';
 
 
     // our function under test
-    op.flch.appDidStart(app, activeFeatures, aspects);
+    op.flch.appDidStart(fassets, activeFeatures, aspects);
 
     test('confirm appDidStart() invoked properly', () => {
       expect(accumFromAppDidStart)
@@ -55,8 +55,8 @@ describe('launchApp.op.flch.appDidStart(app, activeFeatures, aspects): void', ()
 
     applyTest({
       aspects: [], // no aspects
-      expected: 'appDidStart for feature: feature1 (app: app-pass-through-for-testing, appState: undefined, dispatch: undefined)' +
-                'appDidStart for feature: feature3 (app: app-pass-through-for-testing, appState: undefined, dispatch: undefined)',
+      expected: 'appDidStart for feature: feature1 (fassets: fassets-pass-through-for-testing, appState: undefined, dispatch: undefined)' +
+                'appDidStart for feature: feature3 (fassets: fassets-pass-through-for-testing, appState: undefined, dispatch: undefined)',
     });
 
   });
@@ -75,8 +75,8 @@ describe('launchApp.op.flch.appDidStart(app, activeFeatures, aspects): void', ()
           },
         }),
       ],
-      expected: 'appDidStart for feature: feature1 (app: app-pass-through-for-testing, appState: pretendState, dispatch: pretendDispatch)' +
-                'appDidStart for feature: feature3 (app: app-pass-through-for-testing, appState: pretendState, dispatch: pretendDispatch)',
+      expected: 'appDidStart for feature: feature1 (fassets: fassets-pass-through-for-testing, appState: pretendState, dispatch: pretendDispatch)' +
+                'appDidStart for feature: feature3 (fassets: fassets-pass-through-for-testing, appState: pretendState, dispatch: pretendDispatch)',
     });
 
   });
