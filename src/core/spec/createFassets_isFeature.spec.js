@@ -1,9 +1,9 @@
 import createFassets      from '../createFassets';  // module under test
 import {createFeature}    from '../..';
 
-describe('createFassets(): fassets.isFeature() tests', () => {
+describe('createFassets(): fassets.hasFeature() tests', () => {
 
-  describe('fassets.isFeature(featureName): boolean', () => {
+  describe('fassets.hasFeature(featureName): boolean', () => {
 
     // NOTE: this test does NOT require the Feature.fassets aspect
     const fassets = createFassets([
@@ -15,20 +15,20 @@ describe('createFassets(): fassets.isFeature() tests', () => {
       }),
     ]);
 
-    test('feature1', () => expect(fassets.isFeature('feature1')).toBe(true)  );
-    test('feature2', () => expect(fassets.isFeature('feature2')).toBe(true)  );
-    test('feature3', () => expect(fassets.isFeature('feature3')).toBe(false) );
+    test('feature1', () => expect(fassets.hasFeature('feature1')).toBe(true)  );
+    test('feature2', () => expect(fassets.hasFeature('feature2')).toBe(true)  );
+    test('feature3', () => expect(fassets.hasFeature('feature3')).toBe(false) );
 
     test('missing param', () => {
-      expect(()=>fassets.isFeature())
-        .toThrow(/fassets.isFeature().*parameter violation.*featureName is required*/);
-      // THROW:  fassets.isFeature() parameter violation: featureName is required
+      expect(()=>fassets.hasFeature())
+        .toThrow(/fassets.hasFeature().*parameter violation.*featureName is required*/);
+      // THROW:  fassets.hasFeature() parameter violation: featureName is required
     });
 
     test('invalid param', () => {
-      expect(()=>fassets.isFeature(123))
-        .toThrow(/fassets.isFeature().*parameter violation.*featureName must be a string*/);
-      // THROW:  fassets.isFeature() parameter violation: featureName must be a string
+      expect(()=>fassets.hasFeature(123))
+        .toThrow(/fassets.hasFeature().*parameter violation.*featureName must be a string*/);
+      // THROW:  fassets.hasFeature() parameter violation: featureName must be a string
     });
 
   });

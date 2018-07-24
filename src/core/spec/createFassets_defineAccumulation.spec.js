@@ -40,7 +40,7 @@ describe('createFassets(): fassets define/defineUse directive accumulation', () 
     });
 
     // drive test with all reserved words
-    ['get', 'isFeature'].forEach( reservedWord => {
+    ['get', 'hasFeature'].forEach( reservedWord => {
       test('resource cannot overwrite a reserved word', () => {
         expect(()=> createFassets([
           createFeature({

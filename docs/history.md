@@ -26,6 +26,23 @@ reference the most current release.
 
 
 <!-- 
+
+
+*-----------------------------------------------
+* Adorn bullets with following bolded prefix
+*-----------------------------------------------
+
+**Added**:      ... for new features
+**Changed**:    ... for changes in existing functionality
+**Deprecated**: ... for soon-to-be removed features
+**Removed**:    ... for now removed features
+**Fixed**:      ... for any bug fixes
+**Enhanced**:   ... for enhancements
+**Security**:   ... in case of vulnerabilities
+**Docs**:       ... changes in documentation
+**Review**:     ... requires review
+**Internal**:   ... internal change NOT affecting user/client
+
 *-----------------------------------------------
 * PROCEDURE for maintaining LINKS in history.md
 *-----------------------------------------------

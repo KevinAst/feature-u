@@ -22,8 +22,8 @@ import logf               from '../util/logf';
  */
 export default function createFassets(activeFeatures) {
 
-  // PRIVATE: active features (used in isFeature())
-  const _isFeature = { /* dynamically maintained ... SAMPLE:
+  // PRIVATE: active features (used in hasFeature())
+  const _hasFeature = { /* dynamically maintained ... SAMPLE:
     feature1: true,
     feature2: true,
     ... */
@@ -225,17 +225,17 @@ export default function createFassets(activeFeatures) {
      * @return {boolean} **true**: is active, **false**: is not active
      * (or doesn't exist).
      * 
-     * @method Fassets.isFeature
+     * @method Fassets.hasFeature
      */
-    isFeature: (featureName) => {
+    hasFeature: (featureName) => {
       // validate parameters
-      const check = verify.prefix('fassets.isFeature() parameter violation: ');
+      const check = verify.prefix('fassets.hasFeature() parameter violation: ');
 
       check(featureName,            'featureName is required');
       check(isString(featureName),  'featureName must be a string');
 
       // return indicator
-      return _isFeature[featureName] ? true : false;
+      return _hasFeature[featureName] ? true : false;
     },
   };
 
@@ -275,11 +275,11 @@ export default function createFassets(activeFeatures) {
 
   //*---------------------------------------------------------------------------
   // T Minus 2: Maintain our "active features" indicator
-  //            - in support of: fassets.isFeature()
+  //            - in support of: fassets.hasFeature()
   //*---------------------------------------------------------------------------
 
   activeFeatures.forEach( feature => {
-    _isFeature[feature.name] = true;
+    _hasFeature[feature.name] = true;
   });
 
 
@@ -379,8 +379,8 @@ export default function createFassets(activeFeatures) {
         // NOTE: resource validation is postponed to subsequent stage
         //       ... because we need BOTH _resources and _usage
 
-        // ... insure it will not overwrite our reserved fasset methods (get/isFeature)
-        check(resourceKey!=='get' && resourceKey!=='isFeature', `fassets.${directiveKey}.'${resourceKey}' is a reserved word`);
+        // ... insure it will not overwrite our reserved fasset methods (get/hasFeature)
+        check(resourceKey!=='get' && resourceKey!=='hasFeature', `fassets.${directiveKey}.'${resourceKey}' is a reserved word`);
 
         // ... restrict to a programmatic structure, because we normalize it (with depth)
         checkProgrammaticStruct(resourceKey, check);

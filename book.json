@@ -139,7 +139,7 @@
       "App":                "<a href='/api.html#App'><code>App??OBSOLETE</code></a>",
       "Fassets":            "<a href='/api.html#Fassets'><code>Fassets</code></a>",
       "Fassets_get":        "<a href='/api.html#Fassets_get'><code>Fassets.get()</code></a>",
-      "Fassets_isFeature":  "<a href='/api.html#Fassets_isFeature'><code>Fassets.isFeature()</code></a>",
+      "Fassets_hasFeature": "<a href='/api.html#Fassets_hasFeature'><code>Fassets.hasFeature()</code></a>",
       "fassetValidations":  "<a href='/api.html#fassetValidations'><code>fassetValidations</code></a>",
       "Aspect":             "<a href='/api.html#Aspect'><code>Aspect</code></a>",
       "Aspects":            "<a href='/api.html#Aspect'><code>Aspects</code></a>",

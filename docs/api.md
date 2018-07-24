@@ -324,7 +324,7 @@ The `fassets` object _(emitted from {{book.api.launchApp}})_ isan accumulation 
 
 * [Fassets](#Fassets) : Object
     * [.get(fassetsKey)](#Fassets.get) ⇒ resource \| Array.&lt;resource&gt;
-    * [.isFeature(featureName)](#Fassets.isFeature) ⇒ boolean
+    * [.hasFeature(featureName)](#Fassets.hasFeature) ⇒ boolean
 
 
 <br/><br/><br/>
@@ -354,10 +354,10 @@ resources)</em>.</p>
 
 <br/><br/><br/>
 
-<a id="Fassets_isFeature"></a>
+<a id="Fassets_hasFeature"></a>
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
-  Fassets.isFeature(featureName) ⇒ boolean</h5>
+  Fassets.hasFeature(featureName) ⇒ boolean</h5>
 Return an indicator as to whether the supplied feature isactive or not.**Note**: As an alternative to using this method, you canconditionally reason over the existence of "well-known fassetresources" specific to a given feature.
 
 <table>

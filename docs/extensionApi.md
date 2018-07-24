@@ -32,7 +32,7 @@ convenience this list:_
 * {{book.api.Feature}}
 * {{book.api.Fassets}}
   * {{book.api.Fassets_get}}
-  * {{book.api.Fassets_isFeature}}
+  * {{book.api.Fassets_hasFeature}}
 * {{book.api.fassetValidations}}
 * {{book.api.Aspect}}
 * {{book.api.AspectContent}}
