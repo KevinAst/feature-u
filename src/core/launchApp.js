@@ -109,10 +109,17 @@ export default function launchApp({aspects=[],
   const rootAppElm = op.helper.defineRootAppElm(fassets, activeFeatures, aspects);  // ?xRETRO-TO-fassets - param
 
   // start our app by registering our rootAppElm to the appropriate react framework
-  // ... because this is accomplished by app-specific code, 
-  //     feature-u can operate in any number of containing react frameworks,
-  //     like: React Web, React Native, Expo, etc.
-  registerRootAppElm(rootAppElm, fassets); // ?xRETRO-TO-fassets enhance this API by passing fassets (allowing client to inject their own <FassetsContext.Provider> for a null rootAppElm)
+  // NOTE 1: Because this is accomplished by app-specific code, 
+  //         feature-u can operate in any number of containing react frameworks,
+  //         like React Web, React Native, Expo, etc.
+  // NOTE 2: We delay this process (via timeout) making "import fassets" feasible
+  //         to UI rendering functions ... such as redux connect().
+  //         This technique allows launchApp() to complete, and the fassets object
+  //         to have definition (via application code export)
+  //         for use in these UI rendering functions.
+  setTimeout(() => {
+    registerRootAppElm(rootAppElm, fassets); // ?xRETRO-TO-fassets enhance this API by passing fassets (allowing client to inject their own <FassetsContext.Provider> for a null rootAppElm)
+  }, 0);
 
   // apply Feature.appDidStart() life-cycle hook
   op.flch.appDidStart(fassets, activeFeatures, aspects);  // ?xRETRO-TO-fassets - param
