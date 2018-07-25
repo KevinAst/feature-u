@@ -6,9 +6,14 @@ import isPlainObject        from 'lodash.isplainobject';
 import isString             from 'lodash.isstring';
 import {MyObj}              from '../util/mySpace';
 import isComponent          from '../util/isComponent';
+import logf                 from '../util/logf';
 
 
 const fassetsNotDefined = 'NO FassetsContext.Provider';
+
+// report the React Context that is in-use
+const contextImpl = React.createContext === React_createContext ? 'native (React >16.3)' : 'ponyfilled (React <16.3)';
+logf.force(`Context in-use: ${contextImpl}... React Version: ${React.version}`);
 
 // publically exposed (in rare case when app code defines their own DOM via registerRootAppElm())
 export const FassetsContext = React_createContext(fassetsNotDefined); // specify a defaultValue we can detect ERROR conditions (need FassetsContext.Provider at root)
