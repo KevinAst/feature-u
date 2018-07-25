@@ -118,8 +118,8 @@ export function withFassets({mapFassetsToProps, ...unknownArgs}={}) {
     // ... this function has access to everything we need:
     //     - fassets (via the context consumer)
     //     - the app-specific mapping operation (from above)
-    //     - our parent props
-    return function FassetsComponent(props) {
+    //     - the outlying properties supplied to the connected component (ownProps)
+    return function FassetsComponent(ownProps) {
 
       // resolve our mapping ... either directly supplied, or by function invocation
       // ex: {
@@ -128,7 +128,7 @@ export function withFassets({mapFassetsToProps, ...unknownArgs}={}) {
       //   mainLinks:   'MainPage.*.link',
       //   mainBodies:  'MainPage.*.body',
       // }
-      const fassetsToPropsMap = mappingIsFunction ? mapFassetsToProps(props) : mapFassetsToProps;
+      const fassetsToPropsMap = mappingIsFunction ? mapFassetsToProps(ownProps) : mapFassetsToProps;
       // ... verify resolved mapping is an Object
       check(isPlainObject(fassetsToPropsMap),
             'mapFassetsToProps resolved to an invalid structure, MUST be a mapFassetsToPropsStruct');
@@ -153,7 +153,7 @@ export function withFassets({mapFassetsToProps, ...unknownArgs}={}) {
               
               // inject fasset resource props into the supplied Component
               // ... THIS IS WHAT WE ARE HERE FOR!!
-              return <Component {...fassetsProps(fassetsToPropsMap, fassets)} {...props}/>;
+              return <Component {...fassetsProps(fassetsToPropsMap, fassets)} {...ownProps}/>;
             }
           }
         </FassetsContext.Consumer>
@@ -213,8 +213,8 @@ export function fassetsProps(fassetsToPropsMap, fassets) { // export for testing
  *
  * @callback mapFassetsToPropsFn
  * 
- * @param {obj} props the outlying properties supplied to this
- * Component.
+ * @param {obj} ownProps the outlying properties supplied to the
+ * connected component.
  *
  * @return {mapFassetsToPropsStruct} the structure defining a
  * prop/fassetsKey mapping, from which fasset resources are injected

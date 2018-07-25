@@ -537,8 +537,8 @@ A function (used by {{book.api.withFassets}}) that returns a{{book.api.mapFasse
   </thead>
   <tbody>
 <tr>
-    <td>props</td><td>obj</td><td><p>the outlying properties supplied to this
-Component.</p>
+    <td>ownProps</td><td>obj</td><td><p>the outlying properties supplied to the
+connected component.</p>
 </td>
     </tr>  </tbody>
 </table>

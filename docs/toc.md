@@ -37,8 +37,8 @@
 * [Core API](coreApi.md)
   * [createFeature()](api.md#createFeature)
   * [launchApp()](api.md#launchApp)
-  * [withFassets()](api.md#withFassets)
   * [managedExpansion()](api.md#managedExpansion)
+  * [withFassets()](api.md#withFassets)
 
 ----
 * [Extending feature-u](extending.md)
