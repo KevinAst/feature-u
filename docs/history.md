@@ -112,9 +112,9 @@ Release           | What                                   | *When*
 releases _(i.e. a retrofit of client code is necessary)_.
 
 1. **Review**:
-   **feature-u**'s {{book.guide.crossCom}} has been completely
-   re-designed to include **UI Composition** as a core part of
-   **feature-u** _(thanks {{book.ext.jeffbski}} for the design
+   Beginning with **feature-u** v1 {{book.guide.crossCom}} has been
+   completely re-designed to include **UI Composition** as a core part
+   of **feature-u** _(thanks {{book.ext.jeffbski}} for the design
    collaboration)_!
 
    This means that **navigation and routing is supported**, when using
@@ -124,8 +124,6 @@ releases _(i.e. a retrofit of client code is necessary)_.
    This refactor promotes **one solution** for all cross-communication
    _(i.e. Actions, Selectors, UI Components, API, etc.)_, making it
    comprehensive and universal.
-   
-   You can read more about this in {{book.guide.crossCom}}.  
 
    At a high level, the following items have been impacted _(more
    detail can be found at {{book.guide.crossCom}})_:
@@ -146,7 +144,8 @@ releases _(i.e. a retrofit of client code is necessary)_.
    - The new `fassetsConnect()` higher-order component (HOC) auto-wires
      named feature assets as component properties.
    
-   The following ??gist will lead you through the migration details.
+   The following gist will lead you through the migration details:
+   http://bit.ly/feature-u_V1Migration
 
    ?? utilize MORE links (above)
 
