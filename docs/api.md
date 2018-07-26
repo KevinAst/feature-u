@@ -167,7 +167,7 @@ desired {{book.api.AspectContent}}.</p>
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
   withFassets(mapFassetsToProps) ⇒ HoC</h5>
-Create a Higher-order Component (HoC) class that injects fassetprops into a Component as specified by the mapFassetsToPropsparameter.The HoC function returned from `withFassets()` must be invoked,passing the Component to be wrapped (injecting fasset resource props).**Examples**:**Inject fasset resource props from a static structure** ({{book.api.mapFassetsToPropsStruct}}) ...```jsfunction MainPage({mainLinks, mainBodies}) {  return (    <div>      <div>        {mainLinks.map(MainLink => <MainLink/>)}      </div>      <div>        {mainBodies.map(MainBody => <MainBody/>)}      </div>    </div>  );}export default withFassets({  mapFassetsToProps: {    mainLinks:  'MainPage.*.link',    mainBodies: 'MainPage.*.body'  }})(MainPage);```**Inject fasset resource props from a functional directive** ({{book.api.mapFassetsToPropsFn}}) ...```jsfunction MainPage({mainLinks, mainBodies}) {  return (    ... same as prior example  );}export default withFassets({  mapFassetsToProps(props) {    ... some conditional logic based on props    return {      mainLinks:  'MainPage.*.link',      mainBodies: 'MainPage.*.body'    };  }})(MainPage);```
+Create a Higher-order Component (HoC) class that injects fassetprops into a Component as specified by the mapFassetsToPropsparameter.The HoC function returned from `withFassets()` must be invoked,passing the Component to be wrapped (injecting fasset resource props).
 
 <table>
   <thead>
@@ -186,7 +186,7 @@ structure ({{book.api.mapFassetsToPropsFn}}).</p>
     </tr>  </tbody>
 </table>
 
-**Returns**: HoC - the function to be invoked, passing the Component tobe wrapped (injecting fasset resource props).  
+**Returns**: HoC - the function to be invoked, passing the Component tobe wrapped (injecting fasset resource props).**Examples**:1. **Inject fasset resources from a static structure** ({{book.api.mapFassetsToPropsStruct}}) ...    ```js   function MainPage({mainLinks, mainBodies}) {     return (       <div>         <div>           {mainLinks.map(MainLink => <MainLink/>)}         </div>         <div>           {mainBodies.map(MainBody => <MainBody/>)}         </div>       </div>     );   }      export default withFassets({     mapFassetsToProps: {           // NOTE: static structure (mapFassetsToPropsStruct)       mainLinks:  'MainPage.*.link',       mainBodies: 'MainPage.*.body'     }   })(MainPage);   ```   2. **Inject fasset resources from a functional directive** ({{book.api.mapFassetsToPropsFn}}) ...      ```js   function MainPage({mainLinks, mainBodies}) {     return (       ... same as prior example     );   }      export default withFassets({     mapFassetsToProps(ownProps) {  // NOTE: functional directive (mapFassetsToPropsFn)       ... some conditional logic based on ownProps       return {         mainLinks:  'MainPage.*.link',         mainBodies: 'MainPage.*.body'       };     }   })(MainPage);   ```  
 
 <br/><br/><br/>
 

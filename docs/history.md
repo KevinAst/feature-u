@@ -143,6 +143,10 @@ releases _(i.e. a retrofit of client code is necessary)_.
    
    - The new `fassetsConnect()` higher-order component (HOC) auto-wires
      named feature assets as component properties.
+
+   In addition, if you are using any of the **feature-u** extended
+   aspect plugins, you must install the latest version, as they now
+   pass through the new `fassets` object.
    
    The following gist will lead you through the migration details:
    http://bit.ly/feature-u_V1Migration

@@ -27,52 +27,6 @@ export const FassetsContext = React_createContext(fassetsNotDefined); // specify
  * The HoC function returned from `withFassets()` must be invoked,
  * passing the Component to be wrapped (injecting fasset resource props).
  *
- * **Examples**:
- *
- * **Inject fasset resource props from a static structure** ({{book.api.mapFassetsToPropsStruct}}) ...
- *
- * ```js
- * function MainPage({mainLinks, mainBodies}) {
- *   return (
- *     <div>
- *       <div>
- *         {mainLinks.map(MainLink => <MainLink/>)}
- *       </div>
- *       <div>
- *         {mainBodies.map(MainBody => <MainBody/>)}
- *       </div>
- *     </div>
- *   );
- * }
- * 
- * export default withFassets({
- *   mapFassetsToProps: {
- *     mainLinks:  'MainPage.*.link',
- *     mainBodies: 'MainPage.*.body'
- *   }
- * })(MainPage);
- * ```
- *
- * **Inject fasset resource props from a functional directive** ({{book.api.mapFassetsToPropsFn}}) ...
- *
- * ```js
- * function MainPage({mainLinks, mainBodies}) {
- *   return (
- *     ... same as prior example
- *   );
- * }
- * 
- * export default withFassets({
- *   mapFassetsToProps(props) {
- *     ... some conditional logic based on props
- *     return {
- *       mainLinks:  'MainPage.*.link',
- *       mainBodies: 'MainPage.*.body'
- *     };
- *   }
- * })(MainPage);
- * ```
- *
  * @param {mapFassetsToPropsStruct|mapFassetsToPropsFn} mapFassetsToProps the structure defining the
  * prop/fassetsKey mapping, from which fasset resources are
  * injected into a Component.  Can either be a direct structure
@@ -81,6 +35,52 @@ export const FassetsContext = React_createContext(fassetsNotDefined); // specify
  *
  * @return {HoC} the function to be invoked, passing the Component to
  * be wrapped (injecting fasset resource props).
+ *
+ * **Examples**:
+ *
+ * 1. **Inject fasset resources from a static structure** ({{book.api.mapFassetsToPropsStruct}}) ...
+ *  
+ *    ```js
+ *    function MainPage({mainLinks, mainBodies}) {
+ *      return (
+ *        <div>
+ *          <div>
+ *            {mainLinks.map(MainLink => <MainLink/>)}
+ *          </div>
+ *          <div>
+ *            {mainBodies.map(MainBody => <MainBody/>)}
+ *          </div>
+ *        </div>
+ *      );
+ *    }
+ *    
+ *    export default withFassets({
+ *      mapFassetsToProps: {           // NOTE: static structure (mapFassetsToPropsStruct)
+ *        mainLinks:  'MainPage.*.link',
+ *        mainBodies: 'MainPage.*.body'
+ *      }
+ *    })(MainPage);
+ *    ```
+ *    
+ * 2. **Inject fasset resources from a functional directive** ({{book.api.mapFassetsToPropsFn}}) ...
+ *    
+ *    ```js
+ *    function MainPage({mainLinks, mainBodies}) {
+ *      return (
+ *        ... same as prior example
+ *      );
+ *    }
+ *    
+ *    export default withFassets({
+ *      mapFassetsToProps(ownProps) {  // NOTE: functional directive (mapFassetsToPropsFn)
+ *        ... some conditional logic based on ownProps
+ *        return {
+ *          mainLinks:  'MainPage.*.link',
+ *          mainBodies: 'MainPage.*.body'
+ *        };
+ *      }
+ *    })(MainPage);
+ *    ```
  * 
  * @function withFassets
  */
