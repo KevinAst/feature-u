@@ -117,9 +117,15 @@ export default function launchApp({aspects=[],
   //         This technique allows launchApp() to complete, and the fassets object
   //         to have definition (via application code export)
   //         for use in these UI rendering functions.
-  setTimeout(() => {
+  //         HOWEVER: We subsequently discovered that this timeout is 
+  //                  NOT compatible with Expo (or react-native - not sure which)
+  //                  ERROR: Module AppRegistry is not a registered callable module (calling runApplication)
+  //                  EVIDENTLY the designated expo mainline cannot run to completion
+  //                  without first registering a component in some way
+  //                  ... ex: Expo.registerRootComponent(...);
+//setTimeout(() => { // remove timeout (see "NOTE 2" above)
     registerRootAppElm(rootAppElm, fassets); // ?xRETRO-TO-fassets enhance this API by passing fassets (allowing client to inject their own <FassetsContext.Provider> for a null rootAppElm)
-  }, 0);
+//}, 0);
 
   // apply Feature.appDidStart() life-cycle hook
   op.flch.appDidStart(fassets, activeFeatures, aspects);  // ?xRETRO-TO-fassets - param
