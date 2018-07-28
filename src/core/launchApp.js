@@ -571,7 +571,7 @@ op.helper.defineRootAppElm = function(fassets, activeFeatures, aspects) { // ?xR
   // ?xRETRO-TO-fassets - NEW LOGIC
   // FOURTH: inject our <FassetsContext.Provider> in support of withFassets() HoC
   //         NOTE: We conditionally do this if a rootAppElm has been defined.
-  //               Otherwise, the App is responible for this in the registerRootAppElm() hook.
+  //               Otherwise, the App is responsible for this in the registerRootAppElm() hook.
   if (rootAppElm) {
     rootAppElm = <FassetsContext.Provider value={fassets}>{rootAppElm}</FassetsContext.Provider>;
   }
