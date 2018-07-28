@@ -141,7 +141,10 @@ releases _(i.e. a retrofit of client code is necessary)_.
    - The `fassets` object replaces the `app` object, to programmatically
      access cross-feature resources.
    
-   - The new `fassetsConnect()` higher-order component (HOC) auto-wires
+   - The `managedExpansion()` function has been renamed to
+     `expandWithFassets()`.
+   
+   - The new `withFassets()` higher-order component (HOC) auto-wires
      named feature assets as component properties.
 
    In addition, if you are using any of the **feature-u** extended
@@ -151,7 +154,7 @@ releases _(i.e. a retrofit of client code is necessary)_.
    The following gist will lead you through the migration details:
    http://bit.ly/feature-u_V1Migration
 
-   ?? utilize MORE links (above)
+   ?? utilize MORE links (obsolete refs: v0.1.3, new refs: cur or v1.0.0)
 
 
 <!-- ************************************************************* -->

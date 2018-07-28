@@ -1,7 +1,7 @@
 import {op}                    from '../launchApp';    // module under test INTERNAL 
 import createAspect$           from './createAspect$';
 import {createFeature,
-        managedExpansion}      from '../..';
+        expandWithFassets}     from '../..';
 
 const extension1 = createAspect$({ // contains CUSTOM expandFeatureContent()
   name:     'extension1',
@@ -42,7 +42,7 @@ describe('launchApp.op.alch.expandFeatureContent(fassets, activeFeatures, aspect
 
     const feature1 = createFeature({
       name:         'feature1',
-      extension1:   managedExpansion(()=>'with good CUSTOM expandFeatureContent'),
+      extension1:   expandWithFassets(()=>'with good CUSTOM expandFeatureContent'),
     });
 
     op.alch.expandFeatureContent(fassets, [feature1], aspects);
@@ -55,7 +55,7 @@ describe('launchApp.op.alch.expandFeatureContent(fassets, activeFeatures, aspect
 
     const feature2 = createFeature({
       name:         'feature2',
-      extension2:   managedExpansion(()=>'with DEFAULT expandFeatureContent'),
+      extension2:   expandWithFassets(()=>'with DEFAULT expandFeatureContent'),
     });
 
     op.alch.expandFeatureContent(fassets, [feature2], aspects);
@@ -68,7 +68,7 @@ describe('launchApp.op.alch.expandFeatureContent(fassets, activeFeatures, aspect
 
     const feature1 = createFeature({
       name:         'feature1',
-      extension1:   managedExpansion(()=>'bad'),
+      extension1:   expandWithFassets(()=>'bad'),
     });
 
     expect(()=>op.alch.expandFeatureContent(fassets, [feature1], aspects))
@@ -81,7 +81,7 @@ describe('launchApp.op.alch.expandFeatureContent(fassets, activeFeatures, aspect
   
     const feature1 = createFeature({
       name:         'feature1',
-      extension1:   managedExpansion(()=>'goodExceptForSpecialValidation'),
+      extension1:   expandWithFassets(()=>'goodExceptForSpecialValidation'),
     });
   
     expect(()=>op.alch.expandFeatureContent(fassets, [feature1], aspects))

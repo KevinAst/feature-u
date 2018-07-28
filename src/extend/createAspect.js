@@ -49,7 +49,7 @@ import logf                 from '../util/logf';
  *
  * @param {expandFeatureContentMeth} [expandFeatureContent] an
  * optional aspect expansion hook, defaulting to the algorithm defined
- * by {{book.api.managedExpansion}}.<br/><br/>
+ * by {{book.api.expandWithFassets}}.<br/><br/>
  *
  * This function rarely needs to be overridden.  It provides a hook to
  * aspects that need to transfer additional content from the expansion
@@ -377,7 +377,7 @@ export function extendAspectProperty(name, owner) {
  * **API:** {{book.api.expandFeatureContentMeth$}}
  *
  * The default behavior simply implements the expansion algorithm
- * defined by {{book.api.managedExpansion}}:
+ * defined by {{book.api.expandWithFassets}}:
  *
  * ```js
  * feature[this.name] = feature[this.name](fassets);
@@ -396,7 +396,7 @@ export function extendAspectProperty(name, owner) {
  * 
  * @param {Feature} feature - the feature which is known to contain
  * this aspect **and** is in need of expansion (as defined by
- * {{book.api.managedExpansion}}).
+ * {{book.api.expandWithFassets}}).
  *
  * @return {string} an optional error message when the supplied
  * feature contains invalid content for this aspect (falsy when

@@ -902,7 +902,7 @@ To solve this, **feature-u** introduces [Managed Code Expansion].
 
 When aspect content definitions require the [`App`] object at code
 expansion time, you simply wrap the definition in a
-[`managedExpansion()`] function.  In other words, your aspect content
+[`expandWithFassets()`] function.  In other words, your aspect content
 can either be the actual content itself _(ex: a reducer)_, or a
 function that returns the content.
 
@@ -916,13 +916,13 @@ TK: For medium article, use this [GIST](https://gist.github.com/KevinAst/9f57d74
 with caption:
 **[`src/feature/auth/logic.js`](https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/auth/logic.js#L18-L27)**
 ```js
-import {createLogic}      from 'redux-logic';
-import {managedExpansion} from 'feature-u';
-import featureName        from './featureName';
-import actions            from './actions';
+import {createLogic}       from 'redux-logic';
+import {expandWithFassets} from 'feature-u';
+import featureName         from './featureName';
+import actions             from './actions';
 
                                   // *1*
-export const startAuthorization = managedExpansion( (app) => createLogic({
+export const startAuthorization = expandWithFassets( (app) => createLogic({
 
   name: `${featureName}.startAuthorization`,
   type: String(app.device.actions.ready),    // *2*
@@ -939,7 +939,7 @@ export const startAuthorization = managedExpansion( (app) => createLogic({
 You can see that the [auth] feature is using an action from the
 [device] feature, requiring access to the `app` object (see `*2*`).
 Because the `app` object is needed during code expansion, we use the
-[`managedExpansion()`] function (see `*1*`), allowing **feature-u** to
+[`expandWithFassets()`] function (see `*1*`), allowing **feature-u** to
 expand it in a controlled way, passing the fully resolved `app` object
 as a parameter.
 
@@ -1046,7 +1046,7 @@ via **[`index.js`](https://github.com/KevinAst/eatery-nod/blob/after-features/sr
 // *** the eateries feature reducer
 // ***
                                       // *1*
-const reducer = slicedReducer(`view.${featureName}`, managedExpansion( () => combineReducers({
+const reducer = slicedReducer(`view.${featureName}`, expandWithFassets( () => combineReducers({
   ... snip snip
 }) ) );
 
@@ -1284,7 +1284,7 @@ end" of your features!** _Go forth and compute!!_
 [`Feature.appDidStart()`]:                                    https://feature-u.js.org/cur/appLifeCycle.html#appDidStart
 [`Feature.appDidStart({fassets, appState, dispatch}): void`]: https://feature-u.js.org/cur/appLifeCycle.html#appDidStart
 
-[`managedExpansion()`]:    https://feature-u.js.org/cur/api.html#managedExpansion
+[`expandWithFassets()`]:   https://feature-u.js.org/cur/api.html#expandWithFassets
 
 [`createAspect()`]:        https://feature-u.js.org/cur/api.html#createAspect
 

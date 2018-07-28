@@ -196,30 +196,30 @@ export const myLogicModule = createLogic({
 
 When aspect content definitions require the `app` object at code
 expansion time, you can wrap the definition in a
-{{book.api.managedExpansion}} function.  In other words, your aspect
+{{book.api.expandWithFassets}} function.  In other words, your aspect
 content can either be the actual content itself (ex: a reducer), or a
 function that returns the content.
 
 Your callback function should conform to the following signature:
 
-**API**: {{book.api.managedExpansionCB$}}
+**API**: {{book.api.expandWithFassetsCB$}}
 
 When this is done, **feature-u** will invoke the
-{{book.api.managedExpansionCB}} in a controlled way, passing the fully
+{{book.api.expandWithFassetsCB}} in a controlled way, passing the fully
 resolved `app` object as a parameter.
 
 To accomplish this, you must wrap your expansion function with the the
-{{book.api.managedExpansion}} utility.  The reason for this is that
+{{book.api.expandWithFassets}} utility.  The reason for this is that
 **feature-u** must be able to distinguish a
-{{book.api.managedExpansionCB}} function from other functions (ex:
+{{book.api.expandWithFassetsCB}} function from other functions (ex:
 reducers).
 
 Here is the same example (from above) that that fixes our
-problem by replacing the `app` import with {{book.api.managedExpansion}}:
+problem by replacing the `app` import with {{book.api.expandWithFassets}}:
 
 ```js
-                             // *1* we replace app import with managedExpansion()
-export const myLogicModule = managedExpansion( (app) => createLogic({
+                             // *1* we replace app import with expandWithFassets()
+export const myLogicModule = expandWithFassets( (app) => createLogic({
 
   name: 'myLogicModule',
   type: String(app.featureB.actions.fooBar), // *1* app now is fully defined
@@ -231,13 +231,13 @@ export const myLogicModule = managedExpansion( (app) => createLogic({
 }) );
 ```
 
-Because {{book.api.managedExpansionCB}} is invoked in a controlled way
+Because {{book.api.expandWithFassetsCB}} is invoked in a controlled way
 (by **feature-u**), the supplied `app` parameter is guaranteed to be
 defined (_issue **a**_).  Not only that, but the supplied `app` object
 is guaranteed to have all features publicFace definitions resolved
 (_issue **b**_).
 
-**_SideBar_**: A secondary reason {{book.api.managedExpansion}} may be
+**_SideBar_**: A secondary reason {{book.api.expandWithFassets}} may be
 used (_over and above app injection during code expansion_) is to
 **delay code expansion**, which can avoid issues related to
 (_legitimate but somewhat obscure_) circular dependencies.
@@ -255,7 +255,7 @@ object, it is really very simple:
    APIs (_when using route, live-cycle hooks, or logic hooks_).
 
 3. Use the app parameter supplied through
-   {{book.api.managedExpansion}} (_when app is required during in-line
+   {{book.api.expandWithFassets}} (_when app is required during in-line
    expansion of code_).
 
 Accessing Feature Resources in a seamless way is a **rudimentary
@@ -264,7 +264,7 @@ code, making your features truly plug-and-play.
 
 **NOTE**: It is possible that a module may be using more than one of
 these techniques.  As an example a logic module may have to use
-{{book.api.managedExpansion}} to access app at expansion time, but is
+{{book.api.expandWithFassets}} to access app at expansion time, but is
 also supplied app as a parameter in it's functional hook.  This is
 perfectly fine, as they will be referencing the exact same app object
 instance.

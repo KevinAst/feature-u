@@ -2,7 +2,7 @@ import {op}                    from '../launchApp';    // module under test INTE
 import createAspect$           from './createAspect$';
 import {createFeature,
         extendFeatureProperty,
-        managedExpansion}      from '../..';
+        expandWithFassets}     from '../..';
 
 const extension1 = createAspect$({
   name:     'extension1',
@@ -74,12 +74,12 @@ describe('launchApp.op.alch.validateFeatureContent(features, aspectMap): void', 
     // THROW: createFeature() parameter violation: feature.name: 'feature4' contains invalid feature.extension1 AspectContent: bad
   });
 
-  test('4B: Aspect extension with recognized "invalid" AspectContent BUT delayed validaion via managedExpansion()', () => {
+  test('4B: Aspect extension with recognized "invalid" AspectContent BUT delayed validaion via expandWithFassets()', () => {
     expect(()=>op.alch.validateFeatureContent(
       [
         createFeature({
           name:         'feature4B',
-          extension1:   managedExpansion(()=>'bad'),
+          extension1:   expandWithFassets(()=>'bad'),
         }),
       ], aspectMap)).not.toThrow(/contains invalid feature.extension1 AspectContent: bad/);
   });

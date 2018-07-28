@@ -90,7 +90,7 @@ export default function launchApp({aspects=[],
   // accumulate all feature assets in our Fassets object (used in cross-feature-communication)
   const fassets = createFassets(activeFeatures);
 
-  // expand the feature content of any aspect that relies on managedExpansion()
+  // expand the feature content of any aspect that relies on expandWithFassets()
   // ... AND perform a delayed validation, once expansion has occurred
   op.alch.expandFeatureContent(fassets, activeFeatures, aspects);
 
@@ -322,11 +322,11 @@ op.alch.validateFeatureContent = function(features, aspectMap) {
 
         // delay validation when expansion is needed
         // ... is accomplished in subsequent step (after expansion has occurred)
-        // ... this means that validation logic in aspect does NOT have to worry about .managedExpansion
-        if (!feature[propName].managedExpansion) {
+        // ... this means that validation logic in aspect does NOT have to worry about .expandWithFassets
+        if (!feature[propName].expandWithFassets) {
 
           // allow the aspect to validate it's content
-          // ... ex: a reducer MUST be a function (or managedExpansion) and it must have a shape!
+          // ... ex: a reducer MUST be a function (or expandWithFassets) and it must have a shape!
           logf(`aspect-life-cycle-hook ... Aspect.name:${aspect.name} ... invoking it's required Aspect.validateFeatureContent() on Feature.name:${feature.name}'s Feature.${aspect.name}`);
           const errMsg = aspect.validateFeatureContent(feature); // validate self's aspect on supplied feature (which is known to contain this aspect)
           check(!errMsg, errMsg); // non-null is considered a validation error
@@ -375,9 +375,9 @@ op.alch.expandFeatureContent = function(fassets, activeFeatures, aspects) {
   // log summary
   const hookCount   = aspects.reduce( (count, aspect) => aspect.expandFeatureContent ? count+1 : count, 0);
   const hookSummary = aspects.map( (aspect) => `\n  Aspect.name:${aspect.name}${aspect.expandFeatureContent ? ' <-- defines: expandFeatureContent()' : ''}` );
-  logf(`resolving managedExpansion() ... either by DEFAULT-PROCESS -OR- aspect-life-cycle-hook PROCESSING: Aspect.expandFeatureContent() ... ${hookCount} hooks:${hookSummary}`);
+  logf(`resolving expandWithFassets() ... either by DEFAULT-PROCESS -OR- aspect-life-cycle-hook PROCESSING: Aspect.expandFeatureContent() ... ${hookCount} hooks:${hookSummary}`);
 
-  // expand the feature content of any aspect that relies on managedExpansion()
+  // expand the feature content of any aspect that relies on expandWithFassets()
   // ... AND perform a delayed validation, once expansion has occurred
   // NOTE: The original source of this error is in createFeature(), 
   //       so we prefix any errors as such!
@@ -385,7 +385,7 @@ op.alch.expandFeatureContent = function(fassets, activeFeatures, aspects) {
 
   aspects.forEach( aspect => {
     activeFeatures.forEach( feature => {
-      if (feature[aspect.name] && feature[aspect.name].managedExpansion) {
+      if (feature[aspect.name] && feature[aspect.name].expandWithFassets) {
 
         let errMsg = null;
 
@@ -393,20 +393,20 @@ op.alch.expandFeatureContent = function(fassets, activeFeatures, aspects) {
         if (aspect.expandFeatureContent) {
           // aspect wishes to do this
           // ... a simple process, BUT provides the hook to do more (ex: reducer tranfer of slice)
-          logf(`resolving managedExpansion() [by aspect-life-cycle-hook Aspect.name:${aspect.name}'s Aspect.expandFeatureContent()] ON Feature.name:${feature.name}'s Feature.${aspect.name} AspectContent`);
+          logf(`resolving expandWithFassets() [by aspect-life-cycle-hook Aspect.name:${aspect.name}'s Aspect.expandFeatureContent()] ON Feature.name:${feature.name}'s Feature.${aspect.name} AspectContent`);
 
           errMsg = aspect.expandFeatureContent(fassets, feature);
           // ... specialized validation, over-and-above the validateFeatureContent() hook
           check(!errMsg, errMsg); // truthy is considered a validation error
         }
         else {
-          logf(`resolving managedExpansion() [by DEFAULT-PROCESS] ON Feature.name:${feature.name}'s Feature.${aspect.name} AspectContent`);
+          logf(`resolving expandWithFassets() [by DEFAULT-PROCESS] ON Feature.name:${feature.name}'s Feature.${aspect.name} AspectContent`);
           // default implementation (when not done by the aspect)
           feature[aspect.name] = feature[aspect.name](fassets);
         }
 
         // perform our delayed validation
-        logf(`aspect-life-cycle-hook ... Aspect.name:${aspect.name} ... invoking it's required Aspect.validateFeatureContent() on Feature.name:${feature.name}'s Feature.${aspect.name} ... DELAYED from managedExpansion()`);
+        logf(`aspect-life-cycle-hook ... Aspect.name:${aspect.name} ... invoking it's required Aspect.validateFeatureContent() on Feature.name:${feature.name}'s Feature.${aspect.name} ... DELAYED from expandWithFassets()`);
         errMsg = aspect.validateFeatureContent(feature); // validate self's aspect on supplied feature (which is known to contain this aspect)
         check(!errMsg, errMsg); // truthy is considered a validation error
       }

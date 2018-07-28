@@ -95,6 +95,31 @@ request.  Use any string that uniquely identifies your utility
 
 <br/><br/><br/>
 
+<a id="expandWithFassets"></a>
+
+<h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
+  expandWithFassets(expandWithFassetsCB) ⇒ [`expandWithFassetsCB`](#expandWithFassetsCB)</h5>
+Mark the supplied {{book.api.expandWithFassetsCB}} as a "ManagedExpansion Callback", distinguishing it from other functions _(suchas reducer functions)_.Features may communicate {{book.api.AspectContent}} directly, orthrough a {{book.api.expandWithFassetsCB}}.  In other words, the{{book.api.AspectContent}} can either be the actual content itself_(ex: reducer, logic modules, etc.)_, or a function that returnsthe content.  The latter: 1. supports {{book.guide.crossCom}} _(through fassets object    injection)_, and 2. minimizes circular dependency issues (of ES6 modules).Managed Expansion Callbacks are used when a fully resolved{{book.api.Fassets}} object is required during in-line code expansion.They are merely functions that when invoked _(under the control of**feature-u**)_, are supplied the {{book.api.Fassets}} object andreturn the expanded {{book.api.AspectContent}} _(ex: reducer, logicmodules, etc.)_.**For more information _(with examples)_**, please refer to{{book.guide.crossCom_managedCodeExpansion}}.The {{book.api.expandWithFassetsCB}} function should conform to thefollowing signature:**API:** {{book.api.expandWithFassetsCB$}}
+
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>expandWithFassetsCB</td><td><a href="#expandWithFassetsCB"><code>expandWithFassetsCB</code></a></td><td><p>the callback
+function that when invoked (by <strong>feature-u</strong>) expands/returns the
+desired {{book.api.AspectContent}}.</p>
+</td>
+    </tr>  </tbody>
+</table>
+
+**Returns**: [`expandWithFassetsCB`](#expandWithFassetsCB) - the supplied expandWithFassetsCB,marked as a "managed expansion callback".  
+
+<br/><br/><br/>
+
 <a id="launchApp"></a>
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
@@ -135,31 +160,6 @@ details and complete examples.</p>
 </table>
 
 **Returns**: [`Fassets`](#Fassets) - the Fassets object used in cross-feature-communication.  
-
-<br/><br/><br/>
-
-<a id="managedExpansion"></a>
-
-<h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
-  managedExpansion(managedExpansionCB) ⇒ [`managedExpansionCB`](#managedExpansionCB)</h5>
-Mark the supplied {{book.api.managedExpansionCB}} as a "ManagedExpansion Callback", distinguishing it from other functions _(suchas reducer functions)_.Features may communicate {{book.api.AspectContent}} directly, orthrough a {{book.api.managedExpansionCB}}.  In other words, the{{book.api.AspectContent}} can either be the actual content itself_(ex: reducer, logic modules, etc.)_, or a function that returnsthe content.  The latter: 1. supports {{book.guide.crossCom}} _(through fassets object    injection)_, and 2. minimizes circular dependency issues (of ES6 modules).Managed Expansion Callbacks are used when a fully resolved{{book.api.Fassets}} object is required during in-line code expansion.They are merely functions that when invoked _(under the control of**feature-u**)_, are supplied the {{book.api.Fassets}} object andreturn the expanded {{book.api.AspectContent}} _(ex: reducer, logicmodules, etc.)_.**For more information _(with examples)_**, please refer to{{book.guide.crossCom_managedCodeExpansion}}.The {{book.api.managedExpansionCB}} function should conform to thefollowing signature:**API:** {{book.api.managedExpansionCB$}}
-
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>managedExpansionCB</td><td><a href="#managedExpansionCB"><code>managedExpansionCB</code></a></td><td><p>the callback
-function that when invoked (by <strong>feature-u</strong>) expands/returns the
-desired {{book.api.AspectContent}}.</p>
-</td>
-    </tr>  </tbody>
-</table>
-
-**Returns**: [`managedExpansionCB`](#managedExpansionCB) - the supplied managedExpansionCB,marked as a "managed expansion callback".  
 
 <br/><br/><br/>
 
@@ -226,7 +226,7 @@ supplied feature (which is known to contain this aspect).</p>
     </tr><tr>
     <td>[expandFeatureContent]</td><td><a href="#expandFeatureContentMeth"><code>expandFeatureContentMeth</code></a></td><td><p>an
 optional aspect expansion hook, defaulting to the algorithm defined
-by {{book.api.managedExpansion}}.<br/><br/></p>
+by {{book.api.expandWithFassets}}.<br/><br/></p>
 <p>This function rarely needs to be overridden.  It provides a hook to
 aspects that need to transfer additional content from the expansion
 function to the expanded content.</p>
@@ -453,6 +453,29 @@ A builtin aspect that publicly promotes feature-based resourcescalled `fassets`
 
 <br/><br/><br/>
 
+<a id="expandWithFassetsCB"></a>
+
+<h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
+  expandWithFassetsCB ⇒ [`AspectContent`](#AspectContent)</h5>
+A "managed expansion callback" (defined by{{book.api.expandWithFassets}}) that when invoked (by **feature-u**)expands and returns the desired {{book.api.AspectContent}}.**For more information _(with examples)_**, please refer to{{book.guide.crossCom_managedCodeExpansion}}.
+
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>fassets</td><td><a href="#Fassets"><code>Fassets</code></a></td><td><p>the Fassets object used in cross-feature-communication.</p>
+</td>
+    </tr>  </tbody>
+</table>
+
+**Returns**: [`AspectContent`](#AspectContent) - The desired AspectContent (ex: reducer,logic module, etc.).  
+
+<br/><br/><br/>
+
 <a id="fassetValidations"></a>
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
@@ -488,29 +511,6 @@ FassetsContext.Provider for a null rootAppElm).</p>
 </table>
 
 **Returns**: void  
-
-<br/><br/><br/>
-
-<a id="managedExpansionCB"></a>
-
-<h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
-  managedExpansionCB ⇒ [`AspectContent`](#AspectContent)</h5>
-A "managed expansion callback" (defined by{{book.api.managedExpansion}}) that when invoked (by **feature-u**)expands and returns the desired {{book.api.AspectContent}}.**For more information _(with examples)_**, please refer to{{book.guide.crossCom_managedCodeExpansion}}.
-
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>fassets</td><td><a href="#Fassets"><code>Fassets</code></a></td><td><p>the Fassets object used in cross-feature-communication.</p>
-</td>
-    </tr>  </tbody>
-</table>
-
-**Returns**: [`AspectContent`](#AspectContent) - The desired AspectContent (ex: reducer,logic module, etc.).  
 
 <br/><br/><br/>
 
@@ -603,7 +603,7 @@ to contain this aspect.</p>
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
   expandFeatureContentMeth ⇒ string</h5>
-Expand self's {{book.api.AspectContent}} in the supplied feature,replacing that content (within the feature).  Once expansion iscomplete, **feature-u** will perform a delayed validation of theexpanded content.**API:** {{book.api.expandFeatureContentMeth$}}The default behavior simply implements the expansion algorithmdefined by {{book.api.managedExpansion}}:```jsfeature[this.name] = feature[this.name](fassets);```This default behavior rarely needs to change.  It however providesa hook for aspects that need to transfer additional content fromthe expansion function to the expanded content.  As an example, the`reducer` aspect must transfer the slice property from theexpansion function to the expanded reducer.
+Expand self's {{book.api.AspectContent}} in the supplied feature,replacing that content (within the feature).  Once expansion iscomplete, **feature-u** will perform a delayed validation of theexpanded content.**API:** {{book.api.expandFeatureContentMeth$}}The default behavior simply implements the expansion algorithmdefined by {{book.api.expandWithFassets}}:```jsfeature[this.name] = feature[this.name](fassets);```This default behavior rarely needs to change.  It however providesa hook for aspects that need to transfer additional content fromthe expansion function to the expanded content.  As an example, the`reducer` aspect must transfer the slice property from theexpansion function to the expanded reducer.
 
 <table>
   <thead>
@@ -619,7 +619,7 @@ cross-communication.</p>
     </tr><tr>
     <td>feature</td><td><a href="#Feature"><code>Feature</code></a></td><td><p>the feature which is known to contain
 this aspect <strong>and</strong> is in need of expansion (as defined by
-{{book.api.managedExpansion}}).</p>
+{{book.api.expandWithFassets}}).</p>
 </td>
     </tr>  </tbody>
 </table>

@@ -454,7 +454,7 @@ validation conceptually occurs under the control of
 **API:** {{book.api.expandFeatureContentMeth$}}
 
 {{book.api.expandFeatureContentMeth}} is an optional aspect expansion
-hook, defaulting to the algorithm defined by {{book.api.managedExpansion}}.
+hook, defaulting to the algorithm defined by {{book.api.expandWithFassets}}.
 
 This method (when used) should expand self's
 {{book.api.AspectContent}} in the supplied feature (which is known to
@@ -465,7 +465,7 @@ Once expansion is complete, **feature-u** will perform a delayed
 validation of the expanded content.
 
 The default behavior simply implements the expansion algorithm
-defined by {{book.api.managedExpansion}}:
+defined by {{book.api.expandWithFassets}}:
 
 ```js
 feature[this.name] = feature[this.name](app);

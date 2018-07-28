@@ -18,12 +18,12 @@ this list:_
   * {{book.api.appDidStartCB$}}
 
 
+* {{book.api.expandWithFassets$}}
+  * {{book.api.expandWithFassetsCB$}}
+
+
 * {{book.api.launchApp$}}
   * {{book.api.registerRootAppElmCB$}}
-
-
-* {{book.api.managedExpansion$}}
-  * {{book.api.managedExpansionCB$}}
 
 
 * {{book.api.withFassets$}}
