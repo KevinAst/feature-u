@@ -150,7 +150,6 @@ describe('launchApp.op.helper.defineRootAppElm(fassets, activeFeatures, aspects)
   //*** Our test confirmation ... FINALLY
   //***
 
-  // ?xRETRO-TO-fassets - now is a React DOM wrapped with <FassetsContext.Provider>
   test('confirm the accumulated rootAppElm from a combination of Aspects/Features', () => {
     // NOTE: In support of withFassets(), our rootAppElm is now a React DOM rooted in <FassetsContext.Provider>.
     //       For our test purposes, we simply interogate it's children :-)

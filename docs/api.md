@@ -134,7 +134,7 @@ details and complete examples.</p>
     </tr>  </tbody>
 </table>
 
-**Returns**: [`Fassets`](#Fassets) - the Fassets object used in cross-feature-communication. ?xRETRO-TO-fassets  
+**Returns**: [`Fassets`](#Fassets) - the Fassets object used in cross-feature-communication.  
 
 <br/><br/><br/>
 
@@ -400,7 +400,7 @@ An optional {{book.guide.appLifeCycle}} invoked one time, justbefore the app st
   </thead>
   <tbody>
 <tr>
-    <td>fassets</td><td><a href="#Fassets"><code>Fassets</code></a></td><td><p>the Fassets object used in cross-feature-communication. ?xRETRO-TO-fassets - param</p>
+    <td>fassets</td><td><a href="#Fassets"><code>Fassets</code></a></td><td><p>the Fassets object used in cross-feature-communication.</p>
 </td>
     </tr><tr>
     <td>curRootAppElm</td><td>reactElm</td><td><p>the current react app element
@@ -427,7 +427,7 @@ An optional {{book.guide.appLifeCycle}} invoked one time,immediately after the 
   </thead>
   <tbody>
 <tr>
-    <td>fassets</td><td><a href="#Fassets"><code>Fassets</code></a></td><td><p>the Fassets object used in cross-feature-communication. ?xRETRO-TO-fassets - param</p>
+    <td>fassets</td><td><a href="#Fassets"><code>Fassets</code></a></td><td><p>the Fassets object used in cross-feature-communication.</p>
 </td>
     </tr><tr>
     <td>[appState]</td><td>Any</td><td><p>the redux top-level app state (when redux

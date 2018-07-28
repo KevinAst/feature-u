@@ -61,7 +61,7 @@ import logf        from '../util/logf';
 export default function createFeature({name,
                                        enabled=true,
 
-                                       fassets, // ?xRETRO-TO-fassets
+                                       fassets,
 
                                        appWillStart,
                                        appDidStart,
@@ -99,7 +99,7 @@ export default function createFeature({name,
     name,
     enabled,
 
-    fassets, // ?xRETRO-TO-fassets
+    fassets,
 
     appWillStart,
     appDidStart,
@@ -130,7 +130,7 @@ const validFeatureProps = {
   name:         'builtin',
   enabled:      'builtin',
   publicFace:   'builtin',  // OBSOLETE as of feature-u@1 ... still registered for the sole purpose of generating more specific error (see: createFassets.js)
-  fassets:      'builtin',  // ?xRETRO-TO-fassets
+  fassets:      'builtin',
   appWillStart: 'builtin',
   appDidStart:  'builtin',
 
@@ -241,7 +241,7 @@ export function extendFeatureProperty(name, owner) {
  *
  * @callback appWillStartCB
  * 
- * @param {Fassets} fassets the Fassets object used in cross-feature-communication. ?xRETRO-TO-fassets - param
+ * @param {Fassets} fassets the Fassets object used in cross-feature-communication.
  * 
  * @param {reactElm} curRootAppElm - the current react app element
  * root.
@@ -270,7 +270,7 @@ export function extendFeatureProperty(name, owner) {
  *
  * @callback appDidStartCB
  * 
- * @param {Fassets} fassets the Fassets object used in cross-feature-communication. ?xRETRO-TO-fassets - param
+ * @param {Fassets} fassets the Fassets object used in cross-feature-communication.
  * 
  * @param {Any} [appState] - the redux top-level app state (when redux
  * is in use).
@@ -283,7 +283,7 @@ export function extendFeatureProperty(name, owner) {
 
 
 //***
-//*** Specification: fassets // ?xRETRO-TO-fassets ... NEW
+//*** Specification: fassets
 //***
 
 /**
