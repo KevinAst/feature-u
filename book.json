@@ -68,7 +68,7 @@
 
       "appWillStart":     "<a href='/appLifeCycle.html#appwillstart'><code>appWillStart</code></a>",
       "appWillStartCB":   "<a href='/appLifeCycle.html#appwillstart'><code>Feature.appWillStart()</code></a>",
-      "appWillStartCB$":  "<a href='/appLifeCycle.html#appwillstart'><code>Feature.appWillStart({fassets, curRootAppElm}): rootAppElm || falsy</code></a>",
+      "appWillStartCB$":  "<a href='/appLifeCycle.html#appwillstart'><code>Feature.appWillStart({fassets, curRootAppElm}): rootAppElm | falsy</code></a>",
 
       "appDidStart":      "<a href='/appLifeCycle.html#appDidStart'><code>appDidStart</code></a>",
       "appDidStartCB":    "<a href='/appLifeCycle.html#appDidStart'><code>Feature.appDidStart()</code></a>",
@@ -149,7 +149,7 @@
         "createFeature":              "<a href='/api.html#createFeature'><code>createFeature()</code></a>",
         "createFeature$":             "<a href='/api.html#createFeature'><code>createFeature({name, [enabled], [fassets], [appWillStart], [appDidStart], [extendedAspects]}): Feature</code></a>",
           "appWillStartCB":           "<a href='/api.html#appWillStartCB'><code>appWillStart()</code></a>",
-          "appWillStartCB$":          "<a href='/api.html#appWillStartCB'><code>appWillStart({fassets, curRootAppElm}): rootAppElm || falsy</code></a>",
+          "appWillStartCB$":          "<a href='/api.html#appWillStartCB'><code>appWillStart({fassets, curRootAppElm}): rootAppElm | falsy</code></a>",
           "appDidStartCB":            "<a href='/api.html#appDidStartCB'><code>appDidStart()</code></a>",
           "appDidStartCB$":           "<a href='/api.html#appDidStartCB'><code>appDidStart({fassets, [appState], [dispatch]}): void</code></a>",
         "launchApp":                  "<a href='/api.html#launchApp'><code>launchApp()</code></a>",
@@ -157,7 +157,7 @@
           "registerRootAppElmCB":     "<a href='/api.html#registerRootAppElmCB'><code>registerRootAppElm()</code></a>",
           "registerRootAppElmCB$":    "<a href='/api.html#registerRootAppElmCB'><code>registerRootAppElm(rootAppElm, fassets): void</code></a>",
         "withFassets":                "<a href='/api.html#withFassets'><code>withFassets()</code></a>",
-        "withFassets$":               "<a href='/api.html#withFassets'><code>withFassets({mapFassetsToProps}): HoC</code></a>",
+        "withFassets$":               "<a href='/api.html#withFassets'><code>withFassets({[Component], mapFassetsToProps}): WrappedComp | HoC</code></a>",
           "mapFassetsToPropsStruct":  "<a href='/api.html#mapFassetsToPropsStruct'><code>mapFassetsToPropsStruct</code></a>",
           "mapFassetsToPropsFn":      "<a href='/api.html#mapFassetsToPropsFn'><code>mapFassetsToPropsFn</code></a>",
         "expandWithFassets":           "<a href='/api.html#expandWithFassets'><code>expandWithFassets()</code></a>",

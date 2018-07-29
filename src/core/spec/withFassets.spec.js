@@ -42,6 +42,21 @@ describe('withFassets()', () => {
   //***-------------------------------------------------------------------------
   describe('withFassets() ERRORS)', () => {
 
+    // const MyComp = () => <p>My Component</p>;
+    test('Component parameter must be a React Component', () => {
+      expect(()=> withFassets({Component: 123}))
+        .toThrow(/Component.*when supplied.*must be a React Component/);
+      // THROW:  withFassets() parameter violation: Component when supplied, must be a React Component - to be wrapped
+    });
+
+    test('Component parameter passing a React Component', () => {
+      expect(()=> withFassets({
+        Component: (p)=>'DummyReactComp',
+        mapFassetsToProps: {}
+      }))
+        .not.toThrow();
+    });
+
     test('mapFassetsToProps is required', () => {
       expect(()=> withFassets())
         .toThrow(/mapFassetsToProps is required/);
@@ -76,11 +91,11 @@ describe('withFassets()', () => {
       // THROW:  withFassets() parameter violation: unrecognized positional parameters (only named parameters can be specified)
     });
 
-    test('must pass a component to the function returned by withFassets', () => {
+    test('must pass a React Component to the function returned by withFassets', () => {
       const hoc = withFassets({mapFassetsToProps: {prop1: 'fassetsKey'} });
       expect(()=> hoc('BadComponent') )
-        .toThrow(/must pass a component to the function returned by withFassets/);
-      // THROW:  You must pass a component to the function returned by withFassets
+        .toThrow(/must pass a React Component to the function returned by withFassets/);
+      // THROW:  You must pass a React Component to the function returned by withFassets
     });
 
     const props  = {prop1: 'prop1Val', prop2: 'prop2Val'};

@@ -20,25 +20,40 @@ export const FassetsContext = React_createContext(fassetsNotDefined); // specify
 
 
 /**
- * Create a Higher-order Component (HoC) class that injects fasset
- * props into a Component as specified by the mapFassetsToProps
+ * Create a Higher-order Component (HoC) function that injects fasset
+ * props into a `Component` as specified by the `mapFassetsToProps`
  * parameter.
  *
- * The HoC function returned from `withFassets()` must be invoked,
- * passing the Component to be wrapped (injecting fasset resource props).
+ * **Please Note** this function uses named parameters.
  *
- * @param {mapFassetsToPropsStruct|mapFassetsToPropsFn} mapFassetsToProps the structure defining the
- * prop/fassetsKey mapping, from which fasset resources are
- * injected into a Component.  Can either be a direct structure
+ * @param {ReactComp} [Component] optionally, the React Component to
+ * be wrapped.  **When supplied**, it will be automatically wrapped
+ * and returned.  **When not supplied**, the HoC function will be
+ * returned _(suitable to be "composed")_.
+ *
+ * @param {mapFassetsToPropsStruct|mapFassetsToPropsFn}
+ * mapFassetsToProps the structure defining the prop/fassetsKey
+ * mapping, from which fasset resources are injected into a `Component`.
+ * Can either be a direct structure
  * ({{book.api.mapFassetsToPropsStruct}}) or a function returning the
  * structure ({{book.api.mapFassetsToPropsFn}}).
  *
- * @return {HoC} the function to be invoked, passing the Component to
- * be wrapped (injecting fasset resource props).
+ * @return {WrappedComp|HoC} either the WrappedComp or HoC function,
+ * depending on whether the `Component` parameter is supplied:
+ *
+ * - **when `Component` is supplied**: return the WrappedComp _(by invoking the
+ *   HoC - passing `Component`)_.
+ *
+ * - **when `Component` is NOT supplied**: return the HoC function.  Use this
+ *   option if you wish to "compose" the HoC with yet another function.
+ *   Ultimately, this HoC must be invoked _(directly or indirectly)_,
+ *   passing the `Component` to be wrapped.
  *
  * **Examples**:
  *
- * 1. **Inject fasset resources from a static structure** ({{book.api.mapFassetsToPropsStruct}}) ...
+ * 1. Inject fasset resources from a **static structure**
+ *    ({{book.api.mapFassetsToPropsStruct}}), **auto wrapping** a
+ *    `Component` ...
  *  
  *    ```js
  *    function MainPage({mainLinks, mainBodies}) {
@@ -55,7 +70,8 @@ export const FassetsContext = React_createContext(fassetsNotDefined); // specify
  *    }
  *    
  *    export default withFassets({
- *      mapFassetsToProps: {           // NOTE: static structure (mapFassetsToPropsStruct)
+ *      Component: MainPage,   // NOTE: auto wrap MainPage
+ *      mapFassetsToProps: {   // NOTE: static structure (mapFassetsToPropsStruct)
  *        Logo:       'company.logo',
  *                    // Logo:  companyLogoResource,
  *
@@ -65,10 +81,12 @@ export const FassetsContext = React_createContext(fassetsNotDefined); // specify
  *        mainBodies: 'MainPage.*.body'
  *                    // mainBodies: [cartBodyResource, searchBodyResource],
  *      }
- *    })(MainPage);
+ *    });
  *    ```
  *    
- * 2. **Inject fasset resources from a functional directive** ({{book.api.mapFassetsToPropsFn}}) ...
+ * 2. Inject fasset resources from a **functional directive**
+ *    ({{book.api.mapFassetsToPropsFn}}), **returning the HoC** -
+ *    immediately invoked ...
  *    
  *    ```js
  *    function MainPage({mainLinks, mainBodies}) {
@@ -78,7 +96,7 @@ export const FassetsContext = React_createContext(fassetsNotDefined); // specify
  *    }
  *    
  *    export default withFassets({
- *      mapFassetsToProps(ownProps) {  // NOTE: functional directive (mapFassetsToPropsFn)
+ *      mapFassetsToProps(ownProps) { // NOTE: functional directive (mapFassetsToPropsFn)
  *        ... some conditional logic based on ownProps
  *        return {
  *          Logo:       'company.logo',
@@ -91,15 +109,21 @@ export const FassetsContext = React_createContext(fassetsNotDefined); // specify
  *                      // mainBodies: [cartBodyResource, searchBodyResource],
  *        };
  *      }
- *    })(MainPage);
+ *    })(MainPage); // NOTE: immediatly invoke the HoC return function (wrapping MainPage)
  *    ```
  * 
  * @function withFassets
  */
-export function withFassets({mapFassetsToProps, ...unknownArgs}={}) {
+export function withFassets({Component, mapFassetsToProps, ...unknownArgs}={}) {
 
   // validate params
   const check = verify.prefix('withFassets() parameter violation: ');
+
+  // ... Component
+  if (Component) {
+    check(isComponent(Component),
+          'Component when supplied, must be a React Component - to be wrapped');
+  }
 
   // ... mapFassetsToProps
   check(mapFassetsToProps,
@@ -117,14 +141,13 @@ export function withFassets({mapFassetsToProps, ...unknownArgs}={}) {
   check(arguments.length === 1,
         'unrecognized positional parameters (only named parameters can be specified)');
 
-
-  // return our second-level HoC that when invoked will expose our HoC wrapper
+  // define our second-level HoC that when invoked will expose our HoC wrapper
   // ... this "second level of indirection" is required to interpret our mapFassetsToProps
-  return function withFassetsHoC(Component) {
+  function withFassetsHoC(Component) {
 
     // verify Component is supplied and is a valid component
     verify(isComponent(Component),
-           'You must pass a component to the function returned by withFassets()');
+           'You must pass a React Component to the function returned by withFassets()');
 
     // return our HoC wrapper that injects selected fassets props
     // ... this function has access to everything we need:
@@ -171,7 +194,10 @@ export function withFassets({mapFassetsToProps, ...unknownArgs}={}) {
         </FassetsContext.Consumer>
       );
     };
-  };
+  }
+
+  // either return the WrappedComp or HoC function, depending on whether the Component parameter is supplied
+  return Component ? withFassetsHoC(Component) : withFassetsHoC;
 }
 
 // helper function that translates supplied fassetsToPropsMap to fassetsProps
