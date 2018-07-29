@@ -218,7 +218,7 @@ export default function createFassets(activeFeatures) {
           accum.withKeys = true;
         }
         else {
-          check(false, `fassetsKey: '${fassetsKey}' contains an unrecognized keyword directive: '@${directive}'`)
+          check(false, `fassetsKey: '${fassetsKey}' contains an unrecognized keyword directive: '@${directive}'`);
         }
         return accum;
       }, {});
@@ -237,7 +237,7 @@ export default function createFassets(activeFeatures) {
       const resolveResource = (key) => {
         const  resource = _resources[key] ? _resources[key].val : undefined;
         return withKeys ? [key, resource] : resource;
-      }
+      };
 
       // resolve get() when not seen before
       if (containsWildCard(raw_fassetsKey)) { // supplied fassetsKey has wildcards ... do regexp search
