@@ -56,8 +56,14 @@ export const FassetsContext = React_createContext(fassetsNotDefined); // specify
  *    
  *    export default withFassets({
  *      mapFassetsToProps: {           // NOTE: static structure (mapFassetsToPropsStruct)
- *        mainLinks:  'MainPage.*.link',
+ *        Logo:       'company.logo',
+ *                    // Logo:  companyLogoResource,
+ *
+ *        mainLinks:  'MainPage.*.link@withKeys',
+ *                    // mainLinks:  [['MainPage.cart.link',   cartLinkResource],
+ *                    //              ['MainPage.search.link', searchLinkResource]],
  *        mainBodies: 'MainPage.*.body'
+ *                    // mainBodies: [cartBodyResource, searchBodyResource],
  *      }
  *    })(MainPage);
  *    ```
@@ -75,8 +81,14 @@ export const FassetsContext = React_createContext(fassetsNotDefined); // specify
  *      mapFassetsToProps(ownProps) {  // NOTE: functional directive (mapFassetsToPropsFn)
  *        ... some conditional logic based on ownProps
  *        return {
- *          mainLinks:  'MainPage.*.link',
+ *          Logo:       'company.logo',
+ *                      // Logo:  companyLogoResource,
+ *          
+ *          mainLinks:  'MainPage.*.link@withKeys',
+ *                      // mainLinks:  [['MainPage.cart.link',   cartLinkResource],
+ *                      //              ['MainPage.search.link', searchLinkResource]],
  *          mainBodies: 'MainPage.*.body'
+ *                      // mainBodies: [cartBodyResource, searchBodyResource],
  *        };
  *      }
  *    })(MainPage);
@@ -180,8 +192,13 @@ export function fassetsProps(fassetsToPropsMap, fassets) { // export for testing
  * injected into a Component.
  * 
  * The injected Component properties will reference the fasset
- * resource corresponding to the fassetsKey.  Wildcards are supported
- * in the fassetsKey, accumulating multiple resources:
+ * resource corresponding to the fassetsKey.
+ *
+ * **Wildcards**
+ *
+ * Wildcards (`*`) are supported in the fassetsKey, accumulating
+ * multiple resources (a resource array), matching the supplied
+ * pattern:
  *
  * - **without wildcards**, a single resource is injected
  *   _(`undefined` for none)_.
@@ -189,14 +206,47 @@ export function fassetsProps(fassetsToPropsMap, fassets) { // export for testing
  * - **with wildcards**, a resource array is injected, in order of
  *   feature expansion _(empty array for none)_.
  *
- * **Example**:
+ * _Example ..._
  *
  * ```js
  * mapFassetsToProps: {
- *   Logo:       'company.logo',    // single resource
+ *   Logo:       'company.logo',
+ *               // Logo:  companyLogoResource,
  *
- *   mainLinks:  'MainPage.*.link', // resource[] (via wildcards)
+ *               // NOTE: wildcard usage ...
+ *   mainLinks:  'MainPage.*.link',
+ *               // mainLinks:  [cartLinkResource, searchLinkResource],
  *   mainBodies: 'MainPage.*.body'
+ *               // mainBodies: [cartBodyResource, searchBodyResource],
+ * }
+ * ```
+ *
+ * **@withKeys**
+ *
+ * In some cases, you may wish to know the corresponding
+ * `fassetsKey` of the returned resource.  This is especially true
+ * when multiple resources are returned _(using wildcards)_.
+ *
+ * As an example, JSX requires unique keys for array injections _(the
+ * `fassetsKey` is a prime candidate for this, since it is guaranteed
+ * to be unique)_.
+ *
+ * To accomplish this, simply suffix the `fassetsKey` with the
+ * keyword: `'@withKeys'`.  When this is encountered, the resource
+ * returned is a two-element array: `[fassetsKey, resource]`.
+ *
+ * _Example ..._
+ *
+ * ```js
+ * mapFassetsToProps: {
+ *   Logo:       'company.logo',
+ *               // Logo:  companyLogoResource,
+ *
+ *   mainLinks:  'MainPage.*.link@withKeys', // NOTE: @withKeys directive
+ *               // mainLinks:  [['MainPage.cart.link',   cartLinkResource],
+ *               //              ['MainPage.search.link', searchLinkResource]],
+ *   mainBodies: 'MainPage.*.body'
+ *               // mainBodies: [cartBodyResource, searchBodyResource],
  * }
  * ```
  */

@@ -145,30 +145,58 @@ export default function createFassets(activeFeatures) {
     // ***
 
     /**
-     * Get (i.e. fetch) the supplied fassets resource(s).  This is an
-     * alternative to directly dereferencing them on the `fassets`
-     * object.
+     * Get (i.e. fetch) the resource(s) corresponding to the supplied
+     * `fassetsKey`.
      * 
-     * The advantage of this method is:
+     * You may use wildcards (`*`) in the supplied `fassetsKey`,
+     * resulting in a multiple resources being returned (a resource
+     * array), matching the supplied pattern.
      * 
-     *  1. It can accumulate a series of resources (when the
-     *    `fassetsKey` contains wildcards).
+     * In some cases, you may wish to know the corresponding
+     * `fassetsKey` of the returned resource.  This is especially true
+     * when multiple resources are returned _(using wildcards)_.  As
+     * an example, JSX requires unique keys for array injections _(the
+     * `fassetsKey` is a prime candidate for this, since it is
+     * guaranteed to be unique)_.  To accomplish this, simply suffix
+     * the `fassetsKey` with the keyword: `'@withKeys'`.  When this is
+     * encountered, the resource returned is a two-element array:
+     * `[fassetsKey, resource]`.  _**SideBar**: We use this suffix
+     * technique (as opposed to an additional parameter) to be
+     * consistent with how {{book.api.withFassets}} operates._
      * 
-     *  2. It can more gracefully return undefined at any path within
-     *     a federated namespace.
+     * The `fassets.get()` method is an alternative to directly
+     * dereferencing the `fassets` object ... the advantage being:
+     * 
+     *  1. it can accumulate a series of resources (when wildcards are
+     *     used)
+     * 
+     *  2. and it can more gracefully return undefined at any level
+     *     within the federated namespace path
      *
-     * **SideBar**: this method is the basis of the {{book.api.withFassets}}
-     * Higher-order Component (HoC).
+     * **SideBar**: The `fassets.get()` method is the basis of the
+     * {{book.api.withFassets}} Higher-order Component (HoC).
      *
      * @param {string} fassetsKey the key of the resource(s) to fetch.
-     * Wildcards (`*`) are supported _(collecting multiple
-     * resources)_.
+     * This may include wildcards (`*`), as well as the `'@withKeys'`
+     * suffix _(see discussion above)_.
      *
      * @return {resource|resource[]} the requested fassets resource(s).
+     *
      * - **without wildcards**, a single resource is returned
      *   _(`undefined` for none)_.
+     *
+     *   ```js
+     *   'a.b.c':          abcResource
+     *   'a.b.c@withKeys': ['a.b.c', abcResource]
+     *   ```
+     *
      * - **with wildcards**, the return is a resource array, in order
      *   of feature expansion _(empty array for none)_.
+     *
+     *   ```js
+     *   'a.*':          [ab1Resource, ab2Resource, ...]
+     *   'a.*@withKeys': [ ['a.b1', ab1Resource], ['a.b2', ab2Resource], ... ]
+     *   ```
      * 
      * @method Fassets.get
      */
@@ -180,31 +208,58 @@ export default function createFassets(activeFeatures) {
       check(fassetsKey,           'fassetsKey is required');
       check(isString(fassetsKey), `fassetsKey must be a string ... ${fassetsKey}`);
 
+      // interpret optional @directive keywords suffixed in fassetsKey
+      const [raw_fassetsKey, ...directives] = fassetsKey.split('@');
+
+      check(raw_fassetsKey, `fassetsKey: '${fassetsKey}' cannot contain only directives`);
+
+      const { withKeys=false } = directives.reduce( (accum, directive) => {
+        if (directive === 'withKeys') { // @withKeys directive
+          accum.withKeys = true;
+        }
+        else {
+          check(false, `fassetsKey: '${fassetsKey}' contains an unrecognized keyword directive: '@${directive}'`)
+        }
+        return accum;
+      }, {});
+
+
       // use cached value (when available)
+      // ... NOTE: for cache purposes, fassetsKey correctly includes any @directives
+      //           (which can alter the result)
       var result = _searchCache[fassetsKey];
       if (result) {
         return result===UNDEFINED ? undefined : result;
       }
 
+      // resolve resource of supplied key, interpreting @withKeys
+      // ... returning either [fassetsKey, resource] -or- resource
+      const resolveResource = (key) => {
+        const  resource = _resources[key] ? _resources[key].val : undefined;
+        return withKeys ? [key, resource] : resource;
+      }
+
       // resolve get() when not seen before
-      if (containsWildCard(fassetsKey)) { // supplied fassetsKey has wildcards ... do regexp search
+      if (containsWildCard(raw_fassetsKey)) { // supplied fassetsKey has wildcards ... do regexp search
 
         // locate all keys matching the fassetsKey (with wildcards)
         // ... order is same as feature expansion order
         // ... empty array for NO match
-        const keys = matchAll(_fassetsKeysBlob, createRegExp(fassetsKey));
+        const keys = matchAll(_fassetsKeysBlob, createRegExp(raw_fassetsKey));
         
         // convert keys to actual resource values
-        result = keys.map( key => _resources[key].val);
+        result = keys.map( key => resolveResource(key) );
       }
       else { // supplied fassetsKey has NO wildcards ... dereference directly
 
         // convert dereferenced resource (when found) to actual resource value
         // ... undefined for NOT found
-        result = _resources[fassetsKey] ? _resources[fassetsKey].val : undefined;
+        result = resolveResource(raw_fassetsKey);
       }
 
       // maintain cache
+      // ... NOTE: for cache purposes, fassetsKey correctly includes any @directives
+      //           (which can alter the result)
       _searchCache[fassetsKey] = result===undefined ? UNDEFINED : result;
 
       // that's all folks

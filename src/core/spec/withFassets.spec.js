@@ -6,7 +6,6 @@ import {createFeature}    from '../..';
 describe('withFassets()', () => {
 
   // setup our fassets object to test
-  // ?? may need to make these values components or some such thing
   const fassets = createFassets([
     createFeature({
       name: 'main',
@@ -107,7 +106,7 @@ describe('withFassets()', () => {
 
 
   //***-------------------------------------------------------------------------
-  describe('INTERNAL fassetsProps(fassetsToPropsMap, fassets)', () => {
+  describe('INTERNAL fassetsProps()', () => {
 
     const fassetsToPropsMap = {
       logo:       'company.logo',
@@ -117,12 +116,37 @@ describe('withFassets()', () => {
       mainBodies: 'MainPage.*.body',
     };
 
-    test('translate fassetsToPropsMap to fassetsProps', () => {
+    test('translate map to props', () => {
       expect( fassetsProps(fassetsToPropsMap, fassets) )
         .toEqual({
           logo:       'theCompanyLogo',
           nonEntry:   undefined,
           mainLinks:  ['cartLink', 'searchLink'],
+          nonEntries: [],
+          mainBodies: ['cartBody', 'searchBody'],
+        });
+    });
+    
+  });
+
+  //***-------------------------------------------------------------------------
+  describe('INTERNAL fassetsProps() @withKeys', () => {
+
+    const fassetsToPropsMap = {
+      logo:       'company.logo@withKeys',
+      nonEntry:   'not.there@withKeys',
+      mainLinks:  'MainPage.*.link@withKeys',
+      nonEntries: 'not.*.there@withKeys',
+      mainBodies: 'MainPage.*.body',           // NOTE: can mix and match @withKeys
+    };
+
+    test('translate map to props a MIX of @withKeys', () => {
+      expect( fassetsProps(fassetsToPropsMap, fassets) )
+        .toEqual({
+          logo:       ['company.logo',          'theCompanyLogo'],
+          nonEntry:   ['not.there',             undefined],
+          mainLinks:  [['MainPage.cart.link',   'cartLink'],
+                       ['MainPage.search.link', 'searchLink']],
           nonEntries: [],
           mainBodies: ['cartBody', 'searchBody'],
         });
