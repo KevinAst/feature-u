@@ -166,8 +166,8 @@ details and complete examples.</p>
 <a id="withFassets"></a>
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
-  withFassets([Component], mapFassetsToProps) ⇒ WrappedComp \| HoC</h5>
-Create a Higher-order Component (HoC) function that injects fassetprops into a `Component` as specified by the `mapFassetsToProps`parameter.**Please Note** this function uses named parameters.
+  withFassets(mapFassetsToProps, [CompToWrap]) ⇒ HoC \| HoF</h5>
+Promotes a "wrapped" Component (an HoC - Higher-order Component)that injects fasset props into a `CompToWrap`, as specified by the`mapFassetsToProps` parameter.Central to this process, a Higher-order Function (HoF) is createdthat encapsulates this "mapping knowledge".  Ultimately, thisHoF must be invoked (passing the `CompToWrap`), which exposes the HoC(the "wrapped" Component).```js+ withFassetsHoF(CompToWrap): HoC```There are two ways to use `withFassets()`:1. By directly passing the `CompToWrap` parameter, the HoC will be   returned _(internally invoking the HoF)_.  This is the most   common use case.2. By omitting the `CompToWrap` parameter, the HoF will be   returned.  This is useful to facilitate "functional composition"   _(in functional programming)_.  In this case it is the client's   responsibility to invoke the HoF _(either directly or   indirectly)_ in order to expose the HoC.**Please Note** this function uses named parameters.
 
 <table>
   <thead>
@@ -177,22 +177,20 @@ Create a Higher-order Component (HoC) function that injects fassetprops into a 
   </thead>
   <tbody>
 <tr>
-    <td>[Component]</td><td>ReactComp</td><td><p>optionally, the React Component to
-be wrapped.  <strong>When supplied</strong>, it will be automatically wrapped
-and returned.  <strong>When not supplied</strong>, the HoC function will be
-returned <em>(suitable to be &quot;composed&quot;)</em>.</p>
-</td>
-    </tr><tr>
     <td>mapFassetsToProps</td><td><a href="#mapFassetsToPropsStruct"><code>mapFassetsToPropsStruct</code></a> | <a href="#mapFassetsToPropsFn"><code>mapFassetsToPropsFn</code></a></td><td><p>the structure defining the prop/fassetsKey
-mapping, from which fasset resources are injected into a <code>Component</code>.
-Can either be a direct structure
+mapping, from which fasset resources are injected into
+<code>CompToWrap</code>.  This can either be a direct structure
 ({{book.api.mapFassetsToPropsStruct}}) or a function returning the
 structure ({{book.api.mapFassetsToPropsFn}}).</p>
+</td>
+    </tr><tr>
+    <td>[CompToWrap]</td><td>ReactComp</td><td><p>optionally, the React Component to
+be wrapped <em>(see discussion above)</em>.</p>
 </td>
     </tr>  </tbody>
 </table>
 
-**Returns**: WrappedComp \| HoC - either the WrappedComp or HoC function,depending on whether the `Component` parameter is supplied:- **when `Component` is supplied**: return the WrappedComp _(by invoking the  HoC - passing `Component`)_.- **when `Component` is NOT supplied**: return the HoC function.  Use this  option if you wish to "compose" the HoC with yet another function.  Ultimately, this HoC must be invoked _(directly or indirectly)_,  passing the `Component` to be wrapped.**Examples**:1. Inject fasset resources from a **static structure**   ({{book.api.mapFassetsToPropsStruct}}), **auto wrapping** a   `Component` ...    ```js   function MainPage({mainLinks, mainBodies}) {     return (       <div>         <div>           {mainLinks.map(MainLink => <MainLink/>)}         </div>         <div>           {mainBodies.map(MainBody => <MainBody/>)}         </div>       </div>     );   }      export default withFassets({     Component: MainPage,   // NOTE: auto wrap MainPage     mapFassetsToProps: {   // NOTE: static structure (mapFassetsToPropsStruct)       Logo:       'company.logo',                   // Logo:  companyLogoResource,       mainLinks:  'MainPage.*.link@withKeys',                   // mainLinks:  [['MainPage.cart.link',   cartLinkResource],                   //              ['MainPage.search.link', searchLinkResource]],       mainBodies: 'MainPage.*.body'                   // mainBodies: [cartBodyResource, searchBodyResource],     }   });   ```   2. Inject fasset resources from a **functional directive**   ({{book.api.mapFassetsToPropsFn}}), **returning the HoC** -   immediately invoked ...      ```js   function MainPage({mainLinks, mainBodies}) {     return (       ... same as prior example     );   }      export default withFassets({     mapFassetsToProps(ownProps) { // NOTE: functional directive (mapFassetsToPropsFn)       ... some conditional logic based on ownProps       return {         Logo:       'company.logo',                     // Logo:  companyLogoResource,                  mainLinks:  'MainPage.*.link@withKeys',                     // mainLinks:  [['MainPage.cart.link',   cartLinkResource],                     //              ['MainPage.search.link', searchLinkResource]],         mainBodies: 'MainPage.*.body'                     // mainBodies: [cartBodyResource, searchBodyResource],       };     }   })(MainPage); // NOTE: immediatly invoke the HoC return function (wrapping MainPage)   ```  
+**Returns**: HoC \| HoF - either the HoC (the "wrapped" Component) when`CompToWrap` is supplied, otherwise the HoF _(see discussionabove)_.**Examples**:1. Inject fasset resources from a **static structure**   ({{book.api.mapFassetsToPropsStruct}}), **auto wrapping** the   MainPage Component ...    ```js   function MainPage({Logo, mainLinks, mainBodies}) {     return (       <div>         <div>           <Logo/>         </div>         <div>           {mainLinks.map( (MainLink, indx) => <MainLink key={indx}/>)}         </div>         <div>           {mainBodies.map( (MainBody, indx) => <MainBody key={indx}/>)}         </div>       </div>     );   }      export default withFassets({     CompToWrap: MainPage,  // NOTE: auto wrap MainPage     mapFassetsToProps: {   // NOTE: static structure (mapFassetsToPropsStruct)       Logo:       'company.logo',                   // Logo:  companyLogoResource,       mainLinks:  'MainPage.*.link@withKeys',                   // mainLinks:  [['MainPage.cart.link',   cartLinkResource],                   //              ['MainPage.search.link', searchLinkResource]],       mainBodies: 'MainPage.*.body'                   // mainBodies: [cartBodyResource, searchBodyResource],     }   });   ```   2. Inject fasset resources from a **functional directive**   ({{book.api.mapFassetsToPropsFn}}), **returning the HoF** -   immediately invoked ...      ```js   function MainPage({mainLinks, mainBodies}) {     return (       ... same as prior example     );   }      export default withFassets({     mapFassetsToProps(ownProps) { // NOTE: functional directive (mapFassetsToPropsFn)       ... some conditional logic based on ownProps       return {         Logo:       'company.logo',                     // Logo:  companyLogoResource,                  mainLinks:  'MainPage.*.link@withKeys',                     // mainLinks:  [['MainPage.cart.link',   cartLinkResource],                     //              ['MainPage.search.link', searchLinkResource]],         mainBodies: 'MainPage.*.body'                     // mainBodies: [cartBodyResource, searchBodyResource],       };     }   })(MainPage); // NOTE: immediatly invoke the HoF, emitting the wrapped MainPage Component   ```  
 
 <br/><br/><br/>
 

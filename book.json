@@ -157,7 +157,7 @@
           "registerRootAppElmCB":     "<a href='/api.html#registerRootAppElmCB'><code>registerRootAppElm()</code></a>",
           "registerRootAppElmCB$":    "<a href='/api.html#registerRootAppElmCB'><code>registerRootAppElm(rootAppElm, fassets): void</code></a>",
         "withFassets":                "<a href='/api.html#withFassets'><code>withFassets()</code></a>",
-        "withFassets$":               "<a href='/api.html#withFassets'><code>withFassets({[Component], mapFassetsToProps}): WrappedComp | HoC</code></a>",
+        "withFassets$":               "<a href='/api.html#withFassets'><code>withFassets({mapFassetsToProps, [CompToWrap]}): HoC | HoF</code></a>",
           "mapFassetsToPropsStruct":  "<a href='/api.html#mapFassetsToPropsStruct'><code>mapFassetsToPropsStruct</code></a>",
           "mapFassetsToPropsFn":      "<a href='/api.html#mapFassetsToPropsFn'><code>mapFassetsToPropsFn</code></a>",
         "expandWithFassets":           "<a href='/api.html#expandWithFassets'><code>expandWithFassets()</code></a>",

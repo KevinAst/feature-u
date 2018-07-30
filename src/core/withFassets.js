@@ -18,59 +18,73 @@ logf.force(`Context in-use: ${contextImpl}... React Version: ${React.version}`);
 // publically exposed (in rare case when app code defines their own DOM via registerRootAppElm())
 export const FassetsContext = React_createContext(fassetsNotDefined); // specify a defaultValue we can detect ERROR conditions (need FassetsContext.Provider at root)
 
-
 /**
- * Create a Higher-order Component (HoC) function that injects fasset
- * props into a `Component` as specified by the `mapFassetsToProps`
- * parameter.
- *
+ * Promotes a "wrapped" Component (an HoC - Higher-order Component)
+ * that injects fasset props into a `CompToWrap`, as specified by the
+ * `mapFassetsToProps` parameter.
+ * 
+ * Central to this process, a Higher-order Function (HoF) is created
+ * that encapsulates this "mapping knowledge".  Ultimately, this
+ * HoF must be invoked (passing the `CompToWrap`), which exposes the HoC
+ * (the "wrapped" Component).
+ * 
+ * ```js
+ * + withFassetsHoF(CompToWrap): HoC
+ * ```
+ * 
+ * There are two ways to use `withFassets()`:
+ * 
+ * 1. By directly passing the `CompToWrap` parameter, the HoC will be
+ *    returned _(internally invoking the HoF)_.  This is the most
+ *    common use case.
+ * 
+ * 2. By omitting the `CompToWrap` parameter, the HoF will be
+ *    returned.  This is useful to facilitate "functional composition"
+ *    _(in functional programming)_.  In this case it is the client's
+ *    responsibility to invoke the HoF _(either directly or
+ *    indirectly)_ in order to expose the HoC.
+ * 
  * **Please Note** this function uses named parameters.
- *
- * @param {ReactComp} [Component] optionally, the React Component to
- * be wrapped.  **When supplied**, it will be automatically wrapped
- * and returned.  **When not supplied**, the HoC function will be
- * returned _(suitable to be "composed")_.
  *
  * @param {mapFassetsToPropsStruct|mapFassetsToPropsFn}
  * mapFassetsToProps the structure defining the prop/fassetsKey
- * mapping, from which fasset resources are injected into a `Component`.
- * Can either be a direct structure
+ * mapping, from which fasset resources are injected into
+ * `CompToWrap`.  This can either be a direct structure
  * ({{book.api.mapFassetsToPropsStruct}}) or a function returning the
  * structure ({{book.api.mapFassetsToPropsFn}}).
  *
- * @return {WrappedComp|HoC} either the WrappedComp or HoC function,
- * depending on whether the `Component` parameter is supplied:
- *
- * - **when `Component` is supplied**: return the WrappedComp _(by invoking the
- *   HoC - passing `Component`)_.
- *
- * - **when `Component` is NOT supplied**: return the HoC function.  Use this
- *   option if you wish to "compose" the HoC with yet another function.
- *   Ultimately, this HoC must be invoked _(directly or indirectly)_,
- *   passing the `Component` to be wrapped.
+ * @param {ReactComp} [CompToWrap] optionally, the React Component to
+ * be wrapped _(see discussion above)_.
+ *    
+ * @returns {HoC|HoF} either the HoC (the "wrapped" Component) when
+ * `CompToWrap` is supplied, otherwise the HoF _(see discussion
+ * above)_.
  *
  * **Examples**:
  *
  * 1. Inject fasset resources from a **static structure**
- *    ({{book.api.mapFassetsToPropsStruct}}), **auto wrapping** a
- *    `Component` ...
+ *    ({{book.api.mapFassetsToPropsStruct}}), **auto wrapping** the
+ *    MainPage Component ...
  *  
  *    ```js
- *    function MainPage({mainLinks, mainBodies}) {
+ *    function MainPage({Logo, mainLinks, mainBodies}) {
  *      return (
  *        <div>
  *          <div>
- *            {mainLinks.map(MainLink => <MainLink/>)}
+ *            <Logo/>
  *          </div>
  *          <div>
- *            {mainBodies.map(MainBody => <MainBody/>)}
+ *            {mainLinks.map( (MainLink, indx) => <MainLink key={indx}/>)}
+ *          </div>
+ *          <div>
+ *            {mainBodies.map( (MainBody, indx) => <MainBody key={indx}/>)}
  *          </div>
  *        </div>
  *      );
  *    }
  *    
  *    export default withFassets({
- *      Component: MainPage,   // NOTE: auto wrap MainPage
+ *      CompToWrap: MainPage,  // NOTE: auto wrap MainPage
  *      mapFassetsToProps: {   // NOTE: static structure (mapFassetsToPropsStruct)
  *        Logo:       'company.logo',
  *                    // Logo:  companyLogoResource,
@@ -85,7 +99,7 @@ export const FassetsContext = React_createContext(fassetsNotDefined); // specify
  *    ```
  *    
  * 2. Inject fasset resources from a **functional directive**
- *    ({{book.api.mapFassetsToPropsFn}}), **returning the HoC** -
+ *    ({{book.api.mapFassetsToPropsFn}}), **returning the HoF** -
  *    immediately invoked ...
  *    
  *    ```js
@@ -109,21 +123,15 @@ export const FassetsContext = React_createContext(fassetsNotDefined); // specify
  *                      // mainBodies: [cartBodyResource, searchBodyResource],
  *        };
  *      }
- *    })(MainPage); // NOTE: immediatly invoke the HoC return function (wrapping MainPage)
+ *    })(MainPage); // NOTE: immediatly invoke the HoF, emitting the wrapped MainPage Component
  *    ```
  * 
  * @function withFassets
  */
-export function withFassets({Component, mapFassetsToProps, ...unknownArgs}={}) {
+export function withFassets({mapFassetsToProps, CompToWrap, ...unknownArgs}={}) {
 
   // validate params
   const check = verify.prefix('withFassets() parameter violation: ');
-
-  // ... Component
-  if (Component) {
-    check(isComponent(Component),
-          'Component when supplied, must be a React Component - to be wrapped');
-  }
 
   // ... mapFassetsToProps
   check(mapFassetsToProps,
@@ -131,6 +139,12 @@ export function withFassets({Component, mapFassetsToProps, ...unknownArgs}={}) {
   const mappingIsFunction = isFunction(mapFassetsToProps);
   check(mappingIsFunction || isPlainObject(mapFassetsToProps),
         'mapFassetsToProps must be a mapFassetsToPropsFn or mapFassetsToPropsStruct');
+
+  // ... CompToWrap
+  if (CompToWrap) {
+    check(isComponent(CompToWrap),
+          'CompToWrap, when supplied, must be a React Component - to be wrapped');
+  }
 
   // ... unrecognized named parameter
   const unknownArgKeys = Object.keys(unknownArgs);
@@ -141,12 +155,12 @@ export function withFassets({Component, mapFassetsToProps, ...unknownArgs}={}) {
   check(arguments.length === 1,
         'unrecognized positional parameters (only named parameters can be specified)');
 
-  // define our second-level HoC that when invoked will expose our HoC wrapper
+  // define our HoF that when invoked will expose our HoC wrapper
   // ... this "second level of indirection" is required to interpret our mapFassetsToProps
-  function withFassetsHoC(Component) {
+  function withFassetsHoF(CompToWrap) {
 
-    // verify Component is supplied and is a valid component
-    verify(isComponent(Component),
+    // verify CompToWrap is supplied and is a valid component
+    verify(isComponent(CompToWrap),
            'You must pass a React Component to the function returned by withFassets()');
 
     // return our HoC wrapper that injects selected fassets props
@@ -173,7 +187,7 @@ export function withFassets({Component, mapFassetsToProps, ...unknownArgs}={}) {
               `mapFassetsToProps resolved to an invalid structure - all properties MUST reference a fassetsKey string ... at minimum ${propKey} does NOT`);
       });
 
-      // wrap the supplied Component with the context consumer (providing access to fassets)
+      // wrap the supplied CompToWrap with the context consumer (providing access to fassets)
       // and inject the desired fassets props
       return (
         <FassetsContext.Consumer> 
@@ -186,9 +200,9 @@ export function withFassets({Component, mapFassetsToProps, ...unknownArgs}={}) {
                      'In this case the app must do this in launchApp() registerRootAppElm() callback.  ' + 
                      '... see: https://feature-u.js.org/cur/detail.html#react-registration');
               
-              // inject fasset resource props into the supplied Component
+              // inject fasset resource props into the supplied CompToWrap
               // ... THIS IS WHAT WE ARE HERE FOR!!
-              return <Component {...fassetsProps(fassetsToPropsMap, fassets)} {...ownProps}/>;
+              return <CompToWrap {...fassetsProps(fassetsToPropsMap, fassets)} {...ownProps}/>;
             }
           }
         </FassetsContext.Consumer>
@@ -196,8 +210,9 @@ export function withFassets({Component, mapFassetsToProps, ...unknownArgs}={}) {
     };
   }
 
-  // either return the WrappedComp or HoC function, depending on whether the Component parameter is supplied
-  return Component ? withFassetsHoC(Component) : withFassetsHoC;
+  // either return the HoC "wrapped" Component or HoF
+  // ... depending on whether the CompToWrap parameter is supplied
+  return CompToWrap ? withFassetsHoF(CompToWrap) : withFassetsHoF;
 }
 
 // helper function that translates supplied fassetsToPropsMap to fassetsProps

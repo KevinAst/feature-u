@@ -43,15 +43,18 @@ describe('withFassets()', () => {
   describe('withFassets() ERRORS)', () => {
 
     // const MyComp = () => <p>My Component</p>;
-    test('Component parameter must be a React Component', () => {
-      expect(()=> withFassets({Component: 123}))
-        .toThrow(/Component.*when supplied.*must be a React Component/);
-      // THROW:  withFassets() parameter violation: Component when supplied, must be a React Component - to be wrapped
+    test('CompToWrap parameter must be a React Component', () => {
+      expect(()=> withFassets({
+        CompToWrap: 123,
+        mapFassetsToProps: {}
+      }))
+        .toThrow(/CompToWrap.*when supplied.*must be a React Component/);
+      // THROW:  withFassets() parameter violation: CompToWrap when supplied, must be a React Component - to be wrapped
     });
 
-    test('Component parameter passing a React Component', () => {
+    test('CompToWrap parameter passing a React Component', () => {
       expect(()=> withFassets({
-        Component: (p)=>'DummyReactComp',
+        CompToWrap: (p)=>'DummyReactComp',
         mapFassetsToProps: {}
       }))
         .not.toThrow();
