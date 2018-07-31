@@ -32,7 +32,7 @@ convenience this list:_
 ## feature-u Objects
 
 * {{book.api.Feature}}
-* {{book.api.Fassets}}
+* {{book.api.FassetsObject}}
   * {{book.api.Fassets_get}}
   * {{book.api.Fassets_hasFeature}}
 * {{book.api.fassetValidations}}

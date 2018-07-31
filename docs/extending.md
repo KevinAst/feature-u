@@ -339,10 +339,10 @@ discussion of each:
   result, you are free to use `this` for your **state retention**.
  
 
-- **App Parameter**: 
+- **App Parameter**: ??now-fassets
 
   You will notice that the `app` parameter is supplied on many of these
-  life cycle methods.  As you know the {{book.api.Fassets}} object is used
+  life cycle methods.  As you know the {{book.api.FassetsObject}} is used
   in promoting {{book.guide.crossCom}}.  
 
   While it is most likely an anti-pattern to directly interrogate the

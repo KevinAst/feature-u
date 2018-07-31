@@ -74,9 +74,9 @@ If however one feature depends on another _(i.e. it **has a**
 {{book.guide.crossCom_publicFace}})_, then there are additional
 factors to consider.
 
-As you know, the {{book.api.Fassets}} object is used to facilitate
+As you know, the {{book.api.FassetsObject}} is used to facilitate
 {{book.guide.crossCom}}.  If a feature does not exist, or has been
-disabled, the corresponding `app.{featureName}` will NOT exist.
+disabled, the corresponding `app.{featureName}` will NOT exist. ??tweak-this
 
 You can use this to conditionally determine whether a feature is
 present or not.

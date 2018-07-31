@@ -7,12 +7,12 @@ import {MyObj}            from '../util/mySpace';
 import logf               from '../util/logf';
 
 /**
- * An internal creator of the {{book.api.fassets}} object, by
- * accumulating the public fassets promoted by the set of supplied
+ * An internal creator of the {{book.api.FassetsObject}}.  Accumulates
+ * the {{book.api.fassetsAspect}} promoted by the set of supplied
  * `activeFeatures`.
  *
  * @param {Feature[]} activeFeatures the active features from which we
- * accumulate feature assets through the `Feature.fassets` aspect.
+ * accumulate feature assets through the {{book.api.fassetsAspect$}}.
  *
  * @return {Fassets} a new Fassets object (promoted by launchApp()).
  * 

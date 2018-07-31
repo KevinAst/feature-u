@@ -17,9 +17,9 @@ import isFunction  from 'lodash.isfunction';
  *  2. minimizes circular dependency issues (of ES6 modules).
  *
  * Managed Expansion Callbacks are used when a fully resolved
- * {{book.api.Fassets}} object is required during in-line code expansion.
+ * {{book.api.FassetsObject}} is required during in-line code expansion.
  * They are merely functions that when invoked _(under the control of
- * **feature-u**)_, are supplied the {{book.api.Fassets}} object and
+ * **feature-u**)_, are supplied the {{book.api.FassetsObject}} and
  * return the expanded {{book.api.AspectContent}} _(ex: reducer, logic
  * modules, etc.)_.
  *

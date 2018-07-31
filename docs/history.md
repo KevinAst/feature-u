@@ -118,7 +118,7 @@ releases _(i.e. a retrofit of client code is necessary)_.
    collaboration)_!
 
    This means that **navigation and routing is supported**, when using
-   {{book.ext.reactRouter}} _(due to it's v4 design that utilizes
+   {{book.ext.reactRouter}} _(due to RR's V4 design that utilizes
    component composition)_.
 
    This refactor promotes **one solution** for all cross-communication

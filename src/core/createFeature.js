@@ -32,7 +32,7 @@ import logf        from '../util/logf';
  * `fassets` directives can both define resources, and/or declare a
  * resource contract (the intention to use a set of fasset resources).
  * Resources are accumulated across all features, and exposed through
- * the {{book.api.Fassets}} object, and the {{book.api.withFassets}}
+ * the {{book.api.FassetsObject}}, and the {{book.api.withFassets}}
  * HoC.
  *
  * @param {appWillStartCB} [appWillStart] an optional
@@ -299,7 +299,7 @@ export function extendFeatureProperty(name, owner) {
  * spelled fassets (i.e. feature assets).
  * 
  * Feature resources are accumulated across all features, and exposed
- * through the {{book.api.Fassets}} object.  They can also be referenced
+ * through the {{book.api.FassetsObject}}.  They can also be referenced
  * via the {{book.api.withFassets}} HoC.
  * 
  * The `fassets` aspect can both define resources, and/or declare a
@@ -308,7 +308,7 @@ export function extendFeatureProperty(name, owner) {
  * directives:
  * 
  * 1. **define**: define public resources, held in the
- *    {{book.api.Fassets}} object
+ *    {{book.api.FassetsObject}}
  *    
  *    ```js
  *    fassets: {
@@ -402,5 +402,5 @@ export function extendFeatureProperty(name, owner) {
  *    ```
  * 
  * For more information, please refer to {{book.guide.crossCom}},
- * {{book.api.Fassets}} object, and the {{book.api.withFassets}} HoC.
+ * {{book.api.FassetsObject}}, and the {{book.api.withFassets}} HoC.
  */

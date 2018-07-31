@@ -160,8 +160,8 @@ Here are some **important points of interest** _(match the numbers to
    {{book.guide.detail_reactRegistration}}_
 
 4. _as a bit of a preview_, the return value of {{book.api.launchApp}}
-   is an {{book.api.Fassets}} object, which promotes the accumulated
-   Public API of all features.  The App object contains named feature
+   is an {{book.api.FassetsObject}}, which promotes the accumulated
+   Public Face of all features.  The App object contains named feature
    nodes, and is exported to provide {{book.guide.crossCom}} ... _here
    is what app looks like (for this example):_
 

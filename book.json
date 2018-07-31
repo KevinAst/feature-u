@@ -134,10 +134,10 @@
 
       "Feature":            "<a href='/api.html#Feature'><code>Feature</code></a>",
       "Features":           "<a href='/api.html#Feature'><code>Features</code></a>",
-      "fassets":            "<a href='/api.html#fassets'><code>fassets</code></a>",
-      "fassets$":           "<a href='/api.html#fassets'><code>Feature.fassets</code></a>",
+      "fassetsAspect":      "<a href='/api.html#fassets'><code>fassets aspect</code></a>",
+      "fassetsAspect$":     "<a href='/api.html#fassets'><code>Feature.fassets aspect</code></a>",
       "App":                "<a href='/api.html#App'><code>App??OBSOLETE</code></a>",
-      "Fassets":            "<a href='/api.html#Fassets'><code>Fassets</code></a>",
+      "FassetsObject":      "<a href='/api.html#Fassets'><code>Fassets object</code></a>",
       "Fassets_get":        "<a href='/api.html#Fassets_get'><code>Fassets.get()</code></a>",
       "Fassets_hasFeature": "<a href='/api.html#Fassets_hasFeature'><code>Fassets.hasFeature()</code></a>",
       "fassetValidations":  "<a href='/api.html#fassetValidations'><code>fassetValidations</code></a>",

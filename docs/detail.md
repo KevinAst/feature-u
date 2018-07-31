@@ -8,7 +8,7 @@ resources used to configure it's slice of the frameworks in use._
 
 In turn, these Feature objects are supplied to {{book.api.launchApp}},
 which configures and starts your application, returning an
-{{book.api.Fassets}} Object (_which promotes the public API of each
+{{book.api.FassetsObject}} (_which promotes the public API of each
 feature_).
 
 _Let's take a closer look at this process ..._
@@ -90,7 +90,7 @@ object properties (via {{book.api.createFeature}}).
 - `Feature.name`
 
   A string property which represents the identity of the feature.
-  Feature names are used to index the {{book.api.Fassets}} Object by
+  ?? NO-LONGER-TRUE: Feature names are used to index the {{book.api.FassetsObject}} by
   feature _(in support of {{book.guide.crossCom}})_, and are therefore
   guaranteed to be unique.  Application code can also use
   {{book.guide.bestPractices_featureName}} in various
@@ -105,14 +105,14 @@ object properties (via {{book.api.createFeature}}).
   run-time _(please refer to: {{book.guide.enablement}})_.
 
 
-- {{book.api.fassets$}}
+- {{book.api.fassetsAspect$}}
 
   An optional aspect that promotes feature assets used in
   {{book.guide.crossCom}} (i.e. the Public Face of a feature).
   `fassets` directives can both define resources, and/or declare a
   resource contract (the intention to use a set of fasset resources).
   Resources are accumulated across all features, and exposed through
-  the {{book.api.Fassets}} object, and the {{book.api.withFassets}}
+  the {{book.api.FassetsObject}}, and the {{book.api.withFassets}}
   HoC.
 
 
@@ -268,7 +268,7 @@ This is accomplished through the {{book.api.launchApp}} function.
   allowing features to manage things like: initialization and
   injecting root UI elements, etc.
 
-- It creates and promotes the {{book.api.Fassets}} object which contains the publicFace
+- It creates and promotes the {{book.api.FassetsObject}} which contains the publicFace
   of all features, facilitating a cross-communication between features.
 
 As a result, your application mainline is very simple and generic.
@@ -396,7 +396,7 @@ export default launchApp({
 <!-- *** SECTION ********************************************************************************  -->
 ## App Object
 
-An {{book.api.Fassets}} object is emitted from the {{book.api.launchApp}}
+An {{book.api.FassetsObject}} is emitted from the {{book.api.launchApp}}
 function, which promotes the accumulated Public API of all features
 _(see: {{book.guide.crossCom_publicFaceApp}})_.
 
@@ -420,7 +420,7 @@ The app object can be used for two distinct purposes:
 
 ### Feature Public API
 
-The {{book.api.Fassets}} object promotes the feature's Public API
+The {{book.api.FassetsObject}} promotes the feature's Public API
 (i.e. it's publicFace).
 
 As an example, an application that has two features (featureA, and
@@ -445,9 +445,9 @@ close()) in it's publicFace, while featureB has NO publicFace.
 
 ### Does Feature Exist
 
-The {{book.api.Fassets}} object can be used to determine if a feature is
+The {{book.api.FassetsObject}} can be used to determine if a feature is
 present or not.  If a feature does not exist, or has been disabled,
-the corresponding `app.{featureName}` will NOT exist.
+the corresponding `app.{featureName}` will NOT exist. ??tweek-this
 
  - It could be that `featureA` will conditionally use `featureB` if it
    is present.
