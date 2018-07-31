@@ -59,6 +59,7 @@ export default function createFassets(activeFeatures) {
   const _usage = { /* dynamically maintained ... SAMPLE:
 
     '{useKey}': {                          // ex: 'MainPage.*.link' ... wildcards allowed
+      usingWildCard:    true/false         // does this usage contract employ wildcards?
       required:         true/false,        // optionality (required takes precedence for multiple entries)
       validateFn:       func,              // validation function (based on registered keywords)
       definingFeatures: [{featureName}],   // what feature(s) defined this "use" contract
@@ -540,6 +541,7 @@ export default function createFassets(activeFeatures) {
       }
       else { // initial entry (first time introduced)
         _usage[useKey] = {                   // ex: 'MainPage.*.link' ... wildcards allowed
+          usingWildCard:    containsWildCard(useKey), // does this usage contract employ wildcards?
           required,                          // optionality (required takes precedence for multiple entries)
           validateFn,                        // validation function (based on registered keywords)
           definingFeatures: [feature.name],  // what feature(s) defined this "use" contract
@@ -605,7 +607,8 @@ export default function createFassets(activeFeatures) {
     // when usage is contractually required, insure at least one matching resource is available
     if (usage.required) {
       const resource = _fassets.get(useKey);
-      if (resource === undefined || resource.length === 0) {
+      if (resource === undefined ||                         // resource NOT found
+          (usage.usingWildCard && resource.length === 0)) { // empty wildcard usage
         validationErrs.push(`REQUIRED RESOURCE NOT FOUND, usage contract '${useKey}' (found in Feature: '${usage.definingFeatures}') specifies a REQUIRED resource, but NO matches were found`);
         // EX: REQUIRED RESOURCE NOT FOUND, usage contract '*a.*.c*' (found in Feature: 'featureTest') specifies a REQUIRED resource, but NO matches were found
       }

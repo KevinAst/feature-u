@@ -23,6 +23,111 @@ import {createFeature}    from '../..';
 describe('createFassets(): validation', () => {
 
   //***--------------------------------------------------------------------------
+  describe('usage contract fulfillment', () => {
+
+    describe('"non wildcard - single resource" usage contract', () => {
+
+      test('fulfilled', () => {
+        expect(()=> createFassets([
+          createFeature({
+            name:      'feature1',
+            fassets: {
+              define: {
+                'comp.ref': { length: 0 }, // a resource containing a length:0 property ... testing prior lax wildcard detection of zero elm array
+              },
+            },
+          }),
+          createFeature({
+            name:      'feature2',
+            fassets: {
+              use: [
+                'comp.ref', // UNDER TEST: expecting to use this "required: resource
+              ]
+            },
+          }),
+        ]) )
+          .not.toThrow();
+      });
+
+      test('NOT fulfilled', () => {
+        expect(()=> createFassets([
+          createFeature({
+            name:      'feature1',
+            fassets: {
+              define: {
+                'comp.ref.NOT': 'this does NOT match usage contract',
+              },
+            },
+          }),
+          createFeature({
+            name:      'feature2',
+            fassets: {
+              use: [
+                'comp.ref', // UNDER TEST: expecting to use this "required: resource
+              ]
+            },
+          }),
+        ]) )
+          .toThrow(/REQUIRED RESOURCE NOT FOUND.*'comp\.ref'.*in Feature: 'feature2'.*but NO matches were found/);
+        // THROW:   REQUIRED RESOURCE NOT FOUND, usage contract 'comp.ref' (found in Feature: 'feature2') specifies a REQUIRED resource, but NO matches were found
+      });
+
+    });
+
+    describe('"wildcard - multi resource" usage contract', () => {
+
+      test('fulfilled', () => {
+        expect(()=> createFassets([
+          createFeature({
+            name:      'feature1',
+            fassets: {
+              define: {
+                'comp.ref': { length: 0 }, // a resource containing a length:0 property ... testing prior lax wildcard detection of zero elm array
+              },
+            },
+          }),
+          createFeature({
+            name:      'feature2',
+            fassets: {
+              use: [
+                'comp.*ref', // UNDER TEST: expecting to use this "required: resource
+              ]
+            },
+          }),
+        ]) )
+          .not.toThrow();
+      });
+
+      test('NOT fulfilled', () => {
+        expect(()=> createFassets([
+          createFeature({
+            name:      'feature1',
+            fassets: {
+              define: {
+                'comp.ref.NOT': 'this does NOT match usage contract',
+              },
+            },
+          }),
+          createFeature({
+            name:      'feature2',
+            fassets: {
+              use: [
+                'comp.*ref', // UNDER TEST: expecting to use this "required: resource
+              ]
+            },
+          }),
+        ]) )
+          .toThrow(/REQUIRED RESOURCE NOT FOUND.*'comp\.\*ref'.*in Feature: 'feature2'.*but NO matches were found/);
+        // THROW:   REQUIRED RESOURCE NOT FOUND, usage contract 'comp.*ref' (found in Feature: 'feature2') specifies a REQUIRED resource, but NO matches were found
+
+      });
+
+    });
+
+  });
+
+
+  //***--------------------------------------------------------------------------
   describe('client-supplied type validation (via "use" directive)', () => {
 
     test('test default "any" type', () => {
