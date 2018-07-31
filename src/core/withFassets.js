@@ -43,7 +43,15 @@ export const FassetsContext = React_createContext(fassetsNotDefined); // specify
  *    _(in functional programming)_.  In this case it is the client's
  *    responsibility to invoke the HoF _(either directly or
  *    indirectly)_ in order to expose the HoC.
- * 
+ *
+ * **SideBar**: For `withFassets()` to operate,
+ * `<FassetsContext.Provider>` must be rendered at the root of your
+ * application DOM.  This is really a moot point, because
+ * **feature-u** automatically performs this initialization, so you
+ * really don't have to worry about this detail _(automating
+ * configuration is a Hallmark of **feature-u** - reducing boilerplate
+ * code)_.
+ *
  * **Please Note** this function uses named parameters.
  *
  * @param {mapFassetsToPropsStruct|mapFassetsToPropsFn}
@@ -74,7 +82,7 @@ export const FassetsContext = React_createContext(fassetsNotDefined); // specify
  *            <Logo/>
  *          </div>
  *          <div>
- *            {mainLinks.map( (MainLink, indx) => <MainLink key={indx}/>)}
+ *            {mainLinks.map( ([fassetsKey, MainLink]) => <MainLink key={fassetsKey}/>)}
  *          </div>
  *          <div>
  *            {mainBodies.map( (MainBody, indx) => <MainBody key={indx}/>)}

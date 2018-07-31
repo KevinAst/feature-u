@@ -7,9 +7,9 @@ import isComponent from '../util/isComponent';
  * @typedef {Object} fassetValidations
  *
  * A pre-defined container of fasset validation functions, which can
- * be employed in the `Feature.fassets.use` usage contract.  This
- * allows the `use` directive to specify what type of resource it is
- * expecting.
+ * be employed in the {{book.api.fassetsAspect}} `use` directive.
+ * This allows the `use` directive to specify data type and content
+ * validation constraints.
  *
  * These validations are available as a convenience.  Additional
  * validations can be created as needed.
@@ -31,7 +31,7 @@ import isComponent from '../util/isComponent';
  *     usage contract '${useKey}' found in Feature: '${featureName}'
  * ```
  *
- * The following pre-defined validations are promoted:
+ * The following pre-defined validations are promoted through `fassetValidations`:
  *  - any:  any type (except undefined)
  *  - comp: a react component
  *  - fn:   a function
