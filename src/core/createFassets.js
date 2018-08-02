@@ -113,10 +113,10 @@ export default function createFassets(activeFeatures) {
    *    (HoC).
    * 
    * There are several ways to access the `fassets` object _(see
-   * {{book.guide.crossCom_accessingApp}})_. ??UPDATE_LINK
+   * {{book.guide.crossCom_accessingFassets}})_.
    * 
    * For more information, please refer to
-   * {{book.guide.crossCom_publicFaceApp}} and
+   * ??TRASH:book.guide.crossCom_publicFaceApp and
    * {{book.guide.detail_appObject}}. ??UPDATE_LINK
    */
   const _fassets = {

@@ -97,7 +97,7 @@ active features, and promotes them through the
 {{book.api.FassetsObject}} _(emitted from {{book.api.launchApp}})_.
 
 **SideBar**: There are several ways to access the `Fassets object`
-_(discussed later - {{book.guide.crossCom_accessingApp}})_.
+_(discussed later - {{book.guide.crossCom_accessingFassets}})_.
 
 To reference a `fassets` resource, simply dereference it as any other
 object reference.  Here is a usage example (using the definition
@@ -557,126 +557,123 @@ that are specific to a feature.
 
 ## Accessing fassets
 
-?? mucho intro re-work
+Broadly speaking, Public Facing feature resources can be obtained
+either by:
 
-The {{book.api.FassetsObject}} provides access to feature
-assets in a programmatic context (i.e. in code).  In contrast, for UI
-components, the easiest way to access fassets is through the
-{{book.api.withFassets}} HoC _(which employs the fassets object under the
-covers)_.  If however your application code requires feature assets,
-you must directly access the fassets object.
+- using the {{book.api.withFassets}} HoC (for UI Components),
 
-This section describes the various ways in which the fassets object
-can be obtained.
+- or by directly referencing the {{book.api.FassetsObject}}
+  programmatically.
 
-?? OLD OLD OLD ... rework
+The former, implicitly accesses `fassets` _(under the covers)_ using
+the {{book.ext.reactContext}}.  The latter requires direct programatic
+access to the {{book.api.FassetsObject}} ... three ways of which to
+accomplish this:
 
-The {{book.api.FassetsObject}} can be accessed in several different ways.
+1. Simply import `fassets` (_this technique is used by run-time
+   functions that are outside the control of **feature-u**_)
+   ... see: {{book.guide.crossCom_importFassets}}
 
-1. The simplest way to access the {{book.api.FassetsObject}} is to merely
-   import it.
+2. Use the `fassets` parameter supplied through **feature-u**'s programmatic
+   APIs (_for example, live-cycle hooks, or logic hooks, etc._)
+   ... see: {{book.guide.crossCom_fassetsParameter}}
 
-   Your application mainline exports the {{book.api.launchApp}} return
-   value ... which is the App object.
+3. Use {{book.api.expandWithFassets}} to inject the `fassets`
+   parameter (_when `fassets` are required during in-line expansion of
+   code_)
+   ... see: {{book.guide.crossCom_managedCodeExpansion}}
 
-   **`src/app.js`**
-   ```js
-   ...
-
-   // launch our app, exposing the feature-u App object (facilitating cross-feature communication)!
-   export default launchApp({
-     ...
-   });
-   ```
-
-   Importing the app object is a viable technique for run-time
-   functions (_such as UI Components_), where the code is
-   **a:** _not under the direct control of **feature-u**, and_
-   **b:** _executed after all aspect expansion has completed._
-
-   The following example is a UI Component that displays a
-   `deviceStatus` obtained from an external `startup` feature
-   ... **_accessing the app through an import:_**
-   
-   ```js
-   import app from '~/app';
-   
-   function ScreenA({deviceStatus}) {
-     return (
-       <Container>
-         ...
-         <Text>{deviceStatus}</Text>
-         ...
-       </Container>
-     );
-   }
-   
-   export default connectRedux(ScreenA, {
-     mapStateToProps(appState) {
-       return {
-         deviceStatus: app.device.sel.deviceStatus(appState),
-       };
-     },
-   });
-   ```
-
-2. Another way to access the {{book.api.FassetsObject}} is through the
-   programmatic APIs of **feature-u**, where the `app` object is supplied
-   as a parameter.
-
-   * app life-cycle hooks:
-     ```js
-     appWillStart({fassets, curRootAppElm}): rootAppElm || null
-     appDidStart({fassets, appState, dispatch}): void                        
-     ```
-   
-   * route hooks (PKG: {{book.ext.featureRouter}}):
-     ```js
-     routeCB({app, appState}): rendered-component (null for none)
-     ```
-   
-   * logic hooks (PKG: {{book.ext.reduxLogic}}):
-     ```js
-     createLogic({
-       ...
-       transform({getState, action, app}, next) {
-         ...
-       },
-       process({getState, action, app}, dispatch, done) {
-         ...
-       }
-     })
-     ```
-
-3. There is a third technique to access the {{book.api.FassetsObject}},
-that provides **early access** _during code expansion time_, that is
-provided through **Managed Code Expansion** (_see next section_).
+Let's take a closer look at each of these access points.
 
 
-## Managed Code Expansion
+### import fassets
 
-In the previous discussion, we detailed two ways to access the
-{{book.api.FassetsObject}}, and referred to a third technique (_discussed
-here_).
+The simplest way to access the {{book.api.FassetsObject}} is to
+merely import it.
 
-There are two situations that make accessing the `app` object
-problematic, which are: **a:** _in-line code expansion (where the app
-may not be fully defined)_, and **b:** _order dependencies (across
+Your application mainline exports the {{book.api.launchApp}} return
+value ... which is the {{book.api.FassetsObject}}.
+
+**`src/app.js`**
+```js
+// launch our app, exposing the feature-u Fassets object (facilitating cross-feature communication)!
+export default launchApp({
+  ...
+});
+```
+
+As it turns out, importing `fassets` is not usually necessary, because
+most cases are covered through alternate means.
+
+For sake of example, let's consider a somewhat contrived example,
+where a piece of code needs to close the leftNav menu.  This function
+is provided by a Public Facing resource defined in the leftNav
+feature.
+
+```js
+import fassets from '../app';
+
+function closeSideBar() {
+  fassets.leftNav.close();
+}
+```
+
+
+### fassets parameter
+
+other way to access the {{book.api.FassetsObject}} is through the
+programmatic APIs of **feature-u**, where `fassets` is supplied as a
+parameter.
+
+- app life-cycle hooks:
+  
+  - {{book.api.appWillStartCB$}}
+  - {{book.api.appDidStartCB$}}
+
+
+- route hooks (PKG: {{book.ext.featureRouter}}):
+  ```js
+  routeCB({fassets, appState}): rendered-component (null for none)
+  ```
+  
+- logic hooks (PKG: {{book.ext.reduxLogic}}):
+  ```js
+  createLogic({
+    ...
+    transform({getState, action, fassets}, next) {
+      ...
+    },
+    process({getState, action, fassets}, dispatch, done) {
+      ...
+    }
+  })
+  ```
+
+
+### Managed Code Expansion
+
+The last technique to access the {{book.api.FassetsObject}},
+provides **early access** _during code expansion time_, through the
+{{book.api.expandWithFassets}} utility.
+
+There are two situations that make accessing `fassets` problematic,
+which are: **a:** _in-line code expansion (where `fassets` may not
+be fully defined)_, and **b:** _order dependencies (across
 features)_.
 
 To illustrate this, the following {{book.ext.reduxLogic}} module is
 monitoring an action defined by an external feature (see `*1*`).
-Because this `app` reference is made during code expansion time, the
-import will not work, because the `app` object has not yet been fully
+Because this `fassets` reference is made during code expansion time, the
+import will not work, because the `fassets` object has not yet been fully
 defined.  This is a timing issue.
 
 ```js
-import app from '~/app'; // *1*
+import fassets from '~/app'; // *1*
 
 export const myLogicModule = createLogic({
 
   name: 'myLogicModule',
-  type: String(app.featureB.actions.fooBar), // *1* app NOT defined during in-line expansion
+  type: String(fassets.featureB.actions.fooBar), // *1* fassets NOT defined during in-line expansion
   
   process({getState, action}, dispatch, done) {
     ... 
@@ -685,10 +682,10 @@ export const myLogicModule = createLogic({
 });
 ```
 
-When aspect content definitions require the `app` object at code
+When aspect content definitions require the {{book.api.FassetsObject}} at code
 expansion time, you can wrap the definition in a
 {{book.api.expandWithFassets}} function.  In other words, your aspect
-content can either be the actual content itself (ex: a reducer), or a
+content can either be the actual content itself _(ex: a reducer)_, or a
 function that returns the content.
 
 Your callback function should conform to the following signature:
@@ -697,7 +694,7 @@ Your callback function should conform to the following signature:
 
 When this is done, **feature-u** will invoke the
 {{book.api.expandWithFassetsCB}} in a controlled way, passing the fully
-resolved `app` object as a parameter.
+resolved {{book.api.FassetsObject}} as a parameter.
 
 To accomplish this, you must wrap your expansion function with the the
 {{book.api.expandWithFassets}} utility.  The reason for this is that
@@ -706,14 +703,14 @@ To accomplish this, you must wrap your expansion function with the the
 reducers).
 
 Here is the same example (from above) that that fixes our
-problem by replacing the `app` import with {{book.api.expandWithFassets}}:
+problem by replacing the `fassets` import with {{book.api.expandWithFassets}}:
 
 ```js
-                             // *1* we replace app import with expandWithFassets()
-export const myLogicModule = expandWithFassets( (app) => createLogic({
+                             // *1* we replace fassets import with expandWithFassets()
+export const myLogicModule = expandWithFassets( (fassets) => createLogic({
 
   name: 'myLogicModule',
-  type: String(app.featureB.actions.fooBar), // *1* app now is fully defined
+  type: String(fassets.featureB.actions.fooBar), // *1* fassets now is fully defined
   
   process({getState, action}, dispatch, done) {
     ... 
@@ -723,39 +720,49 @@ export const myLogicModule = expandWithFassets( (app) => createLogic({
 ```
 
 Because {{book.api.expandWithFassetsCB}} is invoked in a controlled way
-(by **feature-u**), the supplied `app` parameter is guaranteed to be
-defined (_issue **a**_).  Not only that, but the supplied `app` object
-is guaranteed to have all features publicFace definitions resolved
+(by **feature-u**), the supplied `fassets` parameter is guaranteed to be
+defined (_issue **a**_).  Not only that, but the supplied `fassets` object
+is guaranteed to have all public facing feature definitions resolved
 (_issue **b**_).
 
 **_SideBar_**: A secondary reason {{book.api.expandWithFassets}} may be
-used (_over and above app injection during code expansion_) is to
+used (_over and above `fassets` injection during code expansion_) is to
 **delay code expansion**, which can avoid issues related to
 (_legitimate but somewhat obscure_) circular dependencies.
 
 
-## App Access Summary
+### Fassets Access Summary
 
-To summarize our discussion of how to access the {{book.api.FassetsObject}},
-it is really very simple:
+Programmatic access to the {{book.api.FassetsObject}} boils down to
+two scenarios:
 
-1. Simply import the app (_for run-time functions outside the control
-   of **feature-u**_).
+1. Either the reference is needed during code-expansion time _(which
+   also includes functions that are executed in code-expansion)_
 
-2. Use the app parameter supplied through **feature-u**'s programmatic
-   APIs (_when using route, live-cycle hooks, or logic hooks_).
+2. or they are needed at run-time _(i.e. after code-expansion)_
 
-3. Use the app parameter supplied through
-   {{book.api.expandWithFassets}} (_when app is required during in-line
-   expansion of code_).
+The fact that the feature accumulation process assimilates fasset
+resources _(within {{book.api.launchApp}})_ means that the `fassets`
+object is not available during code-expansion time.
 
-Accessing Feature Resources in a seamless way is a **rudimentary
+Furthermore, the goal of restricting cross-feature imports requires
+that the `fassets` object be used in their place.
+
+In spite of these seemingly conflicting artifacts, **the goal of
+restricting cross-feature imports is most certainly a worthy
+objective!**
+
+The bottom line is that {{book.api.expandWithFassets}} comes to the
+rescue, and "fills the gap" when needed.
+
+Accessing feature resources in a seamless way is a **rudimentary
 benefit of feature-u** that alleviates a number of problems in your
-code, making your features truly plug-and-play.
+code, **making your features truly plug-and-play**.
 
 **NOTE**: It is possible that a module may be using more than one of
-these techniques.  As an example a logic module may have to use
-{{book.api.expandWithFassets}} to access app at expansion time, but is
-also supplied app as a parameter in it's functional hook.  This is
-perfectly fine, as they will be referencing the exact same app object
-instance.
+these access techniques.  As an example a logic module may have to use
+{{book.api.expandWithFassets}} to access `fassets` at code-expansion
+time, but is also supplied `fassets` as a parameter in it's functional
+hook.  This is perfectly fine, as they will be referencing the exact
+same `fassets` object instance.
+

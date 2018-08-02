@@ -121,7 +121,7 @@ object properties (via {{book.api.createFeature}}).
   An optional resource object that is the feature's Public API,
   promoting cross-communication between features.  This object is
   exposed through the App object as: `app.{featureName}.{publicFace}`
-  _(please refer to: {{book.guide.crossCom_publicFaceApp}} )_.
+  _(please refer to: ??TRASH:book.guide.crossCom_publicFaceApp)_.
 
 
 - `Feature.appWillStart` ?? nice to have link to API here (confusing with both guide and api reference)
@@ -398,13 +398,13 @@ export default launchApp({
 
 An {{book.api.FassetsObject}} is emitted from the {{book.api.launchApp}}
 function, which promotes the accumulated Public API of all features
-_(see: {{book.guide.crossCom_publicFaceApp}})_.
+_(see: ??TRASH:book.guide.crossCom_publicFaceApp)_.
 
 The App object should be exported _(see `*4*` in the code
 snippet above)_ so other modules can access it (providing
 {{book.guide.crossCom}}).  Please note that depending on the context,
 there are various techniques by which the App object can be accessed
-(see: {{book.guide.crossCom_accessingApp}}).
+(see: {{book.guide.crossCom_accessingFassets}}).
 
 The App object contains named feature nodes, structured as follows:
 

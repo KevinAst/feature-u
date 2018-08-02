@@ -66,12 +66,12 @@ together!!**_
 ### Feature Existence and Dependencies
 
 When a feature is completely self-contained _(i.e. it **has NO**
-{{book.guide.crossCom_publicFace}})_, then there is no other
+??TRASH:book.guide.crossCom_publicFace)_, then there is no other
 consideration in disabling it ... you **simply disable it** and **it
 disappears!**
 
 If however one feature depends on another _(i.e. it **has a**
-{{book.guide.crossCom_publicFace}})_, then there are additional
+??TRASH:book.guide.crossCom_publicFace)_, then there are additional
 factors to consider.
 
 As you know, the {{book.api.FassetsObject}} is used to facilitate

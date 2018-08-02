@@ -90,12 +90,10 @@
         "crossCom_validatingResources":   "<a href='/crossCommunication.html#validating-resources'><code>Validating Resources</code></a>",
         "crossCom_doesFeatureExist":      "<a href='/crossCommunication.html#does-feature-exist'><code>Does Feature Exist</code></a>",
         "crossCom_accessingFassets":      "<a href='/crossCommunication.html#accessing-fassets'><code>Accessing fassets</code></a>",
-
-      "crossCom_publicFaceApp":         "<a href='/crossCommunication.html#publicface-and-the-app-object'><code>publicFace and the App Object??OBSOLETE</code></a>",
-      "crossCom_publicFace":            "<a href='/crossCommunication.html#publicface-and-the-app-object'><code>publicFace??OBSOLETE</code></a>",
-      "crossCom_accessingApp":          "<a href='/crossCommunication.html#accessing-the-app-object'><code>Accessing App??OBSOLETE</code></a>",
-      "crossCom_managedCodeExpansion":  "<a href='/crossCommunication.html#managed-code-expansion'><code>Managed Code Expansion??OBSOLETE</code></a>",
-      "crossCom_appAccessSummary":      "<a href='/crossCommunication.html#app-access-summary'><code>App Access Summary??OBSOLETE</code></a>",
+          "crossCom_importFassets":        "<a href='/crossCommunication.html#import-fassets'><code>import fassets</code></a>",
+          "crossCom_fassetsParameter":     "<a href='/crossCommunication.html#fassets-parameter'><code>fassets parameter</code></a>",
+          "crossCom_managedCodeExpansion": "<a href='/crossCommunication.html#managed-code-expansion'><code>Managed Code Expansion</code></a>",
+          "crossCom_fassetsAccessSummary": "<a href='/crossCommunication.html#fassets-access-summary'><code>Fassets Access Summary</code></a>",
 
       "featureRouter":  "<a href='/featureRouter.html'><code>Feature Based Routes</code></a>",
 
@@ -222,6 +220,7 @@
       "featureReduxLogic":  "<a href='https://github.com/KevinAst/feature-redux-logic'><code>feature-redux-logic</code></a>",
       "featureRouter":      "<a href='https://github.com/KevinAst/feature-router'><code>feature-router</code></a>",
       "react":              "<a href='https://reactjs.org/'><code>react</code></a>",
+      "reactContext":       "<a href='https://reactjs.org/docs/context.html'><code>react context</code></a>",
       "reactNative":        "<a href='https://facebook.github.io/react-native/'><code>react-native</code></a>",
       "reactRouter":        "<a href='https://reacttraining.com/react-router/'><code>react-router</code></a>",
       "redux":              "<a href='http://redux.js.org/'><code>redux</code></a>",
