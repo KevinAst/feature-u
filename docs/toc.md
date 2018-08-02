@@ -64,4 +64,7 @@
 * [Distribution](dist.md)
 * [Why feature-u?](why.md)
 * [Revision History](history.md)
+  * [v1.0.0 (August ??, 2018)](history.md#v1_0_0)
+  * [v0.1.3 (July 2, 2018)](history.md#v0_1_3)
+  * [v0.1.0 (March 6, 2018)](history.md#v0_1_0)
 * [MIT License](LICENSE.md)

@@ -156,6 +156,12 @@ releases _(i.e. a retrofit of client code is necessary)_.
 
    ?? utilize MORE links (obsolete refs: v0.1.3, new refs: cur or v1.0.0)
 
+2. **Docs**:
+   Our documentation now employs a dynamic left-nav menu, that only
+   exposes the sub-content of the active section.
+
+
+
 
 <!-- ************************************************************* -->
 <br/><br/><br/>
