@@ -34,7 +34,7 @@ Features need a way to promote their **Public Face** to other
 features, and consume other feature's **Public Aspects**.
 
 
-## fassets: Basic Concepts
+## Basic Concepts: fassets
 
 **feature-u** promotes feature-based resources through something
 called `fassets` (feature assets).  This is how all **Cross Feature

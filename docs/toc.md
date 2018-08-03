@@ -25,7 +25,7 @@
   * [appWillStart](appLifeCycle.md#appwillstart)
   * [appDidStart](appLifeCycle.md#appDidStart)
 * [Cross Feature Communication](crossCommunication.md)
-  * [fassets: Basic Concepts](crossCommunication.md#fassets-basic-concepts)
+  * [Basic Concepts: fassets](crossCommunication.md#basic-concepts-fassets)
     * [fassets definition](crossCommunication.md#fassets-definition)
     * [fassets usage](crossCommunication.md#fassets-usage)
     * [federated namespace](crossCommunication.md#federated-namespace)
