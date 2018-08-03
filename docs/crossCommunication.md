@@ -31,7 +31,7 @@ helping to **facilitate true plug-and-play**.
 Given all this then, **how is Cross Feature Communication achieved**?
 
 Features need a way to promote their **Public Face** to other
-features, and consume other feature's **Public Aspects**.
+features, and consume other feature's **Public Assets**.
 
 
 ## Basic Concepts: fassets
@@ -208,7 +208,7 @@ function MyComponent({Logo}) {
 }
 
 export default withFassets({
-  CompToWrap: MyComponent,
+  component: MyComponent,
   mapFassetsToProps: {
     Logo: 'company.logo',
   }
@@ -310,7 +310,7 @@ Here is our `main` feature:
   }
   
   export default withFassets({
-    CompToWrap: MainPage,
+    component: MainPage,
     mapFassetsToProps: {
       Logo:       'company.logo', // from our prior example
   
@@ -429,7 +429,7 @@ definitions are the same, so they are not repeated)_:
   }
 
   export default withFassets({
-    CompToWrap: MainPage,
+    component: MainPage,
     mapFassetsToProps: {
       Logo:       'company.logo',    // from our prior example
 
@@ -566,12 +566,12 @@ either by:
   programmatically.
 
 The former, implicitly accesses `fassets` _(under the covers)_ using
-the {{book.ext.reactContext}}.  The latter requires direct programatic
-access to the {{book.api.FassetsObject}} ... three ways of which to
-accomplish this:
+a {{book.ext.reactContext}}.  The latter requires direct programatic
+access to the {{book.api.FassetsObject}} ... of which there are three
+ways to achieve:
 
-1. Simply import `fassets` (_this technique is used by run-time
-   functions that are outside the control of **feature-u**_)
+1. Simply import `fassets` _(a technique used by run-time
+   functions that are outside the control of **feature-u**)_
    ... see: {{book.guide.crossCom_importFassets}}
 
 2. Use the `fassets` parameter supplied through **feature-u**'s programmatic
@@ -621,7 +621,7 @@ function closeSideBar() {
 
 ### fassets parameter
 
-other way to access the {{book.api.FassetsObject}} is through the
+Another way to access the {{book.api.FassetsObject}} is through the
 programmatic APIs of **feature-u**, where `fassets` is supplied as a
 parameter.
 

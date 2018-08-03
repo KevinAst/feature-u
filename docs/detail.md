@@ -1,27 +1,25 @@
 # A Closer Look
 
-As mentioned previously, the basic process of **feature-u** is that
-each feature promotes a {{book.api.Feature}} object that contains
+As previously mentioned, the basic process of **feature-u** is that
+each feature promotes a {{book.api.Feature}} object that calalogs
 various aspects of that feature ... _things like: the feature's name,
-it's Public API, whether it is enabled, initialization constructs, and
+it's Public Face, whether it is enabled, initialization constructs, and
 resources used to configure it's slice of the frameworks in use._
 
 In turn, these Feature objects are supplied to {{book.api.launchApp}},
 which configures and starts your application, returning an
-{{book.api.FassetsObject}} (_which promotes the public API of each
+{{book.api.FassetsObject}} (_which promotes the Public Face of each
 feature_).
 
 _Let's take a closer look at this process ..._
 
-* [aspects](#aspects)
-* [Feature Object (relaying aspect content)](#feature-object-relaying-aspect-content)
-  - [Built-In aspects](#built-in-aspects)
-  - [Extendable aspects](#extendable-aspects)
-* [Launching Your Application](#launching-your-application)
-  - [React Registration](#react-registration)
-* [App Object](#app-object)
-  - [Feature Public API](#feature-public-api)
-  - [Does Feature Exist](#does-feature-exist)
+* {{book.guide.detail_aspects}}
+* {{book.guide.detail_featureAndAspect}}
+  * {{book.guide.detail_builtInAspects}}
+  * {{book.guide.detail_extendableAspects}}
+* {{book.guide.detail_launchingApp}}
+  * {{book.guide.detail_exportFassets}}
+  * {{book.guide.detail_reactRegistration}}
 
 
 <!-- *** SECTION ********************************************************************************  -->
@@ -52,7 +50,7 @@ API.
 
    These aspects are promoted directly by the base **feature-u** package.
    They provide very rudimentary capabilities, such as feature
-   enablement, public API, and application life-cycle hooks.
+   enablement, Public Face, and application life-cycle hooks.
 
 1. [**Extendable aspects**](#extendable-aspects):
 
@@ -82,7 +80,7 @@ Ultimately, all Feature objects are consumed by {{book.api.launchApp}}.
 
 Built-in aspects are promoted directly by the base **feature-u** package.
 They provide very rudimentary capabilities, such as feature
-enablement, public API, and application life-cycle hooks.
+enablement, Public Face, and application life-cycle hooks.
 
 Like all aspects, Built-In aspect content is relayed through Feature
 object properties (via {{book.api.createFeature}}).
@@ -90,10 +88,8 @@ object properties (via {{book.api.createFeature}}).
 - `Feature.name`
 
   A string property which represents the identity of the feature.
-  ?? NO-LONGER-TRUE: Feature names are used to index the {{book.api.FassetsObject}} by
-  feature _(in support of {{book.guide.crossCom}})_, and are therefore
-  guaranteed to be unique.  Application code can also use
-  {{book.guide.bestPractices_featureName}} in various
+  Feature names are guaranteed to be unique.  Application code can
+  also use {{book.guide.bestPractices_featureName}} in various
   **single-source-of-truth** operations.
 
 
@@ -113,34 +109,26 @@ object properties (via {{book.api.createFeature}}).
   resource contract (the intention to use a set of fasset resources).
   Resources are accumulated across all features, and exposed through
   the {{book.api.FassetsObject}}, and the {{book.api.withFassets}}
-  HoC.
+  HoC. For more information, please see {{book.api.fassetsAspect$}}.
 
 
-- `Feature.publicFace` ?? OBSOLETE
-  
-  An optional resource object that is the feature's Public API,
-  promoting cross-communication between features.  This object is
-  exposed through the App object as: `app.{featureName}.{publicFace}`
-  _(please refer to: ??TRASH:book.guide.crossCom_publicFaceApp)_.
+- {{book.guide.appWillStartCB}}
 
-
-- `Feature.appWillStart` ?? nice to have link to API here (confusing with both guide and api reference)
-  
   An optional {{book.guide.appLifeCycle}} invoked one time, just
   before the app starts up.  This life-cycle hook can do any type of
   initialization, and/or optionally supplement the app's top-level
   content (using a non-null return) _(please refer to:
-  {{book.guide.appWillStart}})_.
+  {{book.api.appWillStartCB}})_.
 
 
-- `Feature.appDidStart` ?? nice to have link to API here (confusing with both guide and api reference)
+- {{book.guide.appDidStartCB}}
   
   An optional {{book.guide.appLifeCycle}} invoked one time, immediately
   after the app has started.  Because the app is up-and-running at
   this time, you have access to the appState and the dispatch()
   function ... assuming you are using redux (when detected by
   **feature-u**'s plugable aspects) _(please refer to:
-  {{book.guide.appDidStart}})_.
+  {{book.api.appDidStartCB}})_.
 
 
 ### Extendable aspects
@@ -268,7 +256,7 @@ This is accomplished through the {{book.api.launchApp}} function.
   allowing features to manage things like: initialization and
   injecting root UI elements, etc.
 
-- It creates and promotes the {{book.api.FassetsObject}} which contains the publicFace
+- It creates and promotes the {{book.api.FassetsObject}} which contains the Public Face
   of all features, facilitating a cross-communication between features.
 
 As a result, your application mainline is very simple and generic.
@@ -303,7 +291,7 @@ const aspects = [ // *1*
 routeAspect.config.fallbackElm$ = <SplashScreen msg="I'm trying to think but it hurts!"/>;
 
 
-// launch our app, exposing the feature-u App object (facilitating cross-feature communication)!
+// launch our app, exposing the feature-u Fassets object (facilitating cross-feature communication)!
 export default launchApp({         // *4*
   aspects,                         // *1*
   features,                        // *2*
@@ -325,6 +313,21 @@ however you can define your own using {{book.api.createAspect}}.
 
 All of our supplied app features are accumulated from the `features/`
 directory ... _(see `*2*` in the code snippet above)_.
+
+## Export fassets
+
+The {{book.api.FassetsObject}} _(emitted from {{book.api.launchApp}})_
+promotes the accumulated Public Face of all features.  This is the
+basis of {{book.guide.crossCom}}.
+
+By **feature-u** decree, this object should be exported _(see `*4*`
+in the code snippet above)_, providing import access to other modules.
+**SideBar**: In reality there are three distinct ways to access the
+`fassets` object _(depending on the context)_, import is just one
+_(see: {{book.guide.crossCom_accessingFassets}})_.
+
+You can find more information about the {{book.api.FassetsObject}} in
+{{book.guide.crossCom}}.
 
 
 ### React Registration
@@ -391,79 +394,3 @@ export default launchApp({
   }
 });
 ```
-
-
-<!-- *** SECTION ********************************************************************************  -->
-## App Object
-
-An {{book.api.FassetsObject}} is emitted from the {{book.api.launchApp}}
-function, which promotes the accumulated Public API of all features
-_(see: ??TRASH:book.guide.crossCom_publicFaceApp)_.
-
-The App object should be exported _(see `*4*` in the code
-snippet above)_ so other modules can access it (providing
-{{book.guide.crossCom}}).  Please note that depending on the context,
-there are various techniques by which the App object can be accessed
-(see: {{book.guide.crossCom_accessingFassets}}).
-
-The App object contains named feature nodes, structured as follows:
-
-```js
-App.{featureName}.{publicFace}
-```
-
-The app object can be used for two distinct purposes: 
-
-1. to access a feature's Public API, and
-2. to determine whether a feature exists.
-
-
-### Feature Public API
-
-The {{book.api.FassetsObject}} promotes the feature's Public API
-(i.e. it's publicFace).
-
-As an example, an application that has two features (featureA, and
-featureB) will look like this:
-
-```js
-app: {
-  featureA: {
-    action: {
-      open(),
-      close()
-    }
-  },
-  featureB: {
-  }
-}
-```
-
-You can see that featureA is promoting a couple of actions (open(),
-close()) in it's publicFace, while featureB has NO publicFace.
-
-
-### Does Feature Exist
-
-The {{book.api.FassetsObject}} can be used to determine if a feature is
-present or not.  If a feature does not exist, or has been disabled,
-the corresponding `app.{featureName}` will NOT exist. ??tweek-this
-
- - It could be that `featureA` will conditionally use `featureB` if it
-   is present.
-
-   ```js
-   if (app.featureB) {
-     ... do something featureB related
-   }
-   ```
-
- - It could be that `featureC` unconditionally requires that `featureD`
-   is present.  This can be checked in the {{book.api.appWillStartCB}}
-   {{book.guide.appLifeCycle}}.
-
-   ```js
-   appWillStart({fassets, curRootAppElm}) {
-     assert(app.featureD, '***ERROR*** I NEED featureD');
-   }
-   ```

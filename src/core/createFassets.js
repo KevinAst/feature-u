@@ -116,8 +116,7 @@ export default function createFassets(activeFeatures) {
    * {{book.guide.crossCom_accessingFassets}})_.
    * 
    * For more information, please refer to
-   * ??TRASH:book.guide.crossCom_publicFaceApp and
-   * {{book.guide.detail_appObject}}. ??UPDATE_LINK
+   * {{book.guide.crossCom_fassetsBasics}}.
    */
   const _fassets = {
 
