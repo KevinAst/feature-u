@@ -82,6 +82,7 @@
   },
   "homepage": "https://github.com/KevinAst/feature-u",
   "jest": {
+    "testURL": "http://localhost",
     "collectCoverageFrom": [
       "src/**/*.js",
       "!**/spec/**"
