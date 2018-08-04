@@ -221,7 +221,7 @@ example, because the `Logo` property is a component, `MyComponent` can
 simply reference it using JSX.
 
 
-## Resource Contracts
+## Resource Contract
 
 It is common for UI Composition to be represented as a contract, where
 a component in one feature has a series of injection needs that are to
@@ -479,11 +479,12 @@ Currently, only one wildcard character is supported:
   =====================  =============
   'company.logo'         1
   'MainPage.*.link'      [  2,  4    ]
+  'MainPage.*.body'      [    3,  5  ]
   'MainPage.*'           [  2,3,4,5  ]
   '*a*'                  [1,2,3,4,5  ]
   '*'                    [1,2,3,4,5,6]
   'ouch'                 undefined
-  'foo*bar'              []
+  'WowZee*WooWoo'        []
   ```
 
 **Wildcard Matching:**
@@ -501,7 +502,7 @@ The following pattern matching rules are in effect:
   'mainPage.*.link'      []
   ```
 
-- By default the entire entry is matched. In other words an
+- By default, the entire entry is matched. In other words an
   implicit start/end anchor is applied.  This heuristic can be
   altered by simply injecting wildcards at the start/end of your
   expression.
@@ -514,7 +515,7 @@ The following pattern matching rules are in effect:
   '*Page.*.link'         [2,4]
   ```
 
-- Matches are restricted to the actual `fassetsKey` registered through
+- Matches are restricted to the actual fassetKeys registered through
   the {{book.api.fassetsAspect}} `define`/`defineUse` directives.  In
   other words, the matching algorithm will **not** drill into the
   resource itself (assuming it is an object with depth).
@@ -567,6 +568,54 @@ using the `@withKeys` suffix.  This is an ideal solution because
 // array injection snippet ...
    {mainLinks.map( ([fassetsKey, MainLink]) => <MainLink key={fassetsKey}/>)}
 ```
+
+
+## Resource Push or Pull?
+
+The definition and consumption of fasset resources can be modeled in
+either a **push** or **pull** philosophy.
+
+- **Push**
+
+  _Definition:_
+
+  When defining resources in a **push** philosophy the `define`
+  {{book.api.fassetsAspect}} directive is crucial.  Here the definer is
+  simply publicly promoting a resource for other features to use
+  **(take it or leave it)**.
+
+  _Consumption:_
+
+  Normally, in a **push** philosophy, the consumer simply accesses the
+  resource directly _(through the {{book.api.FassetsObject}} or
+  {{book.api.withFassets}} HoC)_, **without any `use` directive**.
+
+  _Optionally_ however, the consumer can employ the `use`
+  {{book.api.fassetsAspect}} directive.  Here they are simply
+  providing **feature-u** with more information, so it can fail fast
+  if/when the resource is not defined.  In other words, there would
+  never be a need for the consumer to check if the resource is defined
+  _(that is accomplished by **feature-u**)_.  **SideBar**: This option
+  is not feasible, if the defining feature can be disabled.
+
+- **Pull**
+
+  _Consumption:_
+
+  When using a **pull** philosophy, the `use` {{book.api.fassetsAspect}}
+  directive is more critical.  In this case the consumer is saying: _"I
+  plan to use this resource from whatever feature wishes to supply
+  it"_.  This is the first half of a
+  {{book.guide.crossCom_resourceContract}}!
+
+  _Definition:_
+
+  When defining a resource in the **pull** philosophy, the supplier should
+  use the `defineUse` {{book.api.fassetsAspect}} directive _(even
+  though a `define` would technically work)_.  Here the supplier is
+  saying _"I am supplying this resource under contract"_.  In this case
+  **feature-u** will fail if there is NO fulfillment of this contract
+  _(for example a typo)_.
 
 
 ## Validating Resources
