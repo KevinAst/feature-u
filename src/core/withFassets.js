@@ -246,9 +246,9 @@ export function fassetsProps(fassetsToPropsMap, fassets) { // export for testing
  *
  * **Wildcards**
  *
- * Wildcards (`*`) are supported in the fassetsKey, accumulating
- * multiple resources (a resource array), matching the supplied
- * pattern:
+ * {{book.guide.crossCom_wildcards}} (`*`) are supported in the
+ * fassetsKey, accumulating multiple resources (a resource array),
+ * matching the supplied pattern:
  *
  * - **without wildcards**, a single resource is injected
  *   _(`undefined` for none)_.
@@ -277,9 +277,9 @@ export function fassetsProps(fassetsToPropsMap, fassets) { // export for testing
  * `fassetsKey` of the returned resource.  This is especially true
  * when multiple resources are returned _(using wildcards)_.
  *
- * As an example, JSX requires unique keys for array injections _(the
- * `fassetsKey` is a prime candidate for this, since it is guaranteed
- * to be unique)_.
+ * As an example, React requires a `key` attribute for array
+ * injections _(the `fassetsKey` is a prime candidate for this, since
+ * it is guaranteed to be unique)_.
  *
  * To accomplish this, simply suffix the `fassetsKey` with the
  * keyword: `'@withKeys'`.  When this is encountered, the resource
@@ -299,6 +299,8 @@ export function fassetsProps(fassetsToPropsMap, fassets) { // export for testing
  *               // mainBodies: [cartBodyResource, searchBodyResource],
  * }
  * ```
+ *
+ * This topic is discussed in more detail in: {{book.guide.crossCom_reactKeys$}}.
  */
 
 

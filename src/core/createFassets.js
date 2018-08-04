@@ -106,7 +106,7 @@ export default function createFassets(activeFeatures) {
    *    ```
    * 
    * 2. You may use the {{book.api.Fassets_get}} method, which
-   *    can collect multiple resources (using wildcards).
+   *    can collect multiple resources (using {{book.guide.crossCom_wildcards}}).
    * 
    * 3. Your UI components may indirectly access `fassets` resources
    *    through the {{book.api.withFassets}} Higher-order Component
@@ -148,9 +148,9 @@ export default function createFassets(activeFeatures) {
      * Get (i.e. fetch) the resource(s) corresponding to the supplied
      * `fassetsKey`.
      * 
-     * You may use wildcards (`*`) in the supplied `fassetsKey`,
-     * resulting in a multiple resources being returned (a resource
-     * array), matching the supplied pattern.
+     * You may use {{book.guide.crossCom_wildcards}} (`*`) in the
+     * supplied `fassetsKey`, resulting in a multiple resources being
+     * returned (a resource array), matching the supplied pattern.
      * 
      * In some cases, you may wish to know the corresponding
      * `fassetsKey` of the returned resource.  This is especially true
@@ -167,8 +167,8 @@ export default function createFassets(activeFeatures) {
      * The `fassets.get()` method is an alternative to directly
      * dereferencing the `fassets` object ... the advantage being:
      * 
-     *  1. it can accumulate a series of resources (when wildcards are
-     *     used)
+     *  1. it can accumulate a series of resources (when
+     *     {{book.guide.crossCom_wildcards}} are used)
      * 
      *  2. and it can more gracefully return undefined at any level
      *     within the federated namespace path

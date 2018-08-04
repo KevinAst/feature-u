@@ -380,11 +380,10 @@ strategically place it in our parent component.  While this may be
 necessary in some cases, typically more dynamics are required
 _(allowing features to introduce their content autonomously)_.
 
-This can be accomplished by using wildcards in the specification and
-usage of the injection keys.
+This can be accomplished by using wildcards (`*`).
 
-Here is our **refined** `main` feature _(**NOTE**: the **sub-feature**
-definitions are the same, so they are not repeated)_:
+Here is our **refined** `main` feature _(**NOTE**: the definitions
+from the defining features are the same, so they are not repeated)_:
 
 - **main feature**
 
@@ -403,7 +402,7 @@ definitions are the same, so they are not repeated)_:
   });
   ```
 
-  Because our specification includes wildcards, a series of injection
+  Because our specification includes wildcards, a series of
   definitions will match!
 
   Here is our **refined** `MainPage` component:
@@ -439,55 +438,135 @@ definitions are the same, so they are not repeated)_:
   });
   ```
 
-When {{book.api.withFassets}} encounters wildcards, it merely
-accumulates all matching injection definitions, and promotes them as
-arrays.  Our **MainPage** component no longer explicitly reasons about
-each injection.
+When {{book.api.withFassets}} encounters wildcards (`*`), it merely
+accumulates all matching definitions, and promotes them as arrays.
+Our **MainPage** component no longer explicitly reasons about each
+injection.
 
-Through this implementation, **any feature may dynamically inject itself
-in the process autonomously**!  This dynamic also recognizes the case
-where a feature is dynamically disabled _**(very kool indeed)**_!!
+Through this implementation, **any feature may dynamically inject
+itself in the process autonomously**!  In addition, this dynamic
+implicitly handles the case where a feature is dynamically disabled
+_**(very kool indeed)**_!!
 
-Here are some **Notes** of interest:
 
-- **React Keys** _(in array processing)_
+### Wildcard Processing
 
-  React requires a `key` attribute when injecting elements of an
-  array.  
+This section provides additional detail related to wildcard
+processing.  For the examples **below**, please assume the following
+resource definitions:
 
-  You may have noticed in the prior example, we are using the array
-  index for our key.  In some cases this may be considered an
-  anti-pattern, _leading to inefficiencies in DOM reconciliation._
-  **It really depends on the mutability status of the array.**
-  Remember, the key must only be unique among its siblings - not
-  globally _(please refer to the React docs
-  [`here`](https://reactjs.org/docs/reconciliation.html#keys))_.
+```
+fassetsKey             Resource
+=====================  ========
+'company.logo'            1
+'MainPage.cart.link'      2
+'MainPage.cart.body'      3
+'MainPage.search.link'    4
+'MainPage.search.body'    5
+'my.fun.object'           6 ... { greet: 'hello' }
+```
 
-  In the case of fasset usage, this **will in fact work in most
-  cases** - assuming there is no variability in the promoted set of
-  fasset resources _(a normal case)_.
+**Wildcard Characters:**
 
-  If however there is some conditional logic involved, you may request
-  {{book.api.withFassets}} to supply a `[fassetsKey, resource]` pair, by
-  using the `@withKeys` suffix.  This is an ideal solution because
-  **feature-u** guarantees `fassetsKey` to be unique.
+Currently, only one wildcard character is supported:
 
-  ```js
-  // mapping snippet ...
-     mainLinks:  'MainPage.*.link@withKeys', // @withKeys: request [fassetsKey, resource] pairs
-                  // mainLinks:  [['MainPage.cart.link',   cartLinkResource],
-                  //              ['MainPage.search.link', searchLinkResource]],
+- `*`: Matches zero or more characters.  Can also span multiple nodes
+  _(i.e. the dots `.` of a federated namespace)_.
 
-  // array injection snippet ...
-     {mainLinks.map( ([fassetsKey, MainLink]) => <MainLink key={fassetsKey}/>)}
+  **Examples:**
+  ```
+  fassetsKey             Matches
+  =====================  =============
+  'company.logo'         1
+  'MainPage.*.link'      [  2,  4    ]
+  'MainPage.*'           [  2,3,4,5  ]
+  '*a*'                  [1,2,3,4,5  ]
+  '*'                    [1,2,3,4,5,6]
+  'ouch'                 undefined
+  'foo*bar'              []
+  ```
+
+**Wildcard Matching:**
+
+The following pattern matching rules are in effect:
+
+- Pattern matching is case-sensitive.  _It is worth noting that
+  `fassetsKey` definitions are also case-sensitive._
+
+  **Examples:**
+  ```
+  fassetsKey             Matches
+  =====================  ===========
+  'MainPage.*.link'      [2,4]
+  'mainPage.*.link'      []
+  ```
+
+- By default the entire entry is matched. In other words an
+  implicit start/end anchor is applied.  This heuristic can be
+  altered by simply injecting wildcards at the start/end of your
+  expression.
+
+  **Examples:**
+  ```
+  fassetsKey             Matches
+  =====================  ===========
+  'Page.*.link'          []
+  '*Page.*.link'         [2,4]
+  ```
+
+- Matches are restricted to the actual `fassetsKey` registered through
+  the {{book.api.fassetsAspect}} `define`/`defineUse` directives.  In
+  other words, the matching algorithm will **not** drill into the
+  resource itself (assuming it is an object with depth).
+
+  **Examples:**
+  ```
+  fassetsKey             Matches
+  =====================  ==========================
+  'my.*.object'          [6] ... { greet: 'hello' }
+  'my.*.object.greet'    []
   ```
 
 
-- **Resource Order** _(in wildcard processing)_
 
-  The order in which resources are promoted _when wildcards are in use_,
-  is feature expansion order.  In other words, the **same order that
-  features are registered**.
+
+### Resource Order (in wildcard processing)
+
+The order in which resources are promoted _when wildcards are in use_,
+is feature expansion order.  In other words, the **same order that
+features are registered**.
+
+### React Keys (in array processing)
+
+As you probably already know, React requires a `key` attribute when
+injecting elements of an array.
+
+You may have noticed _(in the wildcard example - above)_, we are using
+array indices for our keys.  In some cases this may be considered an
+anti-pattern, _leading to inefficiencies in DOM reconciliation._ **It
+really depends on the mutability status of the array.** Remember, the
+key must only be unique among its siblings - not globally _(please
+refer to the React docs
+[`here`](https://reactjs.org/docs/reconciliation.html#keys))_.
+
+In the case of fasset usage, key indices **will in fact work in most
+cases** - assuming there is no variability in the promoted set of
+fasset resources _(a normal case)_.
+
+If however there is some conditional logic involved, you may request
+{{book.api.withFassets}} to supply a `[fassetsKey, resource]` pair, by
+using the `@withKeys` suffix.  This is an ideal solution because
+**feature-u** guarantees `fassetsKey` to be unique.
+
+```js
+// mapping snippet ...
+   mainLinks:  'MainPage.*.link@withKeys', // @withKeys: request [fassetsKey, resource] pairs
+                // mainLinks:  [['MainPage.cart.link',   cartLinkResource],
+                //              ['MainPage.search.link', searchLinkResource]],
+
+// array injection snippet ...
+   {mainLinks.map( ([fassetsKey, MainLink]) => <MainLink key={fassetsKey}/>)}
+```
 
 
 ## Validating Resources

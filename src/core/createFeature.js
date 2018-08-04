@@ -319,6 +319,7 @@ export function extendFeatureProperty(name, owner) {
  *    
  *        NOTES:
  *         - fassetsKey MUST be unique
+ *         - are case-sensitive
  *         - may contain federated namespace (via dots ".")
  *           ... normalized in fassets object
  *           ... ex: 'MainPage.launch'
@@ -357,6 +358,7 @@ export function extendFeatureProperty(name, owner) {
  *           HOWEVER: feature-u cannot strictly enforce this usage
  *                    ... enclosed feature should reference this
  *                        {fassetsKey} through fassets.get(), or withFassets()
+ *         - is case-sensitive
  *         - may contain federated namespace (with dots ".")
  *           ... ex: 'MainPage.launch'
  *         - may contain wildcards (with "*")

@@ -51,8 +51,11 @@ ${searchBody}
                                                                         // **BLOB TESTS**
       [  blob,         'MainPage.search.body', [searchBody]          ], // no wildcards
       [  blob,         'MainPage.*.link',      [cartLink,searchLink] ], // inner wildcard
+      [  blob,         'mainPage.*.link',      []                    ], // no match (case-sensitive)
       [  blob,         '*Page.*.li*',          [cartLink,searchLink] ], // outer wildcards (both sides)
       [  blob,         '*Page.*.li',           []                    ], // mismatch on right
+      [  blob,         'Page.*.link',          []                    ], // no match at start (implicit anchor)
+      [  blob,         'MainPage.*.li',        []                    ], // no match at end (implicit anchor)
       [  blob,         'NOT-FOUND',            []                    ], // outright mismatch
 
                                                                         // **SINGLE LINE TESTS**
