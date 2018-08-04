@@ -48,9 +48,24 @@
 ----
 * [Core API](coreApi.md)
   * [createFeature()](api.md#createFeature)
+    * [fassets aspect](api.md#fassets)
+    * [appWillStart()](api.md#appWillStartCB)
+    * [appDidStart()](api.md#appDidStartCB)
   * [expandWithFassets()](api.md#expandWithFassets)
+    * [expandWithFassetsCB()](api.md#expandWithFassetsCB)
   * [launchApp()](api.md#launchApp)
+    * [registerRootAppElm()](api.md#registerRootAppElmCB)
   * [withFassets()](api.md#withFassets)
+    * [mapFassetsToPropsStruct](api.md#mapFassetsToPropsStruct)
+    * [mapFassetsToProps()](api.md#mapFassetsToPropsFn)
+  * Object Refs
+    * [Feature](api.md#Feature)
+    * [Fassets](api.md#Fassets)
+      * [get()](api.md#Fassets_get)
+      * [hasFeature()](api.md#Fassets_hasFeature)
+    * [fassetValidations](api.md#fassetValidations)
+    * [Aspect](api.md#Aspect)
+    * [AspectContent](api.md#AspectContent)
 
 ----
 * [Extending feature-u](extending.md)
@@ -59,11 +74,26 @@
   * [Defining rootAppElm](extending.md#defining-rootappelm)
   * [Aspect Cross Communication](extending.md#aspect-cross-communication)
   * [Aspect Life Cycle Methods](extending.md#aspect-life-cycle-methods)
-
   * [Extension API](extensionApi.md)
     * [createAspect()](api.md#createAspect)
+      * [genesis()](api.md#genesisMeth)
+      * [validateFeatureContent()](api.md#validateFeatureContentMeth)
+      * [expandFeatureContent()](api.md#expandFeatureContentMeth)
+      * [assembleFeatureContent()](api.md#assembleFeatureContentMeth)
+      * [assembleAspectResources()](api.md#assembleAspectResourcesMeth)
+      * [initialRootAppElm()](api.md#initialRootAppElmMeth)
+      * [injectRootAppElm()](api.md#injectRootAppElmMeth)
     * [extendAspectProperty()](api.md#extendAspectProperty)
     * [extendFeatureProperty()](api.md#extendFeatureProperty)
+    * Object Refs
+      * [Feature](api.md#Feature)
+      * [Fassets](api.md#Fassets)
+        * [get()](api.md#Fassets_get)
+        * [hasFeature()](api.md#Fassets_hasFeature)
+      * [fassetValidations](api.md#fassetValidations)
+      * [Aspect](api.md#Aspect)
+      * [AspectContent](api.md#AspectContent)
+      
 
 ----
 * [Distribution](dist.md)
