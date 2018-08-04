@@ -48,16 +48,13 @@
 ----
 * [Core API](coreApi.md)
   * [createFeature()](api.md#createFeature)
-    * [fassets aspect](api.md#fassets)
+  * [expandWithFassets()](api.md#expandWithFassets)
+  * [launchApp()](api.md#launchApp)
+  * [withFassets()](api.md#withFassets)
+  * Built-In aspects
+    * [fassets](api.md#fassets)
     * [appWillStart()](api.md#appWillStartCB)
     * [appDidStart()](api.md#appDidStartCB)
-  * [expandWithFassets()](api.md#expandWithFassets)
-    * [expandWithFassetsCB()](api.md#expandWithFassetsCB)
-  * [launchApp()](api.md#launchApp)
-    * [registerRootAppElm()](api.md#registerRootAppElmCB)
-  * [withFassets()](api.md#withFassets)
-    * [mapFassetsToPropsStruct](api.md#mapFassetsToPropsStruct)
-    * [mapFassetsToProps()](api.md#mapFassetsToPropsFn)
   * Object Refs
     * [Feature](api.md#Feature)
     * [Fassets](api.md#Fassets)
@@ -76,13 +73,6 @@
   * [Aspect Life Cycle Methods](extending.md#aspect-life-cycle-methods)
   * [Extension API](extensionApi.md)
     * [createAspect()](api.md#createAspect)
-      * [genesis()](api.md#genesisMeth)
-      * [validateFeatureContent()](api.md#validateFeatureContentMeth)
-      * [expandFeatureContent()](api.md#expandFeatureContentMeth)
-      * [assembleFeatureContent()](api.md#assembleFeatureContentMeth)
-      * [assembleAspectResources()](api.md#assembleAspectResourcesMeth)
-      * [initialRootAppElm()](api.md#initialRootAppElmMeth)
-      * [injectRootAppElm()](api.md#injectRootAppElmMeth)
     * [extendAspectProperty()](api.md#extendAspectProperty)
     * [extendFeatureProperty()](api.md#extendFeatureProperty)
     * Object Refs
@@ -93,7 +83,6 @@
       * [fassetValidations](api.md#fassetValidations)
       * [Aspect](api.md#Aspect)
       * [AspectContent](api.md#AspectContent)
-      
 
 ----
 * [Distribution](dist.md)
