@@ -113,8 +113,9 @@ releases _(i.e. a retrofit of client code is necessary)_.
 
 1. **Review**:
    Beginning with **feature-u** v1 {{book.guide.crossCom}} has been
-   completely re-designed to include **UI Composition** as a core part
-   of **feature-u** _(thanks {{book.ext.jeffbski}} for the design
+   completely re-designed to include
+   {{book.guide.crossCom_uiComposition}} as a core part of
+   **feature-u** _(thanks {{book.ext.jeffbski}} for the design
    collaboration)_!
 
    This means that **navigation and routing is supported**, when using

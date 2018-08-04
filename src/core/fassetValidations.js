@@ -32,11 +32,11 @@ import isComponent from '../util/isComponent';
  * ```
  *
  * The following pre-defined validations are promoted through `fassetValidations`:
- *  - any:  any type (except undefined)
- *  - comp: a react component
- *  - fn:   a function
- *  - str:  a string
- *  - bool: a boolean
+ *  - `any`:  any type (except undefined)
+ *  - `comp`: a react component
+ *  - `fn`:   a function
+ *  - `str`:  a string
+ *  - `bool`: a boolean
  *
  * **Example**:
  * ```js

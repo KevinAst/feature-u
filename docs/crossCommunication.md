@@ -448,19 +448,29 @@ Through this implementation, **any feature may dynamically inject itself
 in the process autonomously**!  This dynamic also recognizes the case
 where a feature is dynamically disabled _**(very kool indeed)**_!!
 
-- **JSX Array Injection Keys**
+Here are some **Notes** of interest:
 
-  JSX requires array injections to use keys.  You may have noticed in
-  the prior example, we are using the array index for the key.
+- **React Keys** _(in array processing)_
 
-  Normally this is **not recomended**.  However, for fasset usage, this
-  **will in fact work** in most cases - assuming there is no variability in
-  the set of promoted fasset resources (a normal case).
+  React requires a `key` attribute when injecting elements of an
+  array.  
+
+  You may have noticed in the prior example, we are using the array
+  index for our key.  In some cases this may be considered an
+  anti-pattern, _leading to inefficiencies in DOM reconciliation._
+  **It really depends on the mutability status of the array.**
+  Remember, the key must only be unique among its siblings - not
+  globally _(please refer to the React docs
+  [`here`](https://reactjs.org/docs/reconciliation.html#keys))_.
+
+  In the case of fasset usage, this **will in fact work in most
+  cases** - assuming there is no variability in the promoted set of
+  fasset resources _(a normal case)_.
 
   If however there is some conditional logic involved, you may request
   {{book.api.withFassets}} to supply a `[fassetsKey, resource]` pair, by
   using the `@withKeys` suffix.  This is an ideal solution because
-  **feature-u** gaurentees `fassetsKey` to be unique.
+  **feature-u** guarantees `fassetsKey` to be unique.
 
   ```js
   // mapping snippet ...
