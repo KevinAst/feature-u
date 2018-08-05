@@ -32,12 +32,12 @@ this list:_
 
 
 
-## Object Refs
+## Object Refs ...
 
-* {{book.api.Feature}}
 * {{book.api.FassetsObject}}
   * {{book.api.Fassets_get}}
   * {{book.api.Fassets_hasFeature}}
 * {{book.api.fassetValidations}}
+* {{book.api.Feature}}
 * {{book.api.Aspect}}
 * {{book.api.AspectContent}}

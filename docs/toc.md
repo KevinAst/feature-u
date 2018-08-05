@@ -52,16 +52,16 @@
   * [expandWithFassets()](api.md#expandWithFassets)
   * [launchApp()](api.md#launchApp)
   * [withFassets()](api.md#withFassets)
-  * Built-In aspects
+  * Built-In aspects ...
     * [fassets](api.md#fassets)
     * [appWillStart()](api.md#appWillStartCB)
     * [appDidStart()](api.md#appDidStartCB)
-  * Object Refs
-    * [Feature](api.md#Feature)
+  * Object Refs ...
     * [Fassets](api.md#Fassets)
       * [get()](api.md#Fassets_get)
       * [hasFeature()](api.md#Fassets_hasFeature)
     * [fassetValidations](api.md#fassetValidations)
+    * [Feature](api.md#Feature)
     * [Aspect](api.md#Aspect)
     * [AspectContent](api.md#AspectContent)
 
@@ -76,12 +76,12 @@
     * [createAspect()](api.md#createAspect)
     * [extendAspectProperty()](api.md#extendAspectProperty)
     * [extendFeatureProperty()](api.md#extendFeatureProperty)
-    * Object Refs
-      * [Feature](api.md#Feature)
+    * Object Refs ...
       * [Fassets](api.md#Fassets)
         * [get()](api.md#Fassets_get)
         * [hasFeature()](api.md#Fassets_hasFeature)
       * [fassetValidations](api.md#fassetValidations)
+      * [Feature](api.md#Feature)
       * [Aspect](api.md#Aspect)
       * [AspectContent](api.md#AspectContent)
 
