@@ -13,14 +13,6 @@ feature_).
 
 _Let's take a closer look at this process ..._
 
-* {{book.guide.detail_aspects}}
-* {{book.guide.detail_featureAndAspect}}
-  * {{book.guide.detail_builtInAspects}}
-  * {{book.guide.detail_extendableAspects}}
-* {{book.guide.detail_launchingApp}}
-  * {{book.guide.detail_exportFassets}}
-  * {{book.guide.detail_reactRegistration}}
-
 
 <!-- *** SECTION ********************************************************************************  -->
 ## aspects
