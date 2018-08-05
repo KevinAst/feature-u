@@ -11,7 +11,13 @@ which configures and starts your application, returning an
 {{book.api.FassetsObject}} (_which promotes the Public Face of each
 feature_).
 
+<!-- OK ... enough talk ... bring out the diagram ... nix 1000 words ... drop the mic! -->
+
 _Let's take a closer look at this process ..._
+
+![Context Diagram](img/contextDiagram.png)
+
+<!-- <img src="img/contextDiagram.png" width="100%"/> -->
 
 
 <!-- *** SECTION ********************************************************************************  -->
