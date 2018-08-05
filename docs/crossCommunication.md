@@ -570,55 +570,7 @@ using the `@withKeys` suffix.  This is an ideal solution because
 ```
 
 
-## Resource Push or Pull?
-
-The definition and consumption of fasset resources can be modeled in
-either a **push** or **pull** philosophy.
-
-- **Push**
-
-  _Definition:_
-
-  When defining resources in a **push** philosophy the `define`
-  {{book.api.fassetsAspect}} directive is crucial.  Here the definer is
-  simply publicly promoting a resource for other features to use
-  **(take it or leave it)**.
-
-  _Consumption:_
-
-  Normally, in a **push** philosophy, the consumer simply accesses the
-  resource directly _(through the {{book.api.FassetsObject}} or
-  {{book.api.withFassets}} HoC)_, **without any `use` directive**.
-
-  _Optionally_ however, the consumer can employ the `use`
-  {{book.api.fassetsAspect}} directive.  Here they are simply
-  providing **feature-u** with more information, so it can fail fast
-  if/when the resource is not defined.  In other words, there would
-  never be a need for the consumer to check if the resource is defined
-  _(that is accomplished by **feature-u**)_.  **SideBar**: This option
-  is not feasible, if the defining feature can be disabled.
-
-- **Pull**
-
-  _Consumption:_
-
-  When using a **pull** philosophy, the `use` {{book.api.fassetsAspect}}
-  directive is more critical.  In this case the consumer is saying: _"I
-  plan to use this resource from whatever feature wishes to supply
-  it"_.  This is the first half of a
-  {{book.guide.crossCom_resourceContract}}!
-
-  _Definition:_
-
-  When defining a resource in the **pull** philosophy, the supplier should
-  use the `defineUse` {{book.api.fassetsAspect}} directive _(even
-  though a `define` would technically work)_.  Here the supplier is
-  saying _"I am supplying this resource under contract"_.  In this case
-  **feature-u** will fail if there is NO fulfillment of this contract
-  _(for example a typo)_.
-
-
-## Validating Resources
+## Resource Validation
 
 Resource validations can optionally be specified through the
 {{book.api.fassetsAspect}} `use` directive.  This includes:
@@ -691,6 +643,67 @@ the {{book.api.Fassets_hasFeature}} will return false.
 **NOTE**: In addition to `fassets.hasFeature(featureName)` it is also
 possible to reason over the existence of well-known fasset resources
 that are specific to a feature.
+
+
+## fassets summary: Push or Pull
+
+At this point, it may be useful to summarize the three
+{{book.api.fassetsAspect}} directives: `define`, `use`, and
+`defineUse` ... _highlighting two broad use cases_.
+
+As it turns out, when it comes to the definition and consumption of
+fasset resources _(covered in the prior sections)_, there are two
+broad philosophies: **push** or **pull**.
+
+- **Push** - _"throw it over the wall"_
+
+  - **Definition:**
+    
+    When defining resources in a **push** philosophy the `define`
+    directive is crucial.  Here the definer is simply publicly promoting
+    a resource for other features to use **(take it or leave it)**.  The
+    definer is merely saying: _"this is my Public Face"_.
+    
+  - **Consumption:**
+    
+    Normally, in a **push** philosophy, the consumer simply accesses
+    the resource **without any `use` directive** _(through
+    {{book.api.FassetsObject}} or {{book.api.withFassets}} HoC)_.
+    
+    _Optionally_ however, the consumer may employ the `use` directive.
+    Here they are simply providing **feature-u** with more information,
+    so the system will fail fast _(at startup time)_ when the resource
+    is not defined.  In other words, there would never be a need for the
+    consumer to check if the resource is defined _(assuming the `use`
+    contract is "required")_.  Rather, that constraint is achieved by
+    **feature-u**.  **Note**: _This scenario highlights that multiple
+    features can specify the same `use` directive, providing their
+    {{book.guide.crossCom_resourceValidation}} does not conflict_.
+    
+- **Pull** ... _"a resource contract"_
+    
+  - **Consumption:**
+    
+    When using a **pull** philosophy, the `use` directive is more
+    critical.  In this case the consumer is saying: _"I plan to use this
+    resource from whatever feature(s) wish to supply it"_.  This is the
+    first half of a {{book.guide.crossCom_resourceContract}}!
+
+    **SideBar**: It is important that the consumer fulfill this
+    contract by programmatically accessing the resource defined in it's
+    `use` contract _(through {{book.api.FassetsObject}} or
+    {{book.api.withFassets}} HoC)_.  This is outside the control of
+    **feature-u**.
+
+    
+  - **Definition:**
+    
+    When defining a resource in the **pull** philosophy, the supplier
+    should use the `defineUse` directive _(even though a `define`
+    would technically work)_.  Here the supplier is saying _"I am
+    supplying this resource under contract"_.  In this case the system
+    will fail fast _(at startup time)_ if there is NO fulfillment of
+    this contract _(for example a typo)_.
 
 
 ## Accessing fassets
