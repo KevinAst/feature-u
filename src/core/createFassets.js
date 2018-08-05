@@ -148,22 +148,6 @@ export default function createFassets(activeFeatures) {
      * Get (i.e. fetch) the resource(s) corresponding to the supplied
      * `fassetsKey`.
      * 
-     * You may use {{book.guide.crossCom_wildcards}} (`*`) in the
-     * supplied `fassetsKey`, resulting in a multiple resources being
-     * returned (a resource array), matching the supplied pattern.
-     * 
-     * In some cases, you may wish to know the corresponding
-     * `fassetsKey` of the returned resource.  This is especially true
-     * when multiple resources are returned _(using wildcards)_.  As
-     * an example, JSX requires unique keys for array injections _(the
-     * `fassetsKey` is a prime candidate for this, since it is
-     * guaranteed to be unique)_.  To accomplish this, simply suffix
-     * the `fassetsKey` with the keyword: `'@withKeys'`.  When this is
-     * encountered, the resource returned is a two-element array:
-     * `[fassetsKey, resource]`.  _**SideBar**: We use this suffix
-     * technique (as opposed to an additional parameter) to be
-     * consistent with how {{book.api.withFassets}} operates._
-     * 
      * The `fassets.get()` method is an alternative to directly
      * dereferencing the `fassets` object ... the advantage being:
      * 
@@ -172,6 +156,35 @@ export default function createFassets(activeFeatures) {
      * 
      *  2. and it can more gracefully return undefined at any level
      *     within the federated namespace path
+     * 
+     * Regarding the `fassetsKey`:
+     * 
+     * - It is case-sensitive _(as are the defined resources)_.
+     * 
+     * - It may contain {{book.guide.crossCom_wildcards}} (`*`), resulting in a
+     *   multiple resources being returned (a resource array), matching the
+     *   supplied pattern
+     * 
+     * - Matches are restricted to the actual fassetKeys registered through
+     *   the {{book.api.fassetsAspect}} `define`/`defineUse` directives.  In
+     *   other words, the matching algorithm will **not** drill into the
+     *   resource itself (assuming it is an object with depth).
+     * 
+     * - `'@withKeys'`:
+     * 
+     *   In some cases, you may wish to know the corresponding
+     *   `fassetsKey` of the returned resource.  This is especially true
+     *   when multiple resources are returned _(using wildcards)_.  As
+     *   an example, JSX requires unique keys for array injections _(the
+     *   `fassetsKey` is a prime candidate for this, since it is
+     *   guaranteed to be unique)_.
+     * 
+     *   To accomplish this, simply suffix the `fassetsKey` with the
+     *   keyword: `'@withKeys'`.  When this is encountered, the
+     *   resource returned is a two-element array: `[fassetsKey,
+     *   resource]`.  _**SideBar**: We use this suffix technique (as
+     *   opposed to an additional parameter) to be consistent with how
+     *   {{book.api.withFassets}} operates._
      *
      * **SideBar**: The `fassets.get()` method is the basis of the
      * {{book.api.withFassets}} Higher-order Component (HoC).

@@ -242,7 +242,14 @@ export function fassetsProps(fassetsToPropsMap, fassets) { // export for testing
  * injected into a Component.
  * 
  * The injected Component properties will reference the fasset
- * resource corresponding to the fassetsKey.
+ * resource corresponding to the `fassetsKey`.
+ *
+ * Each `fassetsKey` is case-sensitive _(as are the defined resources)_.
+ * 
+ * Matches are restricted to the actual fassetKeys registered through
+ * the {{book.api.fassetsAspect}} `define`/`defineUse` directives.  In
+ * other words, the matching algorithm will **not** drill into the
+ * resource itself (assuming it is an object with depth).
  *
  * **Wildcards**
  *
