@@ -49,13 +49,13 @@
 ----
 * [Core API](coreApi.md)
   * [createFeature()](api.md#createFeature)
+    * Built-In aspects ...
+      * [fassets](api.md#fassets)
+      * [appWillStart()](api.md#appWillStartCB)
+      * [appDidStart()](api.md#appDidStartCB)
   * [expandWithFassets()](api.md#expandWithFassets)
   * [launchApp()](api.md#launchApp)
   * [withFassets()](api.md#withFassets)
-  * Built-In aspects ...
-    * [fassets](api.md#fassets)
-    * [appWillStart()](api.md#appWillStartCB)
-    * [appDidStart()](api.md#appDidStartCB)
   * Object Refs ...
     * [Fassets](api.md#Fassets)
       * [get()](api.md#Fassets_get)

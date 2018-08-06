@@ -170,6 +170,9 @@ export default function createFassets(activeFeatures) {
      *   other words, the matching algorithm will **not** drill into the
      *   resource itself (assuming it is an object with depth).
      * 
+     * - The special **dot** keyword (`'.'`) will return the fassets
+     *   object itself _(in the same tradition as "current directory")_.
+     *
      * - `'@withKeys'`:
      * 
      *   In some cases, you may wish to know the corresponding
@@ -213,7 +216,7 @@ export default function createFassets(activeFeatures) {
      * 
      * @method Fassets.get
      */
-    get: (fassetsKey) => {
+    get: function(fassetsKey) {
 
       // validate parameters
       const check = verify.prefix('fassets.get() parameter violation: ');
@@ -245,11 +248,16 @@ export default function createFassets(activeFeatures) {
         return result===UNDEFINED ? undefined : result;
       }
 
-      // resolve resource of supplied key, interpreting @withKeys
-      // ... returning either [fassetsKey, resource] -or- resource
+      // resolve resource of supplied key
       const resolveResource = (key) => {
-        const  resource = _resources[key] ? _resources[key].val : undefined;
-        return withKeys ? [key, resource] : resource;
+        const resource = key==='.'
+                             ? this // special DOT keyword ... return self (i.e. fassets)
+                             : _resources[key]
+                                 ? _resources[key].val // resource found
+                                 : undefined;          // resource not found
+        return withKeys // interpret @withKeys directive
+                 ? [key, resource] // ... [fassetsKey, resource]
+                 : resource;       // ... resource
       };
 
       // resolve get() when not seen before
@@ -295,7 +303,7 @@ export default function createFassets(activeFeatures) {
      * 
      * @method Fassets.hasFeature
      */
-    hasFeature: (featureName) => {
+    hasFeature: function(featureName) {
       // validate parameters
       const check = verify.prefix('fassets.hasFeature() parameter violation: ');
 

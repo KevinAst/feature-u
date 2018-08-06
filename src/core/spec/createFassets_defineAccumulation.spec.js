@@ -71,6 +71,7 @@ describe('createFassets(): fassets define/defineUse directive accumulation', () 
       [ 'a.b\n.c',   'contains unsupported cr/lf',                       'cr/lf NOT supported'             ],
       [ 'a.b .c',    'alpha, followed by any number of alpha-numerics',  'spaces NOT supported'            ],
       [ 'a.*.c',     'wildcards are not supported',                      'wildcards NOT supported'         ],
+      [ '.',         'contains invalid empty string',                    'dot (.) is a reserved keyword in fassets.get() returning fassets object itself' ],
     ].forEach( ([fassetsKey, expectedError, reason]) => {
 
       test(`resource key programmatic structure check for '${fassetsKey}', expectedError: '${expectedError}', reason: ${reason}`, () => {

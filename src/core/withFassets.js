@@ -251,6 +251,11 @@ export function fassetsProps(fassetsToPropsMap, fassets) { // export for testing
  * other words, the matching algorithm will **not** drill into the
  * resource itself (assuming it is an object with depth).
  *
+ * The special **dot** keyword (`'.'`) will yield the fassets object
+ * itself _(in the same tradition as "current directory")_.  This is
+ * useful if you wish to inject fassets into downstream processes
+ * (such as redux `connect()` via it's `ownProps`).
+ *
  * **Wildcards**
  *
  * {{book.guide.crossCom_wildcards}} (`*`) are supported in the

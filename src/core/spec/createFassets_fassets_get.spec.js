@@ -82,6 +82,9 @@ describe('fassets.get() method', () => {
     [ 'MainPage.*.body@withKeys',       [['MainPage.cart.body','cartBody'],
                                          ['MainPage.search.body', 'searchBody']],   '@withKeys wildcard'],
 
+    [ '.',                              fassets,                                    'special keyword "." yields fassets'],
+    [ '.@withKeys',                     ['.', fassets],                             'special keyword ".@withKeys" yields [".", fassets]'],
+
   ]);
 
   // more tests
