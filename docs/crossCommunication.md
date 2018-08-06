@@ -646,8 +646,7 @@ the {{book.api.Fassets_hasFeature}} will return false.
 possible to reason over the existence of well-known fasset resources
 that are specific to a feature.
 
-
-## fassets summary: Push or Pull
+## Push or Pull: a fassets summary
 
 At this point, it may be useful to summarize the three
 {{book.api.fassetsAspect}} directives: `define`, `use`, and
@@ -657,14 +656,14 @@ As it turns out, when it comes to the definition and consumption of
 fasset resources _(covered in the prior sections)_, there are two
 broad philosophies: **push** or **pull**.
 
-- **Push** - _"throw it over the wall"_
+- **Push** - _"throw it over the wall"_ <img src="img/push.jpg" width="60"/>
 
   - **Definition:**
     
     When defining resources in a **push** philosophy the `define`
-    directive is crucial.  Here the definer is simply publicly promoting
+    directive is crucial.  Here the supplier is simply publicly promoting
     a resource for other features to use **(take it or leave it)**.  The
-    definer is merely saying: _"this is my Public Face"_.
+    supplier is merely saying: _"this is my Public Face"_.
     
   - **Consumption:**
     
@@ -682,7 +681,7 @@ broad philosophies: **push** or **pull**.
     features can specify the same `use` directive, providing their
     {{book.guide.crossCom_resourceValidation}} does not conflict_.
     
-- **Pull** ... _"a resource contract"_
+- **Pull** ... _"a resource contract"_ <img src="img/pull.jpg" width="60"/>
     
   - **Consumption:**
     
@@ -691,13 +690,16 @@ broad philosophies: **push** or **pull**.
     resource from whatever feature(s) wish to supply it"_.  This is the
     first half of a {{book.guide.crossCom_resourceContract}}!
 
+    Typically a `use` contract is made with wildcards, although not
+    required.  Wildcards allow external features to inject their
+    content autonomously.
+
     **SideBar**: It is important that the consumer fulfill this
     contract by programmatically accessing the resource defined in it's
     `use` contract _(through {{book.api.FassetsObject}} or
     {{book.api.withFassets}} HoC)_.  This is outside the control of
     **feature-u**.
 
-    
   - **Definition:**
     
     When defining a resource in the **pull** philosophy, the supplier

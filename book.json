@@ -93,7 +93,7 @@
             "crossCom_reactKeys$":              "<a href='/crossCommunication.html#react-keys-in-array-processing'><code>React Keys (in array processing)</code></a>",
         "crossCom_resourceValidation":     "<a href='/crossCommunication.html#resource-validation'><code>Resource Validation</code></a>",
         "crossCom_doesFeatureExist":       "<a href='/crossCommunication.html#does-feature-exist'><code>Does Feature Exist</code></a>",
-        "crossCom_fassetsPushOrPull":      "<a href='/crossCommunication.html#fassets-summary-push-or-pull'><code>fassets Summary: Push or Pull</code></a>",
+        "crossCom_pushOrPullAFassetssummary":  "<a href='/crossCommunication.html#push-or-pull-a-fassets-summary'><code>Push or Pull: a fassets summary</code></a>",
         "crossCom_accessingFassets":       "<a href='/crossCommunication.html#accessing-fassets'><code>Accessing fassets</code></a>",
           "crossCom_importFassets":        "<a href='/crossCommunication.html#import-fassets'><code>import fassets</code></a>",
           "crossCom_fassetsParameter":     "<a href='/crossCommunication.html#fassets-parameter'><code>fassets parameter</code></a>",

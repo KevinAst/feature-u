@@ -36,7 +36,7 @@
       * [React Keys](crossCommunication.md#react-keys-in-array-processing)
   * [Resource Validation](crossCommunication.md#resource-validation)
   * [Does Feature Exist](crossCommunication.md#does-feature-exist)
-  * [fassets summary: Push or Pull](crossCommunication.md#fassets-summary-push-or-pull)
+  * [Push or Pull: a fassets summary](crossCommunication.md#push-or-pull-a-fassets-summary)
   * [Accessing fassets](crossCommunication.md#accessing-fassets)
     * [import fassets](crossCommunication.md#import-fassets)
     * [fassets parameter](crossCommunication.md#fassets-parameter)
