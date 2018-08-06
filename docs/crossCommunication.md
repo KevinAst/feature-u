@@ -53,6 +53,8 @@ The `fassets` terminology is consistently used in both:
 - and in their usage (through the {{book.api.FassetsObject}} and the
   {{book.api.withFassets}} HoC)
 
+![Context Diagram](img/crossFeatureCommunication.png)
+
 
 ### fassets definition
 
