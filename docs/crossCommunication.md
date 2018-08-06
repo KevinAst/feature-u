@@ -243,8 +243,9 @@ another:
 - Other features will supply this content using the `fassets.defineUse`
   directive, by referencing these same **injection keys**.
 
-This gives **feature-u** more knowledge of the process, allowing it to
-verify that supplied resources are correct.
+This represents more of a **pull** philosophy.  It gives **feature-u**
+more knowledge of the process, allowing it to verify that supplied
+resources are correct.
 
 **SideBar**: The `define` and `defineUse` directives are very similar,
 and in some cases can be used interchangeably.  The `defineUse`
@@ -480,6 +481,7 @@ Currently, only one wildcard character is supported:
   fassetsKey             Matches
   =====================  =============
   'company.logo'         1
+  '*link'                [  2,  4    ]
   'MainPage.*.link'      [  2,  4    ]
   'MainPage.*.body'      [    3,  5  ]
   'MainPage.*'           [  2,3,4,5  ]
