@@ -756,8 +756,18 @@ function injectFassetsResource(key, val, obj, check) {
 
 /**
  * An internal function that validates supplied key, to be a
- * programmatic structure, as follows:
+ * programmatic structure.
  *
+ * feature-u's fassetKeys can be any JS identifier (less $ support - currently)
+ *   TODO: Omition of $ support was due to concern about conflict in wildcard processing (never actually tried).
+ *
+ *   JavaScript Identifier Rules:
+ *    - MAY CONTAIN:    alphas, digits, _, $
+ *    - BEGINNING WITH: alphas,         _, $
+ *    - ARE:            case-sensitive
+ *    - JavaScript keywords cannot be used
+ *
+ * Examples:
  * ```
  *   - allow embedded DOTS "."
  *   - disallow wildcards "*"
@@ -765,6 +775,7 @@ function injectFassetsResource(key, val, obj, check) {
  *                 "a1"
  *                 "a1.b"
  *                 "a1.b2.c"
+ *                 "_a._b_.c_"
  *   - invalid:    ""           // empty string
  *                 "123"        // must start with alpha
  *                 ".a"         // beginning empty string
@@ -791,10 +802,10 @@ function injectFassetsResource(key, val, obj, check) {
  */
 function checkProgrammaticStruct(key, check, allowWildcards=false) {
 
-  const errMsg = `fassetsKey: '${key}' is invalid (NOT a programmatic structure) ...`;
+  const errMsg = `fassetsKey: '${key}' is invalid (NOT a JS identifier) ...`;
 
-  const regExpAllowingWildcards    = /^[a-zA-Z\*][a-zA-Z0-9\*]*$/;
-  const regExpDisallowingWildcards = /^[a-zA-Z][a-zA-Z0-9]*$/;
+  const regExpAllowingWildcards    = /^[_a-zA-Z\*][_a-zA-Z0-9\*]*$/;
+  const regExpDisallowingWildcards = /^[_a-zA-Z][_a-zA-Z0-9]*$/;
   var   regExpCheck                = regExpAllowingWildcards;
 
   // insure NO cr/lf
@@ -812,7 +823,7 @@ function checkProgrammaticStruct(key, check, allowWildcards=false) {
   nodeKeys.forEach( nodeKey => {
     check(nodeKey!=='', `${errMsg} contains invalid empty string`);
     check(isMatch(nodeKey, regExpCheck),
-          `${errMsg} contains invalid chars, each node requires: alpha, followed by any number of alpha-numerics`);
+          `${errMsg} each node must conform to a JS indentifier (less $ support)`);
   });
 }
 

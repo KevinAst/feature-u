@@ -323,6 +323,7 @@ export function extendFeatureProperty(name, owner) {
  *         - may contain federated namespace (via dots ".")
  *           ... normalized in fassets object
  *           ... ex: 'MainPage.launch'
+ *         - may be any valid JS identifier (less $ support)
  *         - may NOT contain wildcards
  *           ... i.e. must be defined completely
  *
@@ -361,6 +362,7 @@ export function extendFeatureProperty(name, owner) {
  *         - is case-sensitive
  *         - may contain federated namespace (with dots ".")
  *           ... ex: 'MainPage.launch'
+ *         - may be any valid JS identifier (less $ support)
  *         - may contain wildcards (with "*")
  *           ... ex: 'MainPage.*.link'
  *

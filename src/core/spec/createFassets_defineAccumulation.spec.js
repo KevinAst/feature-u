@@ -62,14 +62,14 @@ describe('createFassets(): fassets define/defineUse directive accumulation', () 
     // fassetsKey    expectedError                                       reason
     // ===========   ==================================================  =================================
       [ '',          'contains invalid empty string',                    'empty string'                    ],
-      [ '123',       'alpha, followed by any number of alpha-numerics',  'must start with alpha'           ],
+      [ '123',       'must conform to a JS indentifier',                 'must start with alpha'           ],
       [ '.a',        'contains invalid empty string',                    'beginning empty string'          ],
       [ 'a.',        'contains invalid empty string',                    'ending empty string'             ],
       [ 'a..b',      'contains invalid empty string',                    'embedded empty string'           ],
       [ 'a.b.',      'contains invalid empty string',                    'ending empty string (again)'     ],
-      [ 'a.b.1',     'alpha, followed by any number of alpha-numerics',  'each node must start with alpha' ],
+      [ 'a.b.1',     'must conform to a JS indentifier',                 'each node must start with alpha' ],
       [ 'a.b\n.c',   'contains unsupported cr/lf',                       'cr/lf NOT supported'             ],
-      [ 'a.b .c',    'alpha, followed by any number of alpha-numerics',  'spaces NOT supported'            ],
+      [ 'a.b .c',    'must conform to a JS indentifier',                 'spaces NOT supported'            ],
       [ 'a.*.c',     'wildcards are not supported',                      'wildcards NOT supported'         ],
       [ '.',         'contains invalid empty string',                    'dot (.) is a reserved keyword in fassets.get() returning fassets object itself' ],
     ].forEach( ([fassetsKey, expectedError, reason]) => {
@@ -85,8 +85,8 @@ describe('createFassets(): fassets define/defineUse directive accumulation', () 
             },
           }),
         ]) )
-          .toThrow( new RegExp(`Feature.name: 'featureTest'.*ERROR in "fassets" aspect.*fassetsKey.*\n*.*is invalid.*NOT a programmatic structure.*${expectedError}`) );
-        // THROW: Feature.name: 'featureTest' ... ERROR in "fassets" aspect, "define/defineUse" directive: fassetsKey: 'a.*.c' is invalid (NOT a programmatic structure) ... wildcards are not supported
+          .toThrow( new RegExp(`Feature.name: 'featureTest'.*ERROR in "fassets" aspect.*fassetsKey.*\n*.*is invalid.*NOT a JS identifier.*${expectedError}`) );
+        // THROW: Feature.name: 'featureTest' ... ERROR in "fassets" aspect, "define/defineUse" directive: fassetsKey: '.' is invalid (NOT a JS identifier) ... contains invalid empty string
       });
 
     });
@@ -124,6 +124,7 @@ describe('createFassets(): fassets define/defineUse directive accumulation', () 
         fassets: {
           define: {
             'foo': 123,
+            '_a.b_._c_._x_y_z_': 'underbars allowed',
           },
           defineUse: {
             'wow.aaa': 111,
@@ -157,6 +158,9 @@ describe('createFassets(): fassets define/defineUse directive accumulation', () 
     test('wow.aaa',     () => expect(fassets.wow.aaa     ).toBe(111) );
     test('wow.bbb.ccc', () => expect(fassets.wow.bbb.ccc ).toBe(333) );
     test('wow.bbb.ddd', () => expect(fassets.wow.bbb.ddd ).toBe(444) );
+
+    test('_a.b_._c_._x_y_z_', () => expect(fassets._a.b_._c_._x_y_z_ ).toBe('underbars allowed') );
+
   });
 
 

@@ -134,17 +134,17 @@ describe('createFassets(): fassets use directive accumulation', () => {
     });
 
     [
-     // useKey       expectedError                                       reason
-     // ===========  ==================================================  =================================
-      [ '',          'contains invalid empty string',                    'empty string'                    ],
-      [ '123',       'alpha, followed by any number of alpha-numerics',  'must start with alpha'           ],
-      [ '.a',        'contains invalid empty string',                    'beginning empty string'          ],
-      [ 'a.',        'contains invalid empty string',                    'ending empty string'             ],
-      [ 'a..b',      'contains invalid empty string',                    'embedded empty string'           ],
-      [ 'a.b.',      'contains invalid empty string',                    'ending empty string (again)'     ],
-      [ 'a.b.1',     'alpha, followed by any number of alpha-numerics',  'each node must start with alpha' ],
-      [ 'a.b\n.c',   'contains unsupported cr/lf',                       'cr/lf NOT supported'             ],
-      [ 'a.b .c',    'alpha, followed by any number of alpha-numerics',  'spaces NOT supported'            ],
+     // useKey       expectedError                        reason
+     // ===========  ===================================  =================================
+      [ '',          'contains invalid empty string',     'empty string'                    ],
+      [ '123',       'must conform to a JS indentifier',  'must start with alpha'           ],
+      [ '.a',        'contains invalid empty string',     'beginning empty string'          ],
+      [ 'a.',        'contains invalid empty string',     'ending empty string'             ],
+      [ 'a..b',      'contains invalid empty string',     'embedded empty string'           ],
+      [ 'a.b.',      'contains invalid empty string',     'ending empty string (again)'     ],
+      [ 'a.b.1',     'must conform to a JS indentifier',  'each node must start with alpha' ],
+      [ 'a.b\n.c',   'contains unsupported cr/lf',        'cr/lf NOT supported'             ],
+      [ 'a.b .c',    'must conform to a JS indentifier',  'spaces NOT supported'            ],
     ].forEach( ([useKey, expectedError, reason]) => {
 
       test(`useKey invalid check '${useKey}': ${expectedError}`, () => {
@@ -158,8 +158,8 @@ describe('createFassets(): fassets use directive accumulation', () => {
             },
           }),
         ]) )
-          .toThrow( new RegExp(`Feature.name: 'featureTest'.*ERROR in "fassets" aspect, "use" directive.*\n*.*is invalid.*NOT a programmatic structure.*${expectedError}`) );
-        // THROW:  Feature.name: 'featureTest' ... ERROR in "fassets" aspect, "use" directive: fassetsKey: '' is invalid (NOT a programmatic structure) ... contains invalid empty string
+          .toThrow( new RegExp(`Feature.name: 'featureTest'.*ERROR in "fassets" aspect, "use" directive.*\n*.*is invalid.*NOT a JS identifier.*${expectedError}`) );
+        // THROW:  Feature.name: 'featureTest' ... ERROR in "fassets" aspect, "use" directive: fassetsKey: 'a.b .c' is invalid (NOT a JS identifier) ... each node must conform to a JS indentifier (less $ support)
       });
 
     });
