@@ -736,15 +736,15 @@ ways to achieve:
    components _(using the special {{book.api.withFassets}} `'.'`
    keyword, injecting the `fassets` object itself)_.
 
-3. {{book.guide.crossCom_importFassets}} from your application
-   mainline ... for code that is outside the control of **feature-u**
-   _(providing the reference is **not** needed during inline
-   code-expansion)_.
-
-4. Use {{book.guide.crossCom_managedCodeExpansion}} ... for
+3. Use {{book.guide.crossCom_managedCodeExpansion}} ... for
    {{book.api.AspectContent}} definitions requiring `fassets` during
    inline code-expansion _(employing the
    {{book.api.expandWithFassets}} wrapper function)_.
+
+4. {{book.guide.crossCom_importFassets}} from your application
+   mainline ... for code that is outside the control of **feature-u**
+   _(providing the reference is **not** needed during inline
+   code-expansion)_.
 
 You may be asking yourself: **"Why so many techniques"**?  _Let's
 delve into this just a bit ..._
@@ -849,65 +849,49 @@ const MyConnectedComp = connect( // standard redux connect
 
 export default withFassets({
   mapFassetsToProps: {
-    fassets: '.', // ... introduce fassets into component props via the '.' keyword
+    fassets: '.', // ... introduce fassets into props via the '.' keyword
     Logo:    'company.logo',
   }
 })(MyConnectedComp);
 ```
 
+If you are of a "functional" mindset, here is the same example using
+functional composition:
+
+```js
+import {compose} from 'redux';
+
+const MyComp = ({fassets, Logo, eggCount}) => {
+  return (
+    <div>
+      <Logo/>
+      <p>My egg total: {eggCount}</p>
+    </div>
+    ... can use fassets here too (if desired)
+  );
+};
+
+export default compose( // combine withFassets() and redux connect() using functional composition
+  withFassets({
+    mapFassetsToProps: {
+      fassets: '.', // ... introduce fassets into props via the '.' keyword
+      Logo:    'company.logo',
+    },
+  }),
+  connect((state, {fassets}) => ({ // ... fassets available in ownProps (via withFassets())
+    eggCount: fassets.selectors.getEggCount(state), // ... uses external feature selector (via fassets)
+  })),
+)(MyComp);
+```
+
+
+
 <!-- 33333333333333333333333333333333333333333333333333333 -->
-### import fassets
-
-For run-time functions that are outside the control of **feature-u**,
-simply import `fassets` from your application mainline.
-
-Your mainline exports the {{book.api.launchApp}} return value
-... which is the {{book.api.FassetsObject}}.
-
-**`src/app.js`**
-```js
-// launch our app, exposing the feature-u Fassets object (facilitating cross-feature communication)!
-export default launchApp({
-  ...
-});
-```
-
-While imports are a simple and straight forward process, they cannot be
-used when the reference is needed during inline code-expansion
-_(because {{book.api.launchApp}} must run to completion)_.
-
-<!-- 
-  TODO: The above point may highlight an uncovered condition:
-        - If we are in a module OUTSIDE of the control of feature-u
-        - and we need fassets during inline code-expansion
-        Is this a condition where "we can't get there from here"?
-        HOWEVER, this may be a sign of a code smell (not really sure)
--->
-
-
-As it turns out, importing `fassets` is not usually necessary, because
-most cases are covered through the alternate means.
-
-For sake of example, let's consider a somewhat contrived example,
-where a piece of code needs to close the leftNav menu.  This function
-is provided by a Public Facing resource defined in the leftNav
-feature.
-
-```js
-import fassets from '../app';
-
-function closeSideBar() {
-  fassets.leftNav.close();
-}
-```
-
-
-<!-- 44444444444444444444444444444444444444444444444444444 -->
 ### Managed Code Expansion
 
-The last technique to access the {{book.api.FassetsObject}},
-provides **early access** _during code expansion time_, through the
-{{book.api.expandWithFassets}} utility.
+To obtain **early access** to the {{book.api.FassetsObject}} _(during
+inline code-expansion)_, simply wrap your {{book.api.AspectContent}}
+in the {{book.api.expandWithFassets}} utility.
 
 There are two situations that make accessing `fassets` problematic,
 which are: **a:** _in-line code expansion (where `fassets` may not
@@ -982,3 +966,50 @@ is guaranteed to have all public facing feature definitions resolved
 used (_over and above `fassets` injection during code expansion_) is to
 **delay code expansion**, which can avoid issues related to
 (_legitimate but somewhat obscure_) circular dependencies.
+
+
+<!-- 44444444444444444444444444444444444444444444444444444 -->
+### import fassets
+
+For run-time functions that are outside the control of **feature-u**,
+simply import `fassets` from your application mainline.
+
+Your mainline exports the {{book.api.launchApp}} return value
+... which is the {{book.api.FassetsObject}}.
+
+**`src/app.js`**
+```js
+// launch our app, exposing the feature-u Fassets object (facilitating cross-feature communication)!
+export default launchApp({
+  ...
+});
+```
+
+While imports are a simple and straight forward process, they cannot be
+used when the reference is needed during inline code-expansion
+_(because {{book.api.launchApp}} must run to completion)_.
+
+<!-- 
+  TODO: The above point may highlight an uncovered condition:
+        - If we are in a module OUTSIDE of the control of feature-u
+        - and we need fassets during inline code-expansion
+        Is this a condition where "we can't get there from here"?
+        HOWEVER, this may be a sign of a code smell (not really sure)
+-->
+
+
+As it turns out, importing `fassets` is not usually necessary, because
+most cases are covered through the alternate means.
+
+For sake of example, let's consider a somewhat contrived example,
+where a piece of code needs to close the leftNav menu.  This function
+is provided by a Public Facing resource defined in the leftNav
+feature.
+
+```js
+import fassets from '../app';
+
+function closeSideBar() {
+  fassets.leftNav.close();
+}
+```

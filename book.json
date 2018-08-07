@@ -97,8 +97,8 @@
         "crossCom_obtainingFassetsObject":   "<a href='/crossCommunication.html#obtaining-fassets-object'><code>Obtaining fassets object</code></a>",
           "crossCom_fassetsParameter":       "<a href='/crossCommunication.html#fassets-parameter'><code>fassets parameter</code></a>",
           "crossCom_injectFassetsCompProps": "<a href='/crossCommunication.html#inject-fassets-comp-props'><code>Inject fassets comp props</code></a>",
-          "crossCom_importFassets":          "<a href='/crossCommunication.html#import-fassets'><code>import fassets</code></a>",
           "crossCom_managedCodeExpansion":   "<a href='/crossCommunication.html#managed-code-expansion'><code>Managed Code Expansion</code></a>",
+          "crossCom_importFassets":          "<a href='/crossCommunication.html#import-fassets'><code>import fassets</code></a>",
 
       "featureRouter":  "<a href='/featureRouter.html'><code>Feature Based Routes</code></a>",
 
