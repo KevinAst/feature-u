@@ -98,8 +98,8 @@ To use these public resources, **feature-u** accumulates them from all
 active features, and promotes them through the
 {{book.api.FassetsObject}} _(emitted from {{book.api.launchApp}})_.
 
-**SideBar**: There are several ways to access the `Fassets object`
-_(discussed later - {{book.guide.crossCom_accessingFassets}})_.
+**SideBar**: There are several ways to obtain access the `Fassets object`
+_(discussed later - {{book.guide.crossCom_obtainingFassetsObject}})_.
 
 To reference a `fassets` resource, simply dereference it as any other
 object reference.  Here is a usage example (using the definition
@@ -191,7 +191,7 @@ just the resource happens to be a react component.
 
 ### withFassets() HoC
 
-{{book.api.withFassets}} ia a **feature-u** Higher-order Component
+{{book.api.withFassets}} is a **feature-u** Higher-order Component
 (HoC) that auto-wires fasset properties into a component.  This is a
 common pattern popularized by redux `connect()` _(simplifying
 component access to application state)_.
@@ -712,9 +712,9 @@ broad philosophies: **push** or **pull**.
     this contract _(for example a typo)_.
 
 
-## Accessing fassets
+## Obtaining fassets object
 
-Broadly speaking, Public Facing feature resources can be obtained
+Broadly speaking, Public Facing fasset resources can be obtained
 either by:
 
 - using the {{book.api.withFassets}} HoC (for UI Components),
@@ -722,65 +722,71 @@ either by:
 - or by directly referencing the {{book.api.FassetsObject}}
   programmatically.
 
-The former, implicitly accesses `fassets` _(under the covers)_ using
-a {{book.ext.reactContext}}.  The latter requires direct programatic
-access to the {{book.api.FassetsObject}} ... of which there are three
+The former, implicitly accesses `fassets` _(under the covers)_ using a
+{{book.ext.reactContext}}.  The latter requires direct programmatic
+access to the {{book.api.FassetsObject}} ... of which there are four
 ways to achieve:
 
-1. Simply import `fassets` _(a technique used by run-time
-   functions that are outside the control of **feature-u**)_
-   ... see: {{book.guide.crossCom_importFassets}}
+1. Use the {{book.guide.crossCom_fassetsParameter}} supplied through
+   **feature-u**'s programmatic APIs ... for code that is under the
+   control of **feature-u** _(for example, life-cycle hooks, or logic
+   hooks, etc.)_.
 
-2. Use the `fassets` parameter supplied through **feature-u**'s programmatic
-   APIs (_for example, live-cycle hooks, or logic hooks, etc._)
-   ... see: {{book.guide.crossCom_fassetsParameter}}
+2. {{book.guide.crossCom_injectFassetsCompProps}} ... for react
+   components _(using the special {{book.api.withFassets}} `'.'`
+   keyword, injecting the `fassets` object itself)_.
 
-3. Use {{book.api.expandWithFassets}} to inject the `fassets`
-   parameter (_when `fassets` are required during in-line expansion of
-   code_)
-   ... see: {{book.guide.crossCom_managedCodeExpansion}}
+3. {{book.guide.crossCom_importFassets}} from your application
+   mainline ... for code that is outside the control of **feature-u**
+   _(providing the reference is **not** needed during inline
+   code-expansion)_.
 
-Let's take a closer look at each of these access points.
+4. Use {{book.guide.crossCom_managedCodeExpansion}} ... for
+   {{book.api.AspectContent}} definitions requiring `fassets` during
+   inline code-expansion _(employing the
+   {{book.api.expandWithFassets}} wrapper function)_.
+
+You may be asking yourself: **"Why so many techniques"**?  _Let's
+delve into this just a bit ..._
+
+Generally speaking, programmatic access to the
+{{book.api.FassetsObject}} is complicated by whether it is needed
+during inline code-expansion or not.
+
+- The fact that {{book.api.launchApp}} accumulates fasset resources,
+  means that it must run to completion before `fassets` is made
+  available through an import.
+
+- Furthermore, the goal of restricting cross-feature imports requires
+  that the `fassets` object be used in place of imports.
+
+In spite of these seemingly conflicting artifacts, **the goal of
+restricting cross-feature imports is most certainly a worthy
+objective!** The bottom line is that
+{{book.guide.crossCom_managedCodeExpansion}} comes to the rescue, and
+"fills the gap" when needed.
+
+Accessing external feature resources in a seamless way is a
+**rudimentary benefit of feature-u** that alleviates a number of
+problems in your code, **making your features truly plug-and-play**.
+
+**SideBar**: It is possible that a module may be using more than one of
+these access techniques.  As an example a logic module may have to use
+{{book.api.expandWithFassets}} to access `fassets` at code-expansion
+time, but is also supplied `fassets` as a parameter in it's functional
+hook.  This is perfectly fine, as they will be referencing the exact
+same `fassets` object instance.
+
+_**Let's take a closer look at each of these access points.**_
 
 
-### import fassets
-
-The simplest way to access the {{book.api.FassetsObject}} is to
-merely import it.
-
-Your application mainline exports the {{book.api.launchApp}} return
-value ... which is the {{book.api.FassetsObject}}.
-
-**`src/app.js`**
-```js
-// launch our app, exposing the feature-u Fassets object (facilitating cross-feature communication)!
-export default launchApp({
-  ...
-});
-```
-
-As it turns out, importing `fassets` is not usually necessary, because
-most cases are covered through alternate means.
-
-For sake of example, let's consider a somewhat contrived example,
-where a piece of code needs to close the leftNav menu.  This function
-is provided by a Public Facing resource defined in the leftNav
-feature.
-
-```js
-import fassets from '../app';
-
-function closeSideBar() {
-  fassets.leftNav.close();
-}
-```
-
-
+<!-- 11111111111111111111111111111111111111111111111111111 -->
 ### fassets parameter
 
-Another way to access the {{book.api.FassetsObject}} is through the
-programmatic APIs of **feature-u**, where `fassets` is supplied as a
-parameter.
+The simplest way to access the {{book.api.FassetsObject}} is through
+the programmatic APIs of **feature-u**, where `fassets` is supplied as
+a parameter.  This covers any process that is under the control of
+**feature-u**, for example:
 
 - app life-cycle hooks:
   
@@ -807,6 +813,96 @@ parameter.
   ```
 
 
+<!-- 22222222222222222222222222222222222222222222222222222 -->
+### Inject fassets comp props
+
+For react components, you can inject the {{book.api.FassetsObject}}
+directly in your component properties by using the special
+{{book.api.withFassets}} `'.'` keyword.  This emits the `fassets`
+object itself _(in the same tradition as "current directory")_.
+
+When using the {{book.api.withFassets}} HoC you have a choice ... you
+can inject selected assets as needed, or the the entire `fassets`
+object, or both ... _it's really a personal preference_.
+
+As it turns out, this can even be used to introduce `fassets` into
+other HoCs, such as redux `connect()` using it's `ownProps` parameter.
+
+Here is an example:
+
+```js
+const MyComp = ({fassets, Logo, eggCount}) => {
+  return (
+    <div>
+      <Logo/>
+      <p>My egg total: {eggCount}</p>
+    </div>
+    ... can use fassets here too (if desired)
+  );
+};
+
+const MyConnectedComp = connect( // standard redux connect
+ (state, {fassets}) => ({ // ... fassets available in ownProps (via withFassets() below)
+   eggCount: fassets.selectors.getEggCount(state), // ... uses external feature selector (via fassets)
+ }),
+)(MyComp);
+
+export default withFassets({
+  mapFassetsToProps: {
+    fassets: '.', // ... introduce fassets into component props via the '.' keyword
+    Logo:    'company.logo',
+  }
+})(MyConnectedComp);
+```
+
+<!-- 33333333333333333333333333333333333333333333333333333 -->
+### import fassets
+
+For run-time functions that are outside the control of **feature-u**,
+simply import `fassets` from your application mainline.
+
+Your mainline exports the {{book.api.launchApp}} return value
+... which is the {{book.api.FassetsObject}}.
+
+**`src/app.js`**
+```js
+// launch our app, exposing the feature-u Fassets object (facilitating cross-feature communication)!
+export default launchApp({
+  ...
+});
+```
+
+While imports are a simple and straight forward process, they cannot be
+used when the reference is needed during inline code-expansion
+_(because {{book.api.launchApp}} must run to completion)_.
+
+<!-- 
+  TODO: The above point may highlight an uncovered condition:
+        - If we are in a module OUTSIDE of the control of feature-u
+        - and we need fassets during inline code-expansion
+        Is this a condition where "we can't get there from here"?
+        HOWEVER, this may be a sign of a code smell (not really sure)
+-->
+
+
+As it turns out, importing `fassets` is not usually necessary, because
+most cases are covered through the alternate means.
+
+For sake of example, let's consider a somewhat contrived example,
+where a piece of code needs to close the leftNav menu.  This function
+is provided by a Public Facing resource defined in the leftNav
+feature.
+
+```js
+import fassets from '../app';
+
+function closeSideBar() {
+  fassets.leftNav.close();
+}
+```
+
+
+<!-- 44444444444444444444444444444444444444444444444444444 -->
 ### Managed Code Expansion
 
 The last technique to access the {{book.api.FassetsObject}},
@@ -839,11 +935,11 @@ export const myLogicModule = createLogic({
 });
 ```
 
-When aspect content definitions require the {{book.api.FassetsObject}} at code
-expansion time, you can wrap the definition in a
-{{book.api.expandWithFassets}} function.  In other words, your aspect
-content can either be the actual content itself _(ex: a reducer)_, or a
-function that returns the content.
+When {{book.api.AspectContent}} definitions require the
+{{book.api.FassetsObject}} at code expansion time, you can wrap the
+definition in a {{book.api.expandWithFassets}} function.  In other
+words, your aspect content can either be the actual content itself
+_(ex: a reducer)_, or a function that returns the content.
 
 Your callback function should conform to the following signature:
 
@@ -886,40 +982,3 @@ is guaranteed to have all public facing feature definitions resolved
 used (_over and above `fassets` injection during code expansion_) is to
 **delay code expansion**, which can avoid issues related to
 (_legitimate but somewhat obscure_) circular dependencies.
-
-
-### Fassets Access Summary
-
-Programmatic access to the {{book.api.FassetsObject}} boils down to
-two scenarios:
-
-1. Either the reference is needed during code-expansion time _(which
-   also includes functions that are executed in code-expansion)_
-
-2. or they are needed at run-time _(i.e. after code-expansion)_
-
-The fact that the feature accumulation process assimilates fasset
-resources _(within {{book.api.launchApp}})_ means that the `fassets`
-object is not available during code-expansion time.
-
-Furthermore, the goal of restricting cross-feature imports requires
-that the `fassets` object be used in their place.
-
-In spite of these seemingly conflicting artifacts, **the goal of
-restricting cross-feature imports is most certainly a worthy
-objective!**
-
-The bottom line is that {{book.api.expandWithFassets}} comes to the
-rescue, and "fills the gap" when needed.
-
-Accessing feature resources in a seamless way is a **rudimentary
-benefit of feature-u** that alleviates a number of problems in your
-code, **making your features truly plug-and-play**.
-
-**NOTE**: It is possible that a module may be using more than one of
-these access techniques.  As an example a logic module may have to use
-{{book.api.expandWithFassets}} to access `fassets` at code-expansion
-time, but is also supplied `fassets` as a parameter in it's functional
-hook.  This is perfectly fine, as they will be referencing the exact
-same `fassets` object instance.
-

@@ -320,9 +320,9 @@ basis of {{book.guide.crossCom}}.
 
 By **feature-u** decree, this object should be exported _(see `*4*`
 in the code snippet above)_, providing import access to other modules.
-**SideBar**: In reality there are three distinct ways to access the
+**SideBar**: In reality there are several ways to access the
 `fassets` object _(depending on the context)_, import is just one
-_(see: {{book.guide.crossCom_accessingFassets}})_.
+_(see: {{book.guide.crossCom_obtainingFassetsObject}})_.
 
 You can find more information about the {{book.api.FassetsObject}} in
 {{book.guide.crossCom}}.

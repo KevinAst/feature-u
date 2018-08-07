@@ -112,8 +112,8 @@ export default function createFassets(activeFeatures) {
    *    through the {{book.api.withFassets}} Higher-order Component
    *    (HoC).
    * 
-   * There are several ways to access the `fassets` object _(see
-   * {{book.guide.crossCom_accessingFassets}})_.
+   * There are several ways to obtain access to the `fassets` object _(see
+   * {{book.guide.crossCom_obtainingFassetsObject}})_.
    * 
    * For more information, please refer to
    * {{book.guide.crossCom_fassetsBasics}}.

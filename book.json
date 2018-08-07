@@ -94,11 +94,11 @@
         "crossCom_resourceValidation":     "<a href='/crossCommunication.html#resource-validation'><code>Resource Validation</code></a>",
         "crossCom_doesFeatureExist":       "<a href='/crossCommunication.html#does-feature-exist'><code>Does Feature Exist</code></a>",
         "crossCom_pushOrPullAFassetssummary":  "<a href='/crossCommunication.html#push-or-pull-a-fassets-summary'><code>Push or Pull: a fassets summary</code></a>",
-        "crossCom_accessingFassets":       "<a href='/crossCommunication.html#accessing-fassets'><code>Accessing fassets</code></a>",
-          "crossCom_importFassets":        "<a href='/crossCommunication.html#import-fassets'><code>import fassets</code></a>",
-          "crossCom_fassetsParameter":     "<a href='/crossCommunication.html#fassets-parameter'><code>fassets parameter</code></a>",
-          "crossCom_managedCodeExpansion": "<a href='/crossCommunication.html#managed-code-expansion'><code>Managed Code Expansion</code></a>",
-          "crossCom_fassetsAccessSummary": "<a href='/crossCommunication.html#fassets-access-summary'><code>Fassets Access Summary</code></a>",
+        "crossCom_obtainingFassetsObject":   "<a href='/crossCommunication.html#obtaining-fassets-object'><code>Obtaining fassets object</code></a>",
+          "crossCom_fassetsParameter":       "<a href='/crossCommunication.html#fassets-parameter'><code>fassets parameter</code></a>",
+          "crossCom_injectFassetsCompProps": "<a href='/crossCommunication.html#inject-fassets-comp-props'><code>Inject fassets comp props</code></a>",
+          "crossCom_importFassets":          "<a href='/crossCommunication.html#import-fassets'><code>import fassets</code></a>",
+          "crossCom_managedCodeExpansion":   "<a href='/crossCommunication.html#managed-code-expansion'><code>Managed Code Expansion</code></a>",
 
       "featureRouter":  "<a href='/featureRouter.html'><code>Feature Based Routes</code></a>",
 
