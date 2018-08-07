@@ -19,18 +19,19 @@ describe('createFassets(): fassets use directive accumulation', () => {
       // THROW:   Feature.name: 'featureTest' ... ERROR in "fassets" aspect, "use" directive: the use directive MUST BE an array
     });
 
-    test(`use directive should NOT be empty`, () => {
-      expect(()=> createFassets([
-        createFeature({
-          name:       'featureTest',
-          fassets: {
-            use: [],
-          },
-        }),
-      ]) )
-        .toThrow(/Feature.name: 'featureTest'.*the use directive is empty/);
-      // THROW:   Feature.name: 'featureTest' ... ERROR in "fassets" aspect, "use" directive: the use directive is empty (at least one usage contract is needed
-    });
+    // NOTE: this constraint was relaxed (see: createFassets.js ... relax this "empty" check)
+    // test(`use directive should NOT be empty`, () => {
+    //   expect(()=> createFassets([
+    //     createFeature({
+    //       name:       'featureTest',
+    //       fassets: {
+    //         use: [],
+    //       },
+    //     }),
+    //   ]) )
+    //     .toThrow(/Feature.name: 'featureTest'.*the use directive is empty/);
+    //   // THROW:   Feature.name: 'featureTest' ... ERROR in "fassets" aspect, "use" directive: the use directive is empty (at least one usage contract is needed
+    // });
 
     test(`use directive entries must either be a string or a string/options in a two-element array`, () => {
       expect(()=> createFassets([

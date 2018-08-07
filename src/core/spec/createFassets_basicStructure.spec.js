@@ -61,16 +61,17 @@ describe('createFassets(): fassets basic structure', () => {
       // THROW:  Feature.name: 'featureTest' ... ERROR in "fassets" aspect: unrecognized fassets directive(s): badDirective1,badDirective2 ... expecting only: define/use/defineUse
     });
 
-    test('at least one directive needed - define/use/defineUse', () => {
-      expect(()=> createFassets([
-        createFeature({
-          name:       'featureTest',
-          fassets:    {},
-        }),
-      ]) )
-        .toThrow(/Feature.name: 'featureTest'.*fassets aspect is empty/);
-      // THROW: Feature.name: 'featureTest' ... ERROR in "fassets" aspect: the fassets aspect is empty (at least one directive needed - define/use/defineUse)
-    });
+    // NOTE: this constraint was relaxed (see: createFassets.js ... relax this "empty" check)
+    // test('at least one directive needed - define/use/defineUse', () => {
+    //   expect(()=> createFassets([
+    //     createFeature({
+    //       name:       'featureTest',
+    //       fassets:    {},
+    //     }),
+    //   ]) )
+    //     .toThrow(/Feature.name: 'featureTest'.*fassets aspect is empty/);
+    //   // THROW: Feature.name: 'featureTest' ... ERROR in "fassets" aspect: the fassets aspect is empty (at least one directive needed - define/use/defineUse)
+    // });
 
   });
 

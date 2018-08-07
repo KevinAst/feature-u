@@ -377,15 +377,15 @@ export default function createFassets(activeFeatures) {
     check(isPlainObject(fassets), `the fassets aspect MUST BE an object literal`);
 
     // insure all fassets directives are recognized
-    const {define, use, defineUse, ...unknownDirectives} = fassets;
+    const {define, use, defineUse, ...unknownDirectives} = fassets; // eslint-disable-line no-unused-vars
     const unknownDirectiveKeys = Object.keys(unknownDirectives);
     check(unknownDirectiveKeys.length === 0,
           `unrecognized fassets directive(s): ${unknownDirectiveKeys} ... expecting only: define/use/defineUse`);
 
     // verify at least ONE fassets directive is supplied
-    // AI: We may want to relax this "empty" check
-    check(define!==undefined || use!==undefined || defineUse!==undefined,
-          `the fassets aspect is empty (at least one directive needed - define/use/defineUse)`);
+    // ... potential to relax this "empty" check
+    // RELAXED: check(define!==undefined || use!==undefined || defineUse!==undefined,
+    //                `the fassets aspect is empty (at least one directive needed - define/use/defineUse)`);
 
   } // HELP_EMACS
   });
@@ -441,9 +441,9 @@ export default function createFassets(activeFeatures) {
       check(isPlainObject(defineDirective), `the ${directiveKey} directive MUST BE an object literal`);
 
       // verify at least ONE definition is supplied
-      // AI: We may want to relax this "empty" check
+      // ... potential to relax this "empty" check
       const resourceKeys = Object.keys(defineDirective);
-      check(resourceKeys.length > 0, `the ${directiveKey} directive is empty (at least one definition is needed)`);
+      // RELAXED: check(resourceKeys.length > 0, `the ${directiveKey} directive is empty (at least one definition is needed)`);
 
       // iterpret each resource being defined
       // ... we attempt to process in same order defined within the fassets.define object literal
@@ -531,8 +531,8 @@ export default function createFassets(activeFeatures) {
     check(Array.isArray(useDirective), `the use directive MUST BE an array`);
 
     // verify at least ONE usage contract is supplied
-    // AI: We may want to relax this "empty" check
-    check(useDirective.length > 0, `the use directive is empty (at least one usage contract is needed`);
+    // ... potential to relax this "empty" check
+    // RELAXED: check(useDirective.length > 0, `the use directive is empty (at least one usage contract is needed`);
 
     // process each "use" contract
     useDirective.forEach( useEntry => {

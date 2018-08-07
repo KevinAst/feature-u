@@ -24,18 +24,19 @@ describe('createFassets(): fassets define/defineUse directive accumulation', () 
         });
       });
 
-      test(`${directive} directive should NOT be empty`, () => {
-        expect(()=> createFassets([
-          createFeature({
-            name:    'featureTest',
-            fassets: {
-              [directive]: {}
-            },
-          }),
-        ]) )
-          .toThrow(/Feature.name: 'featureTest'.*the define.*directive is empty/);
-        // THROW:   Feature.name: 'featureTest' ... ERROR in "fassets" aspect, "define/defineUse" directive: the defineUse directive is empty (at least one definition is needed)
-      });
+      // NOTE: this constraint was relaxed (see: createFassets.js ... relax this "empty" check)
+      // test(`${directive} directive should NOT be empty`, () => {
+      //   expect(()=> createFassets([
+      //     createFeature({
+      //       name:    'featureTest',
+      //       fassets: {
+      //         [directive]: {}
+      //       },
+      //     }),
+      //   ]) )
+      //     .toThrow(/Feature.name: 'featureTest'.*the define.*directive is empty/);
+      //   // THROW:   Feature.name: 'featureTest' ... ERROR in "fassets" aspect, "define/defineUse" directive: the defineUse directive is empty (at least one definition is needed)
+      // });
 
     });
 
