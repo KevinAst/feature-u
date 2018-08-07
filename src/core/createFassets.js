@@ -695,11 +695,15 @@ export default function createFassets(activeFeatures) {
   _regExpCache = {};
 
   // log summary
-  // TODO: consider this: summarize _fassets resources (sorted), usage contracts (sorted), and json _fassets object (normalized) ... could be too much NOT SURE
-  const hookCount   = activeFeatures.reduce( (count, feature) => feature.fassets ? count+1 : count, 0);
-  const hookSummary = activeFeatures.map( (feature) => `\n  Feature.name:${feature.name}${feature.fassets ? ' <-- defines: fassets' : ''}` );
-  logf(`cross-feature-communication ... INTERPRETING: Feature.fassets ... ${hookCount} hooks:${hookSummary}`);
-  logf('cross-feature-communication ... the following fassets are in effect: ', _fassets);
+  if (logf.isEnabled()) {
+    const hookCount   = activeFeatures.reduce( (count, feature) => feature.fassets ? count+1 : count, 0);
+    const hookSummary = activeFeatures.map( (feature) => `\n  Feature.name:${feature.name}${feature.fassets ? ' <-- defines: fassets' : ''}` );
+    logf(`cross-feature-communication ... INTERPRETING: Feature.fassets ... ${hookCount} hooks:${hookSummary}`);
+
+    logf('cross-feature-communication ... fassets define/defineUse directives: ', _resources); // ... see WHO defined WHAT
+    logf('cross-feature-communication ... fassets use directives: ', _usage);                  // ... see WHO enabled usage contracts
+    logf('cross-feature-communication ... resolved fassets object: ', _fassets);               // ... see consolated list of all fassets
+  }
 
   // return our public fassets object (used in cross-feature-communication)
   return _fassets;
