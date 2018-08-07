@@ -216,7 +216,7 @@ export default function createFassets(activeFeatures) {
      * 
      * @method Fassets.get
      */
-    get: function(fassetsKey) {
+    get: (fassetsKey) => {
 
       // validate parameters
       const check = verify.prefix('fassets.get() parameter violation: ');
@@ -251,7 +251,7 @@ export default function createFassets(activeFeatures) {
       // resolve resource of supplied key
       const resolveResource = (key) => {
         const resource = key==='.'
-                             ? this // special DOT keyword ... return self (i.e. fassets)
+                             ? _fassets // special DOT keyword ... return self (i.e. fassets)
                              : _resources[key]
                                  ? _resources[key].val // resource found
                                  : undefined;          // resource not found
@@ -303,7 +303,7 @@ export default function createFassets(activeFeatures) {
      * 
      * @method Fassets.hasFeature
      */
-    hasFeature: function(featureName) {
+    hasFeature: (featureName) => {
       // validate parameters
       const check = verify.prefix('fassets.hasFeature() parameter violation: ');
 
