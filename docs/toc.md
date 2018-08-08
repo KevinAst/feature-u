@@ -53,6 +53,9 @@
   * [How it works](enablement.md#how-does-it-work)
   * [Existence and Dependencies](enablement.md#feature-existence-and-dependencies)
 * [Best Practices](bestPractices.md)
+  * [Avoid Cross Feature Imports](bestPractices.md#avoid-cross-feature-imports)
+  * [Feature Name](bestPractices.md#feature-name)
+  * [Feature State Location](bestPractices.md#feature-state-location)
 
 ----
 * [Core API](coreApi.md)

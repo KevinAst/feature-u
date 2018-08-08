@@ -10,11 +10,6 @@ modification can propagate to many areas of your implementation.
 This discussion is a guideline.  It's up to you to implement these
 items _because **feature-u** is not in control of this_.
 
-Our discussion will include the following items of interest:
-- [Avoid Cross Feature Imports](#avoid-cross-feature-imports)
-- [Feature Name](#feature-name)
-- [Feature State Location](#feature-state-location)
-
 
 ## Avoid Cross Feature Imports
 
@@ -25,14 +20,14 @@ As a result, a given feature **should never** directly import
 resources from other features.  This is tempting because typically the
 code is right there!
 
-If one feature requires resources from other features, you should use
-the {{book.guide.crossCom}} mechanism, exposing a small set of
-characteristics as the **Feature's Public API**.
+If one feature requires resources from other features, simply use the
+{{book.guide.crossCom}} mechanism provided by **feature-u** _(exposing
+a smaller cross section of the **Feature's Public Face**)_.
 
 The reason for this is two fold:
 
 1. it is **more controlled** ... _a feature can formally declare it's
-public interface points_
+Public Facing points_
 
 2. your features truly become **plug-and-play**
 
@@ -47,22 +42,22 @@ uniqueness.  As a result, it can be used to qualify the identity of
 several feature aspects.  For example:
 
 - prefix action types with featureName, guaranteeing their uniqueness app-wide
-  _(see: [feature-redux](https://github.com/KevinAst/feature-redux#action-uniqueness-single-source-of-truth) docs)_
+  _(see: [`feature-redux`](https://github.com/KevinAst/feature-redux#action-uniqueness-single-source-of-truth) docs)_
 
 - prefix logic module names with featureName, identifying where that module lives
-  _(see: [feature-redux-logic](https://github.com/KevinAst/feature-redux-logic#single-source-of-truth) docs)_
+  _(see: [`feature-redux-logic`](https://github.com/KevinAst/feature-redux-logic#single-source-of-truth) docs)_
 
 - depending on the context, the featureName can be used as the root of your feature state's shape
-  _(see: [feature-redux](https://github.com/KevinAst/feature-redux#state-root-single-source-of-truth) docs)_
+  _(see: [`feature-redux`](https://github.com/KevinAst/feature-redux#state-root-single-source-of-truth) docs)_
 
-While the featureName is part of the {{book.api.Feature}} object
+While `Feature.name` is part of the {{book.api.Feature}} object
 (emitted from {{book.api.createFeature}}, there are race conditions
-where the {{book.api.Feature}} object will not be defined (during
-in-line code expansion).
+where the {{book.api.Feature}} object will not be defined during
+in-line code expansion.
 
-As a result, a best practice is to expose the featureName as a
-constant, through a `featureName.js` mini-meta module that is
-"importable" in all use-cases (i.e. a **single-source-of-truth**).
+As a result, a best practice is to expose a featureName constant,
+through a `featureName.js` mini-meta module that is "importable" in
+all use-cases (i.e. a **single-source-of-truth**).
 
 **`src/feature/foo/featureName.js`**
 ```js
@@ -75,11 +70,12 @@ export default 'foo';
 
 ## Feature State Location
 
-Because **feature-u** relies on `slicedReducer()` (in the
-{{book.ext.featureRedux}} package), a best practice is to use the
-reducer's embellished selector to qualify your feature state root in
-all your selector definitions.  As a result the slice definition is
-maintained in one spot.
+Because **feature-u** relies on
+[`slicedReducer()`](https://github.com/KevinAst/feature-redux#slicedreducer)
+(in the {{book.ext.featureRedux}} package), a best practice is to use
+the reducer's embellished selector to qualify your feature state root
+in all your selector definitions.  As a result the slice definition is
+maintained in one spot (i.e. a **single-source-of-truth**).
 
 Here is an example: 
 
