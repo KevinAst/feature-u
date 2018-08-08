@@ -5,6 +5,12 @@
 
 ----
 * [Basic Concepts](concepts.md)
+  * [out of the Starting Gate ...](concepts.md#out-of-the-starting-gate-)
+  * [the Hurdles ...](concepts.md#the-hurdles-)
+  * [the Goal ...](concepts.md#what-now-the-goal-)
+  * [feature-u Basics](concepts.md#feature-u-basics)
+    * [aspects](concepts.md#aspects-)
+    * [framework integration](concepts.md#framework-integration-)
 * [Benefits](benefits.md)
 * [Usage](usage.md)
   * [Directory Structure](usage.md#directory-structure)

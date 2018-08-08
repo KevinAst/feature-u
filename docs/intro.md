@@ -47,7 +47,9 @@ _Go forth and compute!!_
 
 - {{book.guide.appLifeCycle}} ... _learn how features can initialize themselves_
 
-- {{book.guide.crossCom}} ... _how can features interact with one another_
+- {{book.guide.crossCom}} ... _promote truly **Plug-and-Play** features through a well-defined Public Face_
+
+- {{book.guide.crossCom_uiComposition}} ...  _facilitate seamless **cross-feature component composition**_
 
 - {{book.guide.featureRouter}} ... _**feature-u**'s recommendation for autonomous feature-based navigation through state analysis_
 

@@ -10,8 +10,11 @@ developed _(see: {{book.guide.why}})_.
    _isolating feature boundaries improves code manageability_
 
 1. **Feature Collaboration:**
-   _allow **Cross Feature Communication** through a well-defined
+   _promote **Cross Feature Communication** through a well-defined
    feature-based Public Interface_
+
+1. **Feature Based UI Composition:**
+   _facilitate seamless **cross-feature component composition**_
 
 1. **Application Life Cycle Hooks:**
    _features can initialize themselves without relying on an external
@@ -28,7 +31,7 @@ developed _(see: {{book.guide.why}})_.
    run-time-stack) by accumulating all feature aspects (employing an
    extendable API)_
 
-1. **UI Component Promotion:**
+1. **UI Component Promotion:** ??TODO-retrofit
    _features can autonomously promote their UI components through
    Feature Based Route Management_
 

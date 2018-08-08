@@ -30,6 +30,8 @@ However, there are a number of hurdles yet to be resolved ...
 - How do you promote feature-based UI components in an isolated and
   autonomous way?
 
+- How do you facilitate UI Composition that crosses feature boundaries?
+
 - How do you configure your chosen frameworks now that your code is
   so spread out?
 
@@ -61,13 +63,13 @@ The **overriding goal** of **feature-u** is two fold:
 
 The basic process of **feature-u** is that each feature promotes a
 {{book.api.Feature}} object that contains various aspects of that
-feature ... _things like: the feature's name, it's Public API, whether
-it is enabled, initialization constructs, and resources used to
-configure it's slice of the frameworks in use._
+feature ... _things like: the feature's name, it's Public Interface,
+whether it is enabled, initialization constructs, and resources used
+to configure it's slice of the frameworks in use._
 
 In turn, these {{book.api.Feature}} objects are supplied to
 {{book.api.launchApp}}, which configures and starts your application,
-returning an {{book.api.FassetsObject}} (_which promotes the public API
+returning an {{book.api.FassetsObject}} (_which promotes the Public Face
 of each feature_).
 
 ### aspects ...
