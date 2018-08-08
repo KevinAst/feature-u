@@ -51,6 +51,7 @@ sentence ... injecting the header in front of each column)_:
 disabled features with ... | never registers the feature's ... | therefore, the feature's:
 ---                        | ---                               | ---
 life cycle hooks           | callbacks                         | initialization code never executes
+fassets                    | Public Face                       | Public Face doesn't exist
 state management           | reducers                          | state doesn't exist
 logic                      | logic modules                     | logic is never executed
 feature routes             | routes                            | screens are never presented
@@ -65,37 +66,39 @@ together!!**_
 
 ### Feature Existence and Dependencies
 
-When a feature is completely self-contained _(i.e. it **has NO**
-??TRASH:book.guide.crossCom_publicFace)_, then there is no other
-consideration in disabling it ... you **simply disable it** and **it
+When a feature is completely **self-contained** _(i.e. it **has NO**
+{{book.guide.crossCom_fassetsDef}})_, then _there are no other
+consideration in disabling it_ ... you **simply disable it** and **it
 disappears!**
 
-If however one feature depends on another _(i.e. it **has a**
-??TRASH:book.guide.crossCom_publicFace)_, then there are additional
-factors to consider.
+If however one feature **depends on another** _(i.e. it **has**
+{{book.guide.crossCom_fassetsDef}})_, then _there are additional
+factors to consider_.
 
 As you know, the {{book.api.FassetsObject}} is used to facilitate
-{{book.guide.crossCom}}.  If a feature does not exist, or has been
-disabled, the corresponding `app.{featureName}` will NOT exist. ??tweak-this
-
-You can use this to conditionally determine whether a feature is
-present or not.
+{{book.guide.crossCom}}.  You can also use it to determine whether a
+feature is present ... through it's {{book.api.Fassets_hasFeature}}
+method.
 
 - It could be that `featureA` will conditionally use `featureB` if it
   is present.
 
   ```js
-  if (app.featureB) {
+  if (fassets.hasFeature('featureB') {
     ... do something featureB related
   }
   ```
 
 - It could be that `featureC` unconditionally requires that `featureD`
-  is present.  This can be checked in the {{book.api.appWillStartCB}}
+  be present.  This can be checked in the {{book.api.appWillStartCB}}
   {{book.guide.appLifeCycle}}.
 
   ```js
   appWillStart({fassets, curRootAppElm}) {
-    assert(app.featureD, '***ERROR*** I NEED featureD');
+    assert(fassets.hasFeature('featureD'), '***ERROR*** I NEED featureD');
   }
   ```
+
+**Note**: As an alternative to using {{book.api.Fassets_hasFeature}},
+you can simply reason over the existence of "well-known fasset
+resources" specific to a given feature.

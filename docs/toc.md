@@ -50,6 +50,8 @@
     * [import fassets](crossCommunication.md#import-fassets)
 * [Feature Based Routes](featureRouter.md)
 * [Feature Enablement](enablement.md)
+  * [How it works](enablement.md#how-does-it-work)
+  * [Existence and Dependencies](enablement.md#feature-existence-and-dependencies)
 * [Best Practices](bestPractices.md)
 
 ----
