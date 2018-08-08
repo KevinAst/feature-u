@@ -1,15 +1,19 @@
 # Application Life Cycle Hooks
 
-Because **feature-u** is in control of launching the app, application life
-cycle hooks can be introduced, allowing features to perform
-app-specific initialization, and even inject components into the
-root of the app.
+Because **feature-u** is in control of launching the app, life cycle
+hooks for the application can be introduced, allowing features to
+perform app-specific initialization, and even inject components into
+the root of the app.
 
 Two hooks are provided through the following built-in
 {{book.api.Feature}} aspects:
 
 1. [`Feature.appWillStart`](#appwillstart) - invoked one time at app startup time
 2. [`Feature.appDidStart`](#appdidstart)   - invoked one time immediately after app has started
+
+Application Life Cycle Hooks **greatly simplify your app's mainline
+startup process**, because _initialization specific to a given feature
+**can be encapsulated in that feature**_.
 
 
 ## appWillStart
@@ -20,11 +24,11 @@ time, just before the app starts up.
 **API**: {{book.api.appWillStartCB$}}
 
 This life-cycle hook can do any type of initialization.  For example:
-initialize FireBase _(say from a named DB feature's public API)_:
+initialize your database:
 
 ```js
 appWillStart({fassets, curRootAppElm}) {
-  app.DB.api.init();
+  initFireBase();
 }
 ```
 
