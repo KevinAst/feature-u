@@ -121,7 +121,7 @@ left-nav menu available throughout the application.
 
    **`routeAspect: Aspect.initialRootAppElm()`**
    ```js
-   function initialRootAppElm(app, curRootAppElm) {
+   function initialRootAppElm(fassets, curRootAppElm) {
      // insure we don't clobber any supplied content
      // ... by design, <StateRouter> doesn't support children
      if (curRootAppElm) {
@@ -133,7 +133,7 @@ left-nav menu available throughout the application.
      return <StateRouter routes={this.routes}
                          fallbackElm={this.config.fallbackElm$}
                          componentWillUpdateHook={this.config.componentWillUpdateHook$}
-                         namedDependencies={{app}}/>;
+                         namedDependencies={{fassets}}/>;
    }
    ```
 
@@ -160,7 +160,7 @@ left-nav menu available throughout the application.
 
    **`reducerAspect: Aspect.injectRootAppElm()`**
    ```js
-   function injectRootAppElm(app, curRootAppElm) {
+   function injectRootAppElm(fassets, curRootAppElm) {
      return (
        <Provider store={this.appStore}>
          {curRootAppElm}
@@ -169,19 +169,36 @@ left-nav menu available throughout the application.
    }
    ```
 
+4. Last but not least, **feature-u** renders
+   `<FassetsContext.Provider>` at the root of the application DOM _(in
+   support of {{book.guide.crossCom}} and the {{book.api.withFassets}}
+   HoC)_.
+
+   This is conditionally performed only when a rootAppElm has been
+   defined.  Otherwise, the App is responsible for this in the
+   {{book.api.registerRootAppElmCB}} hook.
+
+   ```js
+   if (rootAppElm) {
+     rootAppElm = <FassetsContext.Provider value={fassets}>{rootAppElm}</FassetsContext.Provider>;
+   }
+   ```
+
 The **end result** of this example generates the following DOM:
 
 ```
-<Provider store={this.appStore}>
-  <Drawer ref={ ref => registerDrawer(ref) }
-          content={<SideBar/>}
-          onClose={closeSideBar}>
-    <StateRouter routes={this.routes}
-                 fallbackElm={this.config.fallbackElm$}
-                 componentWillUpdateHook={this.config.componentWillUpdateHook$}
-                 namedDependencies={{app}}/>
-  </Drawer>
-</Provider>
+<FassetsContext.Provider value={fassets}>
+  <Provider store={this.appStore}>
+    <Drawer ref={ ref => registerDrawer(ref) }
+            content={<SideBar/>}
+            onClose={closeSideBar}>
+      <StateRouter routes={this.routes}
+                   fallbackElm={this.config.fallbackElm$}
+                   componentWillUpdateHook={this.config.componentWillUpdateHook$}
+                   namedDependencies={{fassets}}/>
+    </Drawer>
+  </Provider>
+</FassetsContext.Provider>
 ```
 
 
@@ -315,7 +332,7 @@ discussion of each:
 
 - **Aspect State Retention**: 
 
-  It is not uncommon for an **Aspect** to use more than one of these
+  It is common for an **Aspect** to use more than one of these
   life cycle methods to do it's work.  When this happens, typically
   there is a need for state retention _(in order to pick up in one
   step where it left off in another)_.
@@ -339,25 +356,25 @@ discussion of each:
   result, you are free to use `this` for your **state retention**.
  
 
-- **App Parameter**: ??now-fassets
+- **fassets Parameter**:
 
-  You will notice that the `app` parameter is supplied on many of these
+  You will notice that the `fassets` parameter is supplied on many of these
   life cycle methods.  As you know the {{book.api.FassetsObject}} is used
   in promoting {{book.guide.crossCom}}.  
 
   While it is most likely an anti-pattern to directly interrogate the
-  **App** object within the **Aspect**, it is frequently required to
+  {{book.api.FassetsObject}} within the **Aspect**, it is frequently required to
   "pass through" to downstream processes _(as an opaque object)_.
-  **This is the reason the App object is supplied**!!
+  **This is the reason the fassets object is supplied**!!
 
   As examples of this:
 
   - The `Feature.logic` aspect _({{book.ext.featureReduxLogic}})_ will
-    dependency inject (DI) the app object into the
+    dependency inject (DI) the {{book.api.FassetsObject}} into the
     {{book.ext.reduxLogic}} process.
 
   - The `Feature.route` aspect _({{book.ext.featureRouter}})_
-    communicates the app in it's routing callbacks.
+    communicates `fassets` in it's routing callbacks.
 
   - etc. etc. etc.
 
@@ -468,7 +485,7 @@ The default behavior simply implements the expansion algorithm
 defined by {{book.api.expandWithFassets}}:
 
 ```js
-feature[this.name] = feature[this.name](app);
+feature[this.name] = feature[this.name](fassets);
 ```
 
 This default behavior rarely needs to change.  It however provides a
