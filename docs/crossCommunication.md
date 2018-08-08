@@ -648,7 +648,8 @@ the {{book.api.Fassets_hasFeature}} will return false.
 possible to reason over the existence of well-known fasset resources
 that are specific to a feature.
 
-## Push or Pull: a fassets summary
+
+## fassets recap: Push or Pull
 
 At this point, it may be useful to summarize the three
 {{book.api.fassetsAspect}} directives: `define`, `use`, and
