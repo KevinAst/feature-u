@@ -64,7 +64,7 @@ reference the most current release.
    - NOTES:
      a) clicking link STAYS ON SAME PAGE
      b) because these notes are copied to all release history.md, 
-        thy MUST reference the appropriate version
+        they MUST reference the appropriate version
         so they will be guaranteed the reference has not been removed/changed
  
 3. for GITHUB release page (when copying these notes), fully qualify the VERSIONED relative references
@@ -109,12 +109,12 @@ Release           | What                                   | *When*
 [Diff](https://github.com/KevinAst/feature-u/compare/v0.1.3-docs...v1.0.0)
 
 **NOTE**: This release contains **breaking changes** from prior
-releases _(i.e. a retrofit of client code is necessary)_.
+releases _(i.e. **a retrofit of client code is necessary**)_.
 
 1. **Review**:
-   Beginning with **feature-u** v1 {{book.guide.crossCom}} has been
+   Beginning with **feature-u** v1 [`Cross Feature Communication`](../1.0.0/crossCommunication.html) has been
    completely re-designed to include
-   {{book.guide.crossCom_uiComposition}} as a core part of
+   [`UI Composition`](../1.0.0/crossCommunication.html#ui-composition) as a core part of
    **feature-u** _(thanks {{book.ext.jeffbski}} for the design
    collaboration)_!
 
@@ -123,39 +123,41 @@ releases _(i.e. a retrofit of client code is necessary)_.
    component composition)_.
 
    This refactor promotes **one solution** for all cross-communication
-   _(i.e. Actions, Selectors, UI Components, API, etc.)_, making it
-   comprehensive and universal.
+   _(i.e. Actions, Selectors, UI Components, API, etc.)_, **making it
+   comprehensive and universal**!!
 
    At a high level, the following items have been impacted _(more
-   detail can be found at {{book.guide.crossCom}})_:
+   detail can be found at [`Cross Feature Communication`](../1.0.0/crossCommunication.html))_:
    
    - In an effort to standardize terminology _(and remove ambiguity)_,
      the term `fassets` _(feature assets)_ is being used throughout,
      replacing `publicFace` _(on the aspect definition side)_ and `app`
      _(on the usage side)_.
-   
-   - The `Feature.fassets` aspect replaces `Feature.publicFace`,
+
+   - The [`Feature.fassets`](../1.0.0/api.html#fassets) aspect replaces
+     [`Feature.publicFace`](../0.1.3/crossCommunication.html#publicface-and-the-app-object),
      providing a more formal set of directives, supporting things like
      **contractual arrangements** _(of usage and definition)_, and
      **validation of resources**.
-   
-   - The `fassets` object replaces the `app` object, to programmatically
+
+   - The [`fassets`](../1.0.0/api.html#Fassets) object replaces the
+     [`app`](../0.1.3/api.html#App) object, to programmatically
      access cross-feature resources.
+
+   - The [`managedExpansion()`](../0.1.3/api.html#managedExpansion)
+     function has been renamed to
+     [`expandWithFassets()`](../1.0.0/api.html#expandWithFassets).
    
-   - The `managedExpansion()` function has been renamed to
-     `expandWithFassets()`.
-   
-   - The new `withFassets()` higher-order component (HOC) auto-wires
-     named feature assets as component properties.
+   - The new [`withFassets()`](../1.0.0/api.html#withFassets)
+     higher-order component (HOC) auto-wires named feature assets as
+     component properties.
 
    In addition, if you are using any of the **feature-u** extended
    aspect plugins, you must install the latest version, as they now
-   pass through the new `fassets` object.
+   pass through the new [`fassets`](../1.0.0/api.html#Fassets) object.
    
    The following gist will lead you through the migration details:
    http://bit.ly/feature-u_V1Migration
-
-   ?? utilize MORE links (obsolete refs: v0.1.3, new refs: cur or v1.0.0)
 
 2. **Docs**:
    Our documentation now employs a dynamic left-nav menu, that only
