@@ -228,6 +228,7 @@
       "featureReduxLogic":  "<a href='https://github.com/KevinAst/feature-redux-logic'><code>feature-redux-logic</code></a>",
       "featureRouter":      "<a href='https://github.com/KevinAst/feature-router'><code>feature-router</code></a>",
       "react":              "<a href='https://reactjs.org/'><code>react</code></a>",
+      "reactWeb":           "<a href='https://reactjs.org/'><code>react-web</code></a>",
       "reactContext":       "<a href='https://reactjs.org/docs/context.html'><code>react context</code></a>",
       "reactNative":        "<a href='https://facebook.github.io/react-native/'><code>react-native</code></a>",
       "reactRouter":        "<a href='https://reacttraining.com/react-router/'><code>react-router</code></a>",
