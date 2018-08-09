@@ -35,11 +35,11 @@ _Go forth and compute!!_
 
 ## At a Glance
 
+- {{book.guide.benefits}} ... _understand the benefits of **feature-u**_
+
 - {{book.guide.start}} ... _installation and access_
 
 - {{book.guide.basicConcepts}} ... _learn high-level **feature-u** concepts_
-
-- {{book.guide.benefits}} ... _understand the benefits of **feature-u**_
 
 - {{book.guide.usage}} ... _what is **feature-u**'s fundamental usage pattern_
 

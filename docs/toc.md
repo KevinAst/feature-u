@@ -1,6 +1,7 @@
 # Table of content 
 
 ### feature-u (1.0.0)
+* [Benefits](benefits.md)
 * [Getting Started](start.md)
 
 ----
@@ -11,7 +12,6 @@
   * [feature-u Basics](concepts.md#feature-u-basics)
     * [aspects](concepts.md#aspects-)
     * [framework integration](concepts.md#framework-integration-)
-* [Benefits](benefits.md)
 * [Usage](usage.md)
   * [Directory Structure](usage.md#directory-structure)
   * [Feature Object](usage.md#feature-object)
