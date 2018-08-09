@@ -5,14 +5,14 @@ project organization_ in your {{book.ext.react}} project.  It assists
 in organizing your project by individual features.
 
 Most software engineers would agree that organizing your project by
-feature is much preferred over type-based patterns.  Because
+feature is much preferred over type-based patterns.  As
 application domains grow in the real world, project organization by
 type simply doesn't scale, it just becomes unmanageable!  There are a
 number of good articles that discuss this topic _(with insights on
 feature-based design and structure)_.
 
 **feature-u** is a utility library that manages and streamlines this
-process.  It automates some of the mundane details of your features
+process.  It automates some of the mundane details of managing features
 and helps in promoting features that are **plug-and-play**.
 
 The following article is an introduction to **feature-u** with
