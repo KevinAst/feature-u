@@ -223,7 +223,7 @@ example, because the `Logo` property is a component, `MyComponent` can
 simply reference it using JSX.
 
 
-## Resource Contract
+## Resource Contracts
 
 It is common for UI Composition to be represented as a contract, where
 a component in one feature has a series of injection needs that are to

@@ -35,7 +35,7 @@
     * [federated namespace](crossCommunication.md#federated-namespace)
   * [UI Composition](crossCommunication.md#ui-composition)
     * [withFassets() HoC](crossCommunication.md#withfassets-hoc)
-    * [Resource Contract](crossCommunication.md#resource-contract)
+    * [Resource Contracts](crossCommunication.md#resource-contracts)
     * [Wildcards](crossCommunication.md#wildcards-adding-dynamics)
       * [Wildcard Processing](crossCommunication.md#wildcard-processing)
       * [Resource Order](crossCommunication.md#resource-order-in-wildcard-processing)
