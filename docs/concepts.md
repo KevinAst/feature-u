@@ -69,14 +69,14 @@ to configure it's slice of the frameworks in use._
 
 In turn, these {{book.api.Feature}} objects are supplied to
 {{book.api.launchApp}}, which configures and starts your application,
-returning an {{book.api.FassetsObject}} (_which promotes the Public Face
+returning a {{book.api.FassetsObject}} (_which promotes the Public Face
 of each feature_).
 
 ### aspects ...
 
 In **feature-u**, "aspect" is a generalized term used to refer to the
 various ingredients that (when combined) constitute your application.
-Aspects can take on many different forms: **UI Components** and **Routes**
+Aspects can take on many different forms: **UI Components** &bull; **Routes**
 &bull; **State Management** _(actions, reducers, selectors)_ &bull;
 **Business Logic** &bull; **Startup Initialization Code** &bull;
 _etc. etc. etc._

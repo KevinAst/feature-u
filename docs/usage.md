@@ -162,7 +162,7 @@ Here are some **important points of interest** _(match the numbers to
    {{book.guide.detail_reactRegistration}}_
 
 4. _as a bit of a preview_, the return value of {{book.api.launchApp}}
-   is an {{book.api.FassetsObject}}, which promotes the accumulated
+   is a {{book.api.FassetsObject}}, which promotes the accumulated
    Public Face of all features, and is exported to provide
    {{book.guide.crossCom}} ... _here is what the `fassets` looks like
    (for this example):_
