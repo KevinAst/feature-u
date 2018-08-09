@@ -61,12 +61,16 @@
 * [Core API](coreApi.md)
   * [createFeature()](api.md#createFeature)
     * Built-In aspects ...
-      * [fassets](api.md#fassets)
+      * [fassets aspect](api.md#fassets)
       * [appWillStart()](api.md#appWillStartCB)
       * [appDidStart()](api.md#appDidStartCB)
   * [expandWithFassets()](api.md#expandWithFassets)
+    * [expandWithFassetsCB()](api.md#expandWithFassetsCB)
   * [launchApp()](api.md#launchApp)
+    * [registerRootAppElm()](api.md#registerRootAppElmCB)
   * [withFassets()](api.md#withFassets)
+    * [mapFassetsToPropsStruct](api.md#mapFassetsToPropsStruct)
+    * [mapFassetsToProps()](api.md#mapFassetsToPropsFn)
   * Object Refs ...
     * [Fassets](api.md#Fassets)
       * [get()](api.md#Fassets_get)
