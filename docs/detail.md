@@ -64,14 +64,39 @@ API.
 <!-- *** SECTION ********************************************************************************  -->
 ## Feature Object (relaying aspect content)
 
-The {{book.api.Feature}} object is merely a container that holds
-aspect content that is of interest to **feature-u**.
+The {{book.api.Feature}} object is merely a lightweight container that
+holds {{book.api.AspectContent}} of interest to **feature-u**.
 
-Each feature within your application promotes a Feature object (using
-{{book.api.createFeature}}) that catalogs the
-{{book.api.AspectContent}} of that feature.
+Each feature within an application promotes a Feature object (using
+{{book.api.createFeature}}) which catalogs the aspects of that feature.
 
 Ultimately, all Feature objects are consumed by {{book.api.launchApp}}. 
+
+Feature content are simple key/value pairs (the key being an
+Aspect.name with values of AspectContent).  These aspects can
+either be **built-in** (from core **feature-u**), or **extensions**.
+
+Here is an example:
+
+```js
+export default createFeature({
+  name:     'featureA', // builtin aspect (name must be unique across all features within app)
+  enabled:  true,       // builtin aspect enabling/disabling feature
+
+  fassets: {            // builtin aspect promoting Public Face - Cross Feature Communication
+    define: {
+      'api.openA':  () => ...,
+      'api.closeA': () => ...,
+    },
+  },
+
+  appWillStart: (...) => ..., // builtin aspect (Application Life Cycle Hook)
+  appDidStart:  (...) => ..., // ditto
+
+  reducer: ..., // feature redux reducer (extended aspect from the feature-redux plugin)
+  logic:   ..., // feature logic modules (extended aspect from the feature-redux-logic plugin)
+});
+```
 
 
 ### Built-In aspects

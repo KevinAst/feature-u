@@ -91,12 +91,16 @@ export default function createFassets(activeFeatures) {
    * @typedef {Object} Fassets
    *
    * The `fassets` object _(emitted from {{book.api.launchApp}})_ is
-   * an accumulation of feature assets gathered from all features.  It
-   * facilitates {{book.guide.crossCom}} by promoting the public
-   * resources of any given feature.
+   * an accumulation of **public feature assets gathered from all
+   * features**.  It facilitates {{book.guide.crossCom}} by promoting
+   * the public resources of any given feature.
    * 
-   * There are 3 different ways to reference the cataloged
-   * resources in `fassets`:
+   * **SideBar**: The term `fassets` is a play on words.  While it is
+   * pronounced "facet" _and is loosely related to this term_, it is
+   * spelled fassets (i.e. feature assets).
+   * 
+   * There are 3 different ways to reference the resources contained
+   * in the `fassets` object:
    *
    * 1. You may directly dereference them. As an example, an
    *    '`action.openView`' resource can be dereferenced as follows:
@@ -112,10 +116,11 @@ export default function createFassets(activeFeatures) {
    *    through the {{book.api.withFassets}} Higher-order Component
    *    (HoC).
    * 
-   * There are several ways to obtain access to the `fassets` object _(see
+   * **SideBar**: There are several ways to get a handle to the
+   * `fassets` object _(see
    * {{book.guide.crossCom_obtainingFassetsObject}})_.
    * 
-   * For more information, please refer to
+   * For more information, please refer to {{book.guide.crossCom}} and
    * {{book.guide.crossCom_fassetsBasics}}.
    */
   const _fassets = {
@@ -344,7 +349,7 @@ export default function createFassets(activeFeatures) {
                   .map( feature => feature.name );
   if (featureNamesWithObsolete_publicFace.length > 0) {
     verify(false, `The OBSOLETE Feature.publicFace is still in-use in the following features: ${featureNamesWithObsolete_publicFace}\n` + 
-                  '... as of @feature-u@1 the publicFace builtin aspect has been replaced with fassets\n' +
+                  '... as of feature-u@1 the publicFace builtin aspect has been replaced with fassets\n' +
                   '... see: https://feature-u.js.org/cur/history.html#v1_0_0');
   }
 

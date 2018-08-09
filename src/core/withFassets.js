@@ -21,7 +21,10 @@ export const FassetsContext = React_createContext(fassetsNotDefined); // specify
 /**
  * Promotes a "wrapped" Component (an HoC - Higher-order Component)
  * that injects fasset props into a `component`, as specified by the
- * `mapFassetsToProps` parameter.
+ * `mapFassetsToProps` parameter.  Please refer to the
+ * {{book.api.mapFassetsToPropsStruct}} for the details of what this
+ * mapping construct looks like. Examples can be found at
+ * {{book.guide.crossCom_uiComposition}}.
  * 
  * Central to this process, a Higher-order Function (HoF) is created
  * that encapsulates this "mapping knowledge".  Ultimately, this
@@ -238,8 +241,9 @@ export function fassetsProps(fassetsToPropsMap, fassets) { // export for testing
  * @typedef {Object} mapFassetsToPropsStruct
  *
  * A structure (used by {{book.api.withFassets}}) defining a
- * prop/fassetsKey mapping, from which fasset resources are
- * injected into a Component.
+ * prop/fassetsKey mapping, from which fasset resources are injected
+ * into a Component.  Please see {{book.guide.crossCom_uiComposition}}
+ * for examples.
  * 
  * The injected Component properties will reference the fasset
  * resource corresponding to the `fassetsKey`.

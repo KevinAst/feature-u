@@ -10,8 +10,7 @@ import logf        from '../util/logf';
  * promotes it's own {{book.api.Feature}} object.
  *
  * For more information, please refer to
- * {{book.guide.detail_featureAndAspect}}, with examples at
- * {{book.guide.usage_featureObject}}.
+ * {{book.guide.detail_featureAndAspect}}.
  *
  * **Please Note** this function uses named parameters.
  *
@@ -199,20 +198,44 @@ export function extendFeatureProperty(name, owner) {
 
 /**
  * @typedef {Object} Feature
- *
- * The Feature object is a container that holds
- * {{book.api.AspectContent}} that is of interest to **feature-u**.
+ * 
+ * The Feature object is merely a lightweight container that holds
+ * {{book.api.AspectContent}} of interest to **feature-u**.
  * 
  * Each feature within an application promotes a Feature object (using
- * {{book.api.createFeature}}) that catalogs the aspects of that
- * feature.
+ * {{book.api.createFeature}}) which catalogs the aspects of that feature.
  * 
  * Ultimately, all Feature objects are consumed by
  * {{book.api.launchApp}}.
+ * 
+ * Feature content are simple key/value pairs (the key being an
+ * Aspect.name with values of AspectContent).  These aspects can
+ * either be **built-in** (from core **feature-u**), or **extensions**.
+ *
+ * Here is an example:
+ * 
+ * ```js
+ * export default createFeature({
+ *   name:     'featureA', // builtin aspect (name must be unique across all features within app)
+ *   enabled:  true,       // builtin aspect enabling/disabling feature
+ * 
+ *   fassets: {            // builtin aspect promoting Public Face - Cross Feature Communication
+ *     define: {
+ *       'api.openA':  () => ...,
+ *       'api.closeA': () => ...,
+ *     },
+ *   },
+ * 
+ *   appWillStart: (...) => ..., // builtin aspect (Application Life Cycle Hook)
+ *   appDidStart:  (...) => ..., // ditto
+ * 
+ *   reducer: ..., // feature redux reducer (extended aspect from the feature-redux plugin)
+ *   logic:   ..., // feature logic modules (extended aspect from the feature-redux-logic plugin)
+ * });
+ * ```
  *
  * For more information, please refer to
- * {{book.guide.detail_featureAndAspect}}, with examples at
- * {{book.guide.usage_featureObject}}.
+ * {{book.guide.detail_featureAndAspect}}.
  */
 
 
@@ -305,7 +328,9 @@ export function extendFeatureProperty(name, owner) {
  * The `fassets` aspect can both define resources, and/or declare a
  * resource contract (i.e. the intention to use a set of fasset
  * resources).  This is accomplished via three separate `fassets`
- * directives:
+ * directives: `define`, `use`, and `defineUse`.  A good summary of
+ * these directives can be found at
+ * {{book.guide.crossCom_fassetsRecapPushOrPull}}.
  * 
  * 1. **define**: define public resources, held in the
  *    {{book.api.FassetsObject}}
@@ -406,5 +431,6 @@ export function extendFeatureProperty(name, owner) {
  *    ```
  * 
  * For more information, please refer to {{book.guide.crossCom}},
- * {{book.api.FassetsObject}}, and the {{book.api.withFassets}} HoC.
+ * {{book.api.FassetsObject}}, the {{book.api.withFassets}} HoC,
+ * and the {{book.guide.crossCom_fassetsRecapPushOrPull}}.
  */

@@ -295,15 +295,25 @@ export function extendAspectProperty(name, owner) {
  * The content (or payload) of an {{book.api.Aspect}}, specified
  * within a {{book.api.Feature}}.
  * 
- * An {{book.api.Aspect}} object extends **feature-u** by accumulating
- * information of interest from {{book.api.Feature}} objects _(indexed
- * by the Aspect name)_.
- * 
  * The content type is specific to the Aspect. For example, a redux
  * Aspect assembles reducers (via `Feature.reducer`), while a
  * redux-logic Aspect gathers logic modules (via `Feature.logic`),
  * etc.
  * 
+ * AspectContent can either be defined from **built-in** aspects
+ * _(via core **feature-u**)_, or **extensions** _(from
+ * {{book.api.Aspect}})_.
+ * 
+ * An {{book.api.Aspect}} object extends **feature-u** by accumulating
+ * information of interest from {{book.api.Feature}} objects _(indexed
+ * by the Aspect name)_.
+ * 
+ * **Note**: Whenever AspectContent definitions require the 
+ * {{book.api.FassetsObject}} **at code expansion time**, you can wrap the
+ * definition in a {{book.api.expandWithFassets}} function.  In other
+ * words, your aspect content can either be the actual content itself
+ * _(ex: a reducer)_, or a function that returns the content.
+ *
  * For more information, please refer to
  * {{book.guide.detail_featureAndAspect}}.
  */
