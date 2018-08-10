@@ -24,22 +24,26 @@ If one feature requires resources from other features, simply use the
 {{book.guide.crossCom}} mechanism provided by **feature-u** _(exposing
 a smaller cross section of the **Feature's Public Face**)_.
 
-The reason for this is many fold:
+There are a number of reasons for this:
 
-1. it is **more controlled** ... _a feature can formally declare it's
-Public Facing points_
+1. Your features truly become **plug-and-play**!  This is probably
+   the most compelling argument, and has many ramifications.
 
-2. your features truly become **plug-and-play**
+2. It is **more controlled**.  A feature can formally declare it's
+   Public Facing points, facilitating collaboration between
+   developers.
 
-3. features can be tested in isolation. Simplified or mock components
-can easily be provided to stand in for any named fassets without any
-sophisticated mocking technique.
+3. Features can be **tested in isolation**. Simplified or mock
+   components can easily be provided to "stand in" for any named `fassets`
+   without any sophisticated mocking technique.
 
-4. upgrade features can be developed separately that define the same
-public face and then at build or runtime the upgraded feature could be
-used instead of the original. This could facilitate A/B testing and
-a nice migration path while keeping the original feature fully operational
-and easily reverted to if necessary.
+4. **Upgrading features can be developed on a separate track**.  A
+   "new and improved" feature can co-exist, providing it conforms to
+   the same Public Face of the original.  Then at build or
+   run-time, the upgraded feature can be "swapped out" in place of the
+   original.  This facilitates A/B testing and provides a nice
+   migration path while keeping the original feature fully operational
+   _(i.e. it can easily be reverted when necessary)_.
 
 ## Feature Name
 

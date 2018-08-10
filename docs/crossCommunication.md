@@ -446,15 +446,17 @@ accumulates all matching definitions, and promotes them as arrays.
 Our **MainPage** component no longer explicitly reasons about each
 injection.
 
-We used the index from the array as the React `key` since it doesn't
-change after startup. However there is an alternative approach which
-provides the original unique fasset name as the key which we will
-cover later when discussing the `@withKeys` directive.
-
 Through this implementation, **any feature may dynamically inject
 itself in the process autonomously**!  In addition, this dynamic
 implicitly handles the case where a feature is dynamically disabled
 _**(very kool indeed)**_!!
+
+**SideBar**: Notice that our mapping process used the array index
+for our React `key`.  This technique actually works in a majority of
+cases, because the set of `fassets` "in use" typically does not
+change.  With that said, there is an alternate approach (using the
+`@withKeys` directive) that injects the unique `fassetsKey` into the
+mix.  Please refer to: {{book.guide.crossCom_reactKeys$}}.
 
 
 ### Wildcard Processing
