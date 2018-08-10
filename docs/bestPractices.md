@@ -29,21 +29,29 @@ There are a number of reasons for this:
 1. Your features truly become **plug-and-play**!  This is probably
    the most compelling argument, and has many ramifications.
 
-2. It is **more controlled**.  A feature can formally declare it's
-   Public Facing points, facilitating collaboration between
-   developers.
+2. It is **more controlled**. By formally declaring Public Interface
+   points, this facilitates collaboration between features _(and even
+   a better understanding between developers)_.
 
-3. Features can be **tested in isolation**. Simplified or mock
+3. When a feature is disabled, it is **dynamically removed from the
+   mix**.  In many cases, this dynamic is automatically reflected
+   _(for example, when it is pulled in through
+   {{book.guide.crossCom_wildcards}})_.  Even when it is not
+   automatic, there is a built-in mechanism by which your logic can
+   reason about the existence of a feature
+   (i.e. {{book.api.Fassets_hasFeature}}).
+
+4. Features can be **tested in isolation**. Simplified or mock
    components can easily be provided to "stand in" for any named `fassets`
    without any sophisticated mocking technique.
 
-4. **Upgrading features can be developed on a separate track**.  A
+5. **Upgrading features can be developed on a separate track**.  A
    "new and improved" feature can co-exist, providing it conforms to
    the same Public Face of the original.  Then at build or
-   run-time, the upgraded feature can be "swapped out" in place of the
+   run-time, the upgraded feature can be "swapped in" in place of the
    original.  This facilitates A/B testing and provides a nice
    migration path while keeping the original feature fully operational
-   _(i.e. it can easily be reverted when necessary)_.
+   _(i.e. it can easily be reverted if necessary)_.
 
 ## Feature Name
 
