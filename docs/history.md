@@ -107,9 +107,13 @@ Release           | What                                   | *When*
 [GitHub Content](https://github.com/KevinAst/feature-u/tree/v1.0.0)
 &bull;
 [Diff](https://github.com/KevinAst/feature-u/compare/v0.1.3-docs...v1.0.0)
+&bull;
+[Migration Notes](https://feature-u.js.org/1.0.0/migration.1.0.0.md)
+[??temp](/migration.1.0.0.md)
 
 **NOTE**: This release contains **breaking changes** from prior
-releases _(i.e. **a retrofit of client code is necessary**)_.
+releases.  _A retrofit of client code is necessary (see **Migration
+Notes** link above)_.
 
 1. **Review**:
    Beginning with **feature-u** v1 [`Cross Feature Communication`](../1.0.0/crossCommunication.html) has been
@@ -155,9 +159,6 @@ releases _(i.e. **a retrofit of client code is necessary**)_.
    In addition, if you are using any of the **feature-u** extended
    aspect plugins, you must install the latest version, as they now
    pass through the new [`fassets`](../1.0.0/api.html#Fassets) object.
-   
-   The following gist will lead you through the migration details:
-   http://bit.ly/feature-u_V1Migration
 
 2. **Docs**:
    Our documentation now employs a dynamic left-nav menu, that only

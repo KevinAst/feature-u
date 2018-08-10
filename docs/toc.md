@@ -116,6 +116,7 @@
 * [Revision History](history.md)
   * [v1.0.0 (August ??, 2018)](history.md#v1_0_0)
     * [Full Docs](https://feature-u.js.org/1.0.0/)
+    * [Migration Notes](migration.1.0.0.md)
   * [v0.1.3 (July 2, 2018)](history.md#v0_1_3)
     * [Full Docs](https://feature-u.js.org/0.1.3/)
   * [v0.1.0 (March 6, 2018)](history.md#v0_1_0)
