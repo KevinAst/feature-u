@@ -51,7 +51,7 @@ _Go forth and compute!!_
 
 - {{book.guide.crossCom_uiComposition}} ...  _facilitate seamless **cross-feature component composition**_
 
-- {{book.guide.featureRouter}} ... _**feature-u**'s recommendation for autonomous feature-based navigation through state analysis_
+- {{book.guide.featureRouter}} ... _learn how navigation and routing can be integrated into your features_
 
 - {{book.guide.enablement}} ... _dynamically enable/disable your features_
 

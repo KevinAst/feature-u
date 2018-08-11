@@ -100,8 +100,7 @@ succinct suffix that distinguishes a number of my published
    them in the overall app's GUI.  How is this accomplished in an
    autonomous way?
 
-   **Solution:** {{book.guide.featureRouter}} (via the plugable
-   {{book.ext.featureRouter}} `routeAspect`)
+   **Solution:** {{book.guide.featureRouter}}
 
 1. **Single Source of Truth:**
 

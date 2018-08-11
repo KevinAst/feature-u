@@ -11,13 +11,8 @@
 Beginning with **feature-u V1**, {{book.guide.crossCom}} has been
 re-designed to include {{book.guide.crossCom_uiComposition}} as a core
 part of **feature-u** _(thanks {{book.ext.jeffbski}} for the design
-collaboration)_!
-
-??TODO: "REWORD after RR retrofit ?? and sync to feature-u history" ... 
-
-?? This means that **navigation and routing is supported**, when using
-??a solution like??  {{book.ext.reactRouter}} _(due to it's V4 design that
-utilizes component composition)_.
+collaboration)_!  This even extends to things like
+{{book.guide.featureRouter}}.
 
 This refactor promotes **one solution** for all
 cross-feature-communication _(i.e. Actions, Selectors, UI Components,

@@ -49,6 +49,8 @@
     * [Managed Code Expansion](crossCommunication.md#managed-code-expansion)
     * [import fassets](crossCommunication.md#import-fassets)
 * [Feature Based Routes](featureRouter.md)
+  * [react-router](featureRouter.md#react-router)
+  * [feature-router](featureRouter.md#feature-router)
 * [Feature Enablement](enablement.md)
   * [How it works](enablement.md#how-does-it-work)
   * [Existence and Dependencies](enablement.md#feature-existence-and-dependencies)

@@ -120,11 +120,7 @@ Notes** link above)_.
    completely re-designed to include
    [`UI Composition`](../1.0.0/crossCommunication.html#ui-composition) as a core part of
    **feature-u** _(thanks {{book.ext.jeffbski}} for the design
-   collaboration)_!
-
-   This means that **navigation and routing is supported**, when using
-   {{book.ext.reactRouter}} _(due to RR's V4 design that utilizes
-   component composition)_.
+   collaboration)_!  This even extends to things like [`Feature Based Routes`](../1.0.0/featureRouter.html).
 
    This refactor promotes **one solution** for all cross-communication
    _(i.e. Actions, Selectors, UI Components, API, etc.)_, **making it

@@ -31,7 +31,7 @@ developed _(see: {{book.guide.why}})_.
    run-time-stack) by accumulating all feature aspects (employing an
    extendable API)_
 
-1. **UI Component Promotion:** ??TODO-retrofit
+1. **UI Component Promotion:**
    _features can autonomously promote their UI components through
    Feature Based Route Management_
 

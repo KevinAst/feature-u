@@ -373,7 +373,8 @@ The `fassets.defineUse` directive requires that the resource keys match a
 **SideBar**: Because we are also dealing with navigation, we introduce
 {{book.ext.reactRouter}} into the mix (with the `Link` and `Route`
 components).  Because of RR's V4 design, our routes are also handled
-through component composition.
+through component composition _(see {{book.guide.featureRouter}} for
+more information)_.
 
 
 ## Wildcards (adding dynamics)

@@ -67,6 +67,7 @@
           "detail_reactRegistration":  "<a href='/detail.html#react-registration'><code>React Registration</code></a>",
 
       "appLifeCycle":     "<a href='/appLifeCycle.html'><code>Application Life Cycle Hook</code></a>",
+      "appLifeCycles":    "<a href='/appLifeCycle.html'><code>Application Life Cycle Hooks</code></a>",
 
       "appWillStart":     "<a href='/appLifeCycle.html#appwillstart'><code>appWillStart</code></a>",
       "appWillStartCB":   "<a href='/appLifeCycle.html#appwillstart'><code>Feature.appWillStart()</code></a>",
@@ -95,13 +96,17 @@
         "crossCom_resourceValidation":     "<a href='/crossCommunication.html#resource-validation'><code>Resource Validation</code></a>",
         "crossCom_doesFeatureExist":       "<a href='/crossCommunication.html#does-feature-exist'><code>Does Feature Exist</code></a>",
         "crossCom_fassetsRecapPushOrPull":  "<a href='/crossCommunication.html#fassets-recap-push-or-pull'><code>fassets Recap: Push or Pull</code></a>",
+        "crossCom_push":                    "<a href='/crossCommunication.html#fassets-recap-push-or-pull'><code>push</code></a>",
+        "crossCom_pull":                    "<a href='/crossCommunication.html#fassets-recap-push-or-pull'><code>pull</code></a>",
         "crossCom_obtainingFassetsObject":   "<a href='/crossCommunication.html#obtaining-fassets-object'><code>Obtaining fassets object</code></a>",
           "crossCom_fassetsParameter":       "<a href='/crossCommunication.html#fassets-parameter'><code>fassets parameter</code></a>",
           "crossCom_injectFassetsCompProps": "<a href='/crossCommunication.html#inject-fassets-comp-props'><code>Inject fassets comp props</code></a>",
           "crossCom_managedCodeExpansion":   "<a href='/crossCommunication.html#managed-code-expansion'><code>Managed Code Expansion</code></a>",
           "crossCom_importFassets":          "<a href='/crossCommunication.html#import-fassets'><code>import fassets</code></a>",
 
-      "featureRouter":  "<a href='/featureRouter.html'><code>Feature Based Routes</code></a>",
+      "featureRouter":               "<a href='/featureRouter.html'><code>Feature Based Routes</code></a>",
+      "featureRouter_reactRouter":   "<a href='/featureRouter.html#react-router'><code>react-router</code></a>",
+      "featureRouter_featureRouter": "<a href='/featureRouter.html#feature-router'><code>feature-router</code></a>",
 
       "enablement":     "<a href='/enablement.html'><code>Feature Enablement</code></a>",
 
