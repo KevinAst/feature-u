@@ -691,7 +691,7 @@ export default function createFassets(activeFeatures) {
   //     - Ready for a trajectory to the moon
   //     - INTERPRETATION: the fassets object is ready for:
   //                       - client consumption
-  //                       - and seeding the fassetsConnect() function
+  //                       - and seeding the withFassets() HoC
   //*---------------------------------------------------------------------------
 
   // SideBar: To free up space, our regexp cache is deleted now that createFassets() is complete
