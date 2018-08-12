@@ -6,17 +6,22 @@
            References to older versions use the MarkDown links to versioned docs.
 -->
 
+Beginning with **feature-u V1** {{book.guide.crossCom}} has been
+completely re-designed to include
+{{book.guide.crossCom_uiComposition}} as a core offering of
+**feature-u** _(thanks {{book.ext.jeffbski}} for the design
+collaboration)_!
 
+- This refactor promotes **one solution** for all
+  {{book.guide.crossCom}} _(i.e. Actions, Selectors, UI Components,
+  API, etc.)_, **making it comprehensive and universal**.
+     
+- This is an **extremely powerful enhancement**, and even extends to
+  things like {{book.guide.featureRouter}}.
+    
+- It **represents a significant step forward** in providing seamless
+  feature-based development!
 
-Beginning with **feature-u V1**, {{book.guide.crossCom}} has been
-re-designed to include {{book.guide.crossCom_uiComposition}} as a core
-part of **feature-u** _(thanks {{book.ext.jeffbski}} for the design
-collaboration)_!  This even extends to things like
-{{book.guide.featureRouter}}.
-
-This refactor promotes **one solution** for all
-cross-feature-communication _(i.e. Actions, Selectors, UI Components,
-API, etc.)_, making it comprehensive and universal.
 
 This guide will walk you through the details of migrating to
 **feature-u V1** from an older release.

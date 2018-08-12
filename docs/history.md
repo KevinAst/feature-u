@@ -112,19 +112,28 @@ Release           | What                                   | *When*
 [??temp](/migration.1.0.0.md)
 
 **NOTE**: This release contains **breaking changes** from prior
-releases.  _A retrofit of client code is necessary (see **Migration
-Notes** link above)_.
+releases.  _A retrofit of client code is necessary (see the
+**Migration Notes** link above)_.
 
-1. **Review**:
-   Beginning with **feature-u** v1 [`Cross Feature Communication`](../1.0.0/crossCommunication.html) has been
-   completely re-designed to include
-   [`UI Composition`](../1.0.0/crossCommunication.html#ui-composition) as a core part of
-   **feature-u** _(thanks {{book.ext.jeffbski}} for the design
-   collaboration)_!  This even extends to things like [`Feature Based Routes`](../1.0.0/featureRouter.html).
+1. **Review**: New **UI Composition**
 
-   This refactor promotes **one solution** for all cross-communication
-   _(i.e. Actions, Selectors, UI Components, API, etc.)_, **making it
-   comprehensive and universal**!!
+   Beginning with **feature-u V1**
+   [`Cross Feature Communication`](../1.0.0/crossCommunication.html)
+   has been completely re-designed to include
+   [`UI Composition`](../1.0.0/crossCommunication.html#ui-composition)
+   as a core offering of **feature-u** _(thanks {{book.ext.jeffbski}} for
+   the design collaboration)_!
+
+   - This refactor promotes **one solution** for all 
+     [`Cross Feature Communication`](../1.0.0/crossCommunication.html)
+     _(i.e. Actions, Selectors, UI Components, API, etc.)_, **making it
+     comprehensive and universal**.
+     
+   - This is an **extremely powerful enhancement**, and even extends to
+     things like [`Feature Based Routes`](../1.0.0/featureRouter.html).
+     
+   - It **represents a significant step forward** in providing seamless
+     feature-based development!
 
    At a high level, the following items have been impacted _(more
    detail can be found at [`Cross Feature Communication`](../1.0.0/crossCommunication.html))_:
@@ -156,11 +165,20 @@ Notes** link above)_.
    aspect plugins, you must install the latest version, as they now
    pass through the new [`fassets`](../1.0.0/api.html#Fassets) object.
 
-2. **Docs**:
-   Our documentation now employs a dynamic left-nav menu, that only
-   exposes the sub-content of the active section.
+2. **Docs**: Documentation improvements include:
 
+   - The docs have been enhanced in several areas, including API
+     clarifications, improved cross-navigation between API/Guide,
+     additional points of interest, examples, etc.  Take a peek
+     (always improving).
 
+   - Several diagrams have been added to the docs.  You know what they
+     say: "a picture is worth a thousand words"!
+
+   - Our docs now employ a dynamic left-nav menu, that only exposes
+     sub-sections of the active section.  As a result, we now promote
+     more left-nav sub-section links, improving the visualization of
+     "where you are at" in larger topics.
 
 
 <!-- ************************************************************* -->
