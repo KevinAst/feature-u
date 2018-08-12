@@ -47,79 +47,129 @@ application, your `<Route>` components can can live anywhere in the
 tree. In turn, `<Link>` components make it easy to navigate to the
 various routes.
 
-In this example, we employ an `app` feature that defines our top-level
-`<App>` component, **and** is responsible for managing our
-application routes.
+In this example, we employ an `app` feature that has two
+responsibilities:
+1. promote our top-level `<App>` component, and
+2. manage our application routes.
 
-Let's walk through some detail, step by step ...
+Let's walk through this implementation, step by step ...
 
 **Step One** _(basic `<App>` injection)_:
+---
 
-Using **feature-u**'s {{book.guide.appLifeCycles}}, we introduce our
-top-level `<App>` component into the DOM (via
-{{book.guide.appWillStartCB}}).  Notice that in support of
-{{book.ext.reactRouter}}, we wrap everything with `<BrowserRouter>`.
+The first goal of our `app` feature is to promote the top-level
+`<App>` component.  This is easily accomplished by using
+**feature-u**'s {{book.guide.appLifeCycles}}.
 
-**features/app/index.js**
+Here are the code snippets that implement this first goal.
+
+**features/app/featureName.js** _see: Best Practices {{book.guide.bestPractices_featureName}}_
+```js
+/**
+ * Expose our featureName through a mini-meta module that is
+ * "importable" in all use-cases (a single-source-of-truth).
+ */
+export default 'app';
+```
+
+**features/app/comp/App.js** _our top-level `<App>` component_
+```js
+import React from 'react';
+
+/**
+ * Our top-level App component (just a start).
+ */
+export default App = () => <div>Hello World</div>;
+```
+
+Now we simply promote the `<App>` component into the DOM using our
+{{book.guide.appWillStartCB}} {{book.guide.appLifeCycle}}.
+
+**features/app/index.js** _our `app` Feature, promoting the `<App>` component_
 ```js
 import React           from 'react';
 import {createFeature} from 'feature-u';
-import {BrowserRouter} from 'react-router-dom';
-import featureName     from './featureName'; // 'app' ... a single-source-of-truth mini-meta module
-
-// our top-level <App> component, wrapped in react-router's <BrowserRouter>
-const App = props => (
-  <BrowserRouter>
-    <div>Hello World</div>
-  </BrowserRouter>
-);
-
+import App             from './comp/App;
+import featureName     from './featureName';
 
 export default createFeature({
+
   name: featureName,
 
   appWillStart({fassets, curRootAppElm}) {
-
-    // check for correct feature registration order
+    // insure we don't clobber any supplied content
     if (curRootAppElm) {
       throw new Error('***ERROR*** Please register the "app" feature ' +
                       'before other features that inject content in the rootAppElm ' +
                       '... <App> does NOT support children.');
     }
-
     return <App/>;
   }
 });
 ```
 
 **Step Two** _(adding links and routes)_:
+---
 
-In our next progression, we introduce some links and routes in the
-mix.
+The second goal of our `app` feature is to manage our application
+links and routes.
 
-Our `app` feature now introduces a
-{{book.guide.crossCom_resourceContract}} where we pull in links and
+Our `app` feature accomplishes this by introducing a
+{{book.guide.crossCom_resourceContract}}, where we pull in links and
 routes under the following naming convention:
 
 - `*.link.comp` - any fasset resource suffixed with `.link.comp` is
   expected to be a `<Link>` component, and will be displayed in the
   App header menu.
 
-- `.*.route.comp` - any fasset resource suffixed with `.route.comp` is
+- `*.route.comp` - any fasset resource suffixed with `.route.comp` is
   expected to be a `<Route>` component, which will be rendered when
   the application navigates to a matching route.
 
 Here is our `app` feature with it's newly enhanced usage contract (see
-`use` directive), fulfilled in the updated `<App>` component:
+`use` directive):
 
-**features/app/index.js** _(next rendition)_
+**features/app/index.js** _our `app` Feature, enhanced with the new usage contract_
 ```js
 import React           from 'react';
 import {createFeature} from 'feature-u';
-import {BrowserRouter} from 'react-router-dom';
-import featureName     from './featureName'; // 'app' ... a single-source-of-truth mini-meta module
+import App             from './comp/App;
+import featureName     from './featureName';
 
-// our top-level <App> component, rendering links and routes
+export default createFeature({
+
+  name: featureName,
+
+  fassets: {          // NEW:
+    use: [            // our usage contract
+      '*.link.comp',  // ... link components
+      '*.route.comp'  // ... route components
+    ]
+  },
+
+  appWillStart({fassets, curRootAppElm}) {
+    // insure we don't clobber any supplied content
+    if (curRootAppElm) {
+      throw new Error('***ERROR*** Please register the "app" feature ' +
+                      'before other features that inject content in the rootAppElm ' +
+                      '... <App> does NOT support children.');
+    }
+    return <App/>;
+  }
+});
+```
+
+And here is the fulfillment of our contract ... the enhanced `<App>`
+component _(with links and routes)_.
+
+**features/app/comp/App.js** _our top-level `<App>` component **with** links and routes_
+```js
+import React           from 'react';
+import {BrowserRouter} from 'react-router-dom';
+
+/**
+ * Our top-level App component (with links and routes)!
+ */
 const App = ({linkComps, routeComps}) => (
   <BrowserRouter>
     <div className="app">
@@ -128,37 +178,36 @@ const App = ({linkComps, routeComps}) => (
         { linkComps.map( (LinkComp, indx) => <LinkComp key={indx}/>) }
       </header>
       <main>
-        { routeComps.map( (RouteComp,indx) => <RouteComp key={key}/>) }
+        { routeComps.map( (RouteComp, indx) => <RouteComp key={indx}/>) }
       </main>
     </div>
   </BrowserRouter>
 );
 
-export default createFeature({
-  name: featureName,
-
-  fassets: {
-    use: [            // our usage contract
-      '*.link.comp',  // ... link components
-      '*.route.comp'  // ... route components
-    ]
-  },
-
-  appWillStart({fassets, curRootAppElm}) {
-    // check for correct feature registration order
-    if (curRootAppElm) {
-      throw new Error('***ERROR*** Please register the "app" feature ' +
-                      'before other features that inject content in the rootAppElm ' +
-                      '... <App> does NOT support children.');
-    }
-
-    // inject our links/routes into our <App> component properties
-    const linkComps  = fassets.get('*.link.comp');
-    const routeComps = fassets.get('*.route.comp');
-    return <App linkComps={linkComps} routeComps={routeComps} />;
+export default withFassets({
+  component: App,
+  mapFassetsToProps: {
+    linkComps:  '*.link.comp',
+    routeComps: '*.route.comp'
   }
 });
 ```
+
+Notice that in support of {{book.ext.reactRouter}}, we wrap everything
+with `<BrowserRouter>`.
+
+Also notice that we inject the needed fasset resources using the
+{{book.api.withFassets}} HoC.
+
+Because our mapping uses wildcards, many resources will match
+(accumulated into arrays).  We simply inject the resources into our
+component using array iteration.
+_**SideBar**: In regard to the react key using an array indices, please
+ see: {{book.guide.crossCom_reactKeys$}}_.
+
+
+**Suppliers** _(supplying content to the resource contract)_
+---
 
 By employing wildcards, **these links and routes can be supplied by
 any of our features - autonomously**!!
@@ -170,15 +219,8 @@ registered)_.
 Here is a `foo` feature that supplies it's own link and route
 components.
 
-Notice that we are using the `defineUse` directive (even though a
-`define` would technically work).  This indicates that we are
-supplying this resource "under contract" (i.e. it should match a
-corresponding `use` directive).  This allows **feature-u** to fail
-fast if there is a problem (for example a misspelling).
-
-**features/foo/index.js**
+**features/foo/index.js** _a `foo` feature **supplying** links and routes_
 ```js
-
 import React           from 'react';
 import {createFeature} from 'feature-u';
 import {Link, Route}   from 'react-router-dom';
@@ -186,15 +228,14 @@ import featureName     from './featureName'; // 'foo' ... a single-source-of-tru
 
 const featureURLPath = `/${featureName}`; // the URL path is /foo
 
-const link = () => <Link to={featureURLPath}>Foo</Link>;
-
+const link      = () => <Link to={featureURLPath}>Foo</Link>;
 const component = () => <Route path={featureURLPath} render={() => <div>Foo</div> }/>;
 
 export default createFeature({
   name: featureName,
 
   fassets: {
-    defineUse: {
+    defineUse: { // KEY: supply content under contract of the app feature
       [`${featureName}.link.comp`]:  link,
       [`${featureName}.route.comp`]: component
     }
@@ -203,7 +244,15 @@ export default createFeature({
 });
 ```
 
+Notice that we are using the `defineUse` directive (even though a
+`define` would technically work).  This indicates that we are
+supplying this resource "under contract" (i.e. it should match a
+corresponding `use` directive).  This allows **feature-u** to fail
+fast if there is a problem (for example a misspelling).
+
+
 **Summing it up**:
+---
 
 That's all there is to it. As we add features with links and route
 components, they are **automatically picked up and rendered to our
