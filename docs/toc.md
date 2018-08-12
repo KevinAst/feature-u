@@ -15,6 +15,7 @@
 * [Usage](usage.md)
   * [Directory Structure](usage.md#directory-structure)
   * [Feature Object](usage.md#feature-object)
+  * [Feature Accumulation](usage.md#feature-accumulation)
   * [launchApp()](usage.md#launchapp)
   * [Real Example](usage.md#real-example)
 * [A Closer Look](detail.md)

@@ -103,6 +103,27 @@ feature) with `openA()` and `closeA()` functions which will be publicly
 promoted to other features.
 
 
+## Feature Accumulation
+
+All features are accumulated through a single es6 module, allowing
+them to be pulled in through a single array import.
+
+**`src/feature/index.js`**
+```js
+import featureA  from './featureA;
+import featureB  from './featureB;
+
+// promote ALL our features through a single import (accumulated in an array)
+export default [
+  featureA,
+  featureB,
+];
+```
+
+**Note**: While this represents a complete list of all our features,
+some of them may be disabled (i.e. logically removed) ... see:
+{{book.guide.enablement}}.
+
 ## launchApp()
 
 In **feature-u** the application mainline is very simple and generic.

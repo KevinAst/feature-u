@@ -51,11 +51,12 @@
 
       "benefits":        "<a href='/benefits.html'><code>Benefits</code></a>",
 
-      "usage":                "<a href='/usage.html'><code>Usage</code></a>",
-      "usage_dir":            "<a href='/usage.html#directory-structure'><code>Directory Structure</code></a>",
-      "usage_featureObject":  "<a href='/usage.html#feature-object'><code>Feature Object</code></a>",
-      "usage_launchapp":      "<a href='/usage.html#launchapp'><code>launchApp()</code></a>",
-      "usage_realExample":    "<a href='/usage.html#real-example'><code>Real Example</code></a>",
+      "usage":                      "<a href='/usage.html'><code>Usage</code></a>",
+      "usage_dir":                  "<a href='/usage.html#directory-structure'><code>Directory Structure</code></a>",
+      "usage_featureObject":        "<a href='/usage.html#feature-object'><code>Feature Object</code></a>",
+      "usage_featureAccumulation":  "<a href='/usage.html#feature-accumulation'><code>Feature Accumulation</code></a>",
+      "usage_launchapp":            "<a href='/usage.html#launchapp'><code>launchApp()</code></a>",
+      "usage_realExample":          "<a href='/usage.html#real-example'><code>Real Example</code></a>",
 
       "detail":                        "<a href='/detail.html'><code>A Closer Look</code></a>",
         "detail_aspects":              "<a href='/detail.html#aspects'><code>aspects</code></a>",
