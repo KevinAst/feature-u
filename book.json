@@ -73,10 +73,11 @@
       "appWillStart":     "<a href='/appLifeCycle.html#appwillstart'><code>appWillStart</code></a>",
       "appWillStartCB":   "<a href='/appLifeCycle.html#appwillstart'><code>Feature.appWillStart()</code></a>",
       "appWillStartCB$":  "<a href='/appLifeCycle.html#appwillstart'><code>Feature.appWillStart({fassets, curRootAppElm}): rootAppElm | falsy</code></a>",
+        "injectingDomContent":     "<a href='/appLifeCycle.html#injecting-dom-content'><code>Injecting DOM Content</code></a>",
 
-      "appDidStart":      "<a href='/appLifeCycle.html#appDidStart'><code>appDidStart</code></a>",
-      "appDidStartCB":    "<a href='/appLifeCycle.html#appDidStart'><code>Feature.appDidStart()</code></a>",
-      "appDidStartCB$":   "<a href='/appLifeCycle.html#appDidStart'><code>Feature.appDidStart({fassets, [appState], [dispatch]}): void</code></a>",
+      "appDidStart":      "<a href='/appLifeCycle.html#appdidstart'><code>appDidStart</code></a>",
+      "appDidStartCB":    "<a href='/appLifeCycle.html#appdidstart'><code>Feature.appDidStart()</code></a>",
+      "appDidStartCB$":   "<a href='/appLifeCycle.html#appdidstart'><code>Feature.appDidStart({fassets, [appState], [dispatch]}): void</code></a>",
 
       "crossCom":                         "<a href='/crossCommunication.html'><code>Cross Feature Communication</code></a>",
         "crossCom_fassetsBasics":         "<a href='/crossCommunication.html#basic-concepts-fassets'><code>Basic Concepts: fassets</code></a>",

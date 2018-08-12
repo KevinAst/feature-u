@@ -255,7 +255,8 @@ export function extendFeatureProperty(name, owner) {
  * (truthy) is interpreted as the app's new rootAppElm.
  * **IMPORTANT**: When this is used, the supplied curRootAppElm MUST
  * be included as part of this definition (accommodating the
- * accumulative process of other feature injections)!
+ * accumulative process of other feature injections)! **More information 
+ * is available at {{book.guide.injectingDomContent}}**
  *
  * For more information _(with examples)_, please refer to the
  * Guide's {{book.guide.appWillStart}}.

@@ -99,9 +99,12 @@ export default createFeature({
   appWillStart({fassets, curRootAppElm}) {
     // insure we don't clobber any supplied content
     if (curRootAppElm) {
-      throw new Error('***ERROR*** Please register the "app" feature ' +
-                      'before other features that inject content in the rootAppElm ' +
-                      '... <App> does NOT support children.');
+      const msg = "***ERROR*** <App> does NOT support children " +
+                  "but another feature/aspect is attempting to inject it's content. " +
+                  "Please resolve either by adjusting the feature expansion order, " +
+                  "or promoting <App> through the conflicting artifact.";
+      console.log(`${msg} ... conflicting artifact:`, curRootAppElm);
+      throw new Error(msg);
     }
     return <App/>;
   }
@@ -150,9 +153,12 @@ export default createFeature({
   appWillStart({fassets, curRootAppElm}) {
     // insure we don't clobber any supplied content
     if (curRootAppElm) {
-      throw new Error('***ERROR*** Please register the "app" feature ' +
-                      'before other features that inject content in the rootAppElm ' +
-                      '... <App> does NOT support children.');
+      const msg = "***ERROR*** <App> does NOT support children " +
+                  "but another feature/aspect is attempting to inject it's content. " +
+                  "Please resolve either by adjusting the feature expansion order, " +
+                  "or promoting <App> through the conflicting artifact.";
+      console.log(`${msg} ... conflicting artifact:`, curRootAppElm);
+      throw new Error(msg);
     }
     return <App/>;
   }
