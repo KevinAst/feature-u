@@ -110,8 +110,8 @@ them to be pulled in through a single array import.
 
 **`src/feature/index.js`**
 ```js
-import featureA  from './featureA;
-import featureB  from './featureB;
+import featureA  from './featureA';
+import featureB  from './featureB';
 
 // promote ALL our features through a single import (accumulated in an array)
 export default [
