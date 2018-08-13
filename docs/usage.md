@@ -135,20 +135,20 @@ invoking {{book.api.launchApp}}:
 
 **`src/app.js`**
 ```js
-import ReactDOM          from 'react-dom';
-import {launchApp}       from 'feature-u';
-import {reducerAspect}   from 'feature-redux';
-import {logicAspect}     from 'feature-redux-logic';
-import {routeAspect}     from 'feature-router';
-import features          from './feature';
+import ReactDOM              from 'react-dom';
+import {launchApp}           from 'feature-u';
+import {createRouteAspect}   from 'feature-router';
+import {createReducerAspect} from 'feature-redux';
+import {createLogicAspect}   from 'feature-redux-logic';
+import features              from './feature';
 
 // launch our app, exposing the Fassets object (facilitating cross-feature communication)
 export default launchApp({           // *4*
 
   aspects: [                         // *1*
-    reducerAspect, // redux          ... extending: Feature.reducer
-    logicAspect,   // redux-logic    ... extending: Feature.logic
-    routeAspect,   // Feature Routes ... extending: Feature.route
+    createRouteAspect(),   // Feature Routes ... extending: Feature.route
+    createReducerAspect(), // redux          ... extending: Feature.reducer
+    createLogicAspect(),   // redux-logic    ... extending: Feature.logic
   ],
 
   features,                          // *2*

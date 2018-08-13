@@ -291,15 +291,18 @@ Aspects and Features, and starts the app by invoking {{book.api.launchApp}}:
 
 **`src/app.js`**
 ```js
-import React             from 'react';
-import ReactDOM          from 'react-dom';
-import {launchApp}       from 'feature-u';
-import {routeAspect}     from 'feature-router';      // *1*
-import {reducerAspect}   from 'feature-redux';       // *1*
-import {logicAspect}     from 'feature-redux-logic'; // *1*
-import SplashScreen      from './util/comp/SplashScreen';
-import features          from './feature';           // *2*
+import React                 from 'react';
+import ReactDOM              from 'react-dom';
+import {launchApp}           from 'feature-u';
+import {createRouteAspect}   from 'feature-router';      // *1*
+import {createReducerAspect} from 'feature-redux';       // *1*
+import {createLogicAspect}   from 'feature-redux-logic'; // *1*
+import SplashScreen          from './util/comp/SplashScreen';
+import features              from './feature';           // *2*
 
+const routeAspect   = createRouteAspect();   // *1*
+const reducerAspect = createReducerAspect(); // *1*
+const logicAspect   = createLogicAspect();   // *1*
 
 // define our set of "plugable" feature-u Aspects, conforming to our app's run-time stack
 const aspects = [ // *1*

@@ -186,33 +186,64 @@ from a simple plugin to a full core offering:
 If you are using the {{book.ext.featureRedux}} plugin, you must
 install the latest version.
 
-There are no changes to your application code for this plugin.
+1. This plugin has eliminated singletons in favor of creators _(to
+   facilitate testing and server-side rendering)_.
 
+   ```js
+    // in place of this:
+    import {reducerAspect}   from 'feature-redux';
+
+    // do this:
+    import {createReducerAspect} from 'feature-redux';
+    const reducerAspect = createReducerAspect();
+   ```
 
 # feature-redux-logic migration
 
 If you are using the {{book.ext.featureReduxLogic}} plugin, you must
 install the latest version.
 
-Because {{book.ext.featureReduxLogic}} auto injects the
-{{book.api.FassetsObject}} as a dependency in your logic modules
-(promoting full {{book.guide.crossCom}}, the logic modules in your
-application code must reflect this change by renaming this named
-parameter from `app` to `fassets`, and utilize the new fassets API
-accordingly.
+1. Because {{book.ext.featureReduxLogic}} auto injects the
+   {{book.api.FassetsObject}} as a dependency in your logic modules
+   (promoting full {{book.guide.crossCom}}, the logic modules in your
+   application code must reflect this change by renaming this named
+   parameter from `app` to `fassets`, and utilize the new fassets API
+   accordingly.
 
+1. This plugin has eliminated singletons in favor of creators _(to
+   facilitate testing and server-side rendering)_.
 
+   ```js
+    // in place of this:
+    import {logicAspect}   from 'feature-redux-logic';
+
+    // do this:
+    import {createLogicAspect} from 'feature-redux-logic';
+    const logicAspect = createLogicAspect();
+   ```
 
 # feature-router migration
 
 If you are using the {{book.ext.featureRouter}} plugin, you must
 install the latest version.
 
-Because {{book.ext.featureRouter}} auto injects the
-{{book.api.FassetsObject}} as a dependency in your routes (promoting
-full {{book.guide.crossCom}}), the routes in your application code
-must reflect this change by renaming this named parameter from `app`
-to `fassets`, and utilize the new fassets API accordingly.
+1. Because {{book.ext.featureRouter}} auto injects the
+   {{book.api.FassetsObject}} as a dependency in your routes (promoting
+   full {{book.guide.crossCom}}), the routes in your application code
+   must reflect this change by renaming this named parameter from `app`
+   to `fassets`, and utilize the new fassets API accordingly.
+
+1. This plugin has eliminated singletons in favor of creators _(to
+   facilitate testing and server-side rendering)_.
+
+   ```js
+    // in place of this:
+    import {routeAspect}   from 'feature-router';
+
+    // do this:
+    import {createRouteAspect} from 'feature-router';
+    const routeAspect = createRouteAspect();
+   ```
 
 
 <!--- *** REFERENCE LINKS to OBSOLETE items (found only in older versions) ... see note at top *** ---> 
