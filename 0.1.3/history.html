@@ -921,9 +921,14 @@ reference the most current release.</p>
 </thead>
 <tbody>
 <tr>
-<td><a href="#v0_1_3">v0.1.3</a></td>
-<td>Establish Polyfill Strategy</td>
-<td><em>July 2, 2018</em></td>
+  <td><a href="#v1_0_0">v1.0.0</a></td>
+  <td>UI Composition</td>
+  <td><em>August 14, 2018</em></td>
+</tr>
+<tr>
+  <td><a href="#v0_1_3">v0.1.3</a></td>
+  <td>Establish Polyfill Strategy</td>
+  <td><em>July 2, 2018</em></td>
 </tr>
 <tr>
 <td><a href="#v0_1_0">v0.1.0</a></td>
@@ -934,6 +939,94 @@ reference the most current release.</p>
 </table>
 <p><br><br><br></p>
 <h2 id="details">Details:</h2>
+<!-- ************************************************************* -->
+<p><br><br><br></p>
+<h3 id="v1_0_0" style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
+  v1.0.0 - UI Composition <i>(August 14, 2018)</i>
+</h3>
+
+<p><a href="https://feature-u.js.org/1.0.0/" target="_blank">Full Docs</a>
+&#x2022;
+<a href="https://github.com/KevinAst/feature-u/releases/tag/v1.0.0" target="_blank">GitHub Release</a>
+&#x2022;
+<a href="https://github.com/KevinAst/feature-u/tree/v1.0.0" target="_blank">GitHub Content</a>
+&#x2022;
+<a href="https://github.com/KevinAst/feature-u/compare/v0.1.3-docs...v1.0.0" target="_blank">Diff</a>
+&#x2022;
+<a href="https://feature-u.js.org/1.0.0/migration.1.0.0.html" target="_blank">Migration Notes</a></p>
+<p><strong>NOTE</strong>: This release contains <strong>breaking changes</strong> from prior
+releases.  <em>A retrofit of client code is necessary (see the
+<strong>Migration Notes</strong> link above)</em>.</p>
+<ol>
+<li><p><strong>Review</strong>: New <strong>UI Composition</strong></p>
+<p>Beginning with <strong>feature-u V1</strong>
+<a href="../1.0.0/crossCommunication.html"><code>Cross Feature Communication</code></a>
+has been completely re-designed to include
+<a href="../1.0.0/crossCommunication.html#ui-composition"><code>UI Composition</code></a>
+as a core offering of <strong>feature-u</strong> <em>(thanks <a href="https://github.com/jeffbski" target="_blank">@jeffbski</a> for
+the design collaboration)</em>!</p>
+<ul>
+<li><p>This refactor promotes <strong>one solution</strong> for all 
+<a href="../1.0.0/crossCommunication.html"><code>Cross Feature Communication</code></a>
+<em>(i.e. Actions, Selectors, UI Components, API, etc.)</em>, <strong>making it
+comprehensive and universal</strong>.</p>
+</li>
+<li><p>This is an <strong>extremely powerful enhancement</strong>, and even extends to
+things like <a href="../1.0.0/featureRouter.html"><code>Feature Based Routes</code></a>.</p>
+</li>
+<li><p>It <strong>represents a significant step forward</strong> in providing seamless
+feature-based development!</p>
+</li>
+</ul>
+<p>At a high level, the following items have been impacted <em>(more
+detail can be found at <a href="../1.0.0/crossCommunication.html"><code>Cross Feature Communication</code></a>)</em>:</p>
+<ul>
+<li><p>In an effort to standardize terminology <em>(and remove ambiguity)</em>,
+the term <code>fassets</code> <em>(feature assets)</em> is being used throughout,
+replacing <code>publicFace</code> <em>(on the aspect definition side)</em> and <code>app</code>
+<em>(on the usage side)</em>.</p>
+</li>
+<li><p>The <a href="../1.0.0/api.html#fassets"><code>Feature.fassets</code></a> aspect replaces
+<a href="../0.1.3/crossCommunication.html#publicface-and-the-app-object"><code>Feature.publicFace</code></a>,
+providing a more formal set of directives, supporting things like
+<strong>contractual arrangements</strong> <em>(of usage and definition)</em>, and
+<strong>validation of resources</strong>.</p>
+</li>
+<li><p>The <a href="../1.0.0/api.html#Fassets"><code>fassets</code></a> object replaces the
+<a href="../0.1.3/api.html#App"><code>app</code></a> object, to programmatically
+access cross-feature resources.</p>
+</li>
+<li><p>The <a href="../0.1.3/api.html#managedExpansion"><code>managedExpansion()</code></a>
+function has been renamed to
+<a href="../1.0.0/api.html#expandWithFassets"><code>expandWithFassets()</code></a>.</p>
+</li>
+<li><p>The new <a href="../1.0.0/api.html#withFassets"><code>withFassets()</code></a>
+higher-order component (HOC) auto-wires named feature assets as
+component properties.</p>
+</li>
+</ul>
+<p>In addition, if you are using any of the <strong>feature-u</strong> extended
+aspect plugins, you must install the latest version, as they now
+pass through the new <a href="../1.0.0/api.html#Fassets"><code>fassets</code></a> object.</p>
+</li>
+<li><p><strong>Docs</strong>: Documentation improvements include:</p>
+<ul>
+<li><p>The docs have been enhanced in several areas, including API
+clarifications, improved cross-navigation between API/Guide,
+additional points of interest, examples, etc.  Take a peek
+(always improving).</p>
+</li>
+<li><p>Several diagrams have been added to the docs.  You know what they
+say: &quot;a picture is worth a thousand words&quot;!</p>
+</li>
+<li><p>Our docs now employ a dynamic left-nav menu, that only exposes
+sub-sections of the active section.  As a result, we now promote
+more left-nav sub-section links, improving the visualization of
+&quot;where you are at&quot; in larger topics.</p>
+</li>
+</ul>
+</li>
+</ol>
 <!-- ************************************************************* -->
 <p><br><br><br></p>
 <h3 id="v0_1_3" style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
