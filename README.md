@@ -64,6 +64,8 @@ In turn, these [`Feature`] objects are supplied to [`launchApp()`],
 which configures and starts your application, returning a [`Fassets`] object
 (_which promotes the Public Face of each feature_).
 
+![Basic Concepts](docs/img/concepts.png)
+
 In **feature-u**, "aspect" is a generalized term used to refer to the
 various ingredients that (when combined) constitute your application.
 Aspects can take on many different forms: **UI Components** &bull; **Routes**
@@ -203,20 +205,20 @@ app-specific constructs**!!  The mainline merely accumulates the
 
 **`src/app.js`**
 ```js
-import ReactDOM          from 'react-dom';
-import {launchApp}       from 'feature-u';
-import {reducerAspect}   from 'feature-redux';
-import {logicAspect}     from 'feature-redux-logic';
-import {routeAspect}     from 'feature-router';
-import features          from './feature';
+import ReactDOM              from 'react-dom';
+import {launchApp}           from 'feature-u';
+import {createRouteAspect}   from 'feature-router';
+import {createReducerAspect} from 'feature-redux';
+import {createLogicAspect}   from 'feature-redux-logic';
+import features              from './feature';
 
 // launch our app, exposing the Fassets object (facilitating cross-feature communication)
 export default launchApp({           // *4*
 
   aspects: [                         // *1*
-    reducerAspect, // redux          ... extending: Feature.reducer
-    logicAspect,   // redux-logic    ... extending: Feature.logic
-    routeAspect,   // Feature Routes ... extending: Feature.route
+    createRouteAspect(),   // Feature Routes ... extending: Feature.route
+    createReducerAspect(), // redux          ... extending: Feature.reducer
+    createLogicAspect(),   // redux-logic    ... extending: Feature.logic
   ],
 
   features,                          // *2*
