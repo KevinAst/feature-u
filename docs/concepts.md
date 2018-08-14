@@ -72,6 +72,8 @@ In turn, these {{book.api.Feature}} objects are supplied to
 returning a {{book.api.FassetsObject}} (_which promotes the Public Face
 of each feature_).
 
+![Basic Concepts](img/concepts.png)
+
 ### aspects ...
 
 In **feature-u**, "aspect" is a generalized term used to refer to the
