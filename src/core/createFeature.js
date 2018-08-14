@@ -48,9 +48,9 @@ import logf        from '../util/logf';
  * plugable aspects) _(please refer to: {{book.guide.appDidStart}})_.
  * 
  * @param {AspectContent} [extendedAspect] additional aspects, as
- * defined by the feature-u's Aspect plugins _(please refer to:
+ * defined by the feature-u's Aspect plugins (please refer to:
  * {{book.guide.detail_extendableAspects}} -and-
- * {{book.guide.extending}})_.
+ * {{book.guide.extending}}).
  *
  * @return {Feature} a new Feature object (to be consumed by
  * launchApp()).

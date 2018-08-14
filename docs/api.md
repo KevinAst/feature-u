@@ -53,9 +53,9 @@ plugable aspects) <em>(please refer to: {{book.guide.appDidStart}})</em>.</p>
 </td>
     </tr><tr>
     <td>[extendedAspect]</td><td><a href="#AspectContent"><code>AspectContent</code></a></td><td></td><td><p>additional aspects, as
-defined by the feature-u&#39;s Aspect plugins _(please refer to:
+defined by the feature-u&#39;s Aspect plugins (please refer to:
 {{book.guide.detail_extendableAspects}} -and-
-{{book.guide.extending}})_.</p>
+{{book.guide.extending}}).</p>
 </td>
     </tr>  </tbody>
 </table>
