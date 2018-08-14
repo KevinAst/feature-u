@@ -108,7 +108,7 @@ Release           | What                                   | *When*
 &bull;
 [Diff](https://github.com/KevinAst/feature-u/compare/v0.1.3-docs...v1.0.0)
 &bull;
-[Migration Notes](https://feature-u.js.org/1.0.0/migration.1.0.0.md)
+[Migration Notes](https://feature-u.js.org/1.0.0/migration.1.0.0.html)
 
 **NOTE**: This release contains **breaking changes** from prior
 releases.  _A retrofit of client code is necessary (see the
