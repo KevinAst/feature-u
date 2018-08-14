@@ -2,7 +2,7 @@ import {op}             from '../launchApp';  // module under test INTERNAL
 import createAspect$    from './createAspect$';
 import {createFeature}  from '../..';
 
-describe('launchApp.op.helper.defineRootAppElm(app, activeFeatures, aspects): rootAppElm', () => {
+describe('launchApp.op.helper.defineRootAppElm(fassets, activeFeatures, aspects): rootAppElm', () => {
 
   // NOTE: throughout this test, we are actually dealing with react
   //       DOM elms, but for this isolated test we never render any DOM,
@@ -17,22 +17,22 @@ describe('launchApp.op.helper.defineRootAppElm(app, activeFeatures, aspects): ro
 
     // NOTE: extension3 HAS an injectRootAppElm()
     //       for our testing purposes, we really only care that
-    //       aspect.injectRootAppElm(app, curRootAppElm)
-    //       is invoked with the correct parameters (app, curRootAppElm)!
+    //       aspect.injectRootAppElm(fassets, curRootAppElm)
+    //       is invoked with the correct parameters (fassets, curRootAppElm)!
     //       ... because we can't really test a client's implemantion of injectRootAppElm()
     //       ... HOWEVER, by testing the return value of this implementation,
     //           we indirectly accomplish our desired goal!!
     createAspect$({
       name:     'extension3',
 
-      injectRootAppElm(app, curRootAppElm) {
+      injectRootAppElm(fassets, curRootAppElm) {
 
         // include curRootAppElm ... and interpret the initial null value
         let rootAppElm = curRootAppElm || '';
 
-        // accumulate our app
-        // ... unconventional, but for our testing it proves that correct app was supplied
-        rootAppElm += `App:${app}`;
+        // accumulate our fassets
+        // ... unconventional, but for our testing it proves that correct fassets was supplied
+        rootAppElm += `Fassets:${fassets}`;
 
         // accumulate our desired rootAppElm injection
         rootAppElm += `...rootAppElmFrom-extension3`;
@@ -48,22 +48,22 @@ describe('launchApp.op.helper.defineRootAppElm(app, activeFeatures, aspects): ro
 
     // NOTE: extension1 HAS an initialRootAppElm()
     //       for our testing purposes, we really only care that
-    //       aspect.initialRootAppElm(app, curRootAppElm)
-    //       is invoked with the correct parameters (app, curRootAppElm)!
+    //       aspect.initialRootAppElm(fassets, curRootAppElm)
+    //       is invoked with the correct parameters (fassets, curRootAppElm)!
     //       ... because we can't really test a client's implemantion of initialRootAppElm()
     //       ... HOWEVER, by testing the return value of this implementation,
     //           we indirectly accomplish our desired goal!!
     createAspect$({
       name:     'extension1',
 
-      initialRootAppElm(app, curRootAppElm) {
+      initialRootAppElm(fassets, curRootAppElm) {
 
         // include curRootAppElm ... and interpret the initial null value
         let rootAppElm = curRootAppElm || '';
 
-        // accumulate our app
-        // ... unconventional, but for our testing it proves that correct app was supplied
-        rootAppElm += `App:${app}`;
+        // accumulate our fassets
+        // ... unconventional, but for our testing it proves that correct fassets was supplied
+        rootAppElm += `Fassets:${fassets}`;
 
         // accumulate our desired rootAppElm injection
         rootAppElm += `...rootAppElmFrom-extension1`;
@@ -80,8 +80,8 @@ describe('launchApp.op.helper.defineRootAppElm(app, activeFeatures, aspects): ro
   //***
 
   // NOTE: for our testing purposes, we really only care that
-  //       feature.appWillStart({app, curRootAppElm})
-  //       is invoked with the correct parameters ({app, curRootAppElm})!
+  //       feature.appWillStart({fassets, curRootAppElm})
+  //       is invoked with the correct parameters ({fassets, curRootAppElm})!
   //       ... because we can't really test a client's implemantion of appWillStart()
   //       ... HOWEVER, by testing the return value of this implementation,
   //           we indirectly accomplish our desired goal!!
@@ -90,14 +90,14 @@ describe('launchApp.op.helper.defineRootAppElm(app, activeFeatures, aspects): ro
     createFeature({
       name:     'feature1', // NOTE: feature1 HAS an appWillStart()
 
-      appWillStart({app, curRootAppElm}) {
+      appWillStart({fassets, curRootAppElm}) {
 
         // include curRootAppElm ... and interpret the initial null value
         let rootAppElm = curRootAppElm || '';
 
-        // accumulate our app
-        // ... unconventional, but for our testing it proves that correct app was supplied
-        rootAppElm += `App:${app}`;
+        // accumulate our fassets
+        // ... unconventional, but for our testing it proves that correct fassets was supplied
+        rootAppElm += `Fassets:${fassets}`;
 
         // accumulate our desired rootAppElm injection
         rootAppElm += `...rootAppElmFrom-feature1`;
@@ -113,14 +113,14 @@ describe('launchApp.op.helper.defineRootAppElm(app, activeFeatures, aspects): ro
     createFeature({
       name:     'feature3', // NOTE: feature3 HAS an appWillStart()
 
-      appWillStart({app, curRootAppElm}) {
+      appWillStart({fassets, curRootAppElm}) {
 
         // include curRootAppElm ... and interpret the initial null value
         let rootAppElm = curRootAppElm || '';
 
-        // accumulate our app
-        // ... unconventional, but for our testing it proves that correct app was supplied
-        rootAppElm += `App:${app}`;
+        // accumulate our fassets
+        // ... unconventional, but for our testing it proves that correct fassets was supplied
+        rootAppElm += `Fassets:${fassets}`;
 
         // accumulate our desired rootAppElm injection
         rootAppElm += `...rootAppElmFrom-feature3`;
@@ -133,17 +133,17 @@ describe('launchApp.op.helper.defineRootAppElm(app, activeFeatures, aspects): ro
 
 
   //***
-  //*** Our App
+  //*** Our Fassets
   //***
 
-  const app = 'app-pass-through-for-testing';
+  const fassets = 'fassets-pass-through-for-testing';
 
 
   //***
   //*** Our function under test
   //***
 
-  const rootAppElm = op.helper.defineRootAppElm(app, activeFeatures, aspects);
+  const rootAppElm = op.helper.defineRootAppElm(fassets, activeFeatures, aspects);
 
 
   //***
@@ -151,12 +151,13 @@ describe('launchApp.op.helper.defineRootAppElm(app, activeFeatures, aspects): ro
   //***
 
   test('confirm the accumulated rootAppElm from a combination of Aspects/Features', () => {
-    expect(rootAppElm)
-      .toBe('App:app-pass-through-for-testing...rootAppElmFrom-extension1' +
-            'App:app-pass-through-for-testing...rootAppElmFrom-feature1'   +
-            'App:app-pass-through-for-testing...rootAppElmFrom-feature3'   +
-            'App:app-pass-through-for-testing...rootAppElmFrom-extension3');
-
+    // NOTE: In support of withFassets(), our rootAppElm is now a React DOM rooted in <FassetsContext.Provider>.
+    //       For our test purposes, we simply interogate it's children :-)
+    expect(rootAppElm.props.children)
+      .toBe('Fassets:fassets-pass-through-for-testing...rootAppElmFrom-extension1' +
+            'Fassets:fassets-pass-through-for-testing...rootAppElmFrom-feature1'   +
+            'Fassets:fassets-pass-through-for-testing...rootAppElmFrom-feature3'   +
+            'Fassets:fassets-pass-through-for-testing...rootAppElmFrom-extension3');
   });
 
 });

@@ -5,20 +5,21 @@ project organization_ in your [`react`] project.  It assists
 in organizing your project by individual features.
 
 Most software engineers would agree that organizing your project by
-feature is much preferred over type-based patterns.  Because
+feature is much preferred over type-based patterns.  As
 application domains grow in the real world, project organization by
 type simply doesn't scale, it just becomes unmanageable!  There are a
 number of good articles that discuss this topic _(with insights on
 feature-based design and structure)_.
 
 **feature-u** is a utility library that manages and streamlines this
-process.  It automates some of the mundane details of your features
-and helps in promoting features that are **plug-and-play**.
+process.  It automates some of the mundane details of managing
+features and helps in promoting features that are **plug-and-play**.
 
-The following article is an introduction to **feature-u**, with
-examples from a real-world app:
-[*feature-u: Feature Based Project Organization for React*](https://tinyurl.com/feature-u)
-_... **NOTE**: you will receive an error until the article is published (ETA: 3/9/2018)_
+The following article is an introduction to **feature-u** with
+examples from a real-world app: [`eatery-nod`] _(where **feature-u**
+was conceived)_: [*feature-u: Feature Based Project Organization for
+React*](http://bit.ly/feature-u).
+
 
 **feature-u** allows you to **focus your attention on the "business
 end" of your features!**
@@ -33,29 +34,50 @@ end" of your features!**
 
 ## Install
 
-```shell
-npm install --save feature-u
-```
+- **peerDependencies**:
+
+  **feature-u** has a peerDependency on react _(most likely you should
+  already have this installed ... but just in case)_:
+
+  ```shell
+  npm install --save react
+  ```
+  <!--- WITH REVEAL of USAGE:
+  npm install --save react   # VER: >=0.14.0   USAGE: React Context and JSX (in withFassets.js and launchApp.js)
+  ---> 
+
+- **the main event**:
+
+  ```shell
+  npm install --save feature-u
+  ```
 
 ## feature-u Basics
 
 The basic process of **feature-u** is that each feature promotes a
 [`Feature`] object that contains various aspects of that
-feature ... _things like: the feature's name, it's Public API, whether
-it is enabled, initialization constructs, and resources used to
-configure it's slice of the frameworks in use._
+feature ... _things like: the feature's name, it's Public Interface,
+whether it is enabled, initialization constructs, and resources used
+to configure it's slice of the frameworks in use._
 
-In turn, these [`Feature`] objects are supplied to
-[`launchApp()`], which configures and starts your application,
-returning an [`App`] object (_which promotes the public API
-of each feature_).
+In turn, these [`Feature`] objects are supplied to [`launchApp()`],
+which configures and starts your application, returning a [`Fassets`] object
+(_which promotes the Public Face of each feature_).
+
+![Basic Concepts](docs/img/concepts.png)
 
 In **feature-u**, "aspect" is a generalized term used to refer to the
 various ingredients that (when combined) constitute your application.
-Aspects can take on many different forms: **UI Components** and **Routes**
+Aspects can take on many different forms: **UI Components** &bull; **Routes**
 &bull; **State Management** _(actions, reducers, selectors)_ &bull;
 **Business Logic** &bull; **Startup Initialization Code** &bull;
 _etc. etc. etc._
+
+**Not all aspects are of interest to feature-u** ...  _only those that
+are needed to setup and launch the app_ ... all others are considered
+an internal implementation detail of the feature.  As an example,
+consider the redux state manager: while it uses actions, reducers, and
+selectors ... only reducers are needed to setup and configure redux.
 
 A fundamental goal of **feature-u** is to **automatically configure
 the framework(s)** used in your run-time-stack _(by accumulating the
@@ -66,14 +88,13 @@ or you can create your own)_.  The interface to your chosen frameworks
 is not altered in any way.  You use them the same way you always have
 _(just within your feature boundary)_.
 
-
 ## Usage
 
 The basic usage pattern of **feature-u** is to:
 
-1. Choose the Aspects that you will need, based on your selected
-   frameworks (i.e. your run-time stack).  This extends the aspect
-   properties accepted by the Feature object (for example:
+1. Choose the [`Aspects`] that you will need, based on your
+   selected frameworks (i.e. your run-time stack).  This extends the
+   aspect properties accepted by the Feature object (for example:
    `Feature.reducer` for [`redux`], or `Feature.logic` for
    [`redux-logic`]).
 
@@ -88,11 +109,11 @@ The basic usage pattern of **feature-u** is to:
      thought.  There are many ways to approach this from a design
      perspective.
 
-   * Each feature will promote it's aspect content through a Feature
-     object (using [`createFeature()`]).
+   * Each feature will promote it's aspect content through a
+     [`Feature`] object (using [`createFeature()`]).
 
-1. Your mainline starts the app by invoking [`launchApp()`],
-   passing all Aspects and Features.
+1. Your mainline starts the app by invoking [`launchApp()`], passing
+   all [`Aspects`] and [`Features`].
 
 **Easy Peasy!!**
 
@@ -106,9 +127,9 @@ src/
   app.js              ... launches app using launchApp()
 
   feature/
-    index.js          ... accumulate/promote all app Feature objects
+    index.js          ... accumulate/promote all Feature objects (within the app)
 
-    featureA/         ... an app feature
+    featureA/         ... a feature (within the app)
       actions.js
       appDidStart.js
       appWillStart.js
@@ -120,7 +141,7 @@ src/
       reducer.js
       route.js
 
-    featureB/         ... another app feature
+    featureB/         ... another feature
       ...
 
   util/               ... common utilities used across all features
@@ -129,6 +150,7 @@ src/
 
 Each feature is located in it's own directory, containing it's aspects
 (actions, reducers, components, routes, logic, etc.).
+
 
 ## Feature Object
 
@@ -148,10 +170,10 @@ export default createFeature({
   name:     'featureA',
   enabled:  true,
 
-  publicFace: {
-    api: {
-      open:  () => ... implementation omitted,
-      close: () => ... implementation omitted,
+  fassets: {
+    define: {
+      'api.openA':  () => ... implementation omitted,
+      'api.closeA': () => ... implementation omitted,
     },
   },
 
@@ -166,9 +188,10 @@ export default createFeature({
 
 The docs will fill in more detail, but for now notice that the feature
 is conveying reducers, logic modules, routes, and does some type of
-initialization (appWillStart/appDidStart).  It also promotes a
-publicFace (open/close) that can be used by other features (i.e. the
-feature's Public API).
+initialization (appWillStart/appDidStart).  It also promotes something
+called `fassets` (feature assets - the Public Face of a feature) with
+`openA()` and `closeA()` functions which will be publicly promoted to
+other features.
 
 
 ## launchApp()
@@ -177,25 +200,25 @@ In **feature-u** the application mainline is very simple and generic.
 There is no real app-specific code in it ... **not even any global
 initialization**!  That is because **each feature can inject their own
 app-specific constructs**!!  The mainline merely accumulates the
-Aspects and Features, and starts the app by invoking
+[`Aspects`] and [`Features`], and starts the app by invoking
 [`launchApp()`]:
 
 **`src/app.js`**
 ```js
-import ReactDOM          from 'react-dom';
-import {launchApp}       from 'feature-u';
-import {reducerAspect}   from 'feature-redux';
-import {logicAspect}     from 'feature-redux-logic';
-import {routeAspect}     from 'feature-router';
-import features          from './feature';
+import ReactDOM              from 'react-dom';
+import {launchApp}           from 'feature-u';
+import {createRouteAspect}   from 'feature-router';
+import {createReducerAspect} from 'feature-redux';
+import {createLogicAspect}   from 'feature-redux-logic';
+import features              from './feature';
 
-// launch our app, exposing the App object (facilitating cross-feature communication)
+// launch our app, exposing the Fassets object (facilitating cross-feature communication)
 export default launchApp({           // *4*
 
   aspects: [                         // *1*
-    reducerAspect, // redux          ... extending: Feature.reducer
-    logicAspect,   // redux-logic    ... extending: Feature.logic
-    routeAspect,   // Feature Routes ... extending: Feature.route
+    createRouteAspect(),   // Feature Routes ... extending: Feature.route
+    createReducerAspect(), // redux          ... extending: Feature.reducer
+    createLogicAspect(),   // redux-logic    ... extending: Feature.logic
   ],
 
   features,                          // *2*
@@ -210,12 +233,11 @@ export default launchApp({           // *4*
 Here are some **important points of interest** _(match the numbers to
 `*n*` in the code above)_:
 
-1. the supplied Aspects _(pulled from separate npm packages)_ reflect
-   the frameworks of our run-time stack _(in our example [
-   [`redux`], [`redux-logic`], and
-   [`feature-router`])_ and extend the acceptable Feature
-   properties _(`Feature.reducer`, `Feature.logic`, and
-   `Feature.route` respectively)_ ... _**see:**
+1. the supplied [`Aspects`] _(pulled from separate npm packages)_
+   reflect the frameworks of our run-time stack _(in our example
+   [`redux`], [`redux-logic`], and [`feature-router`])_ and extend the
+   acceptable Feature properties _(`Feature.reducer`, `Feature.logic`,
+   and `Feature.route` respectively)_ ... _**see:**
    [`Extendable aspects`]_
 
 2. all of our app features are supplied (accumulated from the
@@ -228,22 +250,17 @@ Here are some **important points of interest** _(match the numbers to
    as: React Web, React Native, Expo, etc. ... _**see:**
    [`React Registration`]_
 
-4. _as a bit of a preview_, the return value of [`launchApp()`]
-   is an [`App`] object, which promotes the accumulated
-   Public API of all features.  The App object contains named feature
-   nodes, and is exported to provide [`Cross Feature Communication`] ... _here
-   is what app looks like (for this example):_
+4. _as a bit of a preview_, the return value of [`launchApp()`] is a
+   [`Fassets`] object, which promotes the accumulated Public Face of
+   all features, and is exported to provide [`Cross Feature
+   Communication`] ... _here is what the `fassets` looks like (for
+   this example):_
 
    ```js
-   app: {
-     featureA: {
-       api: {
-         open(),
-         close(),
-       },
-     },
-     featureB: {
-       ...
+   fassets: {
+     api: {
+       openA(),
+       closeA(),
      },
    }
    ```
@@ -268,8 +285,11 @@ The benefits of using **feature-u** include:
    _isolating feature boundaries improves code manageability_
 
 1. **Feature Collaboration:**
-   _allow **Cross Feature Communication** through a well-defined
+   _promote **Cross Feature Communication** through a well-defined
    feature-based Public Interface_
+
+1. **Feature Based UI Composition:**
+   _facilitate seamless **cross-feature component composition**_
 
 1. **Application Life Cycle Hooks:**
    _features can initialize themselves without relying on an external
@@ -323,16 +343,15 @@ wheel!
 
 
 
-
-
-
 I hope you enjoy **feature-u**, and comments are always welcome.
 
 &lt;/Kevin&gt;
 
 
-[`App`]:                          https://feature-u.js.org/cur/api.html#App
+[`Fassets`]:                      https://feature-u.js.org/cur/api.html#Fassets
 [`Feature`]:                      https://feature-u.js.org/cur/api.html#Feature
+[`Features`]:                     https://feature-u.js.org/cur/api.html#Feature
+[`Aspects`]:                      https://feature-u.js.org/cur/api.html#Aspect
 [`createFeature()`]:              https://feature-u.js.org/cur/api.html#createFeature
 [`launchApp()`]:                  https://feature-u.js.org/cur/api.html#launchApp
 [`registerRootAppElm()`]:         https://feature-u.js.org/cur/api.html#registerRootAppElmCB

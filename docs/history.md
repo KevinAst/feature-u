@@ -26,6 +26,23 @@ reference the most current release.
 
 
 <!-- 
+
+
+*-----------------------------------------------
+* Adorn bullets with following bolded prefix
+*-----------------------------------------------
+
+**Added**:      ... for new features
+**Changed**:    ... for changes in existing functionality
+**Deprecated**: ... for soon-to-be removed features
+**Removed**:    ... for now removed features
+**Fixed**:      ... for any bug fixes
+**Enhanced**:   ... for enhancements
+**Security**:   ... in case of vulnerabilities
+**Docs**:       ... changes in documentation
+**Review**:     ... requires review
+**Internal**:   ... internal change NOT affecting user/client
+
 *-----------------------------------------------
 * PROCEDURE for maintaining LINKS in history.md
 *-----------------------------------------------
@@ -47,7 +64,7 @@ reference the most current release.
    - NOTES:
      a) clicking link STAYS ON SAME PAGE
      b) because these notes are copied to all release history.md, 
-        thy MUST reference the appropriate version
+        they MUST reference the appropriate version
         so they will be guaranteed the reference has not been removed/changed
  
 3. for GITHUB release page (when copying these notes), fully qualify the VERSIONED relative references
@@ -67,6 +84,7 @@ reference the most current release.
 
 Release           | What                                   | *When*
 ------------------|----------------------------------------|------------------
+[v1.0.0](#v1_0_0) | UI Composition                         | *August 14, 2018*
 [v0.1.3](#v0_1_3) | Establish Polyfill Strategy            | *July 2, 2018*
 [v0.1.0](#v0_1_0) | Initial Release                        | *March 6, 2018*
 
@@ -74,6 +92,92 @@ Release           | What                                   | *When*
 
 <br/><br/><br/>
 ## Details:
+
+
+<!-- ************************************************************* -->
+<br/><br/><br/>
+<h3 id="v1_0_0" style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
+  v1.0.0 - UI Composition <i>(August 14, 2018)</i>
+</h3>
+
+[Full Docs](https://feature-u.js.org/1.0.0/)
+&bull;
+[GitHub Release](https://github.com/KevinAst/feature-u/releases/tag/v1.0.0)
+&bull;
+[GitHub Content](https://github.com/KevinAst/feature-u/tree/v1.0.0)
+&bull;
+[Diff](https://github.com/KevinAst/feature-u/compare/v0.1.3-docs...v1.0.0)
+&bull;
+[Migration Notes](https://feature-u.js.org/1.0.0/migration.1.0.0.html)
+
+**NOTE**: This release contains **breaking changes** from prior
+releases.  _A retrofit of client code is necessary (see the
+**Migration Notes** link above)_.
+
+1. **Review**: New **UI Composition**
+
+   Beginning with **feature-u V1**
+   [`Cross Feature Communication`](../1.0.0/crossCommunication.html)
+   has been completely re-designed to include
+   [`UI Composition`](../1.0.0/crossCommunication.html#ui-composition)
+   as a core offering of **feature-u** _(thanks {{book.ext.jeffbski}} for
+   the design collaboration)_!
+
+   - This refactor promotes **one solution** for all 
+     [`Cross Feature Communication`](../1.0.0/crossCommunication.html)
+     _(i.e. Actions, Selectors, UI Components, API, etc.)_, **making it
+     comprehensive and universal**.
+     
+   - This is an **extremely powerful enhancement**, and even extends to
+     things like [`Feature Based Routes`](../1.0.0/featureRouter.html).
+     
+   - It **represents a significant step forward** in providing seamless
+     feature-based development!
+
+   At a high level, the following items have been impacted _(more
+   detail can be found at [`Cross Feature Communication`](../1.0.0/crossCommunication.html))_:
+   
+   - In an effort to standardize terminology _(and remove ambiguity)_,
+     the term `fassets` _(feature assets)_ is being used throughout,
+     replacing `publicFace` _(on the aspect definition side)_ and `app`
+     _(on the usage side)_.
+
+   - The [`Feature.fassets`](../1.0.0/api.html#fassets) aspect replaces
+     [`Feature.publicFace`](../0.1.3/crossCommunication.html#publicface-and-the-app-object),
+     providing a more formal set of directives, supporting things like
+     **contractual arrangements** _(of usage and definition)_, and
+     **validation of resources**.
+
+   - The [`fassets`](../1.0.0/api.html#Fassets) object replaces the
+     [`app`](../0.1.3/api.html#App) object, to programmatically
+     access cross-feature resources.
+
+   - The [`managedExpansion()`](../0.1.3/api.html#managedExpansion)
+     function has been renamed to
+     [`expandWithFassets()`](../1.0.0/api.html#expandWithFassets).
+   
+   - The new [`withFassets()`](../1.0.0/api.html#withFassets)
+     higher-order component (HOC) auto-wires named feature assets as
+     component properties.
+
+   In addition, if you are using any of the **feature-u** extended
+   aspect plugins, you must install the latest version, as they now
+   pass through the new [`fassets`](../1.0.0/api.html#Fassets) object.
+
+2. **Docs**: Documentation improvements include:
+
+   - The docs have been enhanced in several areas, including API
+     clarifications, improved cross-navigation between API/Guide,
+     additional points of interest, examples, etc.  Take a peek
+     (always improving).
+
+   - Several diagrams have been added to the docs.  You know what they
+     say: "a picture is worth a thousand words"!
+
+   - Our docs now employ a dynamic left-nav menu, that only exposes
+     sub-sections of the active section.  As a result, we now promote
+     more left-nav sub-section links, improving the visualization of
+     "where you are at" in larger topics.
 
 
 <!-- ************************************************************* -->

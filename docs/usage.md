@@ -2,9 +2,9 @@
 
 The basic usage pattern of **feature-u** is to:
 
-1. Choose the Aspects that you will need, based on your selected
-   frameworks (i.e. your run-time stack).  This extends the aspect
-   properties accepted by the Feature object (for example:
+1. Choose the {{book.api.Aspects}} that you will need, based on your
+   selected frameworks (i.e. your run-time stack).  This extends the
+   aspect properties accepted by the Feature object (for example:
    `Feature.reducer` for {{book.ext.redux}}, or `Feature.logic` for
    {{book.ext.reduxLogic}}).
 
@@ -19,11 +19,11 @@ The basic usage pattern of **feature-u** is to:
      thought.  There are many ways to approach this from a design
      perspective.
 
-   * Each feature will promote it's aspect content through a Feature
-     object (using {{book.api.createFeature}}).
+   * Each feature will promote it's aspect content through a
+     {{book.api.Feature}} object (using {{book.api.createFeature}}).
 
 1. Your mainline starts the app by invoking {{book.api.launchApp}},
-   passing all Aspects and Features.
+   passing all {{book.api.Aspects}} and {{book.api.Features}}.
 
 **Easy Peasy!!**
 
@@ -37,9 +37,9 @@ src/
   app.js              ... launches app using launchApp()
 
   feature/
-    index.js          ... accumulate/promote all app Feature objects
+    index.js          ... accumulate/promote all Feature objects (within the app)
 
-    featureA/         ... an app feature
+    featureA/         ... a feature (within the app)
       actions.js
       appDidStart.js
       appWillStart.js
@@ -51,7 +51,7 @@ src/
       reducer.js
       route.js
 
-    featureB/         ... another app feature
+    featureB/         ... another feature
       ...
 
   util/               ... common utilities used across all features
@@ -79,10 +79,10 @@ export default createFeature({
   name:     'featureA',
   enabled:  true,
 
-  publicFace: {
-    api: {
-      open:  () => ... implementation omitted,
-      close: () => ... implementation omitted,
+  fassets: {
+    define: {
+      'api.openA':  () => ... implementation omitted,
+      'api.closeA': () => ... implementation omitted,
     },
   },
 
@@ -97,10 +97,32 @@ export default createFeature({
 
 We will fill in more detail a bit later, but for now notice that the
 feature is conveying reducers, logic modules, routes, and does some
-type of initialization (appWillStart/appDidStart).  It also promotes a
-publicFace (open/close) that can be used by other features (i.e. the
-feature's Public API).
+type of initialization (appWillStart/appDidStart).  It also promotes
+something called `fassets` (feature assets - the Public Face of a
+feature) with `openA()` and `closeA()` functions which will be publicly
+promoted to other features.
 
+
+## Feature Accumulation
+
+All features are accumulated through a single es6 module, allowing
+them to be pulled in through a single array import.
+
+**`src/feature/index.js`**
+```js
+import featureA  from './featureA';
+import featureB  from './featureB';
+
+// promote ALL our features through a single import (accumulated in an array)
+export default [
+  featureA,
+  featureB,
+];
+```
+
+**Note**: While this represents a complete list of all our features,
+some of them may be disabled (i.e. logically removed) ... see:
+{{book.guide.enablement}}.
 
 ## launchApp()
 
@@ -108,25 +130,25 @@ In **feature-u** the application mainline is very simple and generic.
 There is no real app-specific code in it ... **not even any global
 initialization**!  That is because **each feature can inject their own
 app-specific constructs**!!  The mainline merely accumulates the
-Aspects and Features, and starts the app by invoking
-{{book.api.launchApp}}:
+{{book.api.Aspects}} and {{book.api.Features}}, and starts the app by
+invoking {{book.api.launchApp}}:
 
 **`src/app.js`**
 ```js
-import ReactDOM          from 'react-dom';
-import {launchApp}       from 'feature-u';
-import {reducerAspect}   from 'feature-redux';
-import {logicAspect}     from 'feature-redux-logic';
-import {routeAspect}     from 'feature-router';
-import features          from './feature';
+import ReactDOM              from 'react-dom';
+import {launchApp}           from 'feature-u';
+import {createRouteAspect}   from 'feature-router';
+import {createReducerAspect} from 'feature-redux';
+import {createLogicAspect}   from 'feature-redux-logic';
+import features              from './feature';
 
-// launch our app, exposing the App object (facilitating cross-feature communication)
+// launch our app, exposing the Fassets object (facilitating cross-feature communication)
 export default launchApp({           // *4*
 
   aspects: [                         // *1*
-    reducerAspect, // redux          ... extending: Feature.reducer
-    logicAspect,   // redux-logic    ... extending: Feature.logic
-    routeAspect,   // Feature Routes ... extending: Feature.route
+    createRouteAspect(),   // Feature Routes ... extending: Feature.route
+    createReducerAspect(), // redux          ... extending: Feature.reducer
+    createLogicAspect(),   // redux-logic    ... extending: Feature.logic
   ],
 
   features,                          // *2*
@@ -141,9 +163,9 @@ export default launchApp({           // *4*
 Here are some **important points of interest** _(match the numbers to
 `*n*` in the code above)_:
 
-1. the supplied Aspects _(pulled from separate npm packages)_ reflect
-   the frameworks of our run-time stack _(in our example
-   {{book.ext.redux}}, {{book.ext.reduxLogic}}, and
+1. the supplied {{book.api.Aspects}} _(pulled from separate npm
+   packages)_ reflect the frameworks of our run-time stack _(in our
+   example {{book.ext.redux}}, {{book.ext.reduxLogic}}, and
    {{book.ext.featureRouter}})_ and extend the acceptable Feature
    properties _(`Feature.reducer`, `Feature.logic`, and
    `Feature.route` respectively)_ ... _**see:**
@@ -156,25 +178,21 @@ Here are some **important points of interest** _(match the numbers to
    supplied `rootAppElm` to the specific React platform in use.
    Because this registration is accomplished by your app-specific
    code, **feature-u** can operate in any of the React platforms, such
-   as: React Web, React Native, Expo, etc. ... _**see:**
+   as: {{book.ext.reactWeb}}, {{book.ext.reactNative}}, and
+   {{book.ext.expo}} ... _**see:**
    {{book.guide.detail_reactRegistration}}_
 
 4. _as a bit of a preview_, the return value of {{book.api.launchApp}}
-   is an {{book.api.App}} object, which promotes the accumulated
-   Public API of all features.  The App object contains named feature
-   nodes, and is exported to provide {{book.guide.crossCom}} ... _here
-   is what app looks like (for this example):_
+   is a {{book.api.FassetsObject}}, which promotes the accumulated
+   Public Face of all features, and is exported to provide
+   {{book.guide.crossCom}} ... _here is what the `fassets` looks like
+   (for this example):_
 
    ```js
-   app: {
-     featureA: {
-       api: {
-         open(),
-         close(),
-       },
-     },
-     featureB: {
-       ...
+   fassets: {
+     api: {
+       openA(),
+       closeA(),
      },
    }
    ```
@@ -198,5 +216,3 @@ from a pool of favorites.  _My wife and I have a steady "date night",
 and we are always indecisive on which of our favorite restaurants to
 frequent :-)_ So **{{book.ext.eateryNod}}** provides the spinning
 wheel!
-
-

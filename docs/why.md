@@ -40,6 +40,14 @@ succinct suffix that distinguishes a number of my published
 
    **Solution:** {{book.guide.crossCom}}
 
+1. **Feature Based UI Composition:**
+
+   Component composition can easily cross feature boundaries.  There
+   is a need to facilitate cross-feature content injection in a
+   seamless (and potentially autonomous) way.
+
+   **Solution:** {{book.guide.crossCom_uiComposition}}
+
 1. **Feature Initialization:**
 
    Any given feature should not have to rely on an external startup
@@ -92,8 +100,7 @@ succinct suffix that distinguishes a number of my published
    them in the overall app's GUI.  How is this accomplished in an
    autonomous way?
 
-   **Solution:** {{book.guide.featureRouter}} (via the plugable
-   {{book.ext.featureRouter}} `routeAspect`)
+   **Solution:** {{book.guide.featureRouter}}
 
 1. **Single Source of Truth:**
 

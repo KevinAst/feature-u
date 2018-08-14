@@ -1,7 +1,7 @@
 import {op}                    from '../launchApp';    // module under test INTERNAL 
 import createAspect$           from './createAspect$';
 import {createFeature,
-        managedExpansion}      from '../..';
+        expandWithFassets}     from '../..';
 
 const extension1 = createAspect$({ // contains CUSTOM expandFeatureContent()
   name:     'extension1',
@@ -12,9 +12,9 @@ const extension1 = createAspect$({ // contains CUSTOM expandFeatureContent()
       return `feature.name: '${featureName}' contains invalid feature.${this.name} AspectContent: ${aspectContent}`;
     }
   },
-  expandFeatureContent(app, feature) {
+  expandFeatureContent(fassets, feature) {
     // default expansion here
-    feature[this.name] = feature[this.name](app);
+    feature[this.name] = feature[this.name](fassets);
   
     // apply additional specialized validation (as needed in feature-redux)
     const featureName   = feature.name;
@@ -29,23 +29,23 @@ const extension2 = createAspect$({ // contains DEFAULT expandFeatureContent()
   name:     'extension2',
 });
 
-const app = 'app: for testing, all we need is a pass-through';
+const fassets = 'fassets: for testing, all we need is a pass-through';
 
 const aspects = [
   extension1,
   extension2,
 ];
 
-describe('launchApp.op.alch.expandFeatureContent(app, activeFeatures, aspects): void', () => {
+describe('launchApp.op.alch.expandFeatureContent(fassets, activeFeatures, aspects): void', () => {
 
   test('test delayed expansion (with CUSTOM expandFeatureContent)', () => {
 
     const feature1 = createFeature({
       name:         'feature1',
-      extension1:   managedExpansion(()=>'with good CUSTOM expandFeatureContent'),
+      extension1:   expandWithFassets(()=>'with good CUSTOM expandFeatureContent'),
     });
 
-    op.alch.expandFeatureContent(app, [feature1], aspects);
+    op.alch.expandFeatureContent(fassets, [feature1], aspects);
 
     expect(feature1.extension1)
       .toBe('with good CUSTOM expandFeatureContent');
@@ -55,10 +55,10 @@ describe('launchApp.op.alch.expandFeatureContent(app, activeFeatures, aspects): 
 
     const feature2 = createFeature({
       name:         'feature2',
-      extension2:   managedExpansion(()=>'with DEFAULT expandFeatureContent'),
+      extension2:   expandWithFassets(()=>'with DEFAULT expandFeatureContent'),
     });
 
-    op.alch.expandFeatureContent(app, [feature2], aspects);
+    op.alch.expandFeatureContent(fassets, [feature2], aspects);
 
     expect(feature2.extension2)
       .toBe('with DEFAULT expandFeatureContent');
@@ -68,10 +68,10 @@ describe('launchApp.op.alch.expandFeatureContent(app, activeFeatures, aspects): 
 
     const feature1 = createFeature({
       name:         'feature1',
-      extension1:   managedExpansion(()=>'bad'),
+      extension1:   expandWithFassets(()=>'bad'),
     });
 
-    expect(()=>op.alch.expandFeatureContent(app, [feature1], aspects))
+    expect(()=>op.alch.expandFeatureContent(fassets, [feature1], aspects))
       .toThrow(/contains invalid feature.extension1 AspectContent: bad/);
     // THROW: createFeature() parameter violation: feature.name: 'feature1' contains invalid feature.extension1 AspectContent: bad
   });
@@ -81,10 +81,10 @@ describe('launchApp.op.alch.expandFeatureContent(app, activeFeatures, aspects): 
   
     const feature1 = createFeature({
       name:         'feature1',
-      extension1:   managedExpansion(()=>'goodExceptForSpecialValidation'),
+      extension1:   expandWithFassets(()=>'goodExceptForSpecialValidation'),
     });
   
-    expect(()=>op.alch.expandFeatureContent(app, [feature1], aspects))
+    expect(()=>op.alch.expandFeatureContent(fassets, [feature1], aspects))
       .toThrow(/contains SPECIALIZED invalid feature.extension1 AspectContent: goodExceptForSpecialValidation/);
     // THROW: createFeature() parameter violation: feature.name: 'feature1' contains SPECIALIZED invalid feature.extension1 AspectContent: goodExceptForSpecialValidation
   });

@@ -10,16 +10,14 @@ import logf        from '../util/logf';
  * promotes it's own {{book.api.Feature}} object.
  *
  * For more information, please refer to
- * {{book.guide.detail_featureAndAspect}}, with examples at
- * {{book.guide.usage_featureObject}}.
+ * {{book.guide.detail_featureAndAspect}}.
  *
  * **Please Note** this function uses named parameters.
  *
  * @param {string} name the identity of the feature.  Feature names
- * are used to index the {{book.api.App}} Object _(in support of
- * {{book.guide.crossCom}})_, and are therefore guaranteed to be
- * unique.  Application code can also use the Feature name in various
- * **single-source-of-truth** operations _(see {{book.guide.bestPractices}})_.
+ * are guaranteed to be unique.  Application code can use the Feature
+ * name in various **single-source-of-truth** operations _(see
+ * {{book.guide.bestPractices}})_.
  * 
  * @param {boolean} [enabled=true] an indicator as to whether this
  * feature is enabled (true) or not (false).  When used, this
@@ -27,11 +25,14 @@ import logf        from '../util/logf';
  * packaged code to be dynamically enabled/disabled at run-time
  * _(please refer to: {{book.guide.enablement}})_.
  *
- * @param {Any} [publicFace] an optional resource object that is the
- * feature's Public API, promoting {{book.guide.crossCom}}.  This
- * object is exposed through the {{book.api.App}} object as:
- * `app.{featureName}.{publicFace}` _(please refer to:
- * {{book.guide.crossCom_publicFaceApp}})_.
+ * @param {fassets} [fassets] 
+ * an optional aspect that promotes feature assets used in
+ * {{book.guide.crossCom}} (i.e. the Public Face of a feature).
+ * `fassets` directives can both define resources, and/or declare a
+ * resource contract (the intention to use a set of fasset resources).
+ * Resources are accumulated across all features, and exposed through
+ * the {{book.api.FassetsObject}}, and the {{book.api.withFassets}}
+ * HoC.
  *
  * @param {appWillStartCB} [appWillStart] an optional
  * {{book.guide.appLifeCycle}} invoked one time, just before the app
@@ -47,17 +48,19 @@ import logf        from '../util/logf';
  * plugable aspects) _(please refer to: {{book.guide.appDidStart}})_.
  * 
  * @param {AspectContent} [extendedAspect] additional aspects, as
- * defined by the feature-u's Aspect plugins _(please refer to:
+ * defined by the feature-u's Aspect plugins (please refer to:
  * {{book.guide.detail_extendableAspects}} -and-
- * {{book.guide.extending}})_.
+ * {{book.guide.extending}}).
  *
  * @return {Feature} a new Feature object (to be consumed by
  * launchApp()).
+ *
+ * @function createFeature
  */
 export default function createFeature({name,
                                        enabled=true,
 
-                                       publicFace,
+                                       fassets,
 
                                        appWillStart,
                                        appDidStart,
@@ -74,7 +77,7 @@ export default function createFeature({name,
   // ... enabled
   check(enabled===true || enabled===false, 'enabled must be a boolean');
 
-  // ... publicFace: nothing to validate (it can be anything)
+  // ... fasset: validation occurs in createFasset()
 
   // ... appWillStart
   if (appWillStart) {
@@ -95,7 +98,7 @@ export default function createFeature({name,
     name,
     enabled,
 
-    publicFace,
+    fassets,
 
     appWillStart,
     appDidStart,
@@ -120,11 +123,16 @@ export default function createFeature({name,
  * @private
  */
 const validFeatureProps = {
+
+  //            owner id  of extension (ex: aspect's npm package name)
+  //            =========
   name:         'builtin',
   enabled:      'builtin',
-  publicFace:   'builtin',
+  publicFace:   'builtin',  // OBSOLETE as of feature-u@1 ... still registered for the sole purpose of generating more specific error (see: createFassets.js)
+  fassets:      'builtin',
   appWillStart: 'builtin',
   appDidStart:  'builtin',
+
 };
 
 /**
@@ -190,20 +198,44 @@ export function extendFeatureProperty(name, owner) {
 
 /**
  * @typedef {Object} Feature
- *
- * The Feature object is a container that holds
- * {{book.api.AspectContent}} that is of interest to **feature-u**.
+ * 
+ * The Feature object is merely a lightweight container that holds
+ * {{book.api.AspectContent}} of interest to **feature-u**.
  * 
  * Each feature within an application promotes a Feature object (using
- * {{book.api.createFeature}}) that catalogs the aspects of that
- * feature.
+ * {{book.api.createFeature}}) which catalogs the aspects of that feature.
  * 
  * Ultimately, all Feature objects are consumed by
  * {{book.api.launchApp}}.
+ * 
+ * Feature content are simple key/value pairs (the key being an
+ * Aspect.name with values of AspectContent).  These aspects can
+ * either be **built-in** (from core **feature-u**), or **extensions**.
+ *
+ * Here is an example:
+ * 
+ * ```js
+ * export default createFeature({
+ *   name:     'featureA', // builtin aspect (name must be unique across all features within app)
+ *   enabled:  true,       // builtin aspect enabling/disabling feature
+ * 
+ *   fassets: {            // builtin aspect promoting Public Face - Cross Feature Communication
+ *     define: {
+ *       'api.openA':  () => ...,
+ *       'api.closeA': () => ...,
+ *     },
+ *   },
+ * 
+ *   appWillStart: (...) => ..., // builtin aspect (Application Life Cycle Hook)
+ *   appDidStart:  (...) => ..., // ditto
+ * 
+ *   reducer: ..., // feature redux reducer (extended aspect from the feature-redux plugin)
+ *   logic:   ..., // feature logic modules (extended aspect from the feature-redux-logic plugin)
+ * });
+ * ```
  *
  * For more information, please refer to
- * {{book.guide.detail_featureAndAspect}}, with examples at
- * {{book.guide.usage_featureObject}}.
+ * {{book.guide.detail_featureAndAspect}}.
  */
 
 
@@ -223,7 +255,8 @@ export function extendFeatureProperty(name, owner) {
  * (truthy) is interpreted as the app's new rootAppElm.
  * **IMPORTANT**: When this is used, the supplied curRootAppElm MUST
  * be included as part of this definition (accommodating the
- * accumulative process of other feature injections)!
+ * accumulative process of other feature injections)! **More information 
+ * is available at {{book.guide.injectingDomContent}}**
  *
  * For more information _(with examples)_, please refer to the
  * Guide's {{book.guide.appWillStart}}.
@@ -232,7 +265,7 @@ export function extendFeatureProperty(name, owner) {
  *
  * @callback appWillStartCB
  * 
- * @param {App} app the App object used in feature cross-communication.
+ * @param {Fassets} fassets the Fassets object used in cross-feature-communication.
  * 
  * @param {reactElm} curRootAppElm - the current react app element
  * root.
@@ -261,7 +294,7 @@ export function extendFeatureProperty(name, owner) {
  *
  * @callback appDidStartCB
  * 
- * @param {App} app the App object used in feature cross-communication.
+ * @param {Fassets} fassets the Fassets object used in cross-feature-communication.
  * 
  * @param {Any} [appState] - the redux top-level app state (when redux
  * is in use).
@@ -270,4 +303,135 @@ export function extendFeatureProperty(name, owner) {
  * redux is in use).
  *
  * @return void
+ */
+
+
+//***
+//*** Specification: fassets
+//***
+
+/**
+ * @typedef {BuiltInAspect} fassets
+ * 
+ * A builtin aspect that publicly promotes feature-based resources
+ * called `fassets` (feature assets).  These resources are the basis
+ * of {{book.guide.crossCom}}. You can think of this as the Public Face
+ * of a feature.
+ * 
+ * **SideBar**: The term `fassets` is a play on words.  While it is
+ * pronounced "facet" _and is loosely related to this term_, it is
+ * spelled fassets (i.e. feature assets).
+ * 
+ * Feature resources are accumulated across all features, and exposed
+ * through the {{book.api.FassetsObject}}.  They can also be referenced
+ * via the {{book.api.withFassets}} HoC.
+ * 
+ * The `fassets` aspect can both define resources, and/or declare a
+ * resource contract (i.e. the intention to use a set of fasset
+ * resources).  This is accomplished via three separate `fassets`
+ * directives: `define`, `use`, and `defineUse`.  A good summary of
+ * these directives can be found at
+ * {{book.guide.crossCom_fassetsRecapPushOrPull}}.
+ * 
+ * 1. **define**: define public resources, held in the
+ *    {{book.api.FassetsObject}}
+ *    
+ *    ```js
+ *    fassets: {
+ *      define: {
+ *        '{fassetsKey}': {fassetsValue}
+ *    
+ *        ... 
+ *    
+ *        NOTES:
+ *         - fassetsKey MUST be unique
+ *         - are case-sensitive
+ *         - may contain federated namespace (via dots ".")
+ *           ... normalized in fassets object
+ *           ... ex: 'MainPage.launch'
+ *         - may be any valid JS identifier (less $ support)
+ *         - may NOT contain wildcards
+ *           ... i.e. must be defined completely
+ *
+ *        // examples ...
+ *        'openView': actions.view.open, // fassets.openView(viewName): Action
+ *    
+ *        // federated namespace example
+ *        'selector.currentView': selector.currentView, // fassets.selector.currentView(appState): viewName
+ *    
+ *        // UI Component example
+ *        'MainPage.cart.link': () => <Link to="/cart">Cart</Link>,
+ *        'MainPage.cart.body': () => <Route path="/cart" component={ShoppingCart}/>,
+ *      }
+ *    }
+ *    ```
+ *    
+ * 2. **use**: specify public resource keys that will be **used** by the
+ *    containing feature (i.e. a resource contract)
+ *    
+ *    ```js
+ *    fassets: {
+ *      use: [
+ *        '{fassetsKey}',
+ *        -or-
+ *        ['$fassetsKey', {required: true/false, type: $validationFn}],
+ *    
+ *        ... 
+ *    
+ *        NOTES:
+ *         - each key will be supplied by other features
+ *         - this is a communication to other features (i.e. a contract)
+ *           ... saying: I plan to "use" these injections
+ *           HOWEVER: feature-u cannot strictly enforce this usage
+ *                    ... enclosed feature should reference this
+ *                        {fassetsKey} through fassets.get(), or withFassets()
+ *         - is case-sensitive
+ *         - may contain federated namespace (with dots ".")
+ *           ... ex: 'MainPage.launch'
+ *         - may be any valid JS identifier (less $ support)
+ *         - may contain wildcards (with "*")
+ *           ... ex: 'MainPage.*.link'
+ *
+ *        // examples ...
+ *        'MainPage.launch',
+ *       
+ *        // may contain wildcards ...
+ *        'MainPage.*.link',
+ *        'MainPage.*.body',
+ *       
+ *        // optionally supply options object, controlling optionality and data types
+ *        ['MainPage.*.link',  { required: true,   type: any  }], // same as DEFAULTS
+ *        ['MainPage.*.link',  { required: false,             }], // optional of any type
+ *        ['MainPage.*.link',  {                   type: comp }], // required of react component type
+ *        ['MainPage.*.link',  { required: false,  type: comp }], // optional of react component type
+ *      ]
+ *    }
+ *    ```
+ *    
+ * 3. **defineUse**: define public resources specified by other features (via
+ *    the `use` directive)
+ *    
+ *    ```js
+ *    fassets: {
+ *      defineUse: {
+ *        '{fassetsKey}': {fassetsValue}
+ *    
+ *        ... 
+ *    
+ *        NOTES:
+ *         - this is identical to fassets.define EXCEPT:
+ *         - it MUST MATCH a fassets.use directive
+ *           ... using this directive, feature-u will perform additional
+ *               validation to unsure these entries match a use contract
+ *    
+ *        // examples ...
+ *        'MainPage.cart.link': () => <Link to="/cart">Cart</Link>,
+ *        'MainPage.cart.body': () => <Route path="/cart" component={ShoppingCart}/>,
+ *      }
+ *    }
+ *    ```
+ * 
+ * For more information, please refer to {{book.guide.crossCom}},
+ * {{book.api.FassetsObject}}, the {{book.api.withFassets}} HoC,
+ * and the {{book.guide.crossCom_fassetsRecapPushOrPull}}.
  */

@@ -5,14 +5,14 @@ project organization_ in your {{book.ext.react}} project.  It assists
 in organizing your project by individual features.
 
 Most software engineers would agree that organizing your project by
-feature is much preferred over type-based patterns.  Because
+feature is much preferred over type-based patterns.  As
 application domains grow in the real world, project organization by
 type simply doesn't scale, it just becomes unmanageable!  There are a
 number of good articles that discuss this topic _(with insights on
 feature-based design and structure)_.
 
 **feature-u** is a utility library that manages and streamlines this
-process.  It automates some of the mundane details of your features
+process.  It automates some of the mundane details of managing features
 and helps in promoting features that are **plug-and-play**.
 
 The following article is an introduction to **feature-u** with
@@ -35,11 +35,11 @@ _Go forth and compute!!_
 
 ## At a Glance
 
+- {{book.guide.benefits}} ... _understand the benefits of **feature-u**_
+
 - {{book.guide.start}} ... _installation and access_
 
 - {{book.guide.basicConcepts}} ... _learn high-level **feature-u** concepts_
-
-- {{book.guide.benefits}} ... _understand the benefits of **feature-u**_
 
 - {{book.guide.usage}} ... _what is **feature-u**'s fundamental usage pattern_
 
@@ -47,9 +47,11 @@ _Go forth and compute!!_
 
 - {{book.guide.appLifeCycle}} ... _learn how features can initialize themselves_
 
-- {{book.guide.crossCom}} ... _how can features interact with one another_
+- {{book.guide.crossCom}} ... _promote truly **Plug-and-Play** features through a well-defined Public Face_
 
-- {{book.guide.featureRouter}} ... _**feature-u**'s recommendation for autonomous feature-based navigation through state analysis_
+- {{book.guide.crossCom_uiComposition}} ...  _facilitate seamless **cross-feature component composition**_
+
+- {{book.guide.featureRouter}} ... _learn how navigation and routing can be integrated into your features_
 
 - {{book.guide.enablement}} ... _dynamically enable/disable your features_
 

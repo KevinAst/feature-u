@@ -10,8 +10,11 @@ developed _(see: {{book.guide.why}})_.
    _isolating feature boundaries improves code manageability_
 
 1. **Feature Collaboration:**
-   _allow **Cross Feature Communication** through a well-defined
+   _promote **Cross Feature Communication** through a well-defined
    feature-based Public Interface_
+
+1. **Feature Based UI Composition:**
+   _facilitate seamless **cross-feature component composition**_
 
 1. **Application Life Cycle Hooks:**
    _features can initialize themselves without relying on an external

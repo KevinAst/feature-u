@@ -1,7 +1,10 @@
 import createFeature,
        {extendFeatureProperty}  from './core/createFeature';
 import launchApp                from './core/launchApp';
-import managedExpansion         from './core/managedExpansion';
+import expandWithFassets        from './core/expandWithFassets';
+import fassetValidations        from './core/fassetValidations';
+import {withFassets,
+        FassetsContext}         from './core/withFassets'; // publically expose FassetsContext (in rare case when client code defines their own DOM via registerRootAppElm())
 import createAspect,
        {extendAspectProperty}   from './extend/createAspect';
 
@@ -18,7 +21,10 @@ import createAspect,
 export {
   createFeature,
   launchApp,
-  managedExpansion,
+  expandWithFassets,
+  fassetValidations,
+  withFassets,
+  FassetsContext,
   createAspect,
   extendAspectProperty,
   extendFeatureProperty,
@@ -32,7 +38,10 @@ export {
 export default {
   createFeature,
   launchApp,
-  managedExpansion,
+  expandWithFassets,
+  fassetValidations,
+  withFassets,
+  FassetsContext,
   createAspect,
   extendAspectProperty,
   extendFeatureProperty,

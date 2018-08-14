@@ -2,9 +2,23 @@
 
 ## Install
 
-```shell
-npm install --save feature-u
-```
+- **peerDependencies**:
+
+  **feature-u** has a peerDependency on react _(most likely you should
+  already have this installed ... but just in case)_:
+
+  ```shell
+  npm install --save react
+  ```
+  <!--- WITH REVEAL of USAGE:
+  npm install --save react   # VER: >=0.14.0   USAGE: React Context and JSX (in withFassets.js and launchApp.js)
+  ---> 
+
+- **the main event**:
+
+  ```shell
+  npm install --save feature-u
+  ```
 
 
 ## Access

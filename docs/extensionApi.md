@@ -23,13 +23,18 @@ convenience this list:_
 
 
 * {{book.api.extendAspectProperty$}}
+
+
 * {{book.api.extendFeatureProperty$}}
 
 
 
-## feature-u Objects
+## Object Refs ...
 
+* {{book.api.FassetsObject}}
+  * {{book.api.Fassets_get}}
+  * {{book.api.Fassets_hasFeature}}
+* {{book.api.fassetValidations}}
 * {{book.api.Feature}}
-* {{book.api.App}}
 * {{book.api.Aspect}}
 * {{book.api.AspectContent}}

@@ -2,21 +2,21 @@ import {op}             from '../launchApp';  // module under test INTERNAL
 import createAspect$    from './createAspect$';
 import {createFeature}  from '../..';
 
-describe('launchApp.op.alch.assembleFeatureContent(app, activeFeatures, aspects): void', () => {
+describe('launchApp.op.alch.assembleFeatureContent(fassets, activeFeatures, aspects): void', () => {
 
   const extension1 = createAspect$({
     name:     'extension1',
 
     // NOTE: for our testing purposes, we really only care that
-    //       aspect.assembleFeatureContent(app, activeFeatures) 
-    //       was invoked with the correct parameters (app, activeFeatures)!
+    //       aspect.assembleFeatureContent(fassets, activeFeatures) 
+    //       was invoked with the correct parameters (fassets, activeFeatures)!
     //       ... because we can't really test a client's implemantion of assembleFeatureContent()
     //       ... HOWEVER, by testing self's simple accumulation (this.accum),
     //           we indirectly accomplish our desired goal!!
-    assembleFeatureContent(app, activeFeatures) {
-      // initialize our accumulation with app
-      // ... unconventional, but for our testing it proves that correct app was supplied
-      this.accum = app;
+    assembleFeatureContent(fassets, activeFeatures) {
+      // initialize our accumulation with fassets
+      // ... unconventional, but for our testing it proves that correct fassets was supplied
+      this.accum = fassets;
       // perform our accumulation
       for (const feature of activeFeatures) {
         const myAspectContent = feature[this.name];
@@ -31,7 +31,7 @@ describe('launchApp.op.alch.assembleFeatureContent(app, activeFeatures, aspects)
     extension1,
   ];
 
-  const app = 'app-pass-through-for-testing';
+  const fassets = 'fassets-pass-through-for-testing';
 
   const activeFeatures = [
 
@@ -50,11 +50,11 @@ describe('launchApp.op.alch.assembleFeatureContent(app, activeFeatures, aspects)
     }),
   ];
 
-  op.alch.assembleFeatureContent(app, activeFeatures, aspects); // function under test
+  op.alch.assembleFeatureContent(fassets, activeFeatures, aspects); // function under test
 
   test('confirm the accumulated feature content within each aspect', () => {
     expect(extension1.accum)
-      .toBe('app-pass-through-for-testing+feature1-extension1+feature3-extension1');
+      .toBe('fassets-pass-through-for-testing+feature1-extension1+feature3-extension1');
   });
 
 });

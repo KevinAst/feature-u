@@ -13,22 +13,31 @@ this list:_
 ## Core API Summary
 
 * {{book.api.createFeature$}}
+  * {{book.api.fassetsAspect}}
   * {{book.api.appWillStartCB$}}
   * {{book.api.appDidStartCB$}}
+
+
+* {{book.api.expandWithFassets$}}
+  * {{book.api.expandWithFassetsCB$}}
 
 
 * {{book.api.launchApp$}}
   * {{book.api.registerRootAppElmCB$}}
 
 
-* {{book.api.managedExpansion$}}
-  * {{book.api.managedExpansionCB$}}
+* {{book.api.withFassets$}}
+  * {{book.api.mapFassetsToPropsStruct}}
+  * {{book.api.mapFassetsToPropsFn}}
 
 
 
-## feature-u Objects
+## Object Refs ...
 
+* {{book.api.FassetsObject}}
+  * {{book.api.Fassets_get}}
+  * {{book.api.Fassets_hasFeature}}
+* {{book.api.fassetValidations}}
 * {{book.api.Feature}}
-* {{book.api.App}}
 * {{book.api.Aspect}}
 * {{book.api.AspectContent}}

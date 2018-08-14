@@ -49,7 +49,7 @@ import logf                 from '../util/logf';
  *
  * @param {expandFeatureContentMeth} [expandFeatureContent] an
  * optional aspect expansion hook, defaulting to the algorithm defined
- * by {{book.api.managedExpansion}}.<br/><br/>
+ * by {{book.api.expandWithFassets}}.<br/><br/>
  *
  * This function rarely needs to be overridden.  It provides a hook to
  * aspects that need to transfer additional content from the expansion
@@ -100,6 +100,8 @@ import logf                 from '../util/logf';
  * {{book.guide.additionalMethods}})_.
  *
  * @return {Aspect} a new Aspect object (to be consumed by {{book.api.launchApp}}).
+ *
+ * @function createAspect
  */
 export default function createAspect({name,
                                       genesis,
@@ -270,7 +272,7 @@ export function extendAspectProperty(name, owner) {
  * 
  * The Aspect object promotes a series of life-cycle methods that
  * **feature-u** invokes in a controlled way.  This life-cycle is
- * controlled by {{book.api.launchApp}}` _... it is supplied the
+ * controlled by {{book.api.launchApp}} _... it is supplied the
  * Aspects, and it invokes their methods._
  * 
  * Typically Aspects are packaged separately _(as an external npm
@@ -293,15 +295,25 @@ export function extendAspectProperty(name, owner) {
  * The content (or payload) of an {{book.api.Aspect}}, specified
  * within a {{book.api.Feature}}.
  * 
- * An {{book.api.Aspect}} object extends **feature-u** by accumulating
- * information of interest from {{book.api.Feature}} objects _(indexed
- * by the Aspect name)_.
- * 
  * The content type is specific to the Aspect. For example, a redux
  * Aspect assembles reducers (via `Feature.reducer`), while a
  * redux-logic Aspect gathers logic modules (via `Feature.logic`),
  * etc.
  * 
+ * AspectContent can either be defined from **built-in** aspects
+ * _(via core **feature-u**)_, or **extensions** _(from
+ * {{book.api.Aspect}})_.
+ * 
+ * An {{book.api.Aspect}} object extends **feature-u** by accumulating
+ * information of interest from {{book.api.Feature}} objects _(indexed
+ * by the Aspect name)_.
+ * 
+ * **Note**: Whenever AspectContent definitions require the 
+ * {{book.api.FassetsObject}} **at code expansion time**, you can wrap the
+ * definition in a {{book.api.expandWithFassets}} function.  In other
+ * words, your aspect content can either be the actual content itself
+ * _(ex: a reducer)_, or a function that returns the content.
+ *
  * For more information, please refer to
  * {{book.guide.detail_featureAndAspect}}.
  */
@@ -375,10 +387,10 @@ export function extendAspectProperty(name, owner) {
  * **API:** {{book.api.expandFeatureContentMeth$}}
  *
  * The default behavior simply implements the expansion algorithm
- * defined by {{book.api.managedExpansion}}:
+ * defined by {{book.api.expandWithFassets}}:
  *
  * ```js
- * feature[this.name] = feature[this.name](app);
+ * feature[this.name] = feature[this.name](fassets);
  * ```
  *
  * This default behavior rarely needs to change.  It however provides
@@ -389,12 +401,12 @@ export function extendAspectProperty(name, owner) {
  *
  * @callback expandFeatureContentMeth
  *
- * @param {App} app the App object used in feature
+ * @param {Fassets} fassets the Fassets object used in feature
  * cross-communication.
  * 
  * @param {Feature} feature - the feature which is known to contain
  * this aspect **and** is in need of expansion (as defined by
- * {{book.api.managedExpansion}}).
+ * {{book.api.expandWithFassets}}).
  *
  * @return {string} an optional error message when the supplied
  * feature contains invalid content for this aspect (falsy when
@@ -419,7 +431,8 @@ export function extendAspectProperty(name, owner) {
  *
  * @callback assembleFeatureContentMeth
  *
- * @param {App} app the App object used in feature cross-communication.
+ * @param {Fassets} fassets the Fassets object used in feature
+ * cross-communication.
  * 
  * @param {Feature[]} activeFeatures - The set of active (enabled)
  * features that comprise this application.
@@ -450,7 +463,8 @@ export function extendAspectProperty(name, owner) {
  *
  * @callback assembleAspectResourcesMeth
  *
- * @param {App} app the App object used in feature cross-communication.
+ * @param {Fassets} fassets the Fassets object used in feature
+ * cross-communication.
  * 
  * @param {Aspect[]} aspects - The set of **feature-u** Aspect objects
  * used in this this application.
@@ -480,7 +494,8 @@ export function extendAspectProperty(name, owner) {
  *
  * @callback initialRootAppElmMeth
  *
- * @param {App} app the App object used in feature cross-communication.
+ * @param {Fassets} fassets the Fassets object used in feature
+ * cross-communication.
  * 
  * @param {reactElm} curRootAppElm - the current react app element root.
  *
@@ -511,7 +526,8 @@ export function extendAspectProperty(name, owner) {
  *
  * @callback injectRootAppElmMeth
  *
- * @param {App} app the App object used in feature cross-communication.
+ * @param {Fassets} fassets the Fassets object used in feature
+ * cross-communication.
  * 
  * @param {reactElm} curRootAppElm - the current react app element root.
  *
