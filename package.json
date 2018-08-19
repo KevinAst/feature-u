@@ -1,6 +1,6 @@
 {
   "name": "feature-u",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Feature Based Project Organization for React",
   "main": "lib/index.js",
   "browser": {

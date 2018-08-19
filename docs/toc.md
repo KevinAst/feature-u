@@ -1,6 +1,6 @@
 # Table of content 
 
-### feature-u (1.0.0)
+### feature-u (1.0.1)
 * [Benefits](benefits.md)
 * [Getting Started](start.md)
 
@@ -118,6 +118,8 @@
 * [Distribution](dist.md)
 * [Why feature-u?](why.md)
 * [Revision History](history.md)
+  * [v1.0.1 (Month ??, 2018)](history.md#v1_0_1)
+    * [Full Docs](https://feature-u.js.org/1.0.1/)
   * [v1.0.0 (August 14, 2018)](history.md#v1_0_0)
     * [Full Docs](https://feature-u.js.org/1.0.0/)
     * [Migration Notes](migration.1.0.0.md)

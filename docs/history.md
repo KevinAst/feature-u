@@ -84,6 +84,7 @@ reference the most current release.
 
 Release           | What                                   | *When*
 ------------------|----------------------------------------|------------------
+[v1.0.1](#v1_0_1) | ?? Desc Here                           | *Month ??, 2018*
 [v1.0.0](#v1_0_0) | UI Composition                         | *August 14, 2018*
 [v0.1.3](#v0_1_3) | Establish Polyfill Strategy            | *July 2, 2018*
 [v0.1.0](#v0_1_0) | Initial Release                        | *March 6, 2018*
@@ -92,6 +93,29 @@ Release           | What                                   | *When*
 
 <br/><br/><br/>
 ## Details:
+
+
+
+
+<!-- ************************************************************* -->
+<br/><br/><br/>
+<h3 id="v1_0_1" style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
+  v1.0.1 - UI Composition <i>(Month ??, 2018)</i>
+</h3>
+
+[Full Docs](https://feature-u.js.org/1.0.1/)
+&bull;
+[GitHub Release](https://github.com/KevinAst/feature-u/releases/tag/v1.0.1)
+&bull;
+[GitHub Content](https://github.com/KevinAst/feature-u/tree/v1.0.1)
+&bull;
+[Diff](https://github.com/KevinAst/feature-u/compare/v1.0.0-docs...v1.0.1)
+
+**NOTE**: This release is a **non-breaking change** _(i.e. no API was affected)_.
+
+1. **xyz**: ?? running update here
+
+
 
 
 <!-- ************************************************************* -->
