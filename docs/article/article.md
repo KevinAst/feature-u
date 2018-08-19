@@ -558,12 +558,12 @@ service API &bull; inject a utility react component at the App root
 To solve this, **feature-u** introduces two [Application Life Cycle
 Hooks], injected through the following Feature aspects:
 
-1. [`Feature.appWillStart({fassets, curRootAppElm}): rootAppElm || falsy`]
+1. [`Feature.appWillStart({app, curRootAppElm}): rootAppElm || falsy`]
    ...  invoked one time, just before the app starts up.  This can do
    any type of initialization, including supplementing the app's
    top-level root element (i.e. react component instance).
 
-2. [`Feature.appDidStart({fassets, appState, dispatch}): void`] ...
+2. [`Feature.appDidStart({app, appState, dispatch}): void`] ...
    invoked one time immediately after the app has started.  A typical
    usage for this hook is to dispatch some type of bootstrap action.
 
@@ -598,7 +598,7 @@ YES: firebase/appWillStart . initFireBase()
   export default createFeature({
     name: 'firebase',
 
-    appWillStart({fassets, curRootAppElm}) {
+    appWillStart({app, curRootAppElm}) {
       initFireBase(); // initialize FireBase
     },
   });
@@ -617,7 +617,7 @@ YES: firebase/appWillStart . initFireBase()
    * An app-level life-cycle hook that dispatches our bootstrap action
    * that gets the ball rolling!
    */
-  export default function appDidStart({fassets, appState, dispatch}) {
+  export default function appDidStart({app, appState, dispatch}) {
     dispatch( actions.bootstrap() );
   }
   ```
@@ -638,7 +638,7 @@ YES: firebase/appWillStart . initFireBase()
   /**
    * Inject our Drawer/SideBar component at the root of our app
    */
-  export default function appWillStart({fassets, curRootAppElm}) {
+  export default function appWillStart({app, curRootAppElm}) {
     return (
       <Drawer ref={ ref => registerDrawer(ref) }
               content={<SideBar/>}
@@ -902,7 +902,7 @@ To solve this, **feature-u** introduces [Managed Code Expansion].
 
 When aspect content definitions require the [`App`] object at code
 expansion time, you simply wrap the definition in a
-[`expandWithFassets()`] function.  In other words, your aspect content
+[`managedExpansion()`] function.  In other words, your aspect content
 can either be the actual content itself _(ex: a reducer)_, or a
 function that returns the content.
 
@@ -916,13 +916,13 @@ TK: For medium article, use this [GIST](https://gist.github.com/KevinAst/9f57d74
 with caption:
 **[`src/feature/auth/logic.js`](https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/auth/logic.js#L18-L27)**
 ```js
-import {createLogic}       from 'redux-logic';
-import {expandWithFassets} from 'feature-u';
-import featureName         from './featureName';
-import actions             from './actions';
+import {createLogic}      from 'redux-logic';
+import {managedExpansion} from 'feature-u';
+import featureName        from './featureName';
+import actions            from './actions';
 
                                   // *1*
-export const startAuthorization = expandWithFassets( (app) => createLogic({
+export const startAuthorization = managedExpansion( (app) => createLogic({
 
   name: `${featureName}.startAuthorization`,
   type: String(app.device.actions.ready),    // *2*
@@ -939,7 +939,7 @@ export const startAuthorization = expandWithFassets( (app) => createLogic({
 You can see that the [auth] feature is using an action from the
 [device] feature, requiring access to the `app` object (see `*2*`).
 Because the `app` object is needed during code expansion, we use the
-[`expandWithFassets()`] function (see `*1*`), allowing **feature-u** to
+[`managedExpansion()`] function (see `*1*`), allowing **feature-u** to
 expand it in a controlled way, passing the fully resolved `app` object
 as a parameter.
 
@@ -1046,7 +1046,7 @@ via **[`index.js`](https://github.com/KevinAst/eatery-nod/blob/after-features/sr
 // *** the eateries feature reducer
 // ***
                                       // *1*
-const reducer = slicedReducer(`view.${featureName}`, expandWithFassets( () => combineReducers({
+const reducer = slicedReducer(`view.${featureName}`, managedExpansion( () => combineReducers({
   ... snip snip
 }) ) );
 
@@ -1278,13 +1278,13 @@ end" of your features!** _Go forth and compute!!_
 [`launchApp()`]:           https://feature-u.js.org/cur/api.html#launchApp
 [`registerRootAppElm()`]:  https://feature-u.js.org/cur/api.html#registerRootAppElmCB
 
-[`Feature.appWillStart()`]:                                               https://feature-u.js.org/cur/appLifeCycle.html#appwillstart
-[`Feature.appWillStart({fassets, curRootAppElm}): rootAppElm || falsy`]:  https://feature-u.js.org/cur/appLifeCycle.html#appwillstart
+[`Feature.appWillStart()`]:                                           https://feature-u.js.org/cur/appLifeCycle.html#appwillstart
+[`Feature.appWillStart({app, curRootAppElm}): rootAppElm || falsy`]:  https://feature-u.js.org/cur/appLifeCycle.html#appwillstart
 
-[`Feature.appDidStart()`]:                                    https://feature-u.js.org/cur/appLifeCycle.html#appDidStart
-[`Feature.appDidStart({fassets, appState, dispatch}): void`]: https://feature-u.js.org/cur/appLifeCycle.html#appDidStart
+[`Feature.appDidStart()`]:                                https://feature-u.js.org/cur/appLifeCycle.html#appDidStart
+[`Feature.appDidStart({app, appState, dispatch}): void`]: https://feature-u.js.org/cur/appLifeCycle.html#appDidStart
 
-[`expandWithFassets()`]:   https://feature-u.js.org/cur/api.html#expandWithFassets
+[`managedExpansion()`]:    https://feature-u.js.org/cur/api.html#managedExpansion
 
 [`createAspect()`]:        https://feature-u.js.org/cur/api.html#createAspect
 
@@ -1305,5 +1305,3 @@ end" of your features!** _Go forth and compute!!_
 [`reducerHash()`]:  https://astx-redux-util.js.org/1.0.0/api.html#reducerHash
 
 [Higher-Order Reducers]: https://redux.js.org/docs/recipes/reducers/ReusingReducerLogic.html#customizing-behavior-with-higher-order-reducers
-
-
