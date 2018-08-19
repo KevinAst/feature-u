@@ -1304,4 +1304,4 @@ end" of your features!** _Go forth and compute!!_
 [astx-redux-util]:  https://astx-redux-util.js.org/
 [`reducerHash()`]:  https://astx-redux-util.js.org/1.0.0/api.html#reducerHash
 
-[Higher-Order Reducers]: https://redux.js.org/docs/recipes/reducers/ReusingReducerLogic.html#customizing-behavior-with-higher-order-reducers
+[Higher-Order Reducers]: https://medium.com/@mange_vibration/reducer-composition-with-higher-order-reducers-35c3977ed08f
