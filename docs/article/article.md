@@ -20,6 +20,26 @@ library to help manage and streamline some of the hurdles incurred in
 this process.  The result: **feature-u** _(check out the [full
 docs], [github source], and [npm package])_.
 
+---
+
+**Update**: On 8/14/2018 [feature-u V1] was released, that re-designed
+[Cross Feature Communication `new`] to include [UI Composition `new`]
+as a core offering.  We are very excited about this update, because it
+**promotes one solution for all feature collaboration**!
+While upgrading to V1 requires some client code mods (see [V1 Migration
+Notes]), it is well worth it.
+This article is based on [feature-u V0], and is using some antiquated
+APIs (mostly `Feature.publicFace`, and the `app` object).
+Still, this is a good resource to get your feet wet with feature-u.
+**Look for a new "V1 article" - coming soon**!
+
+[feature-u V1]:                       https://feature-u.js.org/1.0.0/history.html#v1_0_0
+[feature-u V0]:                       https://feature-u.js.org/0.1.0/history.html#v0_1_0
+[V1 Migration Notes]:                 https://feature-u.js.org/1.0.0/migration.1.0.0.html
+[Cross Feature Communication `new`]:  https://feature-u.js.org/1.0.0/crossCommunication.html
+[UI Composition `new`]:               https://feature-u.js.org/1.0.0/crossCommunication.html#ui-composition
+
+
 
 ## At a Glance
 
