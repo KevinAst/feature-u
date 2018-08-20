@@ -34,7 +34,7 @@ Still, this is a good resource to get your feet wet with feature-u.
 **Look for a new "V1 article" - coming soon**!
 
 [feature-u V1]:                       https://feature-u.js.org/1.0.0/history.html#v1_0_0
-[feature-u V0]:                       https://feature-u.js.org/0.1.0/history.html#v0_1_0
+[feature-u V0]:                       https://feature-u.js.org/0.1.3/history.html#v0_1_3
 [V1 Migration Notes]:                 https://feature-u.js.org/1.0.0/migration.1.0.0.html
 [Cross Feature Communication `new`]:  https://feature-u.js.org/1.0.0/crossCommunication.html
 [UI Composition `new`]:               https://feature-u.js.org/1.0.0/crossCommunication.html#ui-composition
@@ -1276,37 +1276,36 @@ end" of your features!** _Go forth and compute!!_
 
 [feature-router]:     https://github.com/KevinAst/feature-router
 
-[Launching Your Application]:   https://feature-u.js.org/cur/detail.html#launching-your-application
-[Feature & aspect content]:     https://feature-u.js.org/cur/detail.html#feature-object-relaying-aspect-content
-[Extendable aspects]:           https://feature-u.js.org/cur/detail.html#extendable-aspects
-[React Registration]:           https://feature-u.js.org/cur/detail.html#react-registration
-[Cross Feature Communication]:  https://feature-u.js.org/cur/crossCommunication.html
-[Application Life Cycle Hooks]: https://feature-u.js.org/cur/appLifeCycle.html
-[Built-In aspect]:              https://feature-u.js.org/cur/detail.html#built-in-aspects
-[Feature Enablement]:           https://feature-u.js.org/cur/enablement.html
-[Managed Code Expansion]:       https://feature-u.js.org/cur/crossCommunication.html#managed-code-expansion
-[Feature Based Routes]:         https://feature-u.js.org/cur/featureRouter.html
-[Best Practices]:               https://feature-u.js.org/cur/bestPractices.html
-[extendable]:                   https://feature-u.js.org/cur/extending.html
 
+[Launching Your Application]:   https://feature-u.js.org/0.1.3/detail.html#launching-your-application
+[Feature & aspect content]:     https://feature-u.js.org/0.1.3/detail.html#feature-object-relaying-aspect-content
+[Extendable aspects]:           https://feature-u.js.org/0.1.3/detail.html#extendable-aspects
+[React Registration]:           https://feature-u.js.org/0.1.3/detail.html#react-registration
+[Cross Feature Communication]:  https://feature-u.js.org/0.1.3/crossCommunication.html
+[Application Life Cycle Hooks]: https://feature-u.js.org/0.1.3/appLifeCycle.html
+[Built-In aspect]:              https://feature-u.js.org/0.1.3/detail.html#built-in-aspects
+[Feature Enablement]:           https://feature-u.js.org/0.1.3/enablement.html
+[Managed Code Expansion]:       https://feature-u.js.org/0.1.3/crossCommunication.html#managed-code-expansion
+[Feature Based Routes]:         https://feature-u.js.org/0.1.3/featureRouter.html
+[Best Practices]:               https://feature-u.js.org/0.1.3/bestPractices.html
+[extendable]:                   https://feature-u.js.org/0.1.3/extending.html
 
+[`Feature`]:        https://feature-u.js.org/0.1.3/api.html#Feature
+[`App`]:            https://feature-u.js.org/0.1.3/api.html#App
 
-[`Feature`]:        https://feature-u.js.org/cur/api.html#Feature
-[`App`]:            https://feature-u.js.org/cur/api.html#App
+[`createFeature()`]:       https://feature-u.js.org/0.1.3/api.html#createFeature
+[`launchApp()`]:           https://feature-u.js.org/0.1.3/api.html#launchApp
+[`registerRootAppElm()`]:  https://feature-u.js.org/0.1.3/api.html#registerRootAppElmCB
 
-[`createFeature()`]:       https://feature-u.js.org/cur/api.html#createFeature
-[`launchApp()`]:           https://feature-u.js.org/cur/api.html#launchApp
-[`registerRootAppElm()`]:  https://feature-u.js.org/cur/api.html#registerRootAppElmCB
+[`Feature.appWillStart()`]:                                           https://feature-u.js.org/0.1.3/appLifeCycle.html#appwillstart
+[`Feature.appWillStart({app, curRootAppElm}): rootAppElm || falsy`]:  https://feature-u.js.org/0.1.3/appLifeCycle.html#appwillstart
 
-[`Feature.appWillStart()`]:                                           https://feature-u.js.org/cur/appLifeCycle.html#appwillstart
-[`Feature.appWillStart({app, curRootAppElm}): rootAppElm || falsy`]:  https://feature-u.js.org/cur/appLifeCycle.html#appwillstart
+[`Feature.appDidStart()`]:                                https://feature-u.js.org/0.1.3/appLifeCycle.html#appDidStart
+[`Feature.appDidStart({app, appState, dispatch}): void`]: https://feature-u.js.org/0.1.3/appLifeCycle.html#appDidStart
 
-[`Feature.appDidStart()`]:                                https://feature-u.js.org/cur/appLifeCycle.html#appDidStart
-[`Feature.appDidStart({app, appState, dispatch}): void`]: https://feature-u.js.org/cur/appLifeCycle.html#appDidStart
+[`managedExpansion()`]:    https://feature-u.js.org/0.1.3/api.html#managedExpansion
 
-[`managedExpansion()`]:    https://feature-u.js.org/cur/api.html#managedExpansion
-
-[`createAspect()`]:        https://feature-u.js.org/cur/api.html#createAspect
+[`createAspect()`]:        https://feature-u.js.org/0.1.3/api.html#createAspect
 
 [feature-redux]:     https://github.com/KevinAst/feature-redux
 [`slicedReducer()`]: https://github.com/KevinAst/feature-redux#slicedreducer
