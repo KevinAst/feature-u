@@ -10,9 +10,10 @@ that feature)_.
 From this perspective, you can think of each feature as it's **own
 isolated mini application**.
 
-With that said however, we know that _"**no man is an island**"_!  There
-are cases where a feature needs to promote a limited subset of it's
-aspects to other features.  For example, a feature may need to:
+With that said however, we know that _"**no man is an island**"_!  Any
+given feature ultimately exists as part of a larger application.
+There are cases where a feature needs to promote a limited subset of
+it's aspects to other features.  For example, a feature may need to:
 
  - be knowledgeable of some external state (via a selector)
  - emit or monitor actions of other features
@@ -28,9 +29,10 @@ cross feature boundaries**.  The reason being that this
 cross-communication should be limited to public access points -
 helping to **facilitate true plug-and-play**.
 
-Given all this then, **how is Cross Feature Communication achieved**?
+Given all this then, **how is Cross Feature Communication achieved**
+_in a way that doesn't break encapsulation_?
 
-Features need a way to promote their **Public Face** to other
+Features need a way to promote their **Public Interface** to other
 features, and consume other feature's **Public Assets**.
 
 

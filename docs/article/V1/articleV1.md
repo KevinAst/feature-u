@@ -53,16 +53,18 @@ TK:medium-resolve-internal-links
   - [Feature Runtime Consolidation] ... _? describe_
   - [Feature Collaboration] ... _? describe_
 
-?? consider refactoring diagram to use 3 features patterned after concepts (
+<!--- ?? consider refactoring diagram to use 3 features patterned after concepts ---> 
 
 ## Feature Based Development
 
 At a 30,000 ft view, feature-based development _(as in most software)_
 is all about dissecting hard problems into smaller pieces.  Even when I
-started my carrier _(way back in the 70's)_, this was a prominent
-quote: ?? verify when the quote was made
+started my carrier _(back in the 70's)_, this was a prominent
+quote:
 
-  "All problems in computer science can be solved by another level of indirection." David Wheeler
+<ul>
+<i>"All problems in computer science can be solved by another level of indirection." <b>David Wheeler</b></i>
+</ul>
 
 By breaking up your application into features, each feature can focus
 on a more specific and isolated set of tasks.  **In some ways you can
@@ -86,21 +88,17 @@ the first thing that comes to mind is directories.  By segregating
 your features into individual directories, there is a semblance of
 isolation.
 
-<p align="center"><img src="img/featureSegregation.png" alt="Feature Segregation" width="70%"></p>
+<p align="center"><img src="img/featureSegregation.png" alt="Feature Segregation" width="80%"></p>
 
 <!---
+
 Diagram shows:
 
 Feature Clouds
 
-Features Goals: ?? update these goals to include all things mentioned below)
-  - encapsulation
-  - isolation
-  - self sufficient
-  - plug-and-play
-
-Directory Structure:
+Project Directories:
   src/
+  ├──index.js ... promote all Feature objects
   └──features/
      ├──F1/
      │  └── ...
@@ -207,13 +205,49 @@ This concern can be further divided into two sub-concerns:
 
 ## Feature Collaboration
 
+<!--- ? pretty much taken directly from crossCommunication.md inro PLUS new diagram ---> 
 
-???
+A **best practice** of feature-based development _(to the extent
+possible)_ is to **treat each feature as an isolated implementation**.
+Most aspects of a feature are internal to that feature's
+implementation _(for example, actions are typically created and
+consumed exclusively by logic/reducers/components that are internal to
+that feature)_.
+
+From this perspective, you can think of each feature as it's **own
+isolated mini application**.
+
+With that said however, we know that _"**no man is an island**"_!  Any
+given feature ultimately exists as part of a larger application.
+There are cases where a feature needs to promote a limited subset of
+it's aspects to other features.  For example, a feature may need to:
+
+ - be knowledgeable of some external state (via a selector)
+ - emit or monitor actions of other features
+ - consolidate component resources from other features - as in **UI Composition**
+ - invoke the API of other features
+ - etc. etc. etc.
+
+These items form the basis of why **Cross Feature Communication** is
+needed.
+
+To complicate matters, as a general rule, **JS imports should NOT
+cross feature boundaries**.  The reason being that this
+cross-communication should be limited to public access points -
+helping to **facilitate true plug-and-play**.
+
+<p align="center"><img src="img/featureCollaborationNoImport.png" alt="Cross Feature Imports are BAD" width="60%"></p>
 
 
-## Basic Concepts - feature-u ?? or The feature-u Solution
+Given all this then, **how is Cross Feature Communication achieved**
+_in a way that doesn't break encapsulation_?
 
+<p align="center"><img src="img/featureCollaboration.png" alt="Feature Collaboration" width="60%"></p>
 
+Features need a way to promote their **Public Interface** to other
+features, and consume other feature's **Public Assets**.
+
+## The feature-u Solution
 
 
 ??? CURRENT POINT ???
@@ -244,7 +278,7 @@ The **overriding goal** of **feature-u** is two fold:
  ---> 
 
 
-<!--- ?? POINTS COVERED IN PRESENTATION:
+<!--- ?? POINTS COVERED IN PRESENTATION: ... may be part of our goal buildup
 
 How feature-u assists in:
 
