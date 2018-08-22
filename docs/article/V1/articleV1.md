@@ -47,13 +47,22 @@ collaboration**!
 
 TK:medium-resolve-internal-links
 
-- [Feature Based Development] ... _? describe_
-- [Segregating Features] ... _? describe_
-- [Feature Goals] ... _? describe_
-  - [Feature Runtime Consolidation] ... _? describe_
-  - [Feature Collaboration] ... _? describe_
+- [Feature Based Development] ... _think of features as mini applications_
+- [Segregating Features] ... _divide your features into project directories_
+- [Feature Goals] ... _what are the goals of feature based development_
+- [Feature Runtime Consolidation] ... _how do multiple features run as one application?_
+  - [feature-u Runtime Consolidation]  ... _the **feature-u** solution for runtime consolidation_
+    - [launchApp()]
+    - [Feature Object]
+    - [aspects]
+    - [Running the App]
+- [Feature Collaboration] ... _how do features cross communicate without breaking encapsulation?_
+  - [feature-u Cross Communication]  ... _the **feature-u** solution for feature collaboration_
 
-<!--- ?? consider refactoring diagram to use 3 features patterned after concepts ---> 
+
+<!--- ? consider refactoring diagram to use 3 features patterned after concepts
+      ? I THINK WE CAN MOVE TO 3 clouds anytime we want
+ ---> 
 
 ## Feature Based Development
 
@@ -137,18 +146,42 @@ hurdles** that must be overcome to realize our goal ...
 - **In short**, how do we achieve a running application from these
   isolated features?
 
-Broadly speaking, there are two overriding characteristics that must
-be accomplished to achieve our goal _(along with several other
-byproducts)_:
+When you boil it all down, there are **two overriding
+characteristics** that must be accomplished to achieve our goals
+_(everything else are byproducts of these two artifacts)_:
 
 <!--- ? Other Words: Accumulate, Consolidate, Pull/Bring together, Unite, Combine, Amalgamate, Join, Fuse, Unify ---> 
 
-1. **Feature Runtime Consolidation**: pull together our features into one running application
+1. **[Feature Runtime Consolidation]**: _pulling our features back together into one running application_
 
-2. **Feature Collaboration**: provide a mechanism by which our features can interact with one another
+2. **[Feature Collaboration]**: _provide a mechanism by which our features can interact with one another_
 
 Let's take a closer look at each of these items.
 
+
+<!--- ? OLD WORDS
+
+**the Goal _(what now?)_ ...**
+
+<ul>
+
+The **overriding goal** of **feature-u** is two fold:
+
+1. Allow features to **Plug-and-Play!** This encompasses many things,
+   such as: encapsulation, cross communication, enablement,
+   initialization, etc., etc.  We will build on these concepts
+   throughout this article.
+
+2. **Automate the startup of your application!!** You have the
+   features.  Allow them to promote their characteristics, so a
+   central utility can **automatically configure the frameworks** used
+   in your app, thereby **launching your application!** This task
+   **must be accomplished in an extendable way**, _because not
+   everyone uses the same set of frameworks!_
+
+</ul>
+
+ ---> 
 
 
 ## Feature Runtime Consolidation
@@ -203,9 +236,108 @@ This concern can be further divided into two sub-concerns:
   ---> 
 
 
+
+
+## feature-u Runtime Consolidation
+
+What is **feature-u**'s solution for [Feature Runtime Consolidation]?
+... _glad you asked ... let's break it down ..._
+
+
+
+### launchApp()
+
+[`launchApp()`] is a crucial utility in **feature-u**.  It is the agent,
+working on your behalf, that pretty much **accomplishes all the
+goals** of **feature-u**!
+With this utility, **your mainline startup process is extremely
+simple** ... it merely invokes `launchApp()`, and you are done (**easy
+peasy**)!
+
+<p align="center"><img src="img/intro_launchApp.png" alt="launchApp()" width="50%"></p>
+
+The `launchApp()` function actually starts your application running,
+employing various hooks that drive BOTH **App Initialization** and
+**Framework Configuration**!
+
+**How does this work?** ... _glad you asked ... keep reading ... we
+are building our **feature-u** concepts incrementally!_
+
+
+### Feature Object
+
+To accomplish this, each feature promotes a [`Feature`] object (using
+[`createFeature()`]), that catalogs aspects of interest to
+**feature-u**.
+
+<p align="center"><img src="img/intro_Feature.png" alt="Feature Object" width="50%"></p>
+
+
+### aspects
+
+In **feature-u**, "aspect" _(little "a")_ is a generalized term used
+to refer to the various ingredients that (when combined) constitute
+your application.  Aspects can take on many different forms: **UI
+Components** &bull; **Routes** &bull; **State Management** _(actions,
+reducers, selectors)_ &bull; **Business Logic** &bull; **Startup
+Initialization Code** &bull; _etc. etc. etc._
+
+**Not all aspects are of interest to feature-u** ...  _only those that
+are needed to setup and launch the application_ ... all others are
+considered an internal implementation detail of the feature.  As an
+example, consider the redux state manager: while it uses actions,
+reducers, and selectors ... only reducers are needed to setup and
+configure redux.
+
+<p align="center"><img src="img/intro_AspectContent.png" alt="AspectContent" width="70%"></p>
+
+The [`Feature`] object is merely a lightweight container that holds
+aspects of interest to **feature-u**.  These aspects can either be
+**built-in** (from core **feature-u**), or **extensions**.
+
+
+### Running the App
+
+Let's see how [`launchApp()`] accomodates the two sub-goals of runing the app:
+
+- App Initialization
+
+  ?? refine words
+
+  becase launchApp() is in control of starting the app, it can introduce ??link application life cycle events
+
+  this allows each feature to spawn start-up initialization processes
+
+  there are two hooks ??
+
+  <p align="center"><img src="img/intro_AppInit.png" alt="App Initialization" width="80%"></p>
+
+- Framework Configuration
+
+  ??? CURRENT POINT ???
+
+  ?? refine words
+
+  how can this be accomplished when there are so many frameworks out there
+  ... and every project uses a different mix
+
+  feature-u is extendable via Aspect plugins
+
+                       ??? DIAGRAM: showing Aspects being pulled in
+                                    - emphasize this in the Feature.aspects that are promoted
+                                      ... an Aspect extends what can be collected in a Feature
+                                    - basically extended Feature.aspect
+
+
+
+
 ## Feature Collaboration
 
-<!--- ? pretty much taken directly from crossCommunication.md inro PLUS new diagram ---> 
+The second overriding goal (mentioned above) was **Feature
+Collaboration** - _providing a mechanism by which our features can
+interact with one another_.
+
+<!--- ? pretty much taken directly from crossCommunication.md intro PLUS new diagram ---> 
 
 A **best practice** of feature-based development _(to the extent
 possible)_ is to **treat each feature as an isolated implementation**.
@@ -231,51 +363,21 @@ it's aspects to other features.  For example, a feature may need to:
 These items form the basis of why **Cross Feature Communication** is
 needed.
 
+<p align="center"><img src="img/featureCollaboration.png" alt="Feature Collaboration" width="60%"></p>
+
 To complicate matters, as a general rule, **JS imports should NOT
 cross feature boundaries**.  The reason being that this
-cross-communication should be limited to public access points -
+cross-communication should be **limited to public access points** -
 helping to **facilitate true plug-and-play**.
 
 <p align="center"><img src="img/featureCollaborationNoImport.png" alt="Cross Feature Imports are BAD" width="60%"></p>
 
-
 Given all this then, **how is Cross Feature Communication achieved**
 _in a way that doesn't break encapsulation_?
-
-<p align="center"><img src="img/featureCollaboration.png" alt="Feature Collaboration" width="60%"></p>
 
 Features need a way to promote their **Public Interface** to other
 features, and consume other feature's **Public Assets**.
 
-## The feature-u Solution
-
-
-??? CURRENT POINT ???
-
-
-<!--- ?? OLD WORDS
-
-**the Goal _(what now?)_ ...** ?? OLD WORDS
-
-<ul>
-
-The **overriding goal** of **feature-u** is two fold:
-
-1. Allow features to **Plug-and-Play!** This encompasses many things,
-   such as: encapsulation, cross communication, enablement,
-   initialization, etc., etc.  We will build on these concepts
-   throughout this article.
-
-2. **Automate the startup of your application!!** You have the
-   features.  Allow them to promote their characteristics, so a
-   central utility can **automatically configure the frameworks** used
-   in your app, thereby **launching your application!** This task
-   **must be accomplished in an extendable way**, _because not
-   everyone uses the same set of frameworks!_
-
-</ul>
-
- ---> 
 
 
 <!--- ?? POINTS COVERED IN PRESENTATION: ... may be part of our goal buildup
@@ -309,6 +411,16 @@ How feature-u assists in:
   boilerplate code
 
  ---> 
+
+
+
+
+## feature-u Cross Communication
+
+What is **feature-u**'s solution for [Feature Collaboration]?
+... _glad you asked ... let's break it down ..._ ?? too much repreated phrase
+
+???
 
 
 
@@ -372,13 +484,21 @@ How feature-u assists in:
 
 <!--- ?? internal references ---> 
 
-[Feature Based Development]:      #feature-based-development
-[Segregating Features]:           #segregating-features
-[Feature Goals]:                  #feature-goals
-[Feature Runtime Consolidation]:  #feature-runtime-consolidation
-[Feature Collaboration]:          #feature-collaboration
+[Feature Based Development]:           #feature-based-development
+[Segregating Features]:                #segregating-features
+[Feature Goals]:                       #feature-goals
+[Feature Runtime Consolidation]:       #feature-runtime-consolidation
+  [feature-u Runtime Consolidation]:   #feature-u-runtime-consolidation
 
-[References]:                     #references
+  [launchApp()]:                       #launchapp
+  [Feature Object]:                    #feature-object
+  [aspects]:                           #aspects
+  [Running the App]:                   #running-the-app
+
+[Feature Collaboration]:               #feature-collaboration
+  [feature-u Cross Communication]:     #feature-u-cross-communication
+                                       
+[References]:                          #references
 
 
 
