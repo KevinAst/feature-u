@@ -346,7 +346,7 @@ employing various hooks that drive BOTH **App Initialization** and
 **Framework Configuration**!
 
 **How does this work?  _What are the bindings to `launchApp()`_**?
-... _keep reading_
+... _let's delve a bit deeper_
 
 
 ### Feature Object
@@ -411,29 +411,42 @@ startup process**, because _initialization specific to a given feature
 
 ### Framework Configuration
 
-??? CURRENT POINT ???
-
-?? refine words
-
 A fundamental goal of **feature-u** is to **automatically configure
 the framework(s)** used in your run-time-stack _(by accumulating the
-necessary resources across all your features)_.
+necessary resources across all your features)_.  This greatly reduces
+the boilerplate code within your app.
 
-?? this greatly reduces the boilerplate code within your app.
+How can this be accomplished when there are so many frameworks out
+there ... and every project uses a different mix?
 
-?? How can this be accomplished when there are so many frameworks out there
-... and every project uses a different mix
+**feature-u** is extendable!  It operates in an open plugable
+architecture where **Extendable Aspects** integrate **feature-u** to other
+frameworks, matching your specific run-time stack.  **This is good,**
+_because not everyone uses the same frameworks_!
 
-?? feature-u is extendable via Aspect plugins
+**Extendable Aspects** can be found in external NPM packages _(the normal case)_, or you
+can create your own using [`createAspect()`] _(a more advanced topic)_.
 
-Because not everyone uses the same frameworks, **feature-u**
-accomplishes this through **Extendable Aspects** _(you can find them
-in external NPM packages, or you can create your own)_.
+<p align="center"><img src="img/intro_frameworkConfig.png" alt="Framework Configuration" width="80%"></p>
 
-                       ??? DIAGRAM: showing Aspects being pulled in
-                                    - emphasize this in the Feature.aspects that are promoted
-                                      ... an Aspect extends what can be collected in a Feature
-                                    - basically extended Feature.aspect
+The [`Aspect`] object contains a series of [Aspect Life Cycle Hooks] that are
+invoked under the control of **feature-u** ([`launchApp()`]).
+In general, an Aspect's responsibility is to:
+
+- accumulate [`AspectContent`] across all features
+- perform some desired setup and configuration
+- expose it's functionality in some way (typically a framework integration)
+
+By default, an [`Aspect`] automatically extends the [`Feature`] object
+by allowing it's [`AspectContent`] to be **"cataloged"** in the
+`Feature` object using the `Aspect.name` as it's key.  In the diagram
+above, you can see that
+
+- the `reducerAspect` (`Aspect.name: 'reducer'`) permits a
+  `Feature.reducer: reducerContent` construct
+
+- and the `logicAspect` (`Aspect.name: 'logic'`) permits a
+  `Feature.logic: logicContent` construct
 
 It is important to understand that the interface to your chosen
 frameworks is not altered in any way.  You use them the same way you
@@ -444,6 +457,8 @@ necessary resources across all your features.
 
 
 ## feature-u Cross Communication
+
+??? CURRENT POINT ???
 
 ?? this section has been eliminated
 
@@ -574,6 +589,10 @@ What is **feature-u**'s solution for [Feature Collaboration]?
 [Feature Based Routes]:         https://feature-u.js.org/1.0.0/featureRouter.html
 [Best Practices]:               https://feature-u.js.org/1.0.0/bestPractices.html
 [extendable]:                   https://feature-u.js.org/1.0.0/extending.html
+[Aspect Life Cycle Hooks]:      https://feature-u.js.org/1.0.0/extending.html#aspect-life-cycle-methods
+[`AspectContent`]:              https://feature-u.js.org/1.0.0/api.html#AspectContent
+[`Aspect`]:                     https://feature-u.js.org/1.0.0/api.html#Aspect
+
 
 [`Feature`]:        https://feature-u.js.org/1.0.0/api.html#Feature
 [`App`]:            https://feature-u.js.org/1.0.0/api.html#App
