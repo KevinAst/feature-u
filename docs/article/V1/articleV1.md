@@ -48,16 +48,17 @@ collaboration**!
 TK:medium-resolve-internal-links
 
 - [Feature Based Development] ... _think of features as mini applications_
-- [Segregating Features] ... _divide your features into project directories_
-- [Feature Goals] ... _what are the goals of feature based development_
-- [Feature Runtime Consolidation] ... _how do multiple features run as one application?_
-  - [feature-u Runtime Consolidation]  ... _the **feature-u** solution for runtime consolidation_
-    - [launchApp()]
-    - [Feature Object]
-    - [aspects]
-    - [Running the App]
-- [Feature Collaboration] ... _how do features cross communicate without breaking encapsulation?_
-  - [feature-u Cross Communication]  ... _the **feature-u** solution for feature collaboration_
+  - [Segregating Features] ... _divide your features into directories_
+  - [Feature Goals] ... _what are the goals and hurdles of feature based development_
+    - [Feature Runtime Consolidation] ... _how do multiple features run as one application?_
+    - [Feature Collaboration] ... _how do features cross communicate without breaking encapsulation?_
+- [The feature-u Solution] ... _how can **feature-u** help?_
+  - [launchApp()]
+  - [Feature Object]
+  - [aspects]
+  - [Running the App]
+    - [App Initialization]
+    - [Framework Configuration]
 
 
 <!--- ? consider refactoring diagram to use 3 features patterned after concepts
@@ -143,12 +144,11 @@ hurdles** that must be overcome to realize our goal ...
 - How do we enable/disable selected features which are either
   optional, or require a license upgrade?
 
-- **In short**, how do we achieve a running application from these
-  isolated features?
+**In short**, how do we achieve a running application from these
+isolated features?
 
 When you boil it all down, there are **two overriding
-characteristics** that must be accomplished to achieve our goals
-_(everything else are byproducts of these two artifacts)_:
+characteristics** that must be accomplished to achieve our goals:
 
 <!--- ? Other Words: Accumulate, Consolidate, Pull/Bring together, Unite, Combine, Amalgamate, Join, Fuse, Unify ---> 
 
@@ -156,7 +156,9 @@ _(everything else are byproducts of these two artifacts)_:
 
 2. **[Feature Collaboration]**: _provide a mechanism by which our features can interact with one another_
 
-Let's take a closer look at each of these items.
+
+As it turns out, _everything else is a byproduct of these two
+artifacts_. Let's take a closer look at each of these items.
 
 
 <!--- ? OLD WORDS
@@ -236,104 +238,9 @@ This concern can be further divided into two sub-concerns:
   ---> 
 
 
-
-
-## feature-u Runtime Consolidation
-
-What is **feature-u**'s solution for [Feature Runtime Consolidation]?
-... _glad you asked ... let's break it down ..._
-
-
-
-### launchApp()
-
-[`launchApp()`] is a crucial utility in **feature-u**.  It is the agent,
-working on your behalf, that pretty much **accomplishes all the
-goals** of **feature-u**!
-With this utility, **your mainline startup process is extremely
-simple** ... it merely invokes `launchApp()`, and you are done (**easy
-peasy**)!
-
-<p align="center"><img src="img/intro_launchApp.png" alt="launchApp()" width="50%"></p>
-
-The `launchApp()` function actually starts your application running,
-employing various hooks that drive BOTH **App Initialization** and
-**Framework Configuration**!
-
-**How does this work?** ... _glad you asked ... keep reading ... we
-are building our **feature-u** concepts incrementally!_
-
-
-### Feature Object
-
-To accomplish this, each feature promotes a [`Feature`] object (using
-[`createFeature()`]), that catalogs aspects of interest to
-**feature-u**.
-
-<p align="center"><img src="img/intro_Feature.png" alt="Feature Object" width="50%"></p>
-
-
-### aspects
-
-In **feature-u**, "aspect" _(little "a")_ is a generalized term used
-to refer to the various ingredients that (when combined) constitute
-your application.  Aspects can take on many different forms: **UI
-Components** &bull; **Routes** &bull; **State Management** _(actions,
-reducers, selectors)_ &bull; **Business Logic** &bull; **Startup
-Initialization Code** &bull; _etc. etc. etc._
-
-**Not all aspects are of interest to feature-u** ...  _only those that
-are needed to setup and launch the application_ ... all others are
-considered an internal implementation detail of the feature.  As an
-example, consider the redux state manager: while it uses actions,
-reducers, and selectors ... only reducers are needed to setup and
-configure redux.
-
-<p align="center"><img src="img/intro_AspectContent.png" alt="AspectContent" width="70%"></p>
-
-The [`Feature`] object is merely a lightweight container that holds
-aspects of interest to **feature-u**.  These aspects can either be
-**built-in** (from core **feature-u**), or **extensions**.
-
-
-### Running the App
-
-Let's see how [`launchApp()`] accomodates the two sub-goals of runing the app:
-
-- App Initialization
-
-  ?? refine words
-
-  becase launchApp() is in control of starting the app, it can introduce ??link application life cycle events
-
-  this allows each feature to spawn start-up initialization processes
-
-  there are two hooks ??
-
-  <p align="center"><img src="img/intro_AppInit.png" alt="App Initialization" width="80%"></p>
-
-- Framework Configuration
-
-  ??? CURRENT POINT ???
-
-  ?? refine words
-
-  how can this be accomplished when there are so many frameworks out there
-  ... and every project uses a different mix
-
-  feature-u is extendable via Aspect plugins
-
-                       ??? DIAGRAM: showing Aspects being pulled in
-                                    - emphasize this in the Feature.aspects that are promoted
-                                      ... an Aspect extends what can be collected in a Feature
-                                    - basically extended Feature.aspect
-
-
-
-
 ## Feature Collaboration
 
-The second overriding goal (mentioned above) was **Feature
+The second overriding goal (mentioned above) is **Feature
 Collaboration** - _providing a mechanism by which our features can
 interact with one another_.
 
@@ -360,8 +267,8 @@ it's aspects to other features.  For example, a feature may need to:
  - invoke the API of other features
  - etc. etc. etc.
 
-These items form the basis of why **Cross Feature Communication** is
-needed.
+These items form the basis of why **Cross Feature Communication** and
+**Cross Feature UI Composition** is needed.
 
 <p align="center"><img src="img/featureCollaboration.png" alt="Feature Collaboration" width="60%"></p>
 
@@ -413,9 +320,132 @@ How feature-u assists in:
  ---> 
 
 
+## The feature-u Solution
+
+Let's take a look at the **feature-u** solution for all of theses
+items.  In the following sections, we will be building **feature-u**
+concepts incrementally.
+
+
+
+### launchApp()
+
+[`launchApp()`] is a crucial utility in **feature-u**.  It is an
+agent, working on your behalf, which provides the foundation that
+pretty much **accomplishes all the goals** of **feature-u**!  It
+facilitates both **[Feature Runtime Consolidation]** and **[Feature
+Collaboration]**.
+
+With this utility, **your mainline startup process is extremely
+simple** ... it merely invokes `launchApp()`, and you are done!
+
+<p align="center"><img src="img/intro_launchApp.png" alt="launchApp()" width="50%"></p>
+
+The `launchApp()` function actually starts your application running,
+employing various hooks that drive BOTH **App Initialization** and
+**Framework Configuration**!
+
+**How does this work?  _What are the bindings to `launchApp()`_**?
+... _keep reading_
+
+
+### Feature Object
+
+To accomplish this, each feature promotes a [`Feature`] object _(using
+[`createFeature()`])_, that catalogs aspects of interest to
+**feature-u**.
+
+This is the primary input to [`launchApp()`].
+
+<p align="center"><img src="img/intro_Feature.png" alt="Feature Object" width="50%"></p>
+
+
+### aspects
+
+In **feature-u**, "aspect" _(little "a")_ is a generalized term used
+to refer to the various ingredients that (when combined) constitute
+your application.  Aspects can take on many different forms: **UI
+Components** &bull; **Routes** &bull; **State Management** _(actions,
+reducers, selectors)_ &bull; **Business Logic** &bull; **Startup
+Initialization Code** &bull; _etc. etc. etc._
+
+**Not all aspects are of interest to feature-u** ...  _only those that
+are needed to setup and launch the application_ ... all others are
+considered an internal implementation detail of the feature.  As an
+example, consider the redux state manager: while it uses actions,
+reducers, and selectors ... only reducers are needed to setup and
+configure redux.
+
+<p align="center"><img src="img/intro_AspectContent.png" alt="AspectContent" width="70%"></p>
+
+The [`Feature`] object is merely a lightweight container that holds
+aspects of interest to **feature-u**.  These aspects can either be
+**built-in** (from core **feature-u**), or **extensions**.
+
+
+### Running the App
+
+Let's see how [`launchApp()`] accomodates the two sub-goals of runing the app:
+
+- [App Initialization]
+- [Framework Configuration]
+
+### App Initialization
+
+Becase `launchApp()` is in control of starting the app, it can
+introduce [Application Life Cycle Hooks].
+
+This allows each feature to perform app-specific initialization, and
+even inject components into the root of the app.
+
+There are two hooks:
+
+1. [`Feature.appWillStart`] - invoked one time at app startup time
+2. [`Feature.appDidStart`]   - invoked one time immediately after app has started
+
+<p align="center"><img src="img/intro_AppInit.png" alt="App Initialization" width="80%"></p>
+
+[Application Life Cycle Hooks] **greatly simplify your app's mainline
+startup process**, because _initialization specific to a given feature
+**can be encapsulated in that feature**_.
+
+### Framework Configuration
+
+??? CURRENT POINT ???
+
+?? refine words
+
+A fundamental goal of **feature-u** is to **automatically configure
+the framework(s)** used in your run-time-stack _(by accumulating the
+necessary resources across all your features)_.
+
+?? this greatly reduces the boilerplate code within your app.
+
+?? How can this be accomplished when there are so many frameworks out there
+... and every project uses a different mix
+
+?? feature-u is extendable via Aspect plugins
+
+Because not everyone uses the same frameworks, **feature-u**
+accomplishes this through **Extendable Aspects** _(you can find them
+in external NPM packages, or you can create your own)_.
+
+                       ??? DIAGRAM: showing Aspects being pulled in
+                                    - emphasize this in the Feature.aspects that are promoted
+                                      ... an Aspect extends what can be collected in a Feature
+                                    - basically extended Feature.aspect
+
+It is important to understand that the interface to your chosen
+frameworks is not altered in any way.  You use them the same way you
+always have _(just within your feature boundary)_.  **feature-u**
+merely provides a well defined organizational layer, where the
+frameworks are automatically setup and configured by accumulating the
+necessary resources across all your features.
 
 
 ## feature-u Cross Communication
+
+?? this section has been eliminated
 
 What is **feature-u**'s solution for [Feature Collaboration]?
 ... _glad you asked ... let's break it down ..._ ?? too much repreated phrase
@@ -484,21 +514,20 @@ What is **feature-u**'s solution for [Feature Collaboration]?
 
 <!--- ?? internal references ---> 
 
-[Feature Based Development]:           #feature-based-development
-[Segregating Features]:                #segregating-features
-[Feature Goals]:                       #feature-goals
-[Feature Runtime Consolidation]:       #feature-runtime-consolidation
-  [feature-u Runtime Consolidation]:   #feature-u-runtime-consolidation
-
-  [launchApp()]:                       #launchapp
-  [Feature Object]:                    #feature-object
-  [aspects]:                           #aspects
-  [Running the App]:                   #running-the-app
-
-[Feature Collaboration]:               #feature-collaboration
-  [feature-u Cross Communication]:     #feature-u-cross-communication
+[Feature Based Development]:          #feature-based-development
+ [Segregating Features]:              #segregating-features
+ [Feature Goals]:                     #feature-goals
+  [Feature Runtime Consolidation]:    #feature-runtime-consolidation
+  [Feature Collaboration]:            #feature-collaboration
+[The feature-u Solution]:             #the-feature-u-solution
+ [launchApp()]:                       #launchapp
+ [Feature Object]:                    #feature-object
+ [aspects]:                           #aspects
+ [Running the App]:                   #running-the-app
+  [App Initialization]:               #app-initialization
+  [Framework Configuration]:          #framework-configuration
                                        
-[References]:                          #references
+[References]:                         #references
 
 
 
@@ -537,6 +566,8 @@ What is **feature-u**'s solution for [Feature Collaboration]?
 [Cross Feature Communication]:  https://feature-u.js.org/1.0.0/crossCommunication.html
 [UI Composition]:               https://feature-u.js.org/1.0.0/crossCommunication.html#ui-composition
 [Application Life Cycle Hooks]: https://feature-u.js.org/1.0.0/appLifeCycle.html
+[`Feature.appWillStart`]:       https://feature-u.js.org/1.0.0/appLifeCycle.html#appwillstart
+[`Feature.appDidStart`]:        https://feature-u.js.org/1.0.0/appLifeCycle.html#appdidstart
 [Built-In aspect]:              https://feature-u.js.org/1.0.0/detail.html#built-in-aspects
 [Feature Enablement]:           https://feature-u.js.org/1.0.0/enablement.html
 [Managed Code Expansion]:       https://feature-u.js.org/1.0.0/crossCommunication.html#managed-code-expansion
