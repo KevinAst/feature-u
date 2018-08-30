@@ -1,9 +1,9 @@
-/* slim left-nav width (was: 300px) */
+/* slim left-nav width to 250 (was: 300) ... later back to 300 with lengthy Basic Concepts */
 .book-summary {
-  width: 250px;
+  width: 300px;
 }
 .book.with-summary .book-body {
-  left: 250px;
+  left: 300px;
 }
 
 /* condense left-nav spacing (was: 10px 15px) */
