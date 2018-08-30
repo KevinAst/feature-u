@@ -60,7 +60,7 @@ TK:medium-resolve-internal-links
     - [App Initialization]
     - [Framework Configuration]
   - [Cross Feature Communication](#cross-feature-communication)
-  - [Cross Feature UI Composition]
+  - [Feature Based UI Composition]
     - [Resource Contracts]
   - [Feature Enablement](#feature-enablement)
 
@@ -206,7 +206,7 @@ application.
 
 This concern can be further divided into two sub-concerns:
 
-- App Initialization
+- [App Initialization]
 
   Some features may require certain startup initialization.  As an
   example, a feature that encapsulates some DB abstraction will rely
@@ -224,7 +224,7 @@ This concern can be further divided into two sub-concerns:
           - etc
   ---> 
 
-- Framework Configuration
+- [Framework Configuration]
 
   If your application relies on other frameworks, chances are there are
   resources contained within each feature that must be accumulated and
@@ -271,7 +271,7 @@ it's aspects to other features.  For example, a feature may need to:
  - etc. etc. etc.
 
 These items form the basis of why **[Cross Feature Communication](#cross-feature-communication)** and
-**[Cross Feature UI Composition]** is needed.
+**[Feature Based UI Composition]** is needed.
 
 <p align="center"><img src="img/featureCollaboration.png" alt="Feature Collaboration" width="60%"></p>
 
@@ -516,7 +516,7 @@ it or leave it)**.  The supplier is merely saying: _"this is my Public
 Face"_.
 
 
-## Cross Feature UI Composition
+## Feature Based UI Composition
 
 It is common for a UI component to be an accumulation of
 sub-components that span several features.  As a result, **UI
@@ -737,9 +737,6 @@ example:
 This topic is discussed in more detail at [Feature Enablement].
 
 
-## ?? Summary Context Diagram - OR NOT ?? TOC
-
-
 ## References
 
 - [A feature based approach to React development](http://ryanlanciaux.com/blog/2017/08/20/a-feature-based-approach-to-react-development/)
@@ -813,7 +810,7 @@ This topic is discussed in more detail at [Feature Enablement].
   [App Initialization]:               #app-initialization
   [Framework Configuration]:          #framework-configuration
  [Cross Feature Communication LOCAL]: #cross-feature-communication
- [Cross Feature UI Composition]:      #cross-feature-ui-composition
+ [Feature Based UI Composition]:      #feature-based-ui-composition
   [Resource Contracts]:               #resource-contracts
 
                                        
