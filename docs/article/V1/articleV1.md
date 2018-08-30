@@ -59,7 +59,10 @@ TK:medium-resolve-internal-links
   - [Running the App]
     - [App Initialization]
     - [Framework Configuration]
-
+  - [Cross Feature Communication](#cross-feature-communication)
+  - [Cross Feature UI Composition]
+    - [Resource Contracts]
+  - [Feature Enablement](#feature-enablement)
 
 <!--- ? consider refactoring diagram to use 3 features patterned after concepts
       ? I THINK WE CAN MOVE TO 3 clouds anytime we want
@@ -206,12 +209,12 @@ This concern can be further divided into two sub-concerns:
 - App Initialization
 
   Some features may require certain startup initialization.  As an
-  example, a feature that encapsolates some DB abstraction will rely
+  example, a feature that encapsulates some DB abstraction will rely
   on a run-time setup of a DB service.
 
   Certainly we don't want to rely on some global app logic to
   accomplish this _(once again, we want our features to be
-  encapsolated and self-sufficient)_.
+  encapsulated and self-sufficient)_.
 
   <!--- DIAGRAM (included above) enumerating:
           App Initialization ...
@@ -223,7 +226,7 @@ This concern can be further divided into two sub-concerns:
 
 - Framework Configuration
 
-  If your application relys on other frameworks, chances are there are
+  If your application relies on other frameworks, chances are there are
   resources contained within each feature that must be accumulated and
   fed into the framework configuration process.
 
@@ -267,8 +270,8 @@ it's aspects to other features.  For example, a feature may need to:
  - invoke the API of other features
  - etc. etc. etc.
 
-These items form the basis of why **Cross Feature Communication** and
-**Cross Feature UI Composition** is needed.
+These items form the basis of why **[Cross Feature Communication](#cross-feature-communication)** and
+**[Cross Feature UI Composition]** is needed.
 
 <p align="center"><img src="img/featureCollaboration.png" alt="Feature Collaboration" width="60%"></p>
 
@@ -323,18 +326,18 @@ How feature-u assists in:
 ## The feature-u Solution
 
 Let's take a look at the **feature-u** solution for all of theses
-items.  In the following sections, we will be building **feature-u**
-concepts incrementally.
+items.  
 
+The following sections will build **feature-u** concepts
+incrementally.
 
 
 ### launchApp()
 
-[`launchApp()`] is a crucial utility in **feature-u**.  It is an
+[`launchApp()`] is an essential utility in **feature-u**.  It is an
 agent, working on your behalf, which provides the foundation that
-pretty much **accomplishes all the goals** of **feature-u**!  It
-facilitates both **[Feature Runtime Consolidation]** and **[Feature
-Collaboration]**.
+**accomplishes all the goals** of **feature-u**!  It facilitates both
+**[Feature Runtime Consolidation]** and **[Feature Collaboration]**.
 
 With this utility, **your mainline startup process is extremely
 simple** ... it merely invokes `launchApp()`, and you are done!
@@ -385,14 +388,14 @@ aspects of interest to **feature-u**.  These aspects can either be
 
 ### Running the App
 
-Let's see how [`launchApp()`] accomodates the two sub-goals of runing the app:
+Let's see how [`launchApp()`] accommodates the two sub-goals of running the app:
 
 - [App Initialization]
 - [Framework Configuration]
 
 ### App Initialization
 
-Becase `launchApp()` is in control of starting the app, it can
+Because `launchApp()` is in control of starting the app, it can
 introduce [Application Life Cycle Hooks].
 
 This allows each feature to perform app-specific initialization, and
@@ -437,10 +440,9 @@ In general, an Aspect's responsibility is to:
 - perform some desired setup and configuration
 - expose it's functionality in some way (typically a framework integration)
 
-By default, an [`Aspect`] automatically extends the [`Feature`] object
-by allowing it's [`AspectContent`] to be **"cataloged"** in the
-`Feature` object using the `Aspect.name` as it's key.  In the diagram
-above, you can see that
+An [`Aspect`] automatically extends the [`Feature`] object by allowing
+it's [`AspectContent`] to be **"cataloged"** in the `Feature` using
+`Aspect.name` as it's key.  In the diagram above, you can see that
 
 - the `reducerAspect` (`Aspect.name: 'reducer'`) permits a
   `Feature.reducer: reducerContent` construct
@@ -456,17 +458,286 @@ frameworks are automatically setup and configured by accumulating the
 necessary resources across all your features.
 
 
-## feature-u Cross Communication
+## Cross Feature Communication
 
-??? CURRENT POINT ???
+In support of **Feature Collaboration** _that doesn't break
+encapsulation_, **feature-u** promotes feature-based resources through
+something called `fassets` (feature assets).  This is how all **Cross
+Feature Communication** is accomplished.  You can think of this as the
+**Public Face** of a feature.
 
-?? this section has been eliminated
+**SideBar**: The term `fassets` is a play on words.  While it is
+pronounced "facet" _and is loosely related to this term_, it is spelled
+fassets (i.e. feature assets).
 
-What is **feature-u**'s solution for [Feature Collaboration]?
-... _glad you asked ... let's break it down ..._ ?? too much repreated phrase
+A feature can expose whatever it deems necessary through the built-in
+{{book.api.fassetsAspect$}}).  There is no real constraint on this
+resource.  It is truly open.
 
-???
+<p align="center"><img src="../../img/crossFeatureCommunication.png" alt="Cross Feature Communication" width="80%"></p>
 
+The {{book.api.fassetsAspect}} has a `define` directive where
+resources are cataloged.
+
+Here is a simple example of how `fassets` are defined:
+
+```js
+export default createFeature({
+
+  name:     'featureA',
+
+  fassets: {
+    define: {
+     'openView':      actions.view.open,      // openView(viewName): Action
+     'currentView':   selector.currentView,   // currentView(appState): viewName
+     'isDeviceReady': selector.isDeviceReady, // isDeviceReady(appState): boolean
+    },
+  },
+
+  ...
+});
+```
+
+**feature-u** accumulates `fassets` from all active features, and
+promotes them through the {{book.api.FassetsObject}} _(emitted from
+{{book.api.launchApp}})_.
+
+**SideBar**: There are several ways to obtain access the `Fassets
+object` _(see {{book.guide.crossCom_obtainingFassetsObject}})_.
+
+To reference a `fassets` resource, simply dereference it as any other
+object reference.  There is also a {{book.api.Fassets_get}} method
+that can be supplied {{book.guide.crossCom_wildcards}}, returning an
+array of resources.
+
+This is an example of a **push** philosophy.  Here the supplier is is
+simply publicly promoting a resource for other features to use **(take
+it or leave it)**.  The supplier is merely saying: _"this is my Public
+Face"_.
+
+
+## Cross Feature UI Composition
+
+It is common for a UI component to be an accumulation of
+sub-components that span several features.  As a result, **UI
+Composition is a very important part of Cross Feature Communication**.
+
+In support of this, **feature-u** introduces the
+{{book.api.withFassets}} Higher-order Component (HoC) that auto-wires
+fasset properties into a component.  This is a common pattern
+popularized by redux `connect()` _(simplifying component access to
+application state)_.
+
+Here is how a component would access a `company.logo` _(defined
+by another feature)_:
+
+```js
+function MyComponent({Logo}) {
+  return (
+    <div>
+      <Logo/>
+    </div>
+    ... snip snip
+  );
+}
+
+export default withFassets({
+  component: MyComponent,
+  mapFassetsToProps: {
+    Logo: 'company.logo',
+  }
+});
+```
+
+The {{book.api.withFassets}} HoC auto-wires named feature assets as
+component properties through the `mapFassetsToProps` hook.  In this
+example, because the `Logo` property is a component, `MyComponent` can
+simply reference it using JSX.
+
+
+## Resource Contracts
+
+It is common for UI Composition to be represented as a contract, where
+a component in one feature has a series of injection needs that are to
+be supplied by other features.
+
+The {{book.api.fassetsAspect}} has additional constructs to facilitate
+this contractual arrangement, allowing **feature-u** to provide more
+validation in the process.
+
+Rather than just defining resources in one feature and using them in
+another:
+
+- A given feature can specify a series of injection needs using the
+  `fassets.use` directive.  This identifies a set of **injection keys**
+  that uniquely identify these resources.
+
+- Other features will supply this content using the `fassets.defineUse`
+  directive, by referencing these same **injection keys**.
+
+This represents more of a **pull** philosophy.  It gives **feature-u**
+more knowledge of the process, allowing it to verify that supplied
+resources are correct.
+
+Wildcards (`*`) can be used to add additional dynamics to the process,
+allowing features to inject their content autonomously.
+
+Here is a `main` feature that is pulling in a series of sub-components
+_(links and bodies)_ from other features:
+
+- **main feature**
+
+  `src/features/main/index.js`
+  ```js
+  createFeature({
+    name: 'main',
+
+    fassets: {
+      use: [
+         'MainPage.*.link',
+         'MainPage.*.body',
+      ],
+    },
+    ... snip snip
+  });
+  ```
+
+  Because our specification includes wildcards, a series of
+  definitions will match!
+
+  Here is the `MainPage` component that fulfills the usage contract:
+
+  `src/features/main/comp/MainPage.js`
+  ```js
+  function MainPage({Logo, mainLinks, mainBodies}) {
+    return (
+      <div>
+        <div> {/* header section */}
+          <Logo/>
+        </div>
+
+        <div> {/* left-nav section */}
+          {mainLinks.map( (MainLink, indx) => <MainLink key={indx}/>)}
+        </div>
+
+        <div> {/* body section */}
+          {mainBodies.map( (MainBody, indx) => <MainBody key={indx}/>)}
+        </div>
+      </div>
+    );
+  }
+
+  export default withFassets({
+    component: MainPage,
+    mapFassetsToProps: {
+      Logo:       'company.logo',    // from our prior example
+
+      mainLinks:  'MainPage.*.link', // find matching
+      mainBodies: 'MainPage.*.body',
+    },
+  });
+  ```
+
+When {{book.api.withFassets}} encounters wildcards (`*`), it merely
+accumulates all matching definitions, and promotes them as arrays.
+
+Through this implementation, **any feature may dynamically inject
+itself in the process autonomously**!  In addition, this dynamic
+implicitly handles the case where a feature is dynamically disabled
+_**(very kool indeed)**_!!
+
+The following snippets are taken from other features that supply the
+definitions for the content to inject:
+
+- **cart feature**
+
+  `src/features/cart/index.js`
+  ```js
+  createFeature({
+    name: 'cart',
+
+    fassets: {
+      defineUse: {
+       'MainPage.cart.link': () => <Link to="/cart">Cart</Link>,
+       'MainPage.cart.body': () => <Route path="/cart" component={ShoppingCart}/>,
+      },
+    },
+    ... snip snip
+  });
+  ```
+
+- **search feature**
+
+  `src/features/search/index.js`
+  ```js
+  createFeature({
+    name: 'search',
+
+    fassets: {
+      defineUse: {
+       'MainPage.search.link': () => <Link to="/search">Search</Link>,
+       'MainPage.search.body': () => <Route path="/search" component={Search}/>,
+      },
+    },
+    ... snip snip
+  });
+  ```
+
+Two external features (**cart** and **search**) define the content
+that is requested by the **main** feature.
+
+The `fassets.defineUse` directive requires that the resource keys match a
+`fassets.use` feature request.  This is the contract that provides
+**feature-u** insight when enforcing it's validation.
+
+**SideBar**: Because we are also dealing with navigation, we introduce
+{{book.ext.reactRouter}} into the mix (with the `Link` and `Route`
+components).  Because of RR's V4 design, our routes are also handled
+through component composition _(see {{book.guide.featureRouter}} for
+more information)_.
+
+
+## Feature Enablement
+
+Features can be can be dynamically disabled by setting the
+`Feature.enabled` boolean property _(part of the
+{{book.guide.detail_builtInAspects}})_:
+
+```js
+export default createFeature({
+  name:     'sandbox',
+  enabled:  false,
+  ... snip snip
+});
+```
+
+In this example, it is just as though the `sandbox` feature doesn't
+exist.  In other words **it has been logically removed**.
+
+Typically, this indicator is based on some run-time expression,
+allowing packaged code to be dynamically enabled/disabled during the
+application's start-up process:
+
+```js
+export default createFeature({
+  name:     'sandbox',
+  enabled:  inDevelopmentMode(),
+  ... snip snip
+});
+```
+
+This dynamic is useful in a number of different situations. For
+example:
+
+- some features may require a license upgrade
+
+- other features may only be used for diagnostic purposes, and are
+  disabled by default
+
+This topic is discussed in more detail at [Feature Enablement].
+
+
+## ?? Summary Context Diagram - OR NOT ?? TOC
 
 
 ## References
@@ -541,6 +812,10 @@ What is **feature-u**'s solution for [Feature Collaboration]?
  [Running the App]:                   #running-the-app
   [App Initialization]:               #app-initialization
   [Framework Configuration]:          #framework-configuration
+ [Cross Feature Communication LOCAL]: #cross-feature-communication
+ [Cross Feature UI Composition]:      #cross-feature-ui-composition
+  [Resource Contracts]:               #resource-contracts
+
                                        
 [References]:                         #references
 
