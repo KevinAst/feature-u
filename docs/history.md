@@ -129,6 +129,10 @@ Release           | What                                   | *When*
    - All code samples utilize a feature.js module _(previously
      index.js)_.
 
+   - The `src/app.js` sample (found in
+     {{book.guide.detail_launchingApp}}), has been streamlined.
+
+
 <!-- ************************************************************* -->
 <br/><br/><br/>
 <h3 id="v1_0_0" style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
