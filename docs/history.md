@@ -84,7 +84,7 @@ reference the most current release.
 
 Release           | What                                   | *When*
 ------------------|----------------------------------------|------------------
-[v1.0.1](#v1_0_1) | ?? Desc Here                           | *Month ??, 2018*
+[v1.0.1](#v1_0_1) | Docs Update                            | *September ??, 2018*
 [v1.0.0](#v1_0_0) | UI Composition                         | *August 14, 2018*
 [v0.1.3](#v0_1_3) | Establish Polyfill Strategy            | *July 2, 2018*
 [v0.1.0](#v0_1_0) | Initial Release                        | *March 6, 2018*
@@ -100,7 +100,7 @@ Release           | What                                   | *When*
 <!-- ************************************************************* -->
 <br/><br/><br/>
 <h3 id="v1_0_1" style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
-  v1.0.1 - UI Composition <i>(Month ??, 2018)</i>
+  v1.0.1 - Docs Update <i>(September ??, 2018)</i>
 </h3>
 
 [Full Docs](https://feature-u.js.org/1.0.1/)
@@ -113,8 +113,18 @@ Release           | What                                   | *When*
 
 **NOTE**: This release is a **non-breaking change** _(i.e. no API was affected)_.
 
-1. **xyz**: ?? running update here
+1. **Docs**: Documentation improvements include:
 
+   - The {{book.guide.basicConcepts}} chapter has been completely re-written
+     to fully introduce you to **all feature-u concepts and terminology**.
+
+     Diagrams are used to help put everything in perspective _("with
+     circles and arrows and a paragraph on the back of each one
+     explaining what each one was to be used as evidence against us"
+     ... Arlo Guthrie – [Alice's
+     Restaurant](https://www.letras.com/guthrie-arlo/17170/))_.
+
+     This is a **must read** to get you "up to speed" quickly!
 
 
 
