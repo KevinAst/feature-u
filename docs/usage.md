@@ -36,7 +36,7 @@ Here is a sample directory structure of an app that uses **feature-u**:
 src/
   app.js              ... launches app using launchApp()
 
-  feature/
+  features/
     index.js          ... accumulate/promote all Feature objects (within the app)
 
     featureA/         ... a feature (within the app)
@@ -46,7 +46,8 @@ src/
       comp/
         ScreenA1.js
         ScreenA2.js
-      index.js        ... promotes featureA object using createFeature()
+      feature.js      ... promotes featureA object using createFeature()
+      index.js        ... redirect parent dir import to our feature reference
       logic.js
       reducer.js
       route.js
@@ -66,7 +67,7 @@ Each feature is located in it's own directory, containing it's aspects
 Each feature promotes it's aspect content through a
 {{book.api.Feature}} object (using {{book.api.createFeature}}).
 
-**`src/feature/featureA/index.js`**
+**src/features/featureA/feature.js**
 ```js
 import {createFeature}  from 'feature-u';
 import reducer          from './state';
@@ -102,13 +103,22 @@ something called `fassets` (feature assets - the Public Face of a
 feature) with `openA()` and `closeA()` functions which will be publicly
 promoted to other features.
 
+**Note**: Feature directory imports are redirected to our feature
+object reference ... for example:
+
+**src/features/featureA/index.js**
+```js
+// redirect parent dir import to our feature reference
+export {default} from './feature';
+```
+
 
 ## Feature Accumulation
 
 All features are accumulated through a single es6 module, allowing
 them to be pulled in through a single array import.
 
-**`src/feature/index.js`**
+**src/features/index.js**
 ```js
 import featureA  from './featureA';
 import featureB  from './featureB';
@@ -124,6 +134,7 @@ export default [
 some of them may be disabled (i.e. logically removed) ... see:
 {{book.guide.enablement}}.
 
+
 ## launchApp()
 
 In **feature-u** the application mainline is very simple and generic.
@@ -133,14 +144,14 @@ app-specific constructs**!!  The mainline merely accumulates the
 {{book.api.Aspects}} and {{book.api.Features}}, and starts the app by
 invoking {{book.api.launchApp}}:
 
-**`src/app.js`**
+**src/app.js**
 ```js
 import ReactDOM              from 'react-dom';
 import {launchApp}           from 'feature-u';
 import {createRouteAspect}   from 'feature-router';
 import {createReducerAspect} from 'feature-redux';
 import {createLogicAspect}   from 'feature-redux-logic';
-import features              from './feature';
+import features              from './features';
 
 // launch our app, exposing the Fassets object (facilitating cross-feature communication)
 export default launchApp({           // *4*

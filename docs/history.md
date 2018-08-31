@@ -126,7 +126,8 @@ Release           | What                                   | *When*
 
      This is a **must read** to get you "up to speed" quickly!
 
-
+   - All code samples utilize a feature.js module _(previously
+     index.js)_.
 
 <!-- ************************************************************* -->
 <br/><br/><br/>

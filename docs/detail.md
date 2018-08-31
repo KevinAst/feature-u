@@ -289,7 +289,7 @@ app-specific constructs**!!  The mainline merely accumulates the
 Aspects and Features, and starts the app by invoking {{book.api.launchApp}}:
 
 
-**`src/app.js`**
+**src/app.js**
 ```js
 import React                 from 'react';
 import ReactDOM              from 'react-dom';
@@ -298,7 +298,7 @@ import {createRouteAspect}   from 'feature-router';      // *1*
 import {createReducerAspect} from 'feature-redux';       // *1*
 import {createLogicAspect}   from 'feature-redux-logic'; // *1*
 import SplashScreen          from './util/comp/SplashScreen';
-import features              from './feature';           // *2*
+import features              from './features';          // *2*
 
 const routeAspect   = createRouteAspect();   // *1*
 const reducerAspect = createReducerAspect(); // *1*

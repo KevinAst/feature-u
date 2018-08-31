@@ -444,7 +444,7 @@ _(links and bodies)_ from other features:
 
 - **main feature**
 
-  `src/features/main/feature.js`
+  **src/features/main/feature.js**
   ```js
   createFeature({
     name: 'main',
@@ -464,7 +464,7 @@ _(links and bodies)_ from other features:
 
   Here is the `MainPage` component that fulfills the usage contract:
 
-  `src/features/main/comp/MainPage.js`
+  **src/features/main/comp/MainPage.js**
   ```js
   function MainPage({Logo, mainLinks, mainBodies}) {
     return (
@@ -508,7 +508,7 @@ definitions for the content to inject:
 
 - **cart feature**
 
-  `src/features/cart/feature.js`
+  **src/features/cart/feature.js**
   ```js
   createFeature({
     name: 'cart',
@@ -525,7 +525,7 @@ definitions for the content to inject:
 
 - **search feature**
 
-  `src/features/search/feature.js`
+  **src/features/search/feature.js**
   ```js
   createFeature({
     name: 'search',

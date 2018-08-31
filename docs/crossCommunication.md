@@ -268,7 +268,7 @@ Here is our `main` feature:
 
 - **main feature**
 
-  `src/features/main/index.js`
+  **src/features/main/feature.js**
   ```js
   createFeature({
     name: 'main',
@@ -292,7 +292,7 @@ Here is our `main` feature:
   
   Here is the manifestation of this contract:
   
-  `src/features/main/comp/MainPage.js`
+  **src/features/main/comp/MainPage.js**
   ```js
   function MainPage({Logo, CartLink, SearchLink, CartBody, SearchBody,}) {
     return (
@@ -333,7 +333,7 @@ definitions for the content to inject:
 
 - **cart feature**
 
-  `src/features/cart/index.js`
+  **src/features/cart/feature.js**
   ```js
   createFeature({
     name: 'cart',
@@ -350,7 +350,7 @@ definitions for the content to inject:
 
 - **search feature**
 
-  `src/features/search/index.js`
+  **src/features/search/feature.js**
   ```js
   createFeature({
     name: 'search',
@@ -393,7 +393,7 @@ from the defining features are the same, so they are not repeated)_:
 
 - **main feature**
 
-  `src/features/main/index.js`
+  **src/features/main/feature.js**
   ```js
   createFeature({
     name: 'main',
@@ -413,7 +413,7 @@ from the defining features are the same, so they are not repeated)_:
 
   Here is our **refined** `MainPage` component:
 
-  `src/features/main/comp/MainPage.js`
+  **src/features/main/comp/MainPage.js**
   ```js
   function MainPage({Logo, mainLinks, mainBodies}) {
     return (
@@ -988,7 +988,7 @@ simply import `fassets` from your application mainline.
 Your mainline exports the {{book.api.launchApp}} return value
 ... which is the {{book.api.FassetsObject}}.
 
-**`src/app.js`**
+**src/app.js**
 ```js
 // launch our app, exposing the feature-u Fassets object (facilitating cross-feature communication)!
 export default launchApp({
