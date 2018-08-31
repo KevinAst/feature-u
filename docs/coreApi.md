@@ -1,8 +1,5 @@
 # Core API
 
-The two primary functions you will use in **feature-u** are
-{{book.api.createFeature}} and {{book.api.launchApp}}.
-
 The following list summarizes the **Core API**.  _For your convenience
 this list:_
 
