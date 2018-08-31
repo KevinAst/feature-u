@@ -118,7 +118,7 @@ Release           | What                                   | *When*
    - The {{book.guide.basicConcepts}} chapter has been completely re-written
      to fully introduce you to **all feature-u concepts and terminology**.
 
-     Diagrams are used to help put everything in perspective _("with
+     Diagrams are used to put everything in perspective _("with
      circles and arrows and a paragraph on the back of each one
      explaining what each one was to be used as evidence against us"
      ... Arlo Guthrie – [Alice's

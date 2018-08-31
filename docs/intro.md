@@ -39,7 +39,7 @@ _Go forth and compute!!_
 
 - {{book.guide.start}} ... _installation and access_
 
-- {{book.guide.basicConcepts}} ... _learn high-level **feature-u** concepts_
+- {{book.guide.basicConcepts}} ... _a full introduction to **feature-u** concepts and terminology **(a must read)**_
 
 - {{book.guide.usage}} ... _what is **feature-u**'s fundamental usage pattern_
 
