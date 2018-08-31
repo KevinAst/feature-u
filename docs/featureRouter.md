@@ -97,15 +97,7 @@ export default createFeature({
   name: featureName,
 
   appWillStart({fassets, curRootAppElm}) {
-    // insure we don't clobber any supplied content
-    if (curRootAppElm) {
-      const msg = "***ERROR*** <App> does NOT support children " +
-                  "but another feature/aspect is attempting to inject it's content. " +
-                  "Please resolve either by adjusting the feature expansion order, " +
-                  "or promoting <App> through the conflicting artifact.";
-      console.log(`${msg} ... conflicting artifact:`, curRootAppElm);
-      throw new Error(msg);
-    }
+    assertNoRootAppElm(curRootAppElm, '<App>'); // insure no content is clobbered (children NOT supported)
     return <App/>;
   }
 });
@@ -134,10 +126,11 @@ Here is our `app` feature with it's newly enhanced usage contract (see
 
 **src/features/app/feature.js** _our `app` Feature, enhanced with the new usage contract_
 ```js
-import React           from 'react';
-import {createFeature} from 'feature-u';
-import App             from './comp/App;
-import featureName     from './featureName';
+import React                from 'react';
+import {createFeature,
+        assertNoRootAppElm} from 'feature-u';
+import App                  from './comp/App;
+import featureName          from './featureName';
 
 export default createFeature({
 
@@ -151,15 +144,7 @@ export default createFeature({
   },
 
   appWillStart({fassets, curRootAppElm}) {
-    // insure we don't clobber any supplied content
-    if (curRootAppElm) {
-      const msg = "***ERROR*** <App> does NOT support children " +
-                  "but another feature/aspect is attempting to inject it's content. " +
-                  "Please resolve either by adjusting the feature expansion order, " +
-                  "or promoting <App> through the conflicting artifact.";
-      console.log(`${msg} ... conflicting artifact:`, curRootAppElm);
-      throw new Error(msg);
-    }
+    assertNoRootAppElm(curRootAppElm, '<App>'); // insure no content is clobbered (children NOT supported)
     return <App/>;
   }
 });

@@ -28,6 +28,10 @@ this list:_
   * {{book.api.mapFassetsToPropsFn}}
 
 
+* Misc ...
+  * {{book.api.assertNoRootAppElm$}}
+
+
 
 ## Object Refs ...
 

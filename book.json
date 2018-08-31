@@ -213,6 +213,9 @@
           "mapFassetsToPropsStruct":  "<a href='/api.html#mapFassetsToPropsStruct'><code>mapFassetsToPropsStruct</code></a>",
           "mapFassetsToPropsFn":      "<a href='/api.html#mapFassetsToPropsFn'><code>mapFassetsToPropsFn</code></a>",
 
+        "assertNoRootAppElm":         "<a href='/api.html#assertNoRootAppElm'><code>assertNoRootAppElm()</code></a>",
+        "assertNoRootAppElm$":        "<a href='/api.html#assertNoRootAppElm'><code>assertNoRootAppElm(rootAppElm, className)</code></a>",
+
       "extensionApi":                      "<a href='/extensionApi.html'><code>Extension API</code></a>",
         "createAspect":                    "<a href='/api.html#createAspect'><code>createAspect()</code></a>",
         "createAspect$":                   "<a href='/api.html#createAspect'><code>createAspect({see-docs}): Aspect</code></a>",

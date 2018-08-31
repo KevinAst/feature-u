@@ -1,6 +1,33 @@
 
 <br/><br/><br/>
 
+<a id="assertNoRootAppElm"></a>
+
+<h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
+  assertNoRootAppElm(rootAppElm, className)</h5>
+A convenience function that asserts the supplied `rootAppElm` is NOTdefined.When this constraint is not met, and error is thrown, afteremitting applicable context in the console log.For more information, please refer to{{book.guide.injectingDomContent}}.
+
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>rootAppElm</td><td>reactElm</td><td><p>the current react app element root to
+check.</p>
+</td>
+    </tr><tr>
+    <td>className</td><td>string</td><td><p>the className on behalf of which this
+assertion is performed.</p>
+</td>
+    </tr>  </tbody>
+</table>
+
+
+<br/><br/><br/>
+
 <a id="createFeature"></a>
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">

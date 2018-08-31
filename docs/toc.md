@@ -88,6 +88,8 @@
   * [withFassets()](api.md#withFassets)
     * [mapFassetsToPropsStruct](api.md#mapFassetsToPropsStruct)
     * [mapFassetsToProps()](api.md#mapFassetsToPropsFn)
+  * Misc ...
+    * [assertNoRootAppElm()](api.md#assertNoRootAppElm)
   * Object Refs ...
     * [Fassets](api.md#Fassets)
       * [get()](api.md#Fassets_get)

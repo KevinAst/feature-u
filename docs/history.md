@@ -132,6 +132,9 @@ Release           | What                                   | *When*
    - The `src/app.js` sample (found in
      {{book.guide.detail_launchingApp}}), has been streamlined.
 
+2. **Added**: A new {{book.api.assertNoRootAppElm}} convenience function
+   has been added _(see: {{book.guide.injectingDomContent}})_.
+
 
 <!-- ************************************************************* -->
 <br/><br/><br/>
