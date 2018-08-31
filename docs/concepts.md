@@ -7,7 +7,7 @@ _build up high-level **feature-u** concepts_.
 
 At a 30,000 ft view, feature-based development _(as in most software)_
 is all about dissecting hard problems into smaller pieces.  Even when I
-started my carrier _(back in the 70's)_, this was a prominent
+started my career _(back in the 70's)_, this was a prominent
 quote:
 
 <ul>
