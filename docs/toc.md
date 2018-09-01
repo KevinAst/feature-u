@@ -1,7 +1,6 @@
 # Table of content 
 
 ### feature-u (1.0.1)
-* [Benefits](benefits.md)
 * [Getting Started](start.md)
 
 ----
@@ -23,6 +22,7 @@
       * [Resource Contracts](concepts.md#resource-contracts)
     * [Feature Enablement](concepts.md#feature-enablement)
   * [In Summary](concepts.md#in-summary)
+* [Benefits](benefits.md)
 
 ----
 * [Usage](usage.md)

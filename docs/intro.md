@@ -35,11 +35,11 @@ _Go forth and compute!!_
 
 ## At a Glance
 
-- {{book.guide.benefits}} ... _understand the benefits of **feature-u**_
-
 - {{book.guide.start}} ... _installation and access_
 
 - {{book.guide.basicConcepts}} ... _a full introduction to **feature-u** concepts and terminology **(a must read)**_
+
+- {{book.guide.benefits}} ... _understand the benefits of **feature-u**_
 
 - {{book.guide.usage}} ... _what is **feature-u**'s fundamental usage pattern_
 
@@ -49,7 +49,8 @@ _Go forth and compute!!_
 
 - {{book.guide.crossCom}} ... _promote truly **Plug-and-Play** features through a well-defined Public Face_
 
-- {{book.guide.crossCom_uiComposition}} ...  _facilitate seamless **cross-feature component composition**_
+  - {{book.guide.crossCom_uiComposition}} ...  _facilitate seamless **cross-feature component composition**_
+
 
 - {{book.guide.featureRouter}} ... _learn how navigation and routing can be integrated into your features_
 
