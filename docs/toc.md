@@ -2,6 +2,9 @@
 
 ### feature-u (1.0.1)
 * [Getting Started](start.md)
+  * [Install](start.md#install)
+  * [Access](start.md#access)
+  * [Potential Need for Polyfills](start.md#potential-need-for-polyfills)
 
 ----
 * [Basic Concepts](concepts.md)
