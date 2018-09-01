@@ -1,29 +1,31 @@
 # feature-u
 
 **feature-u** is a utility library that _facilitates feature-based
-project organization_ in your {{book.ext.react}} project.  It assists
-in organizing your project by individual features.
+project organization_ in your {{book.ext.react}} project.  It provides
+tangible assistance in promoting individual **plug-and-play** features
+within your project.
 
-Most software engineers would agree that organizing your project by
-feature is much preferred over type-based patterns.  As
-application domains grow in the real world, project organization by
-type simply doesn't scale, it just becomes unmanageable!  There are a
-number of good articles that discuss this topic _(with insights on
-feature-based design and structure)_.
+Most developers would agree that organizing your project by feature is
+much preferred over type-based patterns.  Because **application
+domains grow** in the real world, project **organization by type
+simply doesn't scale**, _it just becomes unmanageable_!
+
+There are a number of good articles that discuss this topic _with
+insight on feature-based design and structure_.  However when it comes
+to the implementation, you are pretty much left to fend for yourself.
 
 **feature-u** is a utility library that manages and streamlines this
-process.  It automates some of the mundane details of managing features
-and helps in promoting features that are **plug-and-play**.
+process.  It automates the mundane details of managing features
+and helps to promote features that are truly **plug-and-play**.
 
-The following article is an introduction to **feature-u** with
-examples from a real-world app: {{book.ext.eateryNod}} _(where
-**feature-u** was conceived)_:
-[*feature-u: Feature Based Project Organization for React*](http://bit.ly/feature-u).
+Want to see a real **feature-u** app?  {{book.ext.eateryNod}} is the
+application _where **feature-u** was conceived_.  It is a
+{{book.ext.reactNative}} {{book.ext.expo}} mobile app, and is one of
+my sandbox applications that I use to test frameworks.
 
-**feature-u** allows you to **focus your attention on the "business
-end" of your features!**
-
-_Go forth and compute!!_
+**feature-u** opens new doors into the exciting world of
+feature-based development.  It frees you up to **focus your attention
+on the "business end" of your features!**
 
 <!--- Badges for CI Builds ---> 
 [![Build Status](https://travis-ci.org/KevinAst/feature-u.svg?branch=master)](https://travis-ci.org/KevinAst/feature-u)

@@ -1,31 +1,37 @@
 # feature-u V1 (Feature Based Project Organization for React)
 
 This article is an introduction to a new JS library called
-**[feature-u]**, that **facilitates feature-based project organization
-in your [react] project**.  It provides tangible assistance in promoting
+**[feature-u]**, that _facilitates feature-based project organization
+in your [react] project_.  It provides tangible assistance in promoting
 individual **plug-and-play** features within your project.
 
 <p align="center"><img src="../../img/featureUSplash.jpg"  alt="Features" width="80%"></p>
 
 Most developers would agree that organizing your project by feature is
-much preferred over type-based patterns. Because **application domains
-grow** in the real world, project **organization by type simply
-doesn't scale**, _it just becomes unmanageable_!
+much preferred over type-based patterns.  Because **application
+domains grow** in the real world, project **organization by type
+simply doesn't scale**, _it just becomes unmanageable_!
 
-There are many good articles on this topic with insights on
-feature-based design and structure _(see: [References] below
-TK:medium-resolve-internal-link)_.  However when it comes to the
+There are a number of good articles that discuss this topic _with
+insight on feature-based design and structure_ _(see: [References]
+below TK:medium-resolve-internal-link)_.  However when it comes to the
 implementation, you are pretty much left to fend for yourself.
 
-This article is an introduction to **feature-u**, building concepts and
-insights.  It makes a case for why **feature-u** was developed and gives
-you a better understanding of it's benefits.
+**[feature-u]** is a utility library that manages and streamlines this
+process.  It automates the mundane details of managing features
+and helps to promote features that are truly **plug-and-play**.
+
+This article is an introduction to **[feature-u]**, building concepts
+and insights.  It makes a case for why **feature-u** was developed and
+gives you a better understanding of it's benefits.
 
 Check out the [full docs], [github source], and [npm package].
 
 **[feature-u]** opens new doors into the exciting world of
 feature-based development.  It frees you up to **focus your attention
-on the "business end" of your features!** _Go forth and compute!!_
+on the "business end" of your features!**
+
+_Go forth and compute!!_
 
 ---
 
