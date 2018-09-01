@@ -5,12 +5,7 @@ This article is an introduction to a new JS library called
 in your [react] project**.  It provides tangible assistance in promoting
 individual **plug-and-play** features within your project.
 
-<p align="center"><img src="img/features.jpg"  alt="Features" width="80%"></p>
-<!--- select new image
-<p align="center"><img src="img/features2.jpg" alt="Features" width="100%"></p>
-<p align="center"><img src="img/features3.png" alt="Features" width="50%"></p>
-<p align="center"><img src="img/features4.png" alt="Features" width="100%"></p>
- ---> 
+<p align="center"><img src="../../img/featureUSplash.jpg"  alt="Features" width="80%"></p>
 
 Most developers would agree that organizing your project by feature is
 much preferred over type-based patterns. Because **application domains

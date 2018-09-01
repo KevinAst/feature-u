@@ -3,6 +3,8 @@
 This section will **introduce you to feature-based development** and
 _build up high-level **feature-u** concepts_.
 
+<p align="center"><img src="img/featureUSplash.jpg" alt="feature-u" width="80%"></p>
+
 ## Feature Based Development
 
 At a 30,000 ft view, feature-based development _(as in most software)_
