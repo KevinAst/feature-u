@@ -404,9 +404,9 @@ export default withFassets({
 ```
 
 The {{book.api.withFassets}} HoC auto-wires named feature assets as
-component properties through the `mapFassetsToProps` hook.  In this
-example, because the `Logo` property is a component, `MyComponent` can
-simply reference it using JSX.
+component properties through the {{book.api.mapFassetsToPropsStruct}}
+hook.  In this example, because the `Logo` property is a component,
+`MyComponent` can simply reference it using JSX.
 
 You can find more information about this topic in
 {{book.guide.crossCom_uiComposition}}.
