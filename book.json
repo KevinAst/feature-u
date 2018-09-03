@@ -60,6 +60,7 @@
           "basicConcepts_runningTheApp":                  "<a href='/concepts.html#running-the-app'><code>Running the App</code></a>",
             "basicConcepts_appInitialization":            "<a href='/concepts.html#app-initialization'><code>App Initialization</code></a>",
             "basicConcepts_frameworkConfiguration":       "<a href='/concepts.html#framework-configuration'><code>Framework Configuration</code></a>",
+            "basicConcepts_launchingApp":                 "<a href='/concepts.html#launching-your-application'><code>Launching Your Application</code></a>",
           "basicConcepts_crossFeatureCommunication":      "<a href='/concepts.html#cross-feature-communication'><code>Cross Feature Communication</code></a>",
           "basicConcepts_featureBasedUIComposition":      "<a href='/concepts.html#feature-based-ui-composition'><code>Feature Based UI Composition</code></a>",
             "basicConcepts_resourceContracts":            "<a href='/concepts.html#concepts.md#resource-contracts'><code>Resource Contracts</code></a>",

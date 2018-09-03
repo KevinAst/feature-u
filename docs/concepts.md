@@ -312,6 +312,70 @@ frameworks are automatically setup and configured by accumulating the
 necessary resources across all your features.
 
 
+### Launching Your Application
+
+In **feature-u** the application mainline is very simple and generic.
+There is no real app-specific code in it ... **not even any global
+initialization**!  That is because **each feature can inject their own
+app-specific constructs**!!  The mainline merely accumulates the
+{{book.api.Aspects}} and {{book.api.Features}}, and starts the app by
+invoking {{book.api.launchApp}}:
+
+**src/app.js**
+```js
+import ReactDOM              from 'react-dom';
+import {launchApp}           from 'feature-u';
+import {createRouteAspect}   from 'feature-router';
+import {createReducerAspect} from 'feature-redux';
+import {createLogicAspect}   from 'feature-redux-logic';
+import features              from './features';
+
+// launch our app, exposing the Fassets object (facilitating cross-feature communication)
+export default launchApp({           // *4*
+
+  aspects: [                         // *1*
+    createRouteAspect(),   // Feature Routes ... extending: Feature.route
+    createReducerAspect(), // redux          ... extending: Feature.reducer
+    createLogicAspect(),   // redux-logic    ... extending: Feature.logic
+  ],
+
+  features,                          // *2*
+
+  registerRootAppElm(rootAppElm) {   // *3*
+    ReactDOM.render(rootAppElm,
+                    getElementById('myAppRoot'));
+  }
+});
+```
+
+Here are some **important points of interest** _(match the numbers to
+`*n*` in the code above)_:
+
+1. the supplied {{book.api.Aspects}} _(pulled from separate npm
+   packages)_ reflect the frameworks of our run-time stack _(in our
+   example {{book.ext.redux}}, {{book.ext.reduxLogic}}, and
+   {{book.ext.featureRouter}})_ and extend the acceptable Feature
+   properties _(`Feature.reducer`, `Feature.logic`, and
+   `Feature.route` respectively)_ ... _**see:**
+   {{book.guide.detail_extendableAspects}}_
+
+2. all of our app features are supplied (accumulated from the
+   `features/` directory)
+
+3. a {{book.api.registerRootAppElmCB}} callback is used to catalog the
+   supplied `rootAppElm` to the specific React platform in use.
+   Because this registration is accomplished by your app-specific
+   code, **feature-u** can operate in any of the React platforms, such
+   as: {{book.ext.reactWeb}}, {{book.ext.reactNative}}, and
+   {{book.ext.expo}} ... _**see:**
+   {{book.guide.detail_reactRegistration}}_
+
+4. _as a bit of a preview_, the return value of {{book.api.launchApp}}
+   is a {{book.api.FassetsObject}}, which promotes the accumulated
+   Public Face of all features, and is exported to provide
+   {{book.guide.crossCom}}.
+
+
 ## Cross Feature Communication
 
 In support of **Feature Collaboration** _that doesn't break

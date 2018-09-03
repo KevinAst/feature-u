@@ -20,6 +20,7 @@
     * [Running the App](concepts.md#running-the-app)
       * [App Initialization](concepts.md#app-initialization)
       * [Framework Configuration](concepts.md#framework-configuration)
+      * [Launching Your Application](concepts.md#launching-your-application)
     * [Cross Feature Communication](concepts.md#cross-feature-communication)
     * [Feature Based UI Composition](concepts.md#feature-based-ui-composition)
       * [Resource Contracts](concepts.md#resource-contracts)
