@@ -428,6 +428,12 @@ object reference.  There is also a {{book.api.Fassets_get}} method
 that can be supplied {{book.guide.crossCom_wildcards}}, returning an
 array of resources.
 
+```js
+if (fassets.isDeviceReady(appState)) {
+  ...
+}
+```
+
 This is an example of a **push** philosophy.  Here the supplier is is
 simply publicly promoting a resource for other features to use **(take
 it or leave it)**.  The supplier is merely saying: _"this is my Public
