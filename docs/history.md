@@ -115,7 +115,7 @@ Release           | What                                   | *When*
 
 1. **Docs**: Documentation improvements include:
 
-   - The {{book.guide.basicConcepts}} chapter has been completely re-written
+   - The [`Basic Concepts`](../1.0.1/concepts.html) chapter has been completely re-written
      to fully introduce you to **all feature-u concepts and terminology**.
 
      Diagrams are used to put everything in perspective _("with
@@ -126,17 +126,17 @@ Release           | What                                   | *When*
 
      This is a **must read** to get you "up to speed" quickly!
 
-   - Diagrams are now styled to be visiable in all themes _(including
+   - All diagrams are now styled to be visiable in all themes _(including
      dark mode)_.
 
    - All code samples utilize a feature.js module _(previously
      index.js)_.
 
    - The `src/app.js` sample (found in
-     {{book.guide.detail_launchingApp}}), has been streamlined.
+     [`Launching Your Application`](../1.0.1/detail.html#launching-your-application)), has been streamlined.
 
-2. **Added**: A new {{book.api.assertNoRootAppElm}} convenience function
-   has been added _(see: {{book.guide.injectingDomContent}})_.
+2. **Added**: A new [`assertNoRootAppElm()`](../1.0.1/api.html#assertNoRootAppElm) convenience function
+   has been added _(see: [`Injecting DOM Content`](../1.0.1/appLifeCycle.html#injecting-dom-content))_.
 
 
 <!-- ************************************************************* -->
