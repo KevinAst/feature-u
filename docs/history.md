@@ -84,7 +84,7 @@ reference the most current release.
 
 Release           | What                                   | *When*
 ------------------|----------------------------------------|------------------
-[v1.0.1](#v1_0_1) | Docs Update                            | *September ??, 2018*
+[v1.0.1](#v1_0_1) | Docs Update                            | *September 5, 2018*
 [v1.0.0](#v1_0_0) | UI Composition                         | *August 14, 2018*
 [v0.1.3](#v0_1_3) | Establish Polyfill Strategy            | *July 2, 2018*
 [v0.1.0](#v0_1_0) | Initial Release                        | *March 6, 2018*
@@ -100,7 +100,7 @@ Release           | What                                   | *When*
 <!-- ************************************************************* -->
 <br/><br/><br/>
 <h3 id="v1_0_1" style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
-  v1.0.1 - Docs Update <i>(September ??, 2018)</i>
+  v1.0.1 - Docs Update <i>(September 5, 2018)</i>
 </h3>
 
 [Full Docs](https://feature-u.js.org/1.0.1/)
