@@ -55,8 +55,7 @@ The `fassets` terminology is consistently used in both:
 - and in their usage (through the {{book.api.FassetsObject}} and the
   {{book.api.withFassets}} HoC)
 
-![Context Diagram](img/crossFeatureCommunication.png)
-
+<p align="center"><img class="diagram" src="img/crossFeatureCommunication.png" width="90%"/></p>
 
 ### fassets definition
 
@@ -669,7 +668,7 @@ As it turns out, when it comes to the definition and consumption of
 fasset resources _(covered in the prior sections)_, there are two
 broad philosophies: **push** or **pull**.
 
-- **Push** - _"throw it over the wall"_ <img src="img/push.jpg" width="60"/>
+- **Push** - _"throw it over the wall"_ <img class="diagram" src="img/push.jpg" width="60"/>
 
   - **Definition:**
     
@@ -694,7 +693,7 @@ broad philosophies: **push** or **pull**.
     features can specify the same `use` directive, providing their
     {{book.guide.crossCom_resourceValidation}} does not conflict_.
     
-- **Pull** ... _"a resource contract"_ <img src="img/pull.jpg" width="60"/>
+- **Pull** ... _"a resource contract"_ <img class="diagram" src="img/pull.jpg" width="60"/>
     
   - **Consumption:**
     

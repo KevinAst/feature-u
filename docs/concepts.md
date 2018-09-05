@@ -3,7 +3,7 @@
 This section will **introduce you to feature-based development** and
 _build up high-level **feature-u** concepts_.
 
-<p align="center"><img src="img/featureUSplash.jpg" alt="feature-u" width="80%"></p>
+<p align="center"><img class="diagram" src="img/featureUSplash.jpg" alt="feature-u" width="80%"></p>
 
 ## Feature Based Development
 
@@ -37,7 +37,7 @@ the first thing that comes to mind is directories.  By segregating
 your features into individual directories, there is a semblance of
 isolation.
 
-<p align="center"><img src="img/featureSegregation.png" alt="Feature Segregation" width="80%"></p>
+<p align="center"><img class="diagram" src="img/featureSegregation.png" alt="Feature Segregation" width="80%"></p>
 
 
 ## Feature Goals
@@ -87,7 +87,7 @@ We must be able to pull and configure various aspects of our
 individual features, and "launch" them as a single homogeneous running
 application.
 
-<p align="center"><img src="img/featureConsolidation.png" alt="Feature Consolidation" width="90%"></p>
+<p align="center"><img class="diagram" src="img/featureConsolidation.png" alt="Feature Consolidation" width="90%"></p>
 
 This concern can be further divided into two sub-concerns:
 
@@ -159,14 +159,14 @@ These items form the basis of why
 **{{book.guide.basicConcepts_crossFeatureCommunication}}** and
 **{{book.guide.basicConcepts_featureBasedUIComposition}}** are needed.
 
-<p align="center"><img src="img/featureCollaboration.png" alt="Feature Collaboration" width="70%"></p>
+<p align="center"><img class="diagram" src="img/featureCollaboration.png" alt="Feature Collaboration" width="70%"></p>
 
 To complicate matters, as a general rule, **JS imports should NOT
 cross feature boundaries**.  The reason being that this
 cross-communication should be **limited to public access points** -
 helping to **facilitate true plug-and-play**.
 
-<p align="center"><img src="img/featureCollaborationNoImport.png" alt="Cross Feature Imports are BAD" width="70%"></p>
+<p align="center"><img class="diagram" src="img/featureCollaborationNoImport.png" alt="Cross Feature Imports are BAD" width="70%"></p>
 
 Given all this then, **how is Cross Feature Communication achieved**
 _in a way that doesn't break encapsulation_?
@@ -192,7 +192,7 @@ agent, working on your behalf, which provides the foundation that
 With this utility, **your mainline startup process is extremely
 simple** ... it merely invokes {{book.api.launchApp}}, and you are done!
 
-<p align="center"><img src="img/intro_launchApp.png" alt="launchApp()" width="70%"></p>
+<p align="center"><img class="diagram" src="img/intro_launchApp.png" alt="launchApp()" width="70%"></p>
 
 The {{book.api.launchApp}} function actually starts your application running,
 employing various hooks that drive BOTH **App Initialization** and
@@ -214,7 +214,7 @@ To accomplish this, each feature promotes a {{book.api.Feature}} object _(using
 
 This is the primary input to {{book.api.launchApp}}.
 
-<p align="center"><img src="img/intro_Feature.png" alt="Feature Object" width="70%"></p>
+<p align="center"><img class="diagram" src="img/intro_Feature.png" alt="Feature Object" width="70%"></p>
 
 
 ### aspects
@@ -233,7 +233,7 @@ example, consider the redux state manager: while it uses actions,
 reducers, and selectors ... only reducers are needed to setup and
 configure redux.
 
-<p align="center"><img src="img/intro_AspectContent.png" alt="AspectContent" width="70%"></p>
+<p align="center"><img class="diagram" src="img/intro_AspectContent.png" alt="AspectContent" width="70%"></p>
 
 The {{book.api.Feature}} object is merely a lightweight container that
 holds aspects of interest to **feature-u**.  These aspects can either
@@ -260,7 +260,7 @@ There are two hooks:
 1. {{book.guide.appWillStartCB}} - invoked one time at app startup time
 2. {{book.guide.appDidStartCB}}  - invoked one time immediately after app has started
 
-<p align="center"><img src="img/intro_AppInit.png" alt="App Initialization" width="90%"></p>
+<p align="center"><img class="diagram" src="img/intro_AppInit.png" alt="App Initialization" width="90%"></p>
 
 {{book.guide.appLifeCycles}} **greatly simplify your app's mainline
 startup process**, because _initialization specific to a given feature
@@ -284,7 +284,7 @@ _because not everyone uses the same frameworks_!
 **Extendable Aspects** can be found in external NPM packages _(the normal case)_, or you
 can create your own using {{book.api.createAspect}} _(a more advanced topic)_.
 
-<p align="center"><img src="img/intro_frameworkConfig.png" alt="Framework Configuration" width="90%"></p>
+<p align="center"><img class="diagram" src="img/intro_frameworkConfig.png" alt="Framework Configuration" width="90%"></p>
 
 The {{book.api.Aspect}} object contains a series of {{book.guide.extending_aspectLifeCycleHooks}} that are
 invoked under the control of **feature-u** ({{book.api.launchApp}}).
@@ -392,7 +392,7 @@ A feature can expose whatever it deems necessary through the built-in
 {{book.api.fassetsAspect$}}).  There is no real constraint on this
 resource.  It is truly open.
 
-<p align="center"><img src="img/crossFeatureCommunication.png" alt="Cross Feature Communication" width="90%"></p>
+<p align="center"><img class="diagram" src="img/crossFeatureCommunication.png" alt="Cross Feature Communication" width="90%"></p>
 
 The {{book.api.fassetsAspect}} has a `define` directive where
 resources are cataloged.
@@ -674,4 +674,4 @@ You can find more information about this topic in
 
 The following diagram summarizes **feature-u**'s Basic Concepts
 
-<p align="center"><img src="img/concepts.png" alt="Basic Concepts" width="100%"></p>
+<p align="center"><img class="diagram" src="img/concepts.png" alt="Basic Concepts" width="100%"></p>

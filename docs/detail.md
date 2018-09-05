@@ -15,9 +15,7 @@ feature_).
 
 _Let's take a closer look at this process ..._
 
-![Context Diagram](img/contextDiagram.png)
-
-<!-- <img src="img/contextDiagram.png" width="100%"/> -->
+<p align="center"><img class="diagram" src="img/contextDiagram.png" width="90%"/></p>
 
 
 <!-- *** SECTION ********************************************************************************  -->

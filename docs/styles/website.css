@@ -19,3 +19,17 @@
   line-height: 1.2;     /* code-snippet line-spacing (was: 1.7) */
   padding:    .5em;     /* also reduce padding around code block (was: .85em 1em) */
 }
+
+/* diagram styles */
+.diagram {
+  background:     #fffffa;      /* light beige: neutral background color that looks good in all three gitbook styles */
+
+  border-radius:  8px;          /* rounded border */
+
+                                /* with a drop shadow effect */
+  -webkit-filter: drop-shadow(8px 8px 10px gray); /* Safari 6.0 - 9.0 */
+  filter:         drop-shadow(8px 8px 10px gray);
+
+                                /* blur around frame */
+  box-shadow: 0 0 8px 8px white inset;
+}

@@ -126,6 +126,9 @@ Release           | What                                   | *When*
 
      This is a **must read** to get you "up to speed" quickly!
 
+   - Diagrams are now styled to be visiable in all themes _(including
+     dark mode)_.
+
    - All code samples utilize a feature.js module _(previously
      index.js)_.
 
