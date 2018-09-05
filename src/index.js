@@ -5,6 +5,7 @@ import expandWithFassets        from './core/expandWithFassets';
 import fassetValidations        from './core/fassetValidations';
 import {withFassets,
         FassetsContext}         from './core/withFassets'; // publically expose FassetsContext (in rare case when client code defines their own DOM via registerRootAppElm())
+import assertNoRootAppElm       from './core/assertNoRootAppElm';
 import createAspect,
        {extendAspectProperty}   from './extend/createAspect';
 
@@ -25,6 +26,7 @@ export {
   fassetValidations,
   withFassets,
   FassetsContext,
+  assertNoRootAppElm,
   createAspect,
   extendAspectProperty,
   extendFeatureProperty,
@@ -42,6 +44,7 @@ export default {
   fassetValidations,
   withFassets,
   FassetsContext,
+  assertNoRootAppElm,
   createAspect,
   extendAspectProperty,
   extendFeatureProperty,

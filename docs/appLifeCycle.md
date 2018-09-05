@@ -103,6 +103,17 @@ appWillStart({fassets, curRootAppElm}) {
   promote your component in a different way ... most likely through
   the Aspect in conflict.
 
+Because this check is rather tedious, **feature-u** provides a
+convenient {{book.api.assertNoRootAppElm}} function that performs this
+check on your behalf.  The following code snippet is equivalent:
+
+```js
+appWillStart({fassets, curRootAppElm}) {
+  assertNoRootAppElm(curRootAppElm, '<MyContent>'); // insure no content is clobbered (children NOT supported)
+  return <MyContent .../>;
+}
+```
+
 
 ## appDidStart
 

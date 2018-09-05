@@ -80,7 +80,7 @@ As a result, a best practice is to expose a featureName constant,
 through a `featureName.js` mini-meta module that is "importable" in
 all use-cases (i.e. a **single-source-of-truth**).
 
-**`src/feature/foo/featureName.js`**
+**src/features/foo/featureName.js**
 ```js
 /**
  * Expose our featureName through a mini-meta module that is

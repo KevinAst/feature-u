@@ -15,9 +15,7 @@ feature_).
 
 _Let's take a closer look at this process ..._
 
-![Context Diagram](img/contextDiagram.png)
-
-<!-- <img src="img/contextDiagram.png" width="100%"/> -->
+<p align="center"><img class="diagram" src="img/contextDiagram.png" width="90%"/></p>
 
 
 <!-- *** SECTION ********************************************************************************  -->
@@ -288,44 +286,47 @@ initialization**!  That is because **each feature can inject their own
 app-specific constructs**!!  The mainline merely accumulates the
 Aspects and Features, and starts the app by invoking {{book.api.launchApp}}:
 
-
-**`src/app.js`**
+**src/app.js**
 ```js
 import React                 from 'react';
 import ReactDOM              from 'react-dom';
 import {launchApp}           from 'feature-u';
-import {createRouteAspect}   from 'feature-router';      // *1*
 import {createReducerAspect} from 'feature-redux';       // *1*
 import {createLogicAspect}   from 'feature-redux-logic'; // *1*
+import {createRouteAspect}   from 'feature-router';      // *1*
+import features              from './features';          // *2*
 import SplashScreen          from './util/comp/SplashScreen';
-import features              from './feature';           // *2*
 
-const routeAspect   = createRouteAspect();   // *1*
-const reducerAspect = createReducerAspect(); // *1*
-const logicAspect   = createLogicAspect();   // *1*
-
-// define our set of "plugable" feature-u Aspects, conforming to our app's run-time stack
-const aspects = [ // *1*
-  routeAspect,    // Feature Routes ... order: early - it's DOM injection does NOT support children
-  reducerAspect,  // redux          ... order: later - <Provider> DOM injection should be on top
-  logicAspect,    // redux-logic    ... order: N/A   - NO DOM injection
-];
-
-
-// configure our Aspects (as needed)
-// ... Feature Route fallback screen (when no routes are in effect)
-routeAspect.config.fallbackElm$ = <SplashScreen msg="I'm trying to think but it hurts!"/>;
-
-
-// launch our app, exposing the feature-u Fassets object (facilitating cross-feature communication)!
+// launch our app, exposing the feature-u Fassets object (facilitating cross-feature-communication)!
 export default launchApp({         // *4*
-  aspects,                         // *1*
+  aspects: appAspects(),           // *1*
   features,                        // *2*
   registerRootAppElm(rootAppElm) { // *3*
     ReactDOM.render(rootAppElm,
                     getElementById('myAppRoot'));
   }
 });
+
+// accumulate/configure the Aspect plugins matching our app's run-time stack
+function appAspects() {
+
+  // define our framework run-time stack
+  const reducerAspect = createReducerAspect(); // *1*
+  const logicAspect   = createLogicAspect();   // *1*
+  const routeAspect   = createRouteAspect();   // *1*
+  const aspects = [                            // *1*
+    reducerAspect, // redux          ... extending: Feature.reducer
+    logicAspect,   // redux-logic    ... extending: Feature.logic
+    routeAspect,   // Feature Routes ... extending: Feature.route
+  ];
+
+  // configure Aspects (as needed)
+  // ... StateRouter fallback screen (when no routes are in effect)
+  routeAspect.config.fallbackElm$ = <SplashScreen msg="I'm trying to think but it hurts!"/>;
+
+  // beam me up Scotty :-)
+  return aspects;
+}
 ```
 
 The Aspect collection _(see `*1*` in the code snippet above)_ reflects

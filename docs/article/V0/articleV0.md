@@ -20,6 +20,26 @@ library to help manage and streamline some of the hurdles incurred in
 this process.  The result: **feature-u** _(check out the [full
 docs], [github source], and [npm package])_.
 
+---
+
+**Update**: On 8/14/2018 [feature-u V1] was released, that re-designed
+[Cross Feature Communication `new`] to include [UI Composition `new`]
+as a core offering.  We are very excited about this update, because it
+**promotes one solution for all feature collaboration**!
+While upgrading to V1 requires some client code mods (see [V1 Migration
+Notes]), it is well worth it.
+This article is based on [feature-u V0], and is using some antiquated
+APIs (mostly `Feature.publicFace`, and the `app` object).
+Still, this is a good resource to get your feet wet with feature-u.
+**Look for a new "V1 article" - coming soon**!
+
+[feature-u V1]:                       https://feature-u.js.org/1.0.0/history.html#v1_0_0
+[feature-u V0]:                       https://feature-u.js.org/0.1.3/history.html#v0_1_3
+[V1 Migration Notes]:                 https://feature-u.js.org/1.0.0/migration.1.0.0.html
+[Cross Feature Communication `new`]:  https://feature-u.js.org/1.0.0/crossCommunication.html
+[UI Composition `new`]:               https://feature-u.js.org/1.0.0/crossCommunication.html#ui-composition
+
+
 
 ## At a Glance
 
@@ -558,12 +578,12 @@ service API &bull; inject a utility react component at the App root
 To solve this, **feature-u** introduces two [Application Life Cycle
 Hooks], injected through the following Feature aspects:
 
-1. [`Feature.appWillStart({fassets, curRootAppElm}): rootAppElm || falsy`]
+1. [`Feature.appWillStart({app, curRootAppElm}): rootAppElm || falsy`]
    ...  invoked one time, just before the app starts up.  This can do
    any type of initialization, including supplementing the app's
    top-level root element (i.e. react component instance).
 
-2. [`Feature.appDidStart({fassets, appState, dispatch}): void`] ...
+2. [`Feature.appDidStart({app, appState, dispatch}): void`] ...
    invoked one time immediately after the app has started.  A typical
    usage for this hook is to dispatch some type of bootstrap action.
 
@@ -598,7 +618,7 @@ YES: firebase/appWillStart . initFireBase()
   export default createFeature({
     name: 'firebase',
 
-    appWillStart({fassets, curRootAppElm}) {
+    appWillStart({app, curRootAppElm}) {
       initFireBase(); // initialize FireBase
     },
   });
@@ -617,7 +637,7 @@ YES: firebase/appWillStart . initFireBase()
    * An app-level life-cycle hook that dispatches our bootstrap action
    * that gets the ball rolling!
    */
-  export default function appDidStart({fassets, appState, dispatch}) {
+  export default function appDidStart({app, appState, dispatch}) {
     dispatch( actions.bootstrap() );
   }
   ```
@@ -638,7 +658,7 @@ YES: firebase/appWillStart . initFireBase()
   /**
    * Inject our Drawer/SideBar component at the root of our app
    */
-  export default function appWillStart({fassets, curRootAppElm}) {
+  export default function appWillStart({app, curRootAppElm}) {
     return (
       <Drawer ref={ ref => registerDrawer(ref) }
               content={<SideBar/>}
@@ -902,7 +922,7 @@ To solve this, **feature-u** introduces [Managed Code Expansion].
 
 When aspect content definitions require the [`App`] object at code
 expansion time, you simply wrap the definition in a
-[`expandWithFassets()`] function.  In other words, your aspect content
+[`managedExpansion()`] function.  In other words, your aspect content
 can either be the actual content itself _(ex: a reducer)_, or a
 function that returns the content.
 
@@ -916,13 +936,13 @@ TK: For medium article, use this [GIST](https://gist.github.com/KevinAst/9f57d74
 with caption:
 **[`src/feature/auth/logic.js`](https://github.com/KevinAst/eatery-nod/blob/after-features/src/feature/auth/logic.js#L18-L27)**
 ```js
-import {createLogic}       from 'redux-logic';
-import {expandWithFassets} from 'feature-u';
-import featureName         from './featureName';
-import actions             from './actions';
+import {createLogic}      from 'redux-logic';
+import {managedExpansion} from 'feature-u';
+import featureName        from './featureName';
+import actions            from './actions';
 
                                   // *1*
-export const startAuthorization = expandWithFassets( (app) => createLogic({
+export const startAuthorization = managedExpansion( (app) => createLogic({
 
   name: `${featureName}.startAuthorization`,
   type: String(app.device.actions.ready),    // *2*
@@ -939,7 +959,7 @@ export const startAuthorization = expandWithFassets( (app) => createLogic({
 You can see that the [auth] feature is using an action from the
 [device] feature, requiring access to the `app` object (see `*2*`).
 Because the `app` object is needed during code expansion, we use the
-[`expandWithFassets()`] function (see `*1*`), allowing **feature-u** to
+[`managedExpansion()`] function (see `*1*`), allowing **feature-u** to
 expand it in a controlled way, passing the fully resolved `app` object
 as a parameter.
 
@@ -1046,7 +1066,7 @@ via **[`index.js`](https://github.com/KevinAst/eatery-nod/blob/after-features/sr
 // *** the eateries feature reducer
 // ***
                                       // *1*
-const reducer = slicedReducer(`view.${featureName}`, expandWithFassets( () => combineReducers({
+const reducer = slicedReducer(`view.${featureName}`, managedExpansion( () => combineReducers({
   ... snip snip
 }) ) );
 
@@ -1256,37 +1276,36 @@ end" of your features!** _Go forth and compute!!_
 
 [feature-router]:     https://github.com/KevinAst/feature-router
 
-[Launching Your Application]:   https://feature-u.js.org/cur/detail.html#launching-your-application
-[Feature & aspect content]:     https://feature-u.js.org/cur/detail.html#feature-object-relaying-aspect-content
-[Extendable aspects]:           https://feature-u.js.org/cur/detail.html#extendable-aspects
-[React Registration]:           https://feature-u.js.org/cur/detail.html#react-registration
-[Cross Feature Communication]:  https://feature-u.js.org/cur/crossCommunication.html
-[Application Life Cycle Hooks]: https://feature-u.js.org/cur/appLifeCycle.html
-[Built-In aspect]:              https://feature-u.js.org/cur/detail.html#built-in-aspects
-[Feature Enablement]:           https://feature-u.js.org/cur/enablement.html
-[Managed Code Expansion]:       https://feature-u.js.org/cur/crossCommunication.html#managed-code-expansion
-[Feature Based Routes]:         https://feature-u.js.org/cur/featureRouter.html
-[Best Practices]:               https://feature-u.js.org/cur/bestPractices.html
-[extendable]:                   https://feature-u.js.org/cur/extending.html
 
+[Launching Your Application]:   https://feature-u.js.org/0.1.3/detail.html#launching-your-application
+[Feature & aspect content]:     https://feature-u.js.org/0.1.3/detail.html#feature-object-relaying-aspect-content
+[Extendable aspects]:           https://feature-u.js.org/0.1.3/detail.html#extendable-aspects
+[React Registration]:           https://feature-u.js.org/0.1.3/detail.html#react-registration
+[Cross Feature Communication]:  https://feature-u.js.org/0.1.3/crossCommunication.html
+[Application Life Cycle Hooks]: https://feature-u.js.org/0.1.3/appLifeCycle.html
+[Built-In aspect]:              https://feature-u.js.org/0.1.3/detail.html#built-in-aspects
+[Feature Enablement]:           https://feature-u.js.org/0.1.3/enablement.html
+[Managed Code Expansion]:       https://feature-u.js.org/0.1.3/crossCommunication.html#managed-code-expansion
+[Feature Based Routes]:         https://feature-u.js.org/0.1.3/featureRouter.html
+[Best Practices]:               https://feature-u.js.org/0.1.3/bestPractices.html
+[extendable]:                   https://feature-u.js.org/0.1.3/extending.html
 
+[`Feature`]:        https://feature-u.js.org/0.1.3/api.html#Feature
+[`App`]:            https://feature-u.js.org/0.1.3/api.html#App
 
-[`Feature`]:        https://feature-u.js.org/cur/api.html#Feature
-[`App`]:            https://feature-u.js.org/cur/api.html#App
+[`createFeature()`]:       https://feature-u.js.org/0.1.3/api.html#createFeature
+[`launchApp()`]:           https://feature-u.js.org/0.1.3/api.html#launchApp
+[`registerRootAppElm()`]:  https://feature-u.js.org/0.1.3/api.html#registerRootAppElmCB
 
-[`createFeature()`]:       https://feature-u.js.org/cur/api.html#createFeature
-[`launchApp()`]:           https://feature-u.js.org/cur/api.html#launchApp
-[`registerRootAppElm()`]:  https://feature-u.js.org/cur/api.html#registerRootAppElmCB
+[`Feature.appWillStart()`]:                                           https://feature-u.js.org/0.1.3/appLifeCycle.html#appwillstart
+[`Feature.appWillStart({app, curRootAppElm}): rootAppElm || falsy`]:  https://feature-u.js.org/0.1.3/appLifeCycle.html#appwillstart
 
-[`Feature.appWillStart()`]:                                               https://feature-u.js.org/cur/appLifeCycle.html#appwillstart
-[`Feature.appWillStart({fassets, curRootAppElm}): rootAppElm || falsy`]:  https://feature-u.js.org/cur/appLifeCycle.html#appwillstart
+[`Feature.appDidStart()`]:                                https://feature-u.js.org/0.1.3/appLifeCycle.html#appDidStart
+[`Feature.appDidStart({app, appState, dispatch}): void`]: https://feature-u.js.org/0.1.3/appLifeCycle.html#appDidStart
 
-[`Feature.appDidStart()`]:                                    https://feature-u.js.org/cur/appLifeCycle.html#appDidStart
-[`Feature.appDidStart({fassets, appState, dispatch}): void`]: https://feature-u.js.org/cur/appLifeCycle.html#appDidStart
+[`managedExpansion()`]:    https://feature-u.js.org/0.1.3/api.html#managedExpansion
 
-[`expandWithFassets()`]:   https://feature-u.js.org/cur/api.html#expandWithFassets
-
-[`createAspect()`]:        https://feature-u.js.org/cur/api.html#createAspect
+[`createAspect()`]:        https://feature-u.js.org/0.1.3/api.html#createAspect
 
 [feature-redux]:     https://github.com/KevinAst/feature-redux
 [`slicedReducer()`]: https://github.com/KevinAst/feature-redux#slicedreducer
@@ -1304,6 +1323,4 @@ end" of your features!** _Go forth and compute!!_
 [astx-redux-util]:  https://astx-redux-util.js.org/
 [`reducerHash()`]:  https://astx-redux-util.js.org/1.0.0/api.html#reducerHash
 
-[Higher-Order Reducers]: https://redux.js.org/docs/recipes/reducers/ReusingReducerLogic.html#customizing-behavior-with-higher-order-reducers
-
-
+[Higher-Order Reducers]: https://medium.com/@mange_vibration/reducer-composition-with-higher-order-reducers-35c3977ed08f

@@ -63,7 +63,7 @@ The first goal of our `app` feature is to promote the top-level
 
 Here are the code snippets that implement this first goal.
 
-**features/app/featureName.js** _see: Best Practices {{book.guide.bestPractices_featureName}}_
+**src/features/app/featureName.js** _see: Best Practices {{book.guide.bestPractices_featureName}}_
 ```js
 /**
  * Expose our featureName through a mini-meta module that is
@@ -72,7 +72,7 @@ Here are the code snippets that implement this first goal.
 export default 'app';
 ```
 
-**features/app/comp/App.js** _our top-level `<App>` component_
+**src/features/app/comp/App.js** _our top-level `<App>` component_
 ```js
 import React from 'react';
 
@@ -85,7 +85,7 @@ export default App = () => <div>Hello World</div>;
 Now we simply promote the `<App>` component into the DOM using our
 {{book.guide.appWillStartCB}} {{book.guide.appLifeCycle}}.
 
-**features/app/index.js** _our `app` Feature, promoting the `<App>` component_
+**src/features/app/feature.js** _our `app` Feature, promoting the `<App>` component_
 ```js
 import React           from 'react';
 import {createFeature} from 'feature-u';
@@ -97,15 +97,7 @@ export default createFeature({
   name: featureName,
 
   appWillStart({fassets, curRootAppElm}) {
-    // insure we don't clobber any supplied content
-    if (curRootAppElm) {
-      const msg = "***ERROR*** <App> does NOT support children " +
-                  "but another feature/aspect is attempting to inject it's content. " +
-                  "Please resolve either by adjusting the feature expansion order, " +
-                  "or promoting <App> through the conflicting artifact.";
-      console.log(`${msg} ... conflicting artifact:`, curRootAppElm);
-      throw new Error(msg);
-    }
+    assertNoRootAppElm(curRootAppElm, '<App>'); // insure no content is clobbered (children NOT supported)
     return <App/>;
   }
 });
@@ -132,12 +124,13 @@ routes under the following naming convention:
 Here is our `app` feature with it's newly enhanced usage contract (see
 `use` directive):
 
-**features/app/index.js** _our `app` Feature, enhanced with the new usage contract_
+**src/features/app/feature.js** _our `app` Feature, enhanced with the new usage contract_
 ```js
-import React           from 'react';
-import {createFeature} from 'feature-u';
-import App             from './comp/App;
-import featureName     from './featureName';
+import React                from 'react';
+import {createFeature,
+        assertNoRootAppElm} from 'feature-u';
+import App                  from './comp/App;
+import featureName          from './featureName';
 
 export default createFeature({
 
@@ -151,15 +144,7 @@ export default createFeature({
   },
 
   appWillStart({fassets, curRootAppElm}) {
-    // insure we don't clobber any supplied content
-    if (curRootAppElm) {
-      const msg = "***ERROR*** <App> does NOT support children " +
-                  "but another feature/aspect is attempting to inject it's content. " +
-                  "Please resolve either by adjusting the feature expansion order, " +
-                  "or promoting <App> through the conflicting artifact.";
-      console.log(`${msg} ... conflicting artifact:`, curRootAppElm);
-      throw new Error(msg);
-    }
+    assertNoRootAppElm(curRootAppElm, '<App>'); // insure no content is clobbered (children NOT supported)
     return <App/>;
   }
 });
@@ -168,7 +153,7 @@ export default createFeature({
 And here is the fulfillment of our contract ... the enhanced `<App>`
 component _(with links and routes)_.
 
-**features/app/comp/App.js** _our top-level `<App>` component **with** links and routes_
+**src/features/app/comp/App.js** _our top-level `<App>` component **with** links and routes_
 ```js
 import React           from 'react';
 import {BrowserRouter} from 'react-router-dom';
@@ -225,7 +210,7 @@ registered)_.
 Here is a `foo` feature that supplies it's own link and route
 components.
 
-**features/foo/index.js** _a `foo` feature **supplying** links and routes_
+**src/features/foo/feature.js** _a `foo` feature **supplying** links and routes_
 ```js
 import React           from 'react';
 import {createFeature} from 'feature-u';

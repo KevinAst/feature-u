@@ -1,8 +1,5 @@
 # Extension API
 
-The main function you will use to extend **feature-u** is
-{{book.api.createAspect}}.
-
 The following list summarizes the **Extension API**.  _For your
 convenience this list:_
 

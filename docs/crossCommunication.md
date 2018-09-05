@@ -10,9 +10,10 @@ that feature)_.
 From this perspective, you can think of each feature as it's **own
 isolated mini application**.
 
-With that said however, we know that _"**no man is an island**"_!  There
-are cases where a feature needs to promote a limited subset of it's
-aspects to other features.  For example, a feature may need to:
+With that said however, we know that _"**no man is an island**"_!  Any
+given feature ultimately exists as part of a larger application.
+There are cases where a feature needs to promote a limited subset of
+it's aspects to other features.  For example, a feature may need to:
 
  - be knowledgeable of some external state (via a selector)
  - emit or monitor actions of other features
@@ -28,9 +29,10 @@ cross feature boundaries**.  The reason being that this
 cross-communication should be limited to public access points -
 helping to **facilitate true plug-and-play**.
 
-Given all this then, **how is Cross Feature Communication achieved**?
+Given all this then, **how is Cross Feature Communication achieved**
+_in a way that doesn't break encapsulation_?
 
-Features need a way to promote their **Public Face** to other
+Features need a way to promote their **Public Interface** to other
 features, and consume other feature's **Public Assets**.
 
 
@@ -53,8 +55,7 @@ The `fassets` terminology is consistently used in both:
 - and in their usage (through the {{book.api.FassetsObject}} and the
   {{book.api.withFassets}} HoC)
 
-![Context Diagram](img/crossFeatureCommunication.png)
-
+<p align="center"><img class="diagram" src="img/crossFeatureCommunication.png" width="90%"/></p>
 
 ### fassets definition
 
@@ -266,7 +267,7 @@ Here is our `main` feature:
 
 - **main feature**
 
-  `src/features/main/index.js`
+  **src/features/main/feature.js**
   ```js
   createFeature({
     name: 'main',
@@ -290,7 +291,7 @@ Here is our `main` feature:
   
   Here is the manifestation of this contract:
   
-  `src/features/main/comp/MainPage.js`
+  **src/features/main/comp/MainPage.js**
   ```js
   function MainPage({Logo, CartLink, SearchLink, CartBody, SearchBody,}) {
     return (
@@ -331,7 +332,7 @@ definitions for the content to inject:
 
 - **cart feature**
 
-  `src/features/cart/index.js`
+  **src/features/cart/feature.js**
   ```js
   createFeature({
     name: 'cart',
@@ -348,7 +349,7 @@ definitions for the content to inject:
 
 - **search feature**
 
-  `src/features/search/index.js`
+  **src/features/search/feature.js**
   ```js
   createFeature({
     name: 'search',
@@ -391,7 +392,7 @@ from the defining features are the same, so they are not repeated)_:
 
 - **main feature**
 
-  `src/features/main/index.js`
+  **src/features/main/feature.js**
   ```js
   createFeature({
     name: 'main',
@@ -411,7 +412,7 @@ from the defining features are the same, so they are not repeated)_:
 
   Here is our **refined** `MainPage` component:
 
-  `src/features/main/comp/MainPage.js`
+  **src/features/main/comp/MainPage.js**
   ```js
   function MainPage({Logo, mainLinks, mainBodies}) {
     return (
@@ -667,7 +668,7 @@ As it turns out, when it comes to the definition and consumption of
 fasset resources _(covered in the prior sections)_, there are two
 broad philosophies: **push** or **pull**.
 
-- **Push** - _"throw it over the wall"_ <img src="img/push.jpg" width="60"/>
+- **Push** - _"throw it over the wall"_ <img class="diagram" src="img/push.jpg" width="60"/>
 
   - **Definition:**
     
@@ -692,7 +693,7 @@ broad philosophies: **push** or **pull**.
     features can specify the same `use` directive, providing their
     {{book.guide.crossCom_resourceValidation}} does not conflict_.
     
-- **Pull** ... _"a resource contract"_ <img src="img/pull.jpg" width="60"/>
+- **Pull** ... _"a resource contract"_ <img class="diagram" src="img/pull.jpg" width="60"/>
     
   - **Consumption:**
     
@@ -986,7 +987,7 @@ simply import `fassets` from your application mainline.
 Your mainline exports the {{book.api.launchApp}} return value
 ... which is the {{book.api.FassetsObject}}.
 
-**`src/app.js`**
+**src/app.js**
 ```js
 // launch our app, exposing the feature-u Fassets object (facilitating cross-feature communication)!
 export default launchApp({

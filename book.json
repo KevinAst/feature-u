@@ -47,7 +47,25 @@
       "start":           "<a href='/start.html'><code>Getting Started</code></a>",
       "start_polyfill":  "<a href='/start.html#potential-need-for-polyfills'><code>Potential Need for Polyfills</code></a>",
 
-      "basicConcepts":   "<a href='/concepts.html'><code>Basic Concepts</code></a>",
+      "basicConcepts":                                    "<a href='/concepts.html'><code>Basic Concepts</code></a>",
+        "basicConcepts_featureBasedDev":                  "<a href='/concepts.html#feature-based-development'><code>Feature Based Development</code></a>",
+          "basicConcepts_segregatingFeatures":            "<a href='/concepts.html#segregating-features'><code>Segregating Features</code></a>",
+          "basicConcepts_featureGoals":                   "<a href='/concepts.html#feature-goals'><code>Feature Goals</code></a>",
+            "basicConcepts_featureRuntimeConsolidation":  "<a href='/concepts.html#feature-runtime-consolidation'><code>Feature Runtime Consolidation</code></a>",
+            "basicConcepts_featureCollaboration":         "<a href='/concepts.html#feature-collaboration'><code>Feature Collaboration</code></a>",
+        "basicConcepts_theFeatureUSolution":              "<a href='/concepts.html#the-feature-u-solution'><code>The feature-u Solution</code></a>",
+          "basicConcepts_launchApp":                      "<a href='/concepts.html#launchapp'><code>launchApp()</code></a>",
+          "basicConcepts_featureObject":                  "<a href='/concepts.html#feature-object'><code>Feature Object</code></a>",
+          "basicConcepts_aspects":                        "<a href='/concepts.html#aspects'><code>aspects</code></a>",
+          "basicConcepts_runningTheApp":                  "<a href='/concepts.html#running-the-app'><code>Running the App</code></a>",
+            "basicConcepts_appInitialization":            "<a href='/concepts.html#app-initialization'><code>App Initialization</code></a>",
+            "basicConcepts_frameworkConfiguration":       "<a href='/concepts.html#framework-configuration'><code>Framework Configuration</code></a>",
+            "basicConcepts_launchingApp":                 "<a href='/concepts.html#launching-your-application'><code>Launching Your Application</code></a>",
+          "basicConcepts_crossFeatureCommunication":      "<a href='/concepts.html#cross-feature-communication'><code>Cross Feature Communication</code></a>",
+          "basicConcepts_featureBasedUIComposition":      "<a href='/concepts.html#feature-based-ui-composition'><code>Feature Based UI Composition</code></a>",
+            "basicConcepts_resourceContracts":            "<a href='/concepts.html#concepts.md#resource-contracts'><code>Resource Contracts</code></a>",
+          "basicConcepts_featureEnablement":              "<a href='/concepts.html#feature-enablement'><code>Feature Enablement</code></a>",
+        "basicConcepts_inSummary":                        "<a href='/concepts.html#in-summary'><code>In Summary</code></a>",
 
       "benefits":        "<a href='/benefits.html'><code>Benefits</code></a>",
 
@@ -123,6 +141,7 @@
       "extending_definingAppElm":            "<a href='/extending.html#defining-rootappelm'><code>Defining rootAppElm</code></a>",
       "extending_aspectCrossCommunication":  "<a href='/extending.html#aspect-cross-communication'><code>Aspect Cross Communication</code></a>",
       "extending_aspectLifeCycleMethods":    "<a href='/extending.html#aspect-life-cycle-methods'><code>Aspect Life Cycle Methods</code></a>",
+      "extending_aspectLifeCycleHooks":      "<a href='/extending.html#aspect-life-cycle-methods'><code>Aspect Life Cycle Hooks</code></a>",
 
         "genesisMeth":   "<a href='/extending.html#aspectgenesis'><code>Aspect.genesis()</code></a>",
         "genesisMeth$":  "<a href='/extending.html#aspectgenesis'><code>Aspect.genesis(): string</code></a>",
@@ -194,6 +213,9 @@
         "withFassets$":               "<a href='/api.html#withFassets'><code>withFassets({mapFassetsToProps, [component]}): HoC | HoF</code></a>",
           "mapFassetsToPropsStruct":  "<a href='/api.html#mapFassetsToPropsStruct'><code>mapFassetsToPropsStruct</code></a>",
           "mapFassetsToPropsFn":      "<a href='/api.html#mapFassetsToPropsFn'><code>mapFassetsToPropsFn</code></a>",
+
+        "assertNoRootAppElm":         "<a href='/api.html#assertNoRootAppElm'><code>assertNoRootAppElm()</code></a>",
+        "assertNoRootAppElm$":        "<a href='/api.html#assertNoRootAppElm'><code>assertNoRootAppElm(rootAppElm, className)</code></a>",
 
       "extensionApi":                      "<a href='/extensionApi.html'><code>Extension API</code></a>",
         "createAspect":                    "<a href='/api.html#createAspect'><code>createAspect()</code></a>",
