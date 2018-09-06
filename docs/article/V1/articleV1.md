@@ -2,8 +2,7 @@
 
 This article is an introduction to a new JS library called
 **[feature-u]**, that _facilitates feature-based project organization
-in your [react] project_.  It provides tangible assistance in promoting
-individual **plug-and-play** features within your project.
+in your [react] project_.  
 
 <p align="center"><img src="../../img/featureUSplash.jpg"  alt="Features" width="80%"></p>
 
@@ -21,53 +20,78 @@ implementation, you are pretty much left to fend for yourself.
 process.  It automates the mundane details of managing features
 and helps to promote features that are truly **plug-and-play**.
 
-This article is an introduction to **[feature-u]**, building concepts
-and insights.  It makes a case for why **feature-u** was developed and
-gives you a better understanding of it's benefits.
+This article provides a foundation of **[feature-u]** concepts and
+terminology, building insight into how you can promote individual
+**plug-and-play** features within your project.  It makes the case for
+why **feature-u** was developed and gives you a better understanding
+of it's benefits.
 
-Check out the [full docs], [github source], and [npm package].
+Check out the [full docs], [source], and [npm package].
 
 **[feature-u]** opens new doors into the exciting world of
 feature-based development.  It frees you up to **focus your attention
 on the "business end" of your features!**
 
-_Go forth and compute!!_
-
 ---
 
 **Note**: On 8/14/2018 [feature-u V1] was released, that re-designed
 [Cross Feature Communication] to include [UI Composition] as a core
-offering.  This article covers the V1 release.  _(the first article,
+offering.  This article covers the V1 release _(the first article,
 based on [feature-u V0], can be found
 [here](http://bit.ly/feature-u))_.  We are very excited about this
-update, because it **promotes one solution for all feature
+update because it **promotes one solution for all feature
 collaboration**!
 
+## At a Glance #76a2
 
-## At a Glance
+TK:medium-resolve-internal-links 
+   NOTE: These LINKS only exist in medium (because we piece the
+         article together from separate sources)
 
-TK:medium-resolve-internal-links
+TK:medium: INDENTED TEXT IS NOT AVIALABLE IN MEDIUM
+           - simply use quoted text (medium still allows individual links)
+```
+#d9f1   Feature Based Development      <<< IMAGE: water drip dance: https://pixabay.com/en/water-drip-dance-drop-of-water-1757781/ <<< featureDevWaterDance.jpg
+#bbe8     Segregating Features
+#f296     Feature Goals
+#c8d1       Feature Runtime Consolidation  KJB: links ref internal article
+#abbc       Feature Collaboration          KJB: links ref internal article
+        ...
+#2aa4   The feature-u Solution         <<< IMAGE: kool 3d puzzel: https://pixabay.com/en/puzzle-share-3d-task-solution-1721464/ <<< img/solutionPuzzle.jpg
+#7f85     launchApp()
+#d46e     Feature Object
+#d09c     aspects
+#5467     Running the App
+#d44a       App Initialization             KJB: links ref internal article
+#c339       Framework Configuration        KJB: links ref internal article
+#13d0       Launching Your Application
+#5369     Cross Feature Communication      KJB: links ref internal article
+#a480     Feature Based UI Composition     KJB: links ref internal article
+#e0e4       Resource Contracts
+#6a02     Feature Enablement
+#2661   In Summary
+        ...
+#2ab8   Benefits                       <<< IMAGE: closup drip of water: https://pixabay.com/en/drip-water-drop-of-water-1037806/ <<< img/benefitsSpash.jpg
+        ...
+#a4bc   References
+```
 
-- [Feature Based Development] ... _think of features as mini applications_
-  - [Segregating Features] ... _divide your features into directories_
-  - [Feature Goals] ... _what are the goals and hurdles of feature based development_
-    - [Feature Runtime Consolidation] ... _how do multiple features run as one application?_
-    - [Feature Collaboration] ... _how do features cross communicate without breaking encapsulation?_
-- [The feature-u Solution] ... _how can **feature-u** help?_
-  - [launchApp()]
-  - [Feature Object]
-  - [aspects]
-  - [Running the App]
-    - [App Initialization]
-    - [Framework Configuration]
-  - [Cross Feature Communication](#cross-feature-communication)
-  - [Feature Based UI Composition]
-    - [Resource Contracts]
-  - [Feature Enablement]
+
+## Feature Based Development
+
+TK:medium: The bulk of this article is extracted from our **Basic
+           Concepts** section (`docs/concepts.md`).  _When mousing
+           this into medium, insure you are on the correct docs
+           version (currently 1.0.1)_!
+
+TK:medium: from these pros CHANGE "This will be the focus of this section." TO "article"
 
 
-TK:medium: The bulk of this article is extracted from our **Basic Concepts** section (`docs/concepts.md`).
-_When mousing this into medium, insure you are on the correct docs version (probabally 1.0.1)_!
+
+## Benefits
+
+TK:medium: Pull from docs
+
 
 
 ## References
@@ -126,40 +150,17 @@ _When mousing this into medium, insure you are on the correct docs version (prob
 
 
 
-<!--- internal references ---> 
-
-[Feature Based Development]:          #feature-based-development
- [Segregating Features]:              #segregating-features
- [Feature Goals]:                     #feature-goals
-  [Feature Runtime Consolidation]:    #feature-runtime-consolidation
-  [Feature Collaboration]:            #feature-collaboration
-[The feature-u Solution]:             #the-feature-u-solution
- [launchApp()]:                       #launchapp
- [Feature Object]:                    #feature-object
- [aspects]:                           #aspects
- [Running the App]:                   #running-the-app
-  [App Initialization]:               #app-initialization
-  [Framework Configuration]:          #framework-configuration
- [Cross Feature Communication LOCAL]: #cross-feature-communication
- [Feature Based UI Composition]:      #feature-based-ui-composition
-  [Resource Contracts]:               #resource-contracts
- [Feature Enablement]:                #feature-enablement
-
-                                       
-[References]:                         #references
-
-
 <!--- feature-u ---> 
 [feature-u]:          https://feature-u.js.org/
 [full docs]:          https://feature-u.js.org/
-[github source]:      https://github.com/KevinAst/feature-u
+[source]:             https://github.com/KevinAst/feature-u
 [npm package]:        https://www.npmjs.com/package/feature-u
 
 [feature-u V0]:       https://feature-u.js.org/0.1.3/history.html#v0_1_3
 [feature-u V1]:       https://feature-u.js.org/1.0.0/history.html#v1_0_0
 
-[Cross Feature Communication]:  https://feature-u.js.org/1.0.0/crossCommunication.html
-[UI Composition]:               https://feature-u.js.org/1.0.0/crossCommunication.html#ui-composition
+[Cross Feature Communication]:  https://feature-u.js.org/1.0.1/crossCommunication.html
+[UI Composition]:               https://feature-u.js.org/1.0.1/crossCommunication.html#ui-composition
 
 
 <!--- external links ---> 
