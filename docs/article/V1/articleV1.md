@@ -44,6 +44,10 @@ collaboration**!
 
 ## At a Glance #76a2
 
+_For your convenience, this **Table of Contents** (TOC) links directly
+to each section.  Also note that **each section title links back to
+the TOC**_.
+
 TK:medium-resolve-internal-links 
    NOTE: These LINKS only exist in medium (because we piece the
          article together from separate sources)
@@ -75,6 +79,14 @@ TK:medium: INDENTED TEXT IS NOT AVIALABLE IN MEDIUM
         ...
 #a4bc   References
 ```
+
+**SideBar**: This article is published in [freeCodeCamp] to harness
+their most excellent distribution channels.  As it turns out the
+content can also be found directly in the **feature-u** docs _(see:
+[Basic Concepts])_.  Some may prefer this format, _because of it's
+full integration to other parts of the docs_.  Whichever form you
+choose, **don't forget to come back and clap** _(if you enjoyed the
+article)_.
 
 
 ## Feature Based Development
@@ -159,9 +171,11 @@ TK:medium: Pull from docs
 [feature-u V0]:       https://feature-u.js.org/0.1.3/history.html#v0_1_3
 [feature-u V1]:       https://feature-u.js.org/1.0.0/history.html#v1_0_0
 
+[Basic Concepts]:               https://feature-u.js.org/1.0.1/concepts.html
 [Cross Feature Communication]:  https://feature-u.js.org/1.0.1/crossCommunication.html
 [UI Composition]:               https://feature-u.js.org/1.0.1/crossCommunication.html#ui-composition
 
 
 <!--- external links ---> 
 [react]:            https://reactjs.org/
+[freeCodeCamp]:     https://www.freecodecamp.org/
