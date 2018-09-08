@@ -11,7 +11,7 @@
   "plugins": [
       "-livereload",
       "toolbar",
-      "toggle-chapters"
+      "folding-menu"
   ],
   "pluginsConfig": {
     "sharing": {
