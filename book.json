@@ -36,6 +36,10 @@
             "url": "https://www.npmjs.com/package/feature-u"
           }
         ]
+    },
+    "folding-menu": {
+      "animationDuration": 400,
+      "sticky":            true
     }
   },
   "variables": { 
