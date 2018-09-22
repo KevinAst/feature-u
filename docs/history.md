@@ -113,8 +113,14 @@ Release           | What                                   | *When*
 
 **NOTE**: This release is a **non-breaking change** _(i.e. no API was affected)_.
 
-1. **L8TR**: ?? initially only holding changes to docs/article/V1/articleV1.md (per publish in medium)
+1. **Docs**: Documentation improvements include:
 
+   - Added a fundamental artifacts introduction to the {{book.guide.benefits}} chapter.
+
+1. **Internal**: Docs generation now uses the formal [folding-menu
+   gitbook plugin](https://github.com/KevinAst/gitbook-plugin-folding-menu)
+
+1. **MORE**: ??
 
 
 

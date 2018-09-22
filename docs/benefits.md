@@ -1,8 +1,29 @@
 # Benefits
 
-The benefits of using **feature-u** are many!
+There are many benefits in using **feature-u**!
 
-The list (accumulated below) can be directly correlated to the
+The two fundamental artifacts from which most benefits are derived
+are:
+
+- A formal means by which features can collaborate with one another
+  _({{book.guide.crossCom}})_, making them truly **plug-and-play**
+
+  - This includes the ability for
+    {{book.guide.crossCom_uiComposition}} to cross feature
+    boundaries.  It even allows UI Content to be injected
+    autonomously.  This is something that has to be seen ... it shows
+    off **feature-u** very well.
+
+
+- A significant reduction in boilerplate code through:
+
+  - Auto configuration of the frameworks in-use _(via plugin
+    extensions - {{book.guide.detail_extendableAspects}})_
+
+  - Startup initialization that is encapsulated within features
+    _(via {{book.guide.appLifeCycles}})_
+
+The following list of benefits can be directly correlated to the
 considerations that formed the basis of why **feature-u** was
 developed _(see: {{book.guide.why}})_.
 
