@@ -631,7 +631,7 @@ You can find more information about this topic in
 
 ## Feature Enablement
 
-Features can be can be dynamically disabled by setting the
+Features can be dynamically disabled by setting the
 `Feature.enabled` boolean property _(part of the
 {{book.guide.detail_builtInAspects}})_:
 
