@@ -42,7 +42,7 @@ based on [feature-u V0], can be found
 update because it **promotes one solution for all feature
 collaboration**!
 
-## At a Glance #76a2
+## At a Glance #e98c
 
 _For your convenience, this **Table of Contents** (TOC) links directly
 to each section.  Also note that **each section title links back to
@@ -55,13 +55,13 @@ TK:medium-resolve-internal-links
 TK:medium: INDENTED TEXT IS NOT AVIALABLE IN MEDIUM
            - simply use quoted text (medium still allows individual links)
 ```
-#d9f1   Feature Based Development      <<< IMAGE: water drip dance: https://pixabay.com/en/water-drip-dance-drop-of-water-1757781/ <<< featureDevWaterDance.jpg
+#05bc   Feature Based Development      <<< IMAGE: water drip dance: https://pixabay.com/en/water-drip-dance-drop-of-water-1757781/ <<< featureDevWaterDance.jpg
 #bbe8     Segregating Features
 #f296     Feature Goals
 #c8d1       Feature Runtime Consolidation  KJB: links ref internal article
 #abbc       Feature Collaboration          KJB: links ref internal article
         ...
-#2aa4   The feature-u Solution         <<< IMAGE: kool 3d puzzel: https://pixabay.com/en/puzzle-share-3d-task-solution-1721464/ <<< img/solutionPuzzle.jpg
+#219e   The feature-u Solution         <<< IMAGE: kool 3d puzzel: https://pixabay.com/en/puzzle-share-3d-task-solution-1721464/ <<< img/solutionPuzzle.jpg
 #7f85     launchApp()
 #d46e     Feature Object
 #d09c     aspects
@@ -73,11 +73,11 @@ TK:medium: INDENTED TEXT IS NOT AVIALABLE IN MEDIUM
 #a480     Feature Based UI Composition     KJB: links ref internal article
 #e0e4       Resource Contracts
 #6a02     Feature Enablement
-#2661   In Summary
+#2ad3   In Summary
         ...
-#2ab8   Benefits                       <<< IMAGE: closup drip of water: https://pixabay.com/en/drip-water-drop-of-water-1037806/ <<< img/benefitsSpash.jpg
+#0cd6   Benefits                       <<< IMAGE: closup drip of water: https://pixabay.com/en/drip-water-drop-of-water-1037806/ <<< img/benefitsSpash.jpg
         ...
-#a4bc   References
+#8e25   References
 ```
 
 **SideBar**: This article is published in [freeCodeCamp] to harness
