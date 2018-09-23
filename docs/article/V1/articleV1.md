@@ -1,10 +1,18 @@
-# feature-u V1 (Feature Based Project Organization for React)
+# Unleash the Power of Feature Based JS Development - with feature-u V1
 
 This article is an introduction to a new JS library called
 **[feature-u]**, that _facilitates feature-based project organization
 in your [react] project_.  
 
 <p align="center"><img src="../../img/featureUSplash.jpg"  alt="Features" width="80%"></p>
+
+**Note**: On 8/14/2018 [feature-u V1] was released, that re-designed
+[Cross Feature Communication] to include [UI Composition] as a core
+offering.  This article covers the V1 release _(the first article,
+based on [feature-u V0], can be found
+[here](http://bit.ly/feature-u))_.  We are very excited about this
+update because it **promotes one solution for all feature
+collaboration**!
 
 Most developers would agree that organizing your project by feature is
 much preferred over type-based patterns.  Because **application
@@ -32,15 +40,8 @@ Check out the [full docs], [source], and [npm package].
 feature-based development.  It frees you up to **focus your attention
 on the "business end" of your features!**
 
----
 
-**Note**: On 8/14/2018 [feature-u V1] was released, that re-designed
-[Cross Feature Communication] to include [UI Composition] as a core
-offering.  This article covers the V1 release _(the first article,
-based on [feature-u V0], can be found
-[here](http://bit.ly/feature-u))_.  We are very excited about this
-update because it **promotes one solution for all feature
-collaboration**!
+---
 
 ## At a Glance #e98c
 
@@ -80,7 +81,11 @@ TK:medium: INDENTED TEXT IS NOT AVIALABLE IN MEDIUM
 #8e25   References
 ```
 
-**SideBar**: This article is published in [freeCodeCamp] to harness
+Please help me get the word out on **feature-u**.  Your claps
+determine the distribution/promotion of this article.  If you think
+**feature-u** has potential, please give this article multiple claps :-)
+
+**SideBar**: TODO (not in article yet): This article is published in [freeCodeCamp] to harness
 their most excellent distribution channels.  As it turns out the
 content can also be found directly in the **feature-u** docs _(see:
 [Basic Concepts])_.  Some may prefer this format, _because of it's
