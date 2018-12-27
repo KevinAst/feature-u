@@ -115,10 +115,13 @@ Release           | What                                   | *When*
 
 1. **Docs**: Documentation improvements include:
 
+   - Improved the concepts and feature-segregation diagrams.
    - Added a fundamental artifacts introduction to the {{book.guide.benefits}} chapter.
+
 
 1. **Internal**: Docs generation now uses the formal [folding-menu
    gitbook plugin](https://github.com/KevinAst/gitbook-plugin-folding-menu)
+
 
 1. **MORE**: ??
 

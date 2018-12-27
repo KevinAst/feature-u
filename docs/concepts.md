@@ -32,12 +32,17 @@ section_.
 
 ## Segregating Features
 
-If you are like me, when you think about feature-based development,
-the first thing that comes to mind is directories.  By segregating
-your features into individual directories, there is a semblance of
-isolation.
+If you are like me, when you think about feature-based development, the first
+thing that comes to mind is to isolate your code into feature directories.
 
-<p align="center"><img class="diagram" src="img/featureSegregation.png" alt="Feature Segregation" width="80%"></p>
+<p align="center"><img class="diagram" src="img/withTypesOrFeatures.png" alt="Project Organization - with types or features" width="90%"></p>
+
+In doing this your code is organized by what it accomplishes (i.e. features),
+rather than what it is (i.e. components, routes, logic, actions, reducers,
+selectors, etc.).
+
+By segregating your features into individual directories, there is
+a semblance of isolation.
 
 
 ## Feature Goals
@@ -672,6 +677,7 @@ You can find more information about this topic in
 
 ## In Summary
 
-The following diagram summarizes **feature-u**'s Basic Concepts
+The following diagram summarizes **feature-u**'s Basic Concepts _(as
+discussed above)_:
 
 <p align="center"><img class="diagram" src="img/concepts.png" alt="Basic Concepts" width="100%"></p>
