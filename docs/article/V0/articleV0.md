@@ -1,7 +1,7 @@
-# feature-u (Feature Based Project Organization for React)
+# feature-u (Feature-Based Development for React)
 
 This article is an introduction to **[feature-u]** - a library that
-_facilitates feature-based project organization_ in your [react]
+_facilitates feature-based development_ in your [react]
 project.  This utility assists in organizing your project by
 individual features.
 

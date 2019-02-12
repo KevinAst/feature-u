@@ -1,7 +1,7 @@
 # Unleash the Power of Feature Based JS Development - with feature-u V1
 
 This article is an introduction to a new JS library called
-**[feature-u]**, that _facilitates feature-based project organization
+**[feature-u]**, that _facilitates feature-based development
 in your [react] project_.  
 
 <p align="center"><img src="../../img/featureUSplash.jpg"  alt="Features" width="80%"></p>
