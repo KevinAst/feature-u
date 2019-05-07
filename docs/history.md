@@ -84,7 +84,7 @@ reference the most current release.
 
 Release           | What                                   | *When*
 ------------------|----------------------------------------|------------------
-[v1.0.2](#v1_0_2) | L8TR??                                 | *October ??, 2018*
+[v1.1.0](#v1_1_0) | React Hooks                            | *May ??, 2019*
 [v1.0.1](#v1_0_1) | Docs Update                            | *September 5, 2018*
 [v1.0.0](#v1_0_0) | UI Composition                         | *August 14, 2018*
 [v0.1.3](#v0_1_3) | Establish Polyfill Strategy            | *July 2, 2018*
@@ -96,34 +96,33 @@ Release           | What                                   | *When*
 
 
 
-
 <!-- ************************************************************* -->
 <br/><br/><br/>
-<h3 id="v1_0_2" style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
-  v1.0.2 - L8TR?? <i>(October ??, 2018)</i>
+<h3 id="v1_1_0" style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
+  v1.1.0 - React Hooks <i>(May ??, 2019)</i>
 </h3>
 
-[Full Docs](https://feature-u.js.org/1.0.2/)
+[Full Docs](https://feature-u.js.org/1.1.0/)
 &bull;
-[GitHub Release](https://github.com/KevinAst/feature-u/releases/tag/v1.0.2)
+[GitHub Release](https://github.com/KevinAst/feature-u/releases/tag/v1.1.0)
 &bull;
-[GitHub Content](https://github.com/KevinAst/feature-u/tree/v1.0.2)
+[GitHub Content](https://github.com/KevinAst/feature-u/tree/v1.1.0)
 &bull;
-[Diff](https://github.com/KevinAst/feature-u/compare/v1.0.1-docs...v1.0.2)
+[Diff](https://github.com/KevinAst/feature-u/compare/v1.0.1-docs...v1.1.0)
 
-**NOTE**: This release is a **non-breaking change** _(i.e. no API was affected)_.
+**NOTE**: This release is a **non-breaking change** _(i.e. no prior API was impacted)_.
+
+1. **Added**: **feature-u** now supports {{book.ext.reactHooks}} for
+   component access to ??fassets.  This can be used as an alternative
+   to {{book.guide.crossCom_withFassetsHoC}} ?? more
 
 1. **Docs**: Documentation improvements include:
 
    - Improved the concepts and feature-segregation diagrams.
    - Added a fundamental artifacts introduction to the {{book.guide.benefits}} chapter.
 
-
 1. **Internal**: Docs generation now uses the formal [folding-menu
    gitbook plugin](https://github.com/KevinAst/gitbook-plugin-folding-menu)
-
-
-1. **MORE**: ??
 
 
 
