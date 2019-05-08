@@ -15,7 +15,7 @@ const fassetsNotDefined = 'NO FassetsContext.Provider';
 const contextImpl = React.createContext === React_createContext ? 'native (React >16.3)' : 'ponyfilled (React <16.3)';
 logf.force(`Context in-use: ${contextImpl}... React Version: ${React.version}`);
 
-// publically exposed (in rare case when app code defines their own DOM via registerRootAppElm())
+// publicly exposed (in rare case when app code defines their own DOM via registerRootAppElm())
 export const FassetsContext = React_createContext(fassetsNotDefined); // specify a defaultValue we can detect ERROR conditions (need FassetsContext.Provider at root)
 
 /**
@@ -134,7 +134,7 @@ export const FassetsContext = React_createContext(fassetsNotDefined); // specify
  *                      // mainBodies: [cartBodyResource, searchBodyResource],
  *        };
  *      }
- *    })(MainPage); // NOTE: immediatly invoke the HoF, emitting the wrapped MainPage Component
+ *    })(MainPage); // NOTE: immediately invoke the HoF, emitting the wrapped MainPage Component
  *    ```
  * 
  * @function withFassets
@@ -228,7 +228,7 @@ export function withFassets({mapFassetsToProps, component, ...unknownArgs}={}) {
 }
 
 // helper function that translates supplied fassetsToPropsMap to fassetsProps
-export function fassetsProps(fassetsToPropsMap, fassets) { // export for testing only
+export function fassetsProps(fassetsToPropsMap, fassets) { // export for internal use -and- testing
   return Object.assign(...MyObj.entries(fassetsToPropsMap).map( ([propKey, fassetsKey]) => ({[propKey]: fassets.get(fassetsKey)}) ));
 }
 
