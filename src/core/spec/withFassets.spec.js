@@ -88,7 +88,7 @@ describe('withFassets()', () => {
       // THROW: withFassets() parameter violation: unrecognized named parameter(s): foo,bar
     });
 
-    test('unrecognized poisition parameters', () => {
+    test('unrecognized position parameters', () => {
       expect(()=> withFassets({mapFassetsToProps: {}}, 123))
         .toThrow(/unrecognized positional parameters.*only named parameters can be specified/);
       // THROW:  withFassets() parameter violation: unrecognized positional parameters (only named parameters can be specified)
@@ -96,7 +96,7 @@ describe('withFassets()', () => {
 
     test('must pass a React Component to the function returned by withFassets', () => {
       const hoc = withFassets({mapFassetsToProps: {prop1: 'fassetsKey'} });
-      expect(()=> hoc('BadComponent') )
+      expect(()=> hoc(123) )
         .toThrow(/must pass a React Component to the function returned by withFassets/);
       // THROW:  You must pass a React Component to the function returned by withFassets
     });

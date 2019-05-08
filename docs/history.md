@@ -116,8 +116,17 @@ Release           | What                                   | *When*
    component access to ??fassets.  This can be used as an alternative
    to {{book.guide.crossCom_withFassetsHoC}} ?? more
 
-1. **Docs**: Documentation improvements include:
+1. **Fixed**: React Component validation has been shored up by using
+   the `react-is` package.
 
+   This impacts components passed to the {{book.api.withFassets}} API,
+   and the {{book.api.fassetValidations}}`.comp` validation utility.
+
+   **Background**: As of react-redux V7, `connect()` returns a
+   React.memo() component type, which is an object and NOT a
+   function ... breaking **feature-u**'s _prior_ component validation.
+
+1. **Docs**: Documentation improvements include:
    - Improved the concepts and feature-segregation diagrams.
    - Added a fundamental artifacts introduction to the {{book.guide.benefits}} chapter.
 

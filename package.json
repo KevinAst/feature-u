@@ -116,7 +116,8 @@
     "create-react-context": "^0.2.2",
     "lodash.isfunction": "^3.0.8",
     "lodash.isplainobject": "^4.0.6",
-    "lodash.isstring": "^4.0.1"
+    "lodash.isstring": "^4.0.1",
+    "react-is": "^16.8.6"
   },
   "peerDependencies": {
     "react": ">=0.14.0"
