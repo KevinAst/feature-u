@@ -25,7 +25,7 @@ describe('useFassets()', () => {
 
     test('fassetsKey string parameter IS OK', () => {
       expect(()=> useFassets('myFassetsKey'))
-        .toThrow(/Hooks can only be called inside the body of a function component/);
+        .toThrow(/Hooks can only be called.*inside.*body of a function component/);
       // THROW:  Invariant Violation: Hooks can only be called inside the body of a function component. (https://fb.me/react-invalid-hook-call)
     });
 
@@ -34,7 +34,7 @@ describe('useFassets()', () => {
         prop1: 'myFassetsKey1',
         prop2: 'myFassetsKey2',
       }))
-        .toThrow(/Hooks can only be called inside the body of a function component/);
+        .toThrow(/Hooks can only be called.*inside.*body of a function component/);
       // THROW:  Invariant Violation: Hooks can only be called inside the body of a function component. (https://fb.me/react-invalid-hook-call)
     });
 
