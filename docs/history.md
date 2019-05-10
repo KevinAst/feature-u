@@ -114,12 +114,12 @@ Release           | What                                   | *When*
 API was impacted)_.  A major V2 version bump strictly reflects the
 significance of this hooks enhancement.
 
-1. **Added**: The {{book.api.useFassets}} function has been added in
+1. **Added**: The [`useFassets()`](../2.0.0/api.html#useFassets) function has been added in
    support of [React Hooks](https://reactjs.org/docs/hooks-intro.html),
    providing functional component access to the
-   {{book.api.FassetsObject}}.  This is an alternative to accessing
+   [`Fassets object`](../2.0.0/api.html#Fassets).  This is an alternative to accessing
    `fassets` through Higher Order Components _(using:
-   {{book.api.withFassets}})_.
+   [`withFassets()`](../2.0.0/api.html#withFassets))_.
 
    This greatly simplifies the UI implementation, and can be seen in
    action in the [eatery-nod-w](https://github.com/KevinAst/eatery-nod-w) project
@@ -129,8 +129,8 @@ significance of this hooks enhancement.
 2. **Fixed**: React Component validation has been shored up by using
    the `react-is` package.
 
-   This impacts components passed to the {{book.api.withFassets}} API,
-   and the {{book.api.fassetValidations}}`.comp` validation utility.
+   This impacts components passed to the [`withFassets()`](../2.0.0/api.html#withFassets) API,
+   and the [`fassetValidations.comp`](../2.0.0/api.html#fassetValidations) validation utility.
 
    **Background**: As of react-redux V7, `connect()` returns a
    React.memo() component type, which is an object and NOT a
@@ -140,7 +140,7 @@ significance of this hooks enhancement.
 
    - Improved the concepts and feature-segregation diagrams.
 
-   - Added a fundamental artifacts introduction to the {{book.guide.benefits}} chapter.
+   - Added a fundamental artifacts introduction to the [`Benefits`](../2.0.0/benefits.html) chapter.
 
 4. **Internal**: Docs generation now uses the formal [folding-menu
    gitbook plugin](https://github.com/KevinAst/gitbook-plugin-folding-menu)
