@@ -1,8 +1,26 @@
 //***
-//*** MY NEW PLUGIN CODE - ROUND 4 ... leave the last expanded section in-tact, when a the current section has NO content
+//*** gitbook-plugin-folding-menu: 
+//***   GitBook plugin that tames large left-nav menus
+//***   by visualizing one section at a time.
 //***
-
 require(["gitbook", "jQuery"], function(gitbook, $) {
+
+  // our plugin configuration object
+  // ... optionally defined in client book.json
+  // ... auto defaulted by gitbook as follows:
+  //     config: {
+  //       animationDuration: 400,
+  //       sticky:            false
+  //     }
+  var config = null;
+
+  // glean plugin configuration on start event
+  gitbook.events.bind('start', function(e, myConfig) {
+    // simply retain in parent scope (for subsequent use)
+    config = myConfig['folding-menu'];
+    diag('start event ... config: ', config);
+  });
+
 
   // listen for gitbook "page.change" events
   // ... emitted whenever a file.md changes
@@ -49,9 +67,10 @@ require(["gitbook", "jQuery"], function(gitbook, $) {
       //     starts out with leftNav expanded!!!
       baselinePriorVisibility($topSections);
 
-      // leave the last expanded section in-tact, when a the current section has NO content
+      // when necessary, leave the last section expanded
       // ... by simply no-oping
-      if ($activeTopSection.length === 0) {
+      if (config.sticky &&                  // when configured to be sticky -AND-
+          $activeTopSection.length === 0) { // the current active section has NO sub-content
         return;
       }
 
@@ -135,8 +154,6 @@ require(["gitbook", "jQuery"], function(gitbook, $) {
   //     - resulting in a MUCH better visual
   function setVisible(elmSection, directive) {
 
-    var animationDelay = 400; // utilize an appropriate animation delay (nice visual)
-
     var sectionKey           = getSectionKey(elmSection);
     var curSectionVisibility = getCurSectionVisibility(sectionKey);
 
@@ -144,9 +161,9 @@ require(["gitbook", "jQuery"], function(gitbook, $) {
 
     // apply the visibility directive, when needed (based on cached current visibility)
     if (directive === 'show') {
-      if (curSectionVisibility !== 'show') {  // when out-of-sync
-        $(elmSection).show(animationDelay);   // ... change visiblity WITH animation
-        visibilityCache[sectionKey] = 'show'; // ... maintaining our cache
+      if (curSectionVisibility !== 'show') {          // when out-of-sync
+        $(elmSection).show(config.animationDuration); // ... change visiblity WITH animation
+        visibilityCache[sectionKey] = 'show';         // ... maintaining our cache
         diagMsg += 'SHOWING';
       }
       else {
@@ -154,9 +171,9 @@ require(["gitbook", "jQuery"], function(gitbook, $) {
       }
     }
     else {
-      if (curSectionVisibility !== 'hide') {  // when out-of-sync
-        $(elmSection).hide(animationDelay);   // ... change visiblity WITH animation
-        visibilityCache[sectionKey] = 'hide'; // ... maintaining our cache
+      if (curSectionVisibility !== 'hide') {          // when out-of-sync
+        $(elmSection).hide(config.animationDuration); // ... change visiblity WITH animation
+        visibilityCache[sectionKey] = 'hide';         // ... maintaining our cache
         diagMsg += 'HIDING';
       }
       else {
