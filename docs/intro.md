@@ -1,7 +1,7 @@
 # feature-u
 
 **feature-u** is a utility library that _facilitates feature-based
-project organization_ in your {{book.ext.react}} project.  It provides
+development_ in your {{book.ext.react}} project.  It provides
 tangible assistance in promoting individual **plug-and-play** features
 within your project.
 

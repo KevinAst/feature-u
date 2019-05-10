@@ -1,6 +1,6 @@
 {
   "name": "feature-u",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "Feature Based Project Organization for React",
   "main": "lib/index.js",
   "browser": {
@@ -103,7 +103,7 @@
     "eslint-plugin-react": "^7.10.0",
     "gh-pages": "^0.12.0",
     "gitbook-cli": "^2.3.2",
-    "gitbook-plugin-toggle-chapters": "0.0.3",
+    "gitbook-plugin-folding-menu": "^1.0.1",
     "gitbook-plugin-toolbar": "^0.6.0",
     "jest": "^22.1.4",
     "jsdoc-to-markdown": "^4.0.1",
@@ -116,7 +116,8 @@
     "create-react-context": "^0.2.2",
     "lodash.isfunction": "^3.0.8",
     "lodash.isplainobject": "^4.0.6",
-    "lodash.isstring": "^4.0.1"
+    "lodash.isstring": "^4.0.1",
+    "react-is": "^16.8.6"
   },
   "peerDependencies": {
     "react": ">=0.14.0"

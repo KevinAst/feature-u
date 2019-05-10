@@ -52,8 +52,9 @@ The `fassets` terminology is consistently used in both:
 - the definition of resources (through the built-in
   {{book.api.fassetsAspect$}})
 
-- and in their usage (through the {{book.api.FassetsObject}} and the
-  {{book.api.withFassets}} HoC)
+- and in their usage (through the {{book.api.FassetsObject}}, along
+  with the {{book.api.useFassets}} Hook and {{book.api.withFassets}}
+  HoC)
 
 <p align="center"><img class="diagram" src="img/crossFeatureCommunication.png" width="90%"/></p>
 
@@ -112,9 +113,10 @@ above):
 
 **NOTE**: In addition to directly dereferencing a resource on the
 `fassets` object, you can also use the {{book.api.Fassets_get}} method
-and the {{book.api.withFassets}} HoC _(discussed later)_.  One
-advantage of these alternatives is you can utilize wildcards to match
-multiple fasset resources.
+along with the {{book.api.useFassets}} Hook and
+{{book.api.withFassets}} HoC _(discussed later)_.  One advantage of
+these alternatives is you can utilize wildcards to match multiple
+fasset resources.
 
 
 ### federated namespace
@@ -190,6 +192,36 @@ So far nothing new has been introduced in this example.  This is the
 same type of resource definition that we have seen previously ... it's
 just the resource happens to be a react component.
 
+### useFassets() Hook
+
+{{book.api.useFassets}} is a **feature-u** {{book.ext.reactHook}} that
+provides functional component access to `fassets`.
+
+**Hooks** is an exciting React feature that allows you to **"hook
+into"** React state and lifecycle aspects _from functional
+components_.
+
+Here is how a component would access a `company.logo` _(defined
+above)_ using **Hooks**:
+
+```js
+export default function MyComponent() {
+
+  const Logo = useFassets('company.logo');
+
+  return (
+    <div>
+      <Logo/>
+    </div>
+    ... snip snip
+  );
+}
+```
+
+In this example, because the `Logo` property is a component,
+`MyComponent` can simply reference it using JSX.
+
+
 ### withFassets() HoC
 
 {{book.api.withFassets}} is a **feature-u** Higher-order Component
@@ -197,8 +229,7 @@ just the resource happens to be a react component.
 common pattern popularized by redux `connect()` _(simplifying
 component access to application state)_.
 
-Here is how a component would access the `company.logo` _(defined
-above)_:
+Here is the same example (from above) using `withFassets()`:
 
 ```js
 function MyComponent({Logo}) {
@@ -290,10 +321,19 @@ Here is our `main` feature:
   to render this content.
   
   Here is the manifestation of this contract:
-  
+
   **src/features/main/comp/MainPage.js**
   ```js
-  function MainPage({Logo, CartLink, SearchLink, CartBody, SearchBody,}) {
+  export default function MainPage() {
+
+    const Logo = useFassets('company.logo'); // from our prior example
+
+    const CartLink = useFassets('MainPage.cart.link');
+    const CartBody = useFassets('MainPage.cart.body');
+  
+    const SearchLink = useFassets('MainPage.search.link');
+    const SearchBody = useFassets('MainPage.search.body');
+
     return (
       <div>
         <div> {/* header section */}
@@ -312,19 +352,6 @@ Here is our `main` feature:
       </div>
     );
   }
-  
-  export default withFassets({
-    component: MainPage,
-    mapFassetsToProps: {
-      Logo:       'company.logo', // from our prior example
-  
-      CartLink:   'MainPage.cart.link',
-      CartBody:   'MainPage.cart.body',
-  
-      SearchLink: 'MainPage.search.link',
-      SearchBody: 'MainPage.search.body',
-    },
-  });
   ```
 
 The following snippets are taken from other features that supply the
@@ -414,7 +441,13 @@ from the defining features are the same, so they are not repeated)_:
 
   **src/features/main/comp/MainPage.js**
   ```js
-  function MainPage({Logo, mainLinks, mainBodies}) {
+  export default function MainPage() {
+
+    const Logo = useFassets('company.logo'); // from our prior example
+
+    const mainLinks  = useFassets('MainPage.*.link'); // find matching
+    const mainBodies = useFassets('MainPage.*.body');
+
     return (
       <div>
         <div> {/* header section */}
@@ -431,19 +464,9 @@ from the defining features are the same, so they are not repeated)_:
       </div>
     );
   }
-
-  export default withFassets({
-    component: MainPage,
-    mapFassetsToProps: {
-      Logo:       'company.logo',    // from our prior example
-
-      mainLinks:  'MainPage.*.link', // find matching
-      mainBodies: 'MainPage.*.body',
-    },
-  });
   ```
 
-When {{book.api.withFassets}} encounters wildcards (`*`), it merely
+When {{book.api.useFassets}} (or {{book.api.withFassets}}) encounters wildcards (`*`), it merely
 accumulates all matching definitions, and promotes them as arrays.
 Our **MainPage** component no longer explicitly reasons about each
 injection.
@@ -568,7 +591,7 @@ cases** - assuming there is no variability in the promoted set of
 fasset resources _(a normal case)_.
 
 If however there is some conditional logic involved, you may request
-{{book.api.withFassets}} to supply a `[fassetsKey, resource]` pair, by
+{{book.api.useFassets}} and {{book.api.withFassets}} to supply a `[fassetsKey, resource]` pair, by
 using the `@withKeys` suffix.  This is an ideal solution because
 **feature-u** guarantees `fassetsKey` to be unique.
 
@@ -681,7 +704,7 @@ broad philosophies: **push** or **pull**.
     
     Normally, in a **push** philosophy, the consumer simply accesses
     the resource **without any `use` directive** _(through
-    {{book.api.FassetsObject}} or {{book.api.withFassets}} HoC)_.
+    {{book.api.FassetsObject}} or {{book.api.useFassets}} Hook and {{book.api.withFassets}} HoC)_.
     
     _Optionally_ however, the consumer may employ the `use` directive.
     Here they are simply providing **feature-u** with more information,
@@ -709,7 +732,7 @@ broad philosophies: **push** or **pull**.
     **SideBar**: It is important that the consumer fulfill this
     contract by programmatically accessing the resource defined in it's
     `use` contract _(through {{book.api.FassetsObject}} or
-    {{book.api.withFassets}} HoC)_.  This is outside the control of
+    {{book.api.useFassets}} Hook and {{book.api.withFassets}} HoC)_.  This is outside the control of
     **feature-u**.
 
   - **Definition:**
@@ -727,14 +750,16 @@ broad philosophies: **push** or **pull**.
 Broadly speaking, Public Facing fasset resources can be obtained
 either by:
 
+- using the {{book.api.useFassets}} Hook (for UI Components),
+
 - using the {{book.api.withFassets}} HoC (for UI Components),
 
 - or by directly referencing the {{book.api.FassetsObject}}
   programmatically.
 
-The former, implicitly accesses `fassets` _(under the covers)_ using a
-{{book.ext.reactContext}}.  The latter requires direct programmatic
-access to the {{book.api.FassetsObject}} ... of which there are four
+The first two options implicitly accesses `fassets` _(under the covers)_ using a
+{{book.ext.reactContext}}.  The last option requires direct programmatic
+access to the {{book.api.FassetsObject}} ... of which there are five
 ways to achieve:
 
 1. Use the {{book.guide.crossCom_fassetsParameter}} supplied through
@@ -742,16 +767,20 @@ ways to achieve:
    control of **feature-u** _(for example, life-cycle hooks, or logic
    hooks, etc.)_.
 
-2. {{book.guide.crossCom_injectFassetsCompProps}} ... for react
+2. {{book.guide.crossCom_obtainFassetsFromHooks}} ... for react
+   components _(using the special {{book.api.useFassets}} `'.'`
+   keyword, obtaining the `fassets` object itself)_.
+
+3. {{book.guide.crossCom_injectFassetsCompProps}} ... for react
    components _(using the special {{book.api.withFassets}} `'.'`
    keyword, injecting the `fassets` object itself)_.
 
-3. Use {{book.guide.crossCom_managedCodeExpansion}} ... for
+4. Use {{book.guide.crossCom_managedCodeExpansion}} ... for
    {{book.api.AspectContent}} definitions requiring `fassets` during
    inline code-expansion _(employing the
    {{book.api.expandWithFassets}} wrapper function)_.
 
-4. {{book.guide.crossCom_importFassets}} from your application
+5. {{book.guide.crossCom_importFassets}} from your application
    mainline ... for code that is outside the control of **feature-u**
    _(providing the reference is **not** needed during inline
    code-expansion)_.
@@ -822,8 +851,43 @@ a parameter.  This covers any process that is under the control of
   })
   ```
 
-
 <!-- 22222222222222222222222222222222222222222222222222222 -->
+### Obtain fassets from Hooks
+
+For react functional components, you can obtain the
+{{book.api.FassetsObject}} by using the special
+{{book.api.useFassets}} `'.'` keyword.  This emits the `fassets`
+object itself _(in the same tradition as "current directory")_.
+**NOTE** that this is also the same result of not passing any
+parameter to {{book.api.useFassets}}.
+
+When using the {{book.api.useFassets}} Hook you have a choice ... you
+can obtain the selected assets as needed, or the the entire `fassets`
+object, or both ... _it's really a personal preference_.
+
+Here is an example:
+
+```js
+export default function MyComp() {
+
+  const fassets  = useFassets('.'); // same as: useFassets()
+  const Logo     = fassets.company.logo;
+                   // ... React's useSelector()
+  const eggCount = useSelector((appState) => fassets.selectors.getEggCount(appState), [fassets]);
+
+  return (
+    <div>
+      <Logo/>
+      <p>My egg total: {eggCount}</p>
+    </div>
+    ... can use fassets here too (if desired)
+  );
+};
+```
+
+
+
+<!-- 33333333333333333333333333333333333333333333333333333 -->
 ### Inject fassets comp props
 
 For react components, you can inject the {{book.api.FassetsObject}}
@@ -896,7 +960,7 @@ export default compose( // combine withFassets() and redux connect() using funct
 
 
 
-<!-- 33333333333333333333333333333333333333333333333333333 -->
+<!-- 44444444444444444444444444444444444444444444444444444 -->
 ### Managed Code Expansion
 
 To obtain **early access** to the {{book.api.FassetsObject}} _(during
@@ -978,7 +1042,7 @@ used (_over and above `fassets` injection during code expansion_) is to
 (_legitimate but somewhat obscure_) circular dependencies.
 
 
-<!-- 44444444444444444444444444444444444444444444444444444 -->
+<!-- 55555555555555555555555555555555555555555555555555555 -->
 ### import fassets
 
 For run-time functions that are outside the control of **feature-u**,

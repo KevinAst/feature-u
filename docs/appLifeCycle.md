@@ -52,9 +52,16 @@ appWillStart({fassets, curRootAppElm}) {
 }
 ```
 
-Here is an example of injecting a new sibling to curRootAppElm:
+Here is an example of injecting a new sibling to `curRootAppElm` _(using
+React Fragments)_:
+
 ```js
-appWillStart: ({fassets, curRootAppElm}) => [React.Children.toArray(curRootAppElm), <Notify key="Notify"/>]
+appWillStart: ({fassets, curRootAppElm}) => (
+  <>
+    <Notify/>
+    {curRootAppElm}
+  </>
+)
 ```
 
 **IMPORTANT**: 

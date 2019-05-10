@@ -17,7 +17,7 @@ resources over your features, you can easily gather a collection of
 links for your menus and the route components themselves.  This
 solution employs {{book.guide.crossCom_resourceContracts}} and
 {{book.guide.crossCom_wildcardProcessing}} through the
-{{book.api.Fassets_get}} and {{book.api.withFassets}} access points.
+{{book.api.Fassets_get}} and {{book.api.useFassets}}/{{book.api.withFassets}} access points.
 
 Using this technique, you can accumulate your routing resources
 autonomously, allowing your app to grow feature by feature, not
@@ -157,38 +157,37 @@ component _(with links and routes)_.
 ```js
 import React           from 'react';
 import {BrowserRouter} from 'react-router-dom';
+import {useFassets}    from 'feature-u;
 
 /**
  * Our top-level App component (with links and routes)!
  */
-const App = ({linkComps, routeComps}) => (
-  <BrowserRouter>
-    <div className="app">
-      <header>
-        <h1>My App</h1>
-        { linkComps.map( (LinkComp, indx) => <LinkComp key={indx}/>) }
-      </header>
-      <main>
-        { routeComps.map( (RouteComp, indx) => <RouteComp key={indx}/>) }
-      </main>
-    </div>
-  </BrowserRouter>
-);
+export default function App() {
 
-export default withFassets({
-  component: App,
-  mapFassetsToProps: {
-    linkComps:  '*.link.comp',
-    routeComps: '*.route.comp'
-  }
-});
+  const linkComps  = useFassets('*.link.comp');
+  const routeComps = useFassets('*.route.comp');
+
+  return (
+    <BrowserRouter>
+      <div className="app">
+        <header>
+          <h1>My App</h1>
+          { linkComps.map( (LinkComp, indx) => <LinkComp key={indx}/>) }
+        </header>
+        <main>
+          { routeComps.map( (RouteComp, indx) => <RouteComp key={indx}/>) }
+        </main>
+      </div>
+    </BrowserRouter>
+  );
+}
 ```
 
 Notice that in support of {{book.ext.reactRouter}}, we wrap everything
 with `<BrowserRouter>`.
 
 Also notice that we inject the needed fasset resources using the
-{{book.api.withFassets}} HoC.
+{{book.api.useFassets}} Hook.
 
 Because our mapping uses wildcards, many resources will match
 (accumulated into arrays).  We simply inject the resources into our

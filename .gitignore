@@ -27,3 +27,6 @@ npm-debug.log*
 pids
 *.pid
 *.seed
+
+# VSCode related
+/.vscode/

@@ -84,16 +84,66 @@ reference the most current release.
 
 Release           | What                                   | *When*
 ------------------|----------------------------------------|------------------
+[v2.0.0](#v2_0_0) | React Hooks                            | *May 10, 2019*
 [v1.0.1](#v1_0_1) | Docs Update                            | *September 5, 2018*
 [v1.0.0](#v1_0_0) | UI Composition                         | *August 14, 2018*
 [v0.1.3](#v0_1_3) | Establish Polyfill Strategy            | *July 2, 2018*
 [v0.1.0](#v0_1_0) | Initial Release                        | *March 6, 2018*
 
 
-
 <br/><br/><br/>
 ## Details:
 
+
+
+<!-- ************************************************************* -->
+<br/><br/><br/>
+<h3 id="v2_0_0" style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
+  v2.0.0 - React Hooks <i>(May 10, 2019)</i>
+</h3>
+
+[Full Docs](https://feature-u.js.org/2.0.0/)
+&bull;
+[GitHub Release](https://github.com/KevinAst/feature-u/releases/tag/v2.0.0)
+&bull;
+[GitHub Content](https://github.com/KevinAst/feature-u/tree/v2.0.0)
+&bull;
+[Diff](https://github.com/KevinAst/feature-u/compare/v1.0.1-docs...v2.0.0)
+
+**NOTE**: This release is a **non-breaking change** _(i.e. no prior
+API was impacted)_.  A major V2 version bump strictly reflects the
+significance of this hooks enhancement.
+
+1. **Added**: The [`useFassets()`](../2.0.0/api.html#useFassets) function has been added in
+   support of [React Hooks](https://reactjs.org/docs/hooks-intro.html),
+   providing functional component access to the
+   [`Fassets object`](../2.0.0/api.html#Fassets).  This is an alternative to accessing
+   `fassets` through Higher Order Components _(using:
+   [`withFassets()`](../2.0.0/api.html#withFassets))_.
+
+   This greatly simplifies the UI implementation, and can be seen in
+   action in the [eatery-nod-w](https://github.com/KevinAst/eatery-nod-w) project
+   _(see the [React Hooks](https://github.com/KevinAst/eatery-nod-w#react-hooks)
+   section)_.
+
+2. **Fixed**: React Component validation has been shored up by using
+   the `react-is` package.
+
+   This impacts components passed to the [`withFassets()`](../2.0.0/api.html#withFassets) API,
+   and the [`fassetValidations.comp`](../2.0.0/api.html#fassetValidations) validation utility.
+
+   **Background**: As of react-redux V7, `connect()` returns a
+   React.memo() component type, which is an object and NOT a
+   function ... breaking **feature-u**'s _prior_ component validation.
+
+3. **Docs**: Documentation improvements include:
+
+   - Improved the concepts and feature-segregation diagrams.
+
+   - Added a fundamental artifacts introduction to the [`Benefits`](../2.0.0/benefits.html) chapter.
+
+4. **Internal**: Docs generation now uses the formal [folding-menu
+   gitbook plugin](https://github.com/KevinAst/gitbook-plugin-folding-menu)
 
 
 

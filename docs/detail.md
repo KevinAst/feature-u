@@ -129,8 +129,9 @@ object properties (via {{book.api.createFeature}}).
   `fassets` directives can both define resources, and/or declare a
   resource contract (the intention to use a set of fasset resources).
   Resources are accumulated across all features, and exposed through
-  the {{book.api.FassetsObject}}, and the {{book.api.withFassets}}
-  HoC. For more information, please see {{book.api.fassetsAspect$}}.
+  the {{book.api.FassetsObject}}, along with the
+  {{book.api.useFassets}} Hook and {{book.api.withFassets}} HoC.  For
+  more information, please see {{book.api.fassetsAspect$}}.
 
 
 - {{book.guide.appWillStartCB}}

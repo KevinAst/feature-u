@@ -11,7 +11,7 @@
   "plugins": [
       "-livereload",
       "toolbar",
-      "toggle-chapters"
+      "folding-menu"
   ],
   "pluginsConfig": {
     "sharing": {
@@ -36,6 +36,10 @@
             "url": "https://www.npmjs.com/package/feature-u"
           }
         ]
+    },
+    "folding-menu": {
+      "animationDuration": 400,
+      "sticky":            true
     }
   },
   "variables": { 
@@ -103,6 +107,7 @@
           "crossCom_fassetsUsage":        "<a href='/crossCommunication.html#fassets-usage'><code>fassets usage</code></a>",
           "crossCom_federatedNamespace":  "<a href='/crossCommunication.html#federated-namespace'><code>federated namespace</code></a>",
         "crossCom_uiComposition":         "<a href='/crossCommunication.html#ui-composition'><code>UI Composition</code></a>",
+          "crossCom_useFassetsHook":      "<a href='/crossCommunication.html#usefassets-hook'><code>useFassets() Hook</code></a>",
           "crossCom_withFassetsHoC":      "<a href='/crossCommunication.html#withfassets-hoc'><code>withFassets() HoC</code></a>",
           "crossCom_resourceContract":    "<a href='/crossCommunication.html#resource-contracts'><code>Resource Contract</code></a>",
           "crossCom_resourceContracts":   "<a href='/crossCommunication.html#resource-contracts'><code>Resource Contracts</code></a>",
@@ -120,6 +125,7 @@
         "crossCom_pull":                    "<a href='/crossCommunication.html#fassets-recap-push-or-pull'><code>pull</code></a>",
         "crossCom_obtainingFassetsObject":   "<a href='/crossCommunication.html#obtaining-fassets-object'><code>Obtaining fassets object</code></a>",
           "crossCom_fassetsParameter":       "<a href='/crossCommunication.html#fassets-parameter'><code>fassets parameter</code></a>",
+          "crossCom_obtainFassetsFromHooks": "<a href='/crossCommunication.html#obtain-fassets-from-hooks'><code>Obtain fassets from Hooks</code></a>",
           "crossCom_injectFassetsCompProps": "<a href='/crossCommunication.html#inject-fassets-comp-props'><code>Inject fassets comp props</code></a>",
           "crossCom_managedCodeExpansion":   "<a href='/crossCommunication.html#managed-code-expansion'><code>Managed Code Expansion</code></a>",
           "crossCom_importFassets":          "<a href='/crossCommunication.html#import-fassets'><code>import fassets</code></a>",
@@ -180,6 +186,7 @@
 
       "Feature":            "<a href='/api.html#Feature'><code>Feature</code></a>",
       "Features":           "<a href='/api.html#Feature'><code>Features</code></a>",
+      "fassets":            "<a href='/api.html#fassets'><code>fassets</code></a>",
       "fassetsAspect":      "<a href='/api.html#fassets'><code>fassets aspect</code></a>",
       "fassetsAspect$":     "<a href='/api.html#fassets'><code>Feature.fassets aspect</code></a>",
       "FassetsObject":      "<a href='/api.html#Fassets'><code>Fassets object</code></a>",
@@ -208,6 +215,9 @@
         "launchApp$":                 "<a href='/api.html#launchApp'><code>launchApp({[aspects], features, registerRootAppElm}): Fassets</code></a>",
           "registerRootAppElmCB":     "<a href='/api.html#registerRootAppElmCB'><code>registerRootAppElm()</code></a>",
           "registerRootAppElmCB$":    "<a href='/api.html#registerRootAppElmCB'><code>registerRootAppElm(rootAppElm, fassets): void</code></a>",
+
+        "useFassets":                 "<a href='/api.html#useFassets'><code>useFassets()</code></a>",
+        "useFassets$":                "<a href='/api.html#useFassets'><code>useFassets(fassetsKey | mapFassetsToPropsStruct): Fassets | fassets-resource | fassetsProps</code></a>",
 
         "withFassets":                "<a href='/api.html#withFassets'><code>withFassets()</code></a>",
         "withFassets$":               "<a href='/api.html#withFassets'><code>withFassets({mapFassetsToProps, [component]}): HoC | HoF</code></a>",
@@ -258,6 +268,8 @@
       "featureReduxLogic":  "<a href='https://github.com/KevinAst/feature-redux-logic'><code>feature-redux-logic</code></a>",
       "featureRouter":      "<a href='https://github.com/KevinAst/feature-router'><code>feature-router</code></a>",
       "react":              "<a href='https://reactjs.org/'><code>react</code></a>",
+      "reactHook":          "<a href='https://reactjs.org/docs/hooks-intro.html'><code>React Hook</code></a>",
+      "reactHooks":         "<a href='https://reactjs.org/docs/hooks-intro.html'><code>react hooks</code></a>",
       "reactWeb":           "<a href='https://reactjs.org/'><code>react-web</code></a>",
       "reactContext":       "<a href='https://reactjs.org/docs/context.html'><code>react context</code></a>",
       "reactNative":        "<a href='https://facebook.github.io/react-native/'><code>react-native</code></a>",
