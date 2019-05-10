@@ -112,9 +112,17 @@ Release           | What                                   | *When*
 
 **NOTE**: This release is a **non-breaking change** _(i.e. no prior API was impacted)_.
 
-1. **Added**: **feature-u** now supports {{book.ext.reactHooks}} for
-   component access to ??fassets.  This can be used as an alternative
-   to {{book.guide.crossCom_withFassetsHoC}} ?? more
+1. **Added**: The {{book.api.useFassets}} function has been added in
+   support of [React Hooks](https://reactjs.org/docs/hooks-intro.html),
+   providing functional component access to the
+   {{book.api.FassetsObject}}).  This is an alternative to accessing
+   `fassets` through Higher Order Components _(using:
+   {{book.api.withFassets}})_.
+
+   This greatly simplifies the UI implementation, and can be seen in
+   action in the [eatery-nod-w](https://github.com/KevinAst/eatery-nod-w) project
+   _(see the [React Hooks](https://github.com/KevinAst/eatery-nod-w#react-hooks)
+   section)_.
 
 1. **Fixed**: React Component validation has been shored up by using
    the `react-is` package.

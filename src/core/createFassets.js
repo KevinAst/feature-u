@@ -194,7 +194,8 @@ export default function createFassets(activeFeatures) {
      *   opposed to an additional parameter) to be consistent with how
      *   {{book.api.withFassets}} operates._
      *
-     * **SideBar**: The `fassets.get()` method is the basis of the
+     * **SideBar**: The `fassets.get()` method is the basis of both the
+     * {{book.api.useFassets}} {{book.ext.reactHook}}, and the
      * {{book.api.withFassets}} Higher-order Component (HoC).
      *
      * @param {string} fassetsKey the key of the resource(s) to fetch.

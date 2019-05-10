@@ -240,7 +240,7 @@ export function fassetsProps(fassetsToPropsMap, fassets) { // export for interna
 /**
  * @typedef {Object} mapFassetsToPropsStruct
  *
- * A structure (used by {{book.api.withFassets}}) defining a
+ * A structure (used by {{book.api.withFassets}} and  {{book.api.useFassets}}) defining a
  * prop/fassetsKey mapping, from which fasset resources are injected
  * into a Component.  Please see {{book.guide.crossCom_uiComposition}}
  * for examples.

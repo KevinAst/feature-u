@@ -23,6 +23,9 @@ this list:_
   * {{book.api.registerRootAppElmCB$}}
 
 
+* {{book.api.useFassets$}}
+
+
 * {{book.api.withFassets$}}
   * {{book.api.mapFassetsToPropsStruct}}
   * {{book.api.mapFassetsToPropsFn}}

@@ -453,37 +453,64 @@ It is common for a UI component to be an accumulation of
 sub-components that span several features.  As a result, **UI
 Composition is a very important part of Cross Feature Communication**.
 
-In support of this, **feature-u** introduces the
-{{book.api.withFassets}} Higher-order Component (HoC) that auto-wires
-fasset properties into a component.  This is a common pattern
-popularized by redux `connect()` _(simplifying component access to
-application state)_.
+In support of this, **feature-u** provides two APIs that give your
+UI components access to `fassets`.
 
-Here is how a component would access a `company.logo` _(defined
-by another feature)_:
+1. {{book.api.useFassets}} is a {{book.ext.reactHook}} that provides
+   functional component access to `fassets`.
 
-```js
-function MyComponent({Logo}) {
-  return (
-    <div>
-      <Logo/>
-    </div>
-    ... snip snip
-  );
-}
+   **Hooks** are an exciting new React feature that allows you to
+   **"hook into"** React state and lifecycle aspects _from functional
+   components_.
 
-export default withFassets({
-  component: MyComponent,
-  mapFassetsToProps: {
-    Logo: 'company.logo',
-  }
-});
-```
+   Here is how a component would access a `company.logo` _(defined
+   by another feature)_:
+   
+   ```js
+   export default function MyComponent() {
 
-The {{book.api.withFassets}} HoC auto-wires named feature assets as
-component properties through the {{book.api.mapFassetsToPropsStruct}}
-hook.  In this example, because the `Logo` property is a component,
-`MyComponent` can simply reference it using JSX.
+     const Logo = useFassets('company.logo');
+
+     return (
+       <div>
+         <Logo/>
+       </div>
+       ... snip snip
+     );
+   }
+   ```
+
+   In this example, because the `Logo` property is a component,
+   `MyComponent` can simply reference it using JSX.
+
+2. {{book.api.withFassets}} is a Higher-order Component (HoC) that
+   auto-wires fasset properties into a component.  This is a common
+   pattern popularized by redux `connect()` _(simplifying component
+   access to application state)_.
+
+   Here is the same example (from above) using `withFassets()`:
+   
+   ```js
+   function MyComponent({Logo}) {
+     return (
+       <div>
+         <Logo/>
+       </div>
+       ... snip snip
+     );
+   }
+   
+   export default withFassets({
+     component: MyComponent,
+     mapFassetsToProps: {
+       Logo: 'company.logo',
+     }
+   });
+   ```
+   
+   The {{book.api.withFassets}} HoC auto-wires named feature assets as
+   component properties through the {{book.api.mapFassetsToPropsStruct}}
+   hook.
 
 You can find more information about this topic in
 {{book.guide.crossCom_uiComposition}}.
@@ -543,7 +570,14 @@ _(links and bodies)_ from other features:
 
   **src/features/main/comp/MainPage.js**
   ```js
-  function MainPage({Logo, mainLinks, mainBodies}) {
+  export default function MainPage() {
+
+    const fassets = useFassets();
+
+    const Logo       = fassets.get('company.logo');    // from our prior example
+    const mainLinks  = fassets.get('MainPage.*.link'); // find matching
+    const mainBodies = fassets.get('MainPage.*.body');
+
     return (
       <div>
         <div> {/* header section */}
@@ -560,20 +594,11 @@ _(links and bodies)_ from other features:
       </div>
     );
   }
-
-  export default withFassets({
-    component: MainPage,
-    mapFassetsToProps: {
-      Logo:       'company.logo',    // from our prior example
-
-      mainLinks:  'MainPage.*.link', // find matching
-      mainBodies: 'MainPage.*.body',
-    },
-  });
   ```
 
-When {{book.api.withFassets}} encounters wildcards (`*`), it merely
-accumulates all matching definitions, and promotes them as arrays.
+When {{book.api.useFassets}} (or {{book.api.withFassets}}) encounters
+wildcards (`*`), it merely accumulates all matching definitions, and
+promotes them as arrays.
 
 Through this implementation, **any feature may dynamically inject
 itself in the process autonomously**!  In addition, this dynamic

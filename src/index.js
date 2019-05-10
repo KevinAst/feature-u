@@ -3,6 +3,7 @@ import createFeature,
 import launchApp                from './core/launchApp';
 import expandWithFassets        from './core/expandWithFassets';
 import fassetValidations        from './core/fassetValidations';
+import {useFassets}             from './core/useFassets';
 import {withFassets,
         FassetsContext}         from './core/withFassets'; // publically expose FassetsContext (in rare case when client code defines their own DOM via registerRootAppElm())
 import assertNoRootAppElm       from './core/assertNoRootAppElm';
@@ -24,6 +25,7 @@ export {
   launchApp,
   expandWithFassets,
   fassetValidations,
+  useFassets,
   withFassets,
   FassetsContext,
   assertNoRootAppElm,
@@ -42,6 +44,7 @@ export default {
   launchApp,
   expandWithFassets,
   fassetValidations,
+  useFassets,
   withFassets,
   FassetsContext,
   assertNoRootAppElm,

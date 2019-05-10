@@ -171,8 +171,8 @@ left-nav menu available throughout the application.
 
 4. Last but not least, **feature-u** renders
    `<FassetsContext.Provider>` at the root of the application DOM _(in
-   support of {{book.guide.crossCom}} and the {{book.api.withFassets}}
-   HoC)_.
+   support of {{book.guide.crossCom}} with the {{book.api.useFassets}}
+   Hook and {{book.api.withFassets}} HoC)_.
 
    This is conditionally performed only when a rootAppElm has been
    defined.  Otherwise, the App is responsible for this in the
