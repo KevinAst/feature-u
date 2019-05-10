@@ -197,12 +197,12 @@ just the resource happens to be a react component.
 {{book.api.useFassets}} is a **feature-u** {{book.ext.reactHook}} that
 provides functional component access to `fassets`.
 
-**Hooks** are an exciting new React feature that allows you to **"hook
+**Hooks** is an exciting React feature that allows you to **"hook
 into"** React state and lifecycle aspects _from functional
-**components_.
+components_.
 
 Here is how a component would access a `company.logo` _(defined
-above)_:
+above)_ using **Hooks**:
 
 ```js
 export default function MyComponent() {

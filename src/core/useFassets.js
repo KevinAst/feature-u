@@ -16,7 +16,8 @@ import {MyObj}             from '../util/mySpace';
  * implementation _as opposed to the alternative of Higher Order
  * Components (see: {{book.api.withFassets}})_.
  * 
- * There are three ways to invoke `useFassets()`:
+ * There are three ways to invoke `useFassets()` _(examples can be
+ * found at {{book.guide.crossCom_uiComposition}})_:
  * 
  * 1. Passing NO parameters, returns the
  *    {{book.api.FassetsObject}}:
