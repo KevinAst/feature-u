@@ -52,7 +52,7 @@ appWillStart({fassets, curRootAppElm}) {
 }
 ```
 
-Here is an example of injecting a new sibling to `curRootAppElm` _(use
+Here is an example of injecting a new sibling to `curRootAppElm` _(using
 React Fragments)_:
 
 ```js
