@@ -84,6 +84,7 @@ reference the most current release.
 
 Release           | What                                   | *When*
 ------------------|----------------------------------------|------------------
+[v2.1.0](#v2_1_0) | appInit() Life Cycle Hook              | *July xx, 2019*
 [v2.0.0](#v2_0_0) | React Hooks                            | *May 10, 2019*
 [v1.0.1](#v1_0_1) | Docs Update                            | *September 5, 2018*
 [v1.0.0](#v1_0_0) | UI Composition                         | *August 14, 2018*
@@ -93,6 +94,34 @@ Release           | What                                   | *When*
 
 <br/><br/><br/>
 ## Details:
+
+
+
+<!-- ************************************************************* -->
+<br/><br/><br/>
+<h3 id="v2_1_0" style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
+  v2.1.0 - appInit() Life Cycle Hook <i>(July xx, 2019)</i>
+</h3>
+
+[Full Docs](https://feature-u.js.org/2.1.0/)
+&bull;
+[GitHub Release](https://github.com/KevinAst/feature-u/releases/tag/v2.1.0)
+&bull;
+[GitHub Content](https://github.com/KevinAst/feature-u/tree/v2.1.0)
+&bull;
+[Diff](https://github.com/KevinAst/feature-u/compare/v2.0.0-docs...v2.1.0)
+
+**NOTE**: This release is a **non-breaking change** _(i.e. no prior
+API was impacted)_.
+
+1. **Added**: A new `Feature.appInit()` Application Life Cycle Hook was added, supporting
+   blocking async initialization.
+
+   ?? more more more -AND- ?? links
+
+2. **Docs**: Documentation improvements include:
+
+   - ??
 
 
 

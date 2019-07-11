@@ -1,6 +1,6 @@
 # Table of content 
 
-### feature-u (2.0.0)
+### feature-u (2.1.0)
 * [Getting Started](start.md)
   * [Install](start.md#install)
   * [Access](start.md#access)
@@ -140,6 +140,8 @@
 * [Distribution](dist.md)
 * [Why feature-u?](why.md)
 * [Revision History](history.md)
+  * [v2.1.0 (July xx, 2019)](history.md#v2_1_0)
+    * [Full Docs](https://feature-u.js.org/2.1.0/)
   * [v2.0.0 (May 10, 2019)](history.md#v2_0_0)
     * [Full Docs](https://feature-u.js.org/2.0.0/)
   * [v1.0.1 (September 5, 2018)](history.md#v1_0_1)

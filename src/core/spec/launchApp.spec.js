@@ -79,6 +79,7 @@ describe('launchApp() verify execution order of life cycle hooks (both Aspects a
     { type: 'alch', func: 'initialRootAppElm' },
     { type: 'flch', func: 'appWillStart' },
     { type: 'alch', func: 'injectRootAppElm' },
+    { type: 'flch', func: 'appInit' },
     { type: 'flch', func: 'appDidStart' },
   ];
 

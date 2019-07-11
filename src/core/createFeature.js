@@ -40,6 +40,9 @@ import logf        from '../util/logf';
  * and/or optionally supplement the app's top-level content (using a
  * non-null return) _(please refer to: {{book.guide.appWillStart}})_.
  *
+ * ?? NEW: appInit: appInitCB
+ * @param {appInitCB} [appInit] an optional ?? describe here
+ *
  * @param {appDidStartCB} [appDidStart] an optional
  * {{book.guide.appLifeCycle}} invoked one time, immediately after the
  * app has started.  Because the app is up-and-running at this time,
@@ -63,7 +66,9 @@ export default function createFeature({name,
                                        fassets,
 
                                        appWillStart,
+                                       appInit,       // ?? NEW: appInit: appInitCB
                                        appDidStart,
+
 
                                        ...extendedAspect}={}) {
 
@@ -84,6 +89,12 @@ export default function createFeature({name,
     check(isFunction(appWillStart), 'appWillStart (when supplied) must be a function');
   }
 
+  // ?? NEW: appInit: appInitCB
+  // ... appInit
+  if (appInit) {
+    check(isFunction(appInit), 'appInit (when supplied) must be a function');
+  }
+
   // ... appDidStart
   if (appDidStart) {
     check(isFunction(appDidStart), 'appDidStart (when supplied) must be a function');
@@ -101,6 +112,7 @@ export default function createFeature({name,
     fassets,
 
     appWillStart,
+    appInit, // ?? NEW: appInit: appInitCB
     appDidStart,
 
     ...extendedAspect,
@@ -124,14 +136,15 @@ export default function createFeature({name,
  */
 const validFeatureProps = {
 
-  //            owner id  of extension (ex: aspect's npm package name)
-  //            =========
-  name:         'builtin',
-  enabled:      'builtin',
-  publicFace:   'builtin',  // OBSOLETE as of feature-u@1 ... still registered for the sole purpose of generating more specific error (see: createFassets.js)
-  fassets:      'builtin',
-  appWillStart: 'builtin',
-  appDidStart:  'builtin',
+  //               owner id  of extension (ex: aspect's npm package name)
+  //               =========
+  name:            'builtin',
+  enabled:         'builtin',
+  publicFace:      'builtin',  // OBSOLETE as of feature-u@1 ... still registered for the sole purpose of generating more specific error (see: createFassets.js)
+  fassets:         'builtin',
+  appWillStart:    'builtin',
+  appInit:         'builtin', // ?? NEW: appInit: appInitCB
+  appDidStart:     'builtin',
 
 };
 
@@ -227,6 +240,7 @@ export function extendFeatureProperty(name, owner) {
  *   },
  * 
  *   appWillStart: (...) => ..., // builtin aspect (Application Life Cycle Hook)
+ *   appInit:      (...) => ..., // ditto // ?? NEW: appInit: appInitCB
  *   appDidStart:  (...) => ..., // ditto
  * 
  *   reducer: ..., // feature redux reducer (extended aspect from the feature-redux plugin)
@@ -273,6 +287,13 @@ export function extendFeatureProperty(name, owner) {
  * @return {reactElm} optionally, new top-level content (which in turn
  * must contain the supplied curRootAppElm), or falsy for unchanged.
  */
+
+
+//***
+//*** Specification: appInitCB
+//***
+
+// ?? define this
 
 
 //***

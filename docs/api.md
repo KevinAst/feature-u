@@ -31,7 +31,7 @@ assertion is performed.</p>
 <a id="createFeature"></a>
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
-  createFeature(name, [enabled], [fassets], [appWillStart], [appDidStart], [extendedAspect]) ⇒ [`Feature`](#Feature)</h5>
+  createFeature(name, [enabled], [fassets], [appWillStart], [appInit], [appDidStart], [extendedAspect]) ⇒ [`Feature`](#Feature)</h5>
 Create a new {{book.api.Feature}} object, cataloging{{book.api.AspectContent}} to be consumed by{{book.api.launchApp}}.  Each feature within an applicationpromotes it's own {{book.api.Feature}} object.For more information, please refer to{{book.guide.detail_featureAndAspect}}.**Please Note** this function uses named parameters.
 
 <table>
@@ -69,6 +69,10 @@ HoC.</p>
 starts up.  This life-cycle hook can do any type of initialization,
 and/or optionally supplement the app&#39;s top-level content (using a
 non-null return) <em>(please refer to: {{book.guide.appWillStart}})</em>.</p>
+<p>?? NEW: appInit: appInitCB</p>
+</td>
+    </tr><tr>
+    <td>[appInit]</td><td>appInitCB</td><td></td><td><p>an optional ?? describe here</p>
 </td>
     </tr><tr>
     <td>[appDidStart]</td><td><a href="#appDidStartCB"><code>appDidStartCB</code></a></td><td></td><td><p>an optional
@@ -150,7 +154,7 @@ desired {{book.api.AspectContent}}.</p>
 <a id="launchApp"></a>
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
-  launchApp([aspects], features, registerRootAppElm) ⇒ [`Fassets`](#Fassets)</h5>
+  launchApp([aspects], features, registerRootAppElm, [showStatus]) ⇒ [`Fassets`](#Fassets)</h5>
 Launch an application by assembling the supplied features, drivingthe configuration of the frameworks in use _(as orchestrated by thesupplied set of plugable Aspects)_.For more information _(with examples)_, please refer to{{book.guide.detail_launchingApp}}.**Please Note** this function uses named parameters.
 
 <table>
@@ -182,6 +186,10 @@ React framework used in the app.<br/><br/></p>
 {{book.ext.expo}}, etc.<br/><br/></p>
 <p>Please refer to {{book.guide.detail_reactRegistration}} for more
 details and complete examples.</p>
+<p>?? NEW:</p>
+</td>
+    </tr><tr>
+    <td>[showStatus]</td><td>showStatusCB</td><td><p>the callback hook ?? describe here</p>
 </td>
     </tr>  </tbody>
 </table>
@@ -436,7 +444,7 @@ Return an indicator as to whether the supplied feature isactive or not.**Note
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
   Feature : Object</h5>
-The Feature object is merely a lightweight container that holds{{book.api.AspectContent}} of interest to **feature-u**.Each feature within an application promotes a Feature object (using{{book.api.createFeature}}) which catalogs the aspects of that feature.Ultimately, all Feature objects are consumed by{{book.api.launchApp}}.Feature content are simple key/value pairs (the key being anAspect.name with values of AspectContent).  These aspects caneither be **built-in** (from core **feature-u**), or **extensions**.Here is an example:```jsexport default createFeature({  name:     'featureA', // builtin aspect (name must be unique across all features within app)  enabled:  true,       // builtin aspect enabling/disabling feature  fassets: {            // builtin aspect promoting Public Face - Cross Feature Communication    define: {      'api.openA':  () => ...,      'api.closeA': () => ...,    },  },  appWillStart: (...) => ..., // builtin aspect (Application Life Cycle Hook)  appDidStart:  (...) => ..., // ditto  reducer: ..., // feature redux reducer (extended aspect from the feature-redux plugin)  logic:   ..., // feature logic modules (extended aspect from the feature-redux-logic plugin)});```For more information, please refer to{{book.guide.detail_featureAndAspect}}.
+The Feature object is merely a lightweight container that holds{{book.api.AspectContent}} of interest to **feature-u**.Each feature within an application promotes a Feature object (using{{book.api.createFeature}}) which catalogs the aspects of that feature.Ultimately, all Feature objects are consumed by{{book.api.launchApp}}.Feature content are simple key/value pairs (the key being anAspect.name with values of AspectContent).  These aspects caneither be **built-in** (from core **feature-u**), or **extensions**.Here is an example:```jsexport default createFeature({  name:     'featureA', // builtin aspect (name must be unique across all features within app)  enabled:  true,       // builtin aspect enabling/disabling feature  fassets: {            // builtin aspect promoting Public Face - Cross Feature Communication    define: {      'api.openA':  () => ...,      'api.closeA': () => ...,    },  },  appWillStart: (...) => ..., // builtin aspect (Application Life Cycle Hook)  appInit:      (...) => ..., // ditto // ?? NEW: appInit: appInitCB  appDidStart:  (...) => ..., // ditto  reducer: ..., // feature redux reducer (extended aspect from the feature-redux plugin)  logic:   ..., // feature logic modules (extended aspect from the feature-redux-logic plugin)});```For more information, please refer to{{book.guide.detail_featureAndAspect}}.
 
 
 <br/><br/><br/>

@@ -41,7 +41,10 @@ let executionOrder = 1; // running counter of execution order of life-cycle-hook
  * 
  * Please refer to {{book.guide.detail_reactRegistration}} for more
  * details and complete examples.
-
+ *
+ * ?? NEW:
+ * @param {showStatusCB} [showStatus] the callback hook ?? describe here
+ *
  * @return {Fassets} the Fassets object used in 
  * cross-feature-communication.
  *
@@ -50,6 +53,7 @@ let executionOrder = 1; // running counter of execution order of life-cycle-hook
 export default function launchApp({aspects=[],
                                    features,
                                    registerRootAppElm,
+                                   showStatus=showStatusFallback,
                                    ...unknownArgs}={}) {
 
   logf('STARTING: - your application is now starting up');
@@ -71,6 +75,11 @@ export default function launchApp({aspects=[],
   check(registerRootAppElm,             'registerRootAppElm is required');
   check(isFunction(registerRootAppElm), 'registerRootAppElm must be a function');
 
+  // ?? NEW
+  // ... showStatus
+  check(showStatus,             'showStatus is required');
+  check(isFunction(showStatus), 'showStatus must be a function');
+
   // ... unrecognized named parameter
   const unknownArgKeys = Object.keys(unknownArgs);
   check(unknownArgKeys.length === 0,  `unrecognized named parameter(s): ${unknownArgKeys}`);
@@ -78,10 +87,10 @@ export default function launchApp({aspects=[],
   // ... unrecognized positional parameter
   check(arguments.length === 1,  'unrecognized positional parameters (only named parameters can be specified)');
 
-  // peform "Aspect" property validation
+  // perform "Aspect" property validation
   op.helper.validateAspectProperties(aspects);
 
-  // peform "Feature" property validation
+  // perform "Feature" property validation
   op.alch.validateFeatureContent(features, aspectMap);
 
   // prune to activeFeatures, insuring all feature.names are unique
@@ -123,10 +132,21 @@ export default function launchApp({aspects=[],
     registerRootAppElm(rootAppElm, fassets);
 //}, 0);
 
-  // apply Feature.appDidStart() life-cycle hook
-  op.flch.appDidStart(fassets, activeFeatures, aspects);
+  // ?? NEW
+  // apply Feature.appInit() life-cycle hook
+  op.flch.appInit(fassets, activeFeatures, aspects, showStatus)
+    .then( () => {
 
-  logf('COMPLETE: your application has now started');
+      // ... once all async processes of feature.appInit() have completed,
+      //     continue on with our launchApp() process
+
+      // ?? TEST THIS: this is the first time that the appDidStart() hook happens AFTER fassets are already returned
+      //               ?? should be OK but test it out
+      // apply Feature.appDidStart() life-cycle hook
+      op.flch.appDidStart(fassets, activeFeatures, aspects);
+
+      logf('COMPLETE: your application has now started');
+    });
 
   // expose our new App object (used in feature cross-communication)
   return fassets;
@@ -172,6 +192,14 @@ launchApp.diag = {
  *
  * @return void
  */
+
+
+
+//***
+//*** Specification: showStatusCB
+//***
+
+// ?? DO THIS
 
 
 
@@ -251,7 +279,7 @@ op.alch.genesis = function(aspects) {
 
 op.helper.validateAspectProperties = function(aspects) {
 
-  // peform "Aspect" property validation
+  // perform "Aspect" property validation
   // NOTE 1: This is done here rather than createAspect(), because 
   //         all Aspects need to be expanded (i.e. imported) for any extendAspectProperty() to be executed)
   //         ... this will have been done by the time launchApp() is executed!!
@@ -263,7 +291,7 @@ op.helper.validateAspectProperties = function(aspects) {
     for (const propName in aspect) { // iterate over the aspects props
 
       // handle unrecognized Aspect.property
-      // ... NOTE: Aspect extended propertis have already been added to this isAspectProperty() list
+      // ... NOTE: Aspect extended properties have already been added to this isAspectProperty() list
       //           via extendAspectProperty() 
       //               executed early within the extending Aspect (i.e. in genesis())
       //               SO it is in the list at this time!!
@@ -294,7 +322,7 @@ op.alch.validateFeatureContent = function(features, aspectMap) {
   const hookSummary = aspects.map( (aspect) => `\n  Aspect.name:${aspect.name}${aspect.validateFeatureContent ? ' <-- defines: validateFeatureContent()' : ''}` );
   logf(`aspect-life-cycle-hook ... PROCESSING: Aspect.validateFeatureContent() ... ${hookCount} hooks:${hookSummary}`);
 
-  // peform "Feature" property validation
+  // perform "Feature" property validation
   // NOTE 1: This is done here rather than createFeature(), because it's the aspect's
   //         responsibility, and this is the spot where we have aspect context.
   // NOTE 2: The original source of this error is in createFeature(), 
@@ -308,7 +336,7 @@ op.alch.validateFeatureContent = function(features, aspectMap) {
       // ... built-ins are validated by createFeature()
       // ... these extra props will be processed by an Aspect
       //     ... an error condition if if no Aspect is registered to handle it
-      // ... NOTE: Aspect extended propertis have already been added to this isFeatureProperty() list
+      // ... NOTE: Aspect extended properties have already been added to this isFeatureProperty() list
       //           via extendFeatureProperty() 
       //               executed early within the extending Aspect (i.e. in genesis())
       //               SO it is in the list at this time!!
@@ -363,9 +391,9 @@ op.helper.pruneActiveFeatures = function(features) {
 };
 
 
-//*------------------------------------------------------------------------------------
+//*--------------------------------------------------------------------------------------
 //* aspect-life-cycle-hook: expandFeatureContent(fassets, activeFeatures, aspects): void
-//*------------------------------------------------------------------------------------
+//*--------------------------------------------------------------------------------------
 
 op.alch.expandFeatureContent = function(fassets, activeFeatures, aspects) {
 
@@ -392,7 +420,7 @@ op.alch.expandFeatureContent = function(fassets, activeFeatures, aspects) {
         // perform the expansion
         if (aspect.expandFeatureContent) {
           // aspect wishes to do this
-          // ... a simple process, BUT provides the hook to do more (ex: reducer tranfer of slice)
+          // ... a simple process, BUT provides the hook to do more (ex: reducer transfer of slice)
           logf(`resolving expandWithFassets() [by aspect-life-cycle-hook Aspect.name:${aspect.name}'s Aspect.expandFeatureContent()] ON Feature.name:${feature.name}'s Feature.${aspect.name} AspectContent`);
 
           errMsg = aspect.expandFeatureContent(fassets, feature);
@@ -416,9 +444,9 @@ op.alch.expandFeatureContent = function(fassets, activeFeatures, aspects) {
 
 
 
-//*--------------------------------------------------------------------------------------
+//*----------------------------------------------------------------------------------------
 //* aspect-life-cycle-hook: assembleFeatureContent(fassets, activeFeatures, aspects): void
-//*--------------------------------------------------------------------------------------
+//*----------------------------------------------------------------------------------------
 
 op.alch.assembleFeatureContent = function(fassets, activeFeatures, aspects) {
 
@@ -440,9 +468,9 @@ op.alch.assembleFeatureContent = function(fassets, activeFeatures, aspects) {
 
 
 
-//*-----------------------------------------------------------------------
+//*-------------------------------------------------------------------------
 //* aspect-life-cycle-hook: assembleAspectResources(fassets, aspects): void
-//*-----------------------------------------------------------------------
+//*-------------------------------------------------------------------------
 
 op.alch.assembleAspectResources = function(fassets, aspects) {
 
@@ -466,9 +494,9 @@ op.alch.assembleAspectResources = function(fassets, aspects) {
 
 
 
-//*----------------------------------------------------------------------
+//*------------------------------------------------------------------------
 //* helper: defineRootAppElm(fassets, activeFeatures, aspects): rootAppElm
-//*----------------------------------------------------------------------
+//*------------------------------------------------------------------------
 
 op.helper.defineRootAppElm = function(fassets, activeFeatures, aspects) {
 
@@ -495,7 +523,7 @@ op.helper.defineRootAppElm = function(fassets, activeFeatures, aspects) {
 
   // NOTE: We do NOT validate rootAppElm to insure it is non-null!
   //       - at first glance it would appear that a null rootAppElm would render NOTHING
-  //       - HOWEVER, ULTIMATLY the app code (found in the registerRootAppElm() hook) 
+  //       - HOWEVER, ULTIMATELY the app code (found in the registerRootAppElm() hook) 
   //         can display whatever it wants ... a given app may have chosen to inject it's own rootAppElm
   logf('defining-rootAppElm ... complete, rootAppElm: ', logf.elm2html(rootAppElm));
   return rootAppElm;
@@ -504,9 +532,9 @@ op.helper.defineRootAppElm = function(fassets, activeFeatures, aspects) {
 
 
 
-//*--------------------------------------------------------------------------------------
+//*----------------------------------------------------------------------------------------
 //* aspect-life-cycle-hook: initialRootAppElm(fassets, aspects, curRootAppElm): rootAppElm
-//*--------------------------------------------------------------------------------------
+//*----------------------------------------------------------------------------------------
 
 op.alch.initialRootAppElm = function(fassets, aspects, curRootAppElm) {
 
@@ -542,9 +570,9 @@ op.alch.initialRootAppElm = function(fassets, aspects, curRootAppElm) {
 
 
 
-//*-----------------------------------------------------------------------------------------
+//*-------------------------------------------------------------------------------------------
 //* feature-life-cycle-hook: appWillStart(fassets, activeFeatures, curRootAppElm): rootAppElm
-//*-----------------------------------------------------------------------------------------
+//*-------------------------------------------------------------------------------------------
 
 op.flch.appWillStart = function(fassets, activeFeatures, curRootAppElm) {
 
@@ -583,9 +611,9 @@ op.flch.appWillStart = function(fassets, activeFeatures, curRootAppElm) {
 
 
 
-//*-------------------------------------------------------------------------------------
+//*---------------------------------------------------------------------------------------
 //* aspect-life-cycle-hook: injectRootAppElm(fassets, aspects, curRootAppElm): rootAppElm
-//*-------------------------------------------------------------------------------------
+//*---------------------------------------------------------------------------------------
 
 op.alch.injectRootAppElm = function(fassets, aspects, curRootAppElm) {
 
@@ -621,9 +649,9 @@ op.alch.injectRootAppElm = function(fassets, aspects, curRootAppElm) {
 
 
 
-//*----------------------------------------------------------------------------
+//*------------------------------------------------------------------------------
 //* feature-life-cycle-hook: appDidStart(fassets, activeFeatures, aspects): void
-//*----------------------------------------------------------------------------
+//*------------------------------------------------------------------------------
 
 op.flch.appDidStart = function(fassets, activeFeatures, aspects) {
 
@@ -651,3 +679,188 @@ op.flch.appDidStart = function(fassets, activeFeatures, aspects) {
     }
   });
 };
+
+
+
+// ?? move this above appDidStart
+//*-----------------------------------------------------------------------------------------
+//* feature-life-cycle-hook: appInit(fassets, activeFeatures, aspects, showStatus): promise
+//*-----------------------------------------------------------------------------------------
+
+// ?? NEW: appInit
+// ?? TEST THIS
+
+op.flch.appInit = function(fassets, activeFeatures, aspects, showStatus) {
+
+  // wrap entire process
+  // ... will resolve when ALL feature.appInit() have completed!
+  return new Promise( (resolve, reject) => {
+
+    // maintain: running counter of execution order of life-cycle-hooks (unit-test related)
+    // ?? DONE: TEST: work out test details
+    op.flch.appInit.executionOrder = executionOrder++;
+    
+    // log summary
+    // ?? TEST: visually see this work
+    const hookCount   = activeFeatures.reduce( (count, feature) => feature.appInit ? count+1 : count, 0);
+    const hookSummary = activeFeatures.map( (feature) => `\n  Feature.name:${feature.name}${feature.appInit ? ' <-- defines: appInit()' : ''}` );
+    // ?? TEMPORARY .force for INITIAL debugging
+    logf.force(`feature-life-cycle-hook ... PROCESSING: Feature.appInit() ... ${hookCount} hooks:${hookSummary}`);
+    
+    // locate the redux app store (if any) from our aspects
+    // ... used as a convenience to pass appState/dispatch to appInit()
+    // ... we define this from the cross-aspect redux method: Aspect.getReduxStore()
+    const reduxAspect = aspects.find( aspect => aspect.getReduxStore ? true : false );
+    const [appState, dispatch] = reduxAspect 
+                               ? [reduxAspect.getReduxStore().getState(), reduxAspect.getReduxStore().dispatch]
+                               : [undefined, undefined];
+    
+    // invoke Feature.appInit() life-cycle hooks
+    // ... accomplished in AsyncInit class
+    const asyncInits = activeFeatures.reduce( (accum, feature) => {
+      if (feature.appInit) {
+        accum.push( new AsyncInit(feature, fassets, appState, dispatch, showStatus, monitorNextAsyncInit) );
+      }
+      return accum;
+    }, []);
+    
+    // monitor the FIRST incomplete AsyncInit
+    monitorNextAsyncInit();
+    
+    // actively monitor the next incomplete AsyncInit
+    function monitorNextAsyncInit() {
+    
+      // monitor the next incomplete AsyncInit
+      const nextIncompleteAsyncInit = asyncInits.find( (asyncInit) => !asyncInit.complete );
+      if (nextIncompleteAsyncInit) {
+        nextIncompleteAsyncInit.monitor();
+      }
+    
+      // otherwise (if there are NO MORE), we are done
+      else {
+        // clear status notification to user
+        showStatus(''); // ... use '', just in case we are invoking app-supplied showStatus()
+
+        // ALL feature.appInit() have completed!
+        // ... resolve our promise
+        return resolve('ALL feature.appInit() have completed!');
+      }
+    }
+
+  }); // end of ... promise
+
+};
+
+// the default showStatus callback ... merely logs status messages
+function showStatusFallback(msg='', err=null) {
+  // ??$$ DONE: logf.force()
+  const postMsg = `STATUS CHANGE (from appInit() life cycle hook): '${msg}'`;
+  if (err) {
+    logf.force(`${postMsg} WITH ERROR: ${err}`, err);
+  }
+  else {
+    logf.force(postMsg);
+  }
+}
+
+// our helper class to launch/monitor async processes in feature.appInit()
+class AsyncInit {
+
+  // class constructor
+  constructor(feature,       // feature KNOWN TO HAVE appInit() hook
+              fassets,
+              appState,
+              dispatch,
+              showStatusApp, // the app-specific showStatus() callback function
+              monitorNextAsyncInit) {
+
+    // carve out instance fields here
+    this.feature         = feature;       // the feature object KNOWN to have appInit() hook
+    this.showStatusApp   = showStatusApp; // the app-specific showStatus() callback function
+    this.monitored       = false;         // is process being monitored by our external tracker
+    this.complete        = false;         // is process complete (either with or without error)
+                                          // the process's current status message (defaulted to feature name)
+    this.statusMsg       = `initializing feature: ${feature.name}`;
+    this.err             = null;          // the error (if any) from this AsyncInit process
+
+    // bind our showStatus() instance method, so it can be used as a direct function
+    this.showStatus = this.showStatus.bind(this);
+
+    // invoke the feature.appInit() hook
+    // ?? TEMPORARY .force for INITIAL debugging
+    logf.force(`feature-life-cycle-hook ... Feature.name:${feature.name} ... invoking it's defined Feature.appInit()`);
+    let optionalPromise = null;
+    try {
+      optionalPromise = feature.appInit({showStatus: this.showStatus,
+                                         fassets,
+                                         appState,
+                                         dispatch});
+    }
+    catch(err) {
+      this.err = err;
+    }
+
+    // monitor promise completion (when returned)
+    if (optionalPromise && optionalPromise.then) { // a promise was returned
+
+      optionalPromise.then( () => { // feature.appInit() finished successfully
+        // ??$$ DONE: logf()
+        // ?? TEMPORARY .force for INITIAL debugging
+        logf.force(`AsyncInit: finished async process for feature: ${this.feature.name} - '${this.statusMsg}'`);
+
+        // consider this a completion (with lack of err)
+        this.complete = true;
+
+        // now monitor the next AsyncInit process (if any)
+        monitorNextAsyncInit();
+      })
+
+      .catch( (err) => { // feature.appInit() finished WITH error
+        // ??$$ DONE: logf()
+        // ?? TEMPORARY .force for INITIAL debugging
+        logf.force(`AsyncInit: finished async process for feature: ${this.feature.name} - '${this.statusMsg}' WITH ERROR: ${err}`, err);
+
+        // communicate error condition to user
+        // NOTE: this retains err in self (in a "sticky" way)
+        this.showStatus(this.statusMsg, err);
+      });
+    }
+
+    // when NO promise was returned, we consider it complete "from the start"
+    // ... unless it errored out
+    else {
+      if (!this.err) {
+        this.complete = true;
+      }
+    }
+  }
+
+  // mark this AsyncInit as now being actively monitored (by our external tracking process)
+  monitor() {
+    // mark self as being actively monitored
+    this.monitored = true;
+
+    // communicate to user what we are waiting for
+    // ... and error condition (if previously errored out)
+    this.showStatus(this.statusMsg, this.err);
+  }
+
+  // our showStatus(), used by the feature.appInit() hook
+  showStatus(msg='', err=null) {
+
+    // retain the last known msg for this feature's AsyncInit
+    this.statusMsg = msg;
+
+    // retain the last known error for this feature's AsyncInit
+    // ... done so in a "sticky" way so as to NOT clobber existing error
+    if (err) { // retain latest error (when supplied) ... retaining prior err (when NOT supplied)
+      this.err = err;
+    }
+
+    // if our process is being actively monitored, pass through to the app-specific callback function
+    if (this.monitored) {
+      this.showStatusApp(msg, this.err);
+    }
+  }
+
+}
