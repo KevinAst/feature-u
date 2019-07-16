@@ -40,14 +40,17 @@ import logf        from '../util/logf';
  * and/or optionally supplement the app's top-level content (using a
  * non-null return) _(please refer to: {{book.guide.appWillStart}})_.
  *
- * ?? NEW: appInit: appInitCB
- * @param {appInitCB} [appInit] an optional ?? describe here
+ * @param {appInitCB} [appInit] an optional
+ * {{book.guide.appLifeCycle}} invoked one time, later in the app
+ * startup process.  This life-cycle hook supports blocking async
+ * initialization (by simply returning a promise) _(please refer to:
+ * {{book.guide.appInit}})_.
  *
  * @param {appDidStartCB} [appDidStart] an optional
  * {{book.guide.appLifeCycle}} invoked one time, immediately after the
  * app has started.  Because the app is up-and-running at this time,
  * you have access to the appState and the dispatch() function
- * ... assuming you are using redux (when detected by feature-u's
+ * ... assuming you are using redux (when detected by **feature-u**'s
  * plugable aspects) _(please refer to: {{book.guide.appDidStart}})_.
  * 
  * @param {AspectContent} [extendedAspect] additional aspects, as
@@ -66,7 +69,7 @@ export default function createFeature({name,
                                        fassets,
 
                                        appWillStart,
-                                       appInit,       // ?? NEW: appInit: appInitCB
+                                       appInit,
                                        appDidStart,
 
 
@@ -89,7 +92,6 @@ export default function createFeature({name,
     check(isFunction(appWillStart), 'appWillStart (when supplied) must be a function');
   }
 
-  // ?? NEW: appInit: appInitCB
   // ... appInit
   if (appInit) {
     check(isFunction(appInit), 'appInit (when supplied) must be a function');
@@ -112,7 +114,7 @@ export default function createFeature({name,
     fassets,
 
     appWillStart,
-    appInit, // ?? NEW: appInit: appInitCB
+    appInit,
     appDidStart,
 
     ...extendedAspect,
@@ -143,7 +145,7 @@ const validFeatureProps = {
   publicFace:      'builtin',  // OBSOLETE as of feature-u@1 ... still registered for the sole purpose of generating more specific error (see: createFassets.js)
   fassets:         'builtin',
   appWillStart:    'builtin',
-  appInit:         'builtin', // ?? NEW: appInit: appInitCB
+  appInit:         'builtin',
   appDidStart:     'builtin',
 
 };
@@ -240,7 +242,7 @@ export function extendFeatureProperty(name, owner) {
  *   },
  * 
  *   appWillStart: (...) => ..., // builtin aspect (Application Life Cycle Hook)
- *   appInit:      (...) => ..., // ditto // ?? NEW: appInit: appInitCB
+ *   appInit:      (...) => ..., // ditto
  *   appDidStart:  (...) => ..., // ditto
  * 
  *   reducer: ..., // feature redux reducer (extended aspect from the feature-redux plugin)
@@ -258,19 +260,20 @@ export function extendFeatureProperty(name, owner) {
 //***
 
 /**
- * An optional {{book.guide.appLifeCycle}} invoked one time, just
- * before the app starts up.
+ * An optional {{book.guide.appLifeCycle}} invoked one time, very
+ * early in the app startup process.
  *
- * This life-cycle hook can do any type of initialization. For
- * example: initialize FireBase.
+ * This life-cycle hook can do any type of general app-specific
+ * initialization _(for example initializing a **PWA service
+ * worker**)_.
  *
- * In addition, it can optionally supplement the app's top-level root
- * element (i.e. react component instance).  Any significant return
- * (truthy) is interpreted as the app's new rootAppElm.
- * **IMPORTANT**: When this is used, the supplied curRootAppElm MUST
- * be included as part of this definition (accommodating the
- * accumulative process of other feature injections)! **More information 
- * is available at {{book.guide.injectingDomContent}}**
+ * In addition, it can optionally inject static content in the app's
+ * DOM root.  Any return is interpreted as the app's new `rootAppElm`
+ * _(an accumulative process)_.  **IMPORTANT**: When this is used, the
+ * supplied `curRootAppElm` MUST be included as part of this
+ * definition (accommodating the accumulative process of other feature
+ * injections)! **More information is available at
+ * {{book.guide.injectingDomContent}}**
  *
  * For more information _(with examples)_, please refer to the
  * Guide's {{book.guide.appWillStart}}.
@@ -284,8 +287,9 @@ export function extendFeatureProperty(name, owner) {
  * @param {reactElm} curRootAppElm - the current react app element
  * root.
  *
- * @return {reactElm} optionally, new top-level content (which in turn
- * must contain the supplied curRootAppElm), or falsy for unchanged.
+ * @return {reactElm|void} optionally, new top-level content (which in turn
+ * must contain the supplied `curRootAppElm`).  Use a void return
+ * when top-level content is unchanged.
  */
 
 
@@ -293,7 +297,58 @@ export function extendFeatureProperty(name, owner) {
 //*** Specification: appInitCB
 //***
 
-// ?? define this
+/**
+ * An optional {{book.guide.appLifeCycle}} invoked one time, later in
+ * the app startup process.  It supports blocking async
+ * initialization.
+ *
+ * This hook is invoked when the app is **nearly up-and-running**.
+ * 
+ * - The {{book.guide.detail_reactRegistration}} has already occurred
+ *   _(via the {{book.api.registerRootAppElmCB}} callback)_.  As a
+ *   result, you can rely on utilities that require an app-specific
+ *   `rootAppElm` to exist.
+ * 
+ * - You have access to the `appState` and `dispatch()` function,
+ *   assuming you are using {{book.ext.redux}} (when detected by
+ *   **feature-u**'s plugable aspects).
+ * 
+ * Just like the {{book.api.appWillStartCB}} hook, you may perform any
+ * type of general initialization that is required by your feature.
+ * 
+ * However the **hallmark of this hook** is **you can block for any
+ * asynchronous initialization to complete**.  By simply returning a
+ * promise, **feature-u** will wait for the process to complete.
+ * 
+ * The user is kept advised of any long-running async processes.  By
+ * default an `'initializing feature: {feature.name}'` message is
+ * used, but you can customize it through the supplied
+ * {{book.api.showStatusCB}} function parameter.
+ *
+ * For more info with examples, please see the Guide's
+ * {{book.guide.appInit}}.
+ *
+ * **Please Note** this function uses named parameters.
+ *
+ * @callback appInitCB
+ * 
+ * @param {showStatusCB} showStatus the function that (when invoked)
+ * will communicate a blocking "persistent" status message to the end
+ * user.
+ * 
+ * @param {Fassets} fassets the Fassets object used in cross-feature-communication.
+ * 
+ * @param {Any} [appState] - the redux top-level app state (when redux
+ * is in use).
+ * 
+ * @param {function} [dispatch] - the redux dispatch() function (when
+ * redux is in use).
+ *
+ * @return {Promise|void} optionally, a promise (for asynchronous
+ * processes) - and feature-u will wait for the process to complete.
+ * Use a void return (for synchronous processes) - and no blocking
+ * will occur.
+ */
 
 
 //***
@@ -302,11 +357,15 @@ export function extendFeatureProperty(name, owner) {
 
 /**
  * An optional {{book.guide.appLifeCycle}} invoked one time,
- * immediately after the app has started.
+ * once the app startup process has completed.
+ * 
+ * This life-cycle hook can be used to trigger **"the app is
+ * running"** events.  A typical usage is to **"kick start"** some
+ * early application logic.
  *
  * Because the app is up-and-running at this time, you have access to
  * the `appState` and `dispatch()` function ... assuming you are using
- * {{book.ext.redux}} (when detected by feature-u's plugable aspects).
+ * {{book.ext.redux}} (when detected by **feature-u**'s plugable aspects).
  *
  * For more info with examples, please see the Guide's
  * {{book.guide.appDidStart}}.

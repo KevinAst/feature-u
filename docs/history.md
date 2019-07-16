@@ -114,14 +114,12 @@ Release           | What                                   | *When*
 **NOTE**: This release is a **non-breaking change** _(i.e. no prior
 API was impacted)_.
 
-1. **Added**: A new `Feature.appInit()` Application Life Cycle Hook was added, supporting
-   blocking async initialization.
-
-   ?? more more more -AND- ?? links
+1. **Added**: A new {{book.guide.appInitCB}} Application Life Cycle
+   Hook was added, supporting blocking async initialization.
 
 2. **Docs**: Documentation improvements include:
 
-   - ??
+   - ?? is there anything in this category?
 
 
 
@@ -205,7 +203,7 @@ significance of this hooks enhancement.
 
      This is a **must read** to get you "up to speed" quickly!
 
-   - All diagrams are now styled to be visiable in all themes _(including
+   - All diagrams are now styled to be visible in all themes _(including
      dark mode)_.
 
    - All code samples utilize a feature.js module _(previously

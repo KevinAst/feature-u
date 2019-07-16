@@ -1,3 +1,4 @@
+// ?? FINISH UPDATE BY DOING UNIT TESTS
 import launchApp, {op}  from '../launchApp';  // module under test INTERNAL 
 import {createFeature}  from '../..';
 
@@ -56,7 +57,7 @@ describe('launchApp() verify execution order of life cycle hooks (both Aspects a
 
   beforeAll(() => {
     // execute launchApp()
-    // ... ALOWING it to populate the executionOrder property of each life-cycle helper function
+    // ... ALLOWING it to populate the executionOrder property of each life-cycle helper function
     launchApp({
       // NO Aspects 
       features: [

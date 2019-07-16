@@ -42,8 +42,11 @@ let executionOrder = 1; // running counter of execution order of life-cycle-hook
  * Please refer to {{book.guide.detail_reactRegistration}} for more
  * details and complete examples.
  *
- * ?? NEW:
- * @param {showStatusCB} [showStatus] the callback hook ?? describe here
+ * @param {showStatusCB} [showStatus] an optional callback hook that
+ * communicates a blocking "persistent" status message to the end
+ * user.
+ *
+ * Please refer to {{book.api.showStatusCB}} for more information.
  *
  * @return {Fassets} the Fassets object used in 
  * cross-feature-communication.
@@ -75,7 +78,6 @@ export default function launchApp({aspects=[],
   check(registerRootAppElm,             'registerRootAppElm is required');
   check(isFunction(registerRootAppElm), 'registerRootAppElm must be a function');
 
-  // ?? NEW
   // ... showStatus
   check(showStatus,             'showStatus is required');
   check(isFunction(showStatus), 'showStatus must be a function');
@@ -132,7 +134,6 @@ export default function launchApp({aspects=[],
     registerRootAppElm(rootAppElm, fassets);
 //}, 0);
 
-  // ?? NEW
   // apply Feature.appInit() life-cycle hook
   op.flch.appInit(fassets, activeFeatures, aspects, showStatus)
     .then( () => {
@@ -140,8 +141,6 @@ export default function launchApp({aspects=[],
       // ... once all async processes of feature.appInit() have completed,
       //     continue on with our launchApp() process
 
-      // ?? TEST THIS: this is the first time that the appDidStart() hook happens AFTER fassets are already returned
-      //               ?? should be OK but test it out
       // apply Feature.appDidStart() life-cycle hook
       op.flch.appDidStart(fassets, activeFeatures, aspects);
 
@@ -199,8 +198,36 @@ launchApp.diag = {
 //*** Specification: showStatusCB
 //***
 
-// ?? DO THIS
-
+/**
+ * The optional {{book.api.launchApp}} callback hook that communicates
+ * a blocking "persistent" status message to the end user.
+ *
+ * These status messages originate from the blocking that occurs in
+ * the asynchronous processes managed by the {{book.guide.appInitCB}}
+ * life-cycle-hook.
+ *
+ * By design **feature-u** has no ability to manifest messages to the
+ * end user, because this is very app-specific in styling and other
+ * heuristics.  By default (when **NO** `showStatus` parameter is
+ * supplied, **feature-u** will simply **console log** these messages.
+ *
+ * A typical manifestation of this callback is to display a running
+ * persistent Splash Screen, seeded with the supplied message.
+ *
+ * Please refer to {{book.guide.appInitCB}} for more details and
+ * examples.
+ *
+ * @callback showStatusCB
+ * 
+ * @param {string} [msg] - the "persistent" message to display.  When
+ * NO message is supplied (i.e. `''`), **all** user notifications
+ * should be cleared _(for example, take the Splash Screen down)_.
+ * 
+ * @param {Error} [err] - an optional error to communicate to the
+ * user.
+ *
+ * @return void
+ */
 
 
 //***
@@ -649,46 +676,11 @@ op.alch.injectRootAppElm = function(fassets, aspects, curRootAppElm) {
 
 
 
-//*------------------------------------------------------------------------------
-//* feature-life-cycle-hook: appDidStart(fassets, activeFeatures, aspects): void
-//*------------------------------------------------------------------------------
-
-op.flch.appDidStart = function(fassets, activeFeatures, aspects) {
-
-  // maintain: running counter of execution order of life-cycle-hooks (unit-test related)
-  op.flch.appDidStart.executionOrder = executionOrder++;
-
-  // log summary
-  const hookCount   = activeFeatures.reduce( (count, feature) => feature.appDidStart ? count+1 : count, 0);
-  const hookSummary = activeFeatures.map( (feature) => `\n  Feature.name:${feature.name}${feature.appDidStart ? ' <-- defines: appDidStart()' : ''}` );
-  logf(`feature-life-cycle-hook ... PROCESSING: Feature.appDidStart() ... ${hookCount} hooks:${hookSummary}`);
-
-  // locate the redux app store (if any) from our aspects
-  // ... used as a convenience to pass appState/dispatch to appDidStart()
-  // ... we define this from the cross-aspect redux method: Aspect.getReduxStore()
-  const reduxAspect = aspects.find( aspect => aspect.getReduxStore ? true : false );
-  const [appState, dispatch] = reduxAspect 
-                                ? [reduxAspect.getReduxStore().getState(), reduxAspect.getReduxStore().dispatch]
-                                : [undefined, undefined];
-
-  // apply Feature.appDidStart() life-cycle hooks
-  activeFeatures.forEach( feature => {
-    if (feature.appDidStart) {
-      logf(`feature-life-cycle-hook ... Feature.name:${feature.name} ... invoking it's defined Feature.appDidStart()`);
-      feature.appDidStart({fassets, appState, dispatch});
-    }
-  });
-};
-
-
-
-// ?? move this above appDidStart
 //*-----------------------------------------------------------------------------------------
 //* feature-life-cycle-hook: appInit(fassets, activeFeatures, aspects, showStatus): promise
 //*-----------------------------------------------------------------------------------------
 
-// ?? NEW: appInit
-// ?? TEST THIS
+// ?? NEW: appInit ... ?? UNIT TEST THIS
 
 op.flch.appInit = function(fassets, activeFeatures, aspects, showStatus) {
 
@@ -701,11 +693,10 @@ op.flch.appInit = function(fassets, activeFeatures, aspects, showStatus) {
     op.flch.appInit.executionOrder = executionOrder++;
     
     // log summary
-    // ?? TEST: visually see this work
+    // ?? DONE: TEST: visually see this work
     const hookCount   = activeFeatures.reduce( (count, feature) => feature.appInit ? count+1 : count, 0);
     const hookSummary = activeFeatures.map( (feature) => `\n  Feature.name:${feature.name}${feature.appInit ? ' <-- defines: appInit()' : ''}` );
-    // ?? TEMPORARY .force for INITIAL debugging
-    logf.force(`feature-life-cycle-hook ... PROCESSING: Feature.appInit() ... ${hookCount} hooks:${hookSummary}`);
+    logf(`feature-life-cycle-hook ... PROCESSING: Feature.appInit() ... ${hookCount} hooks:${hookSummary}`);
     
     // locate the redux app store (if any) from our aspects
     // ... used as a convenience to pass appState/dispatch to appInit()
@@ -753,7 +744,6 @@ op.flch.appInit = function(fassets, activeFeatures, aspects, showStatus) {
 
 // the default showStatus callback ... merely logs status messages
 function showStatusFallback(msg='', err=null) {
-  // ??$$ DONE: logf.force()
   const postMsg = `STATUS CHANGE (from appInit() life cycle hook): '${msg}'`;
   if (err) {
     logf.force(`${postMsg} WITH ERROR: ${err}`, err);
@@ -787,8 +777,7 @@ class AsyncInit {
     this.showStatus = this.showStatus.bind(this);
 
     // invoke the feature.appInit() hook
-    // ?? TEMPORARY .force for INITIAL debugging
-    logf.force(`feature-life-cycle-hook ... Feature.name:${feature.name} ... invoking it's defined Feature.appInit()`);
+    logf(`feature-life-cycle-hook ... Feature.name:${feature.name} ... invoking it's defined Feature.appInit()`);
     let optionalPromise = null;
     try {
       optionalPromise = feature.appInit({showStatus: this.showStatus,
@@ -804,9 +793,7 @@ class AsyncInit {
     if (optionalPromise && optionalPromise.then) { // a promise was returned
 
       optionalPromise.then( () => { // feature.appInit() finished successfully
-        // ??$$ DONE: logf()
-        // ?? TEMPORARY .force for INITIAL debugging
-        logf.force(`AsyncInit: finished async process for feature: ${this.feature.name} - '${this.statusMsg}'`);
+        logf(`AsyncInit: finished async process for feature: ${this.feature.name} - '${this.statusMsg}'`);
 
         // consider this a completion (with lack of err)
         this.complete = true;
@@ -816,9 +803,7 @@ class AsyncInit {
       })
 
       .catch( (err) => { // feature.appInit() finished WITH error
-        // ??$$ DONE: logf()
-        // ?? TEMPORARY .force for INITIAL debugging
-        logf.force(`AsyncInit: finished async process for feature: ${this.feature.name} - '${this.statusMsg}' WITH ERROR: ${err}`, err);
+        logf(`AsyncInit: finished async process for feature: ${this.feature.name} - '${this.statusMsg}' WITH ERROR: ${err}`, err);
 
         // communicate error condition to user
         // NOTE: this retains err in self (in a "sticky" way)
@@ -864,3 +849,36 @@ class AsyncInit {
   }
 
 }
+
+
+
+//*------------------------------------------------------------------------------
+//* feature-life-cycle-hook: appDidStart(fassets, activeFeatures, aspects): void
+//*------------------------------------------------------------------------------
+
+op.flch.appDidStart = function(fassets, activeFeatures, aspects) {
+
+  // maintain: running counter of execution order of life-cycle-hooks (unit-test related)
+  op.flch.appDidStart.executionOrder = executionOrder++;
+
+  // log summary
+  const hookCount   = activeFeatures.reduce( (count, feature) => feature.appDidStart ? count+1 : count, 0);
+  const hookSummary = activeFeatures.map( (feature) => `\n  Feature.name:${feature.name}${feature.appDidStart ? ' <-- defines: appDidStart()' : ''}` );
+  logf(`feature-life-cycle-hook ... PROCESSING: Feature.appDidStart() ... ${hookCount} hooks:${hookSummary}`);
+
+  // locate the redux app store (if any) from our aspects
+  // ... used as a convenience to pass appState/dispatch to appDidStart()
+  // ... we define this from the cross-aspect redux method: Aspect.getReduxStore()
+  const reduxAspect = aspects.find( aspect => aspect.getReduxStore ? true : false );
+  const [appState, dispatch] = reduxAspect 
+                                ? [reduxAspect.getReduxStore().getState(), reduxAspect.getReduxStore().dispatch]
+                                : [undefined, undefined];
+
+  // apply Feature.appDidStart() life-cycle hooks
+  activeFeatures.forEach( feature => {
+    if (feature.appDidStart) {
+      logf(`feature-life-cycle-hook ... Feature.name:${feature.name} ... invoking it's defined Feature.appDidStart()`);
+      feature.appDidStart({fassets, appState, dispatch});
+    }
+  });
+};

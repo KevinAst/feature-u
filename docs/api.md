@@ -69,17 +69,20 @@ HoC.</p>
 starts up.  This life-cycle hook can do any type of initialization,
 and/or optionally supplement the app&#39;s top-level content (using a
 non-null return) <em>(please refer to: {{book.guide.appWillStart}})</em>.</p>
-<p>?? NEW: appInit: appInitCB</p>
 </td>
     </tr><tr>
-    <td>[appInit]</td><td>appInitCB</td><td></td><td><p>an optional ?? describe here</p>
+    <td>[appInit]</td><td><a href="#appInitCB"><code>appInitCB</code></a></td><td></td><td><p>an optional
+{{book.guide.appLifeCycle}} invoked one time, later in the app
+startup process.  This life-cycle hook supports blocking async
+initialization (by simply returning a promise) <em>(please refer to:
+{{book.guide.appInit}})</em>.</p>
 </td>
     </tr><tr>
     <td>[appDidStart]</td><td><a href="#appDidStartCB"><code>appDidStartCB</code></a></td><td></td><td><p>an optional
 {{book.guide.appLifeCycle}} invoked one time, immediately after the
 app has started.  Because the app is up-and-running at this time,
 you have access to the appState and the dispatch() function
-... assuming you are using redux (when detected by feature-u&#39;s
+... assuming you are using redux (when detected by <strong>feature-u</strong>&#39;s
 plugable aspects) <em>(please refer to: {{book.guide.appDidStart}})</em>.</p>
 </td>
     </tr><tr>
@@ -186,10 +189,12 @@ React framework used in the app.<br/><br/></p>
 {{book.ext.expo}}, etc.<br/><br/></p>
 <p>Please refer to {{book.guide.detail_reactRegistration}} for more
 details and complete examples.</p>
-<p>?? NEW:</p>
 </td>
     </tr><tr>
-    <td>[showStatus]</td><td>showStatusCB</td><td><p>the callback hook ?? describe here</p>
+    <td>[showStatus]</td><td><a href="#showStatusCB"><code>showStatusCB</code></a></td><td><p>an optional callback hook that
+communicates a blocking &quot;persistent&quot; status message to the end
+user.</p>
+<p>Please refer to {{book.api.showStatusCB}} for more information.</p>
 </td>
     </tr>  </tbody>
 </table>
@@ -444,7 +449,7 @@ Return an indicator as to whether the supplied feature isactive or not.**Note
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
   Feature : Object</h5>
-The Feature object is merely a lightweight container that holds{{book.api.AspectContent}} of interest to **feature-u**.Each feature within an application promotes a Feature object (using{{book.api.createFeature}}) which catalogs the aspects of that feature.Ultimately, all Feature objects are consumed by{{book.api.launchApp}}.Feature content are simple key/value pairs (the key being anAspect.name with values of AspectContent).  These aspects caneither be **built-in** (from core **feature-u**), or **extensions**.Here is an example:```jsexport default createFeature({  name:     'featureA', // builtin aspect (name must be unique across all features within app)  enabled:  true,       // builtin aspect enabling/disabling feature  fassets: {            // builtin aspect promoting Public Face - Cross Feature Communication    define: {      'api.openA':  () => ...,      'api.closeA': () => ...,    },  },  appWillStart: (...) => ..., // builtin aspect (Application Life Cycle Hook)  appInit:      (...) => ..., // ditto // ?? NEW: appInit: appInitCB  appDidStart:  (...) => ..., // ditto  reducer: ..., // feature redux reducer (extended aspect from the feature-redux plugin)  logic:   ..., // feature logic modules (extended aspect from the feature-redux-logic plugin)});```For more information, please refer to{{book.guide.detail_featureAndAspect}}.
+The Feature object is merely a lightweight container that holds{{book.api.AspectContent}} of interest to **feature-u**.Each feature within an application promotes a Feature object (using{{book.api.createFeature}}) which catalogs the aspects of that feature.Ultimately, all Feature objects are consumed by{{book.api.launchApp}}.Feature content are simple key/value pairs (the key being anAspect.name with values of AspectContent).  These aspects caneither be **built-in** (from core **feature-u**), or **extensions**.Here is an example:```jsexport default createFeature({  name:     'featureA', // builtin aspect (name must be unique across all features within app)  enabled:  true,       // builtin aspect enabling/disabling feature  fassets: {            // builtin aspect promoting Public Face - Cross Feature Communication    define: {      'api.openA':  () => ...,      'api.closeA': () => ...,    },  },  appWillStart: (...) => ..., // builtin aspect (Application Life Cycle Hook)  appInit:      (...) => ..., // ditto  appDidStart:  (...) => ..., // ditto  reducer: ..., // feature redux reducer (extended aspect from the feature-redux plugin)  logic:   ..., // feature logic modules (extended aspect from the feature-redux-logic plugin)});```For more information, please refer to{{book.guide.detail_featureAndAspect}}.
 
 
 <br/><br/><br/>
@@ -452,8 +457,8 @@ The Feature object is merely a lightweight container that holds{{book.api.Aspec
 <a id="appWillStartCB"></a>
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
-  appWillStartCB ⇒ reactElm</h5>
-An optional {{book.guide.appLifeCycle}} invoked one time, justbefore the app starts up.This life-cycle hook can do any type of initialization. Forexample: initialize FireBase.In addition, it can optionally supplement the app's top-level rootelement (i.e. react component instance).  Any significant return(truthy) is interpreted as the app's new rootAppElm.**IMPORTANT**: When this is used, the supplied curRootAppElm MUSTbe included as part of this definition (accommodating theaccumulative process of other feature injections)! **More information is available at {{book.guide.injectingDomContent}}**For more information _(with examples)_, please refer to theGuide's {{book.guide.appWillStart}}.**Please Note** this function uses named parameters.
+  appWillStartCB ⇒ reactElm \| void</h5>
+An optional {{book.guide.appLifeCycle}} invoked one time, veryearly in the app startup process.This life-cycle hook can do any type of general app-specificinitialization _(for example initializing a **PWA serviceworker**)_.In addition, it can optionally inject static content in the app'sDOM root.  Any return is interpreted as the app's new `rootAppElm`_(an accumulative process)_.  **IMPORTANT**: When this is used, thesupplied `curRootAppElm` MUST be included as part of thisdefinition (accommodating the accumulative process of other featureinjections)! **More information is available at{{book.guide.injectingDomContent}}**For more information _(with examples)_, please refer to theGuide's {{book.guide.appWillStart}}.**Please Note** this function uses named parameters.
 
 <table>
   <thead>
@@ -472,7 +477,43 @@ root.</p>
     </tr>  </tbody>
 </table>
 
-**Returns**: reactElm - optionally, new top-level content (which in turnmust contain the supplied curRootAppElm), or falsy for unchanged.  
+**Returns**: reactElm \| void - optionally, new top-level content (which in turnmust contain the supplied `curRootAppElm`).  Use a void returnwhen top-level content is unchanged.  
+
+<br/><br/><br/>
+
+<a id="appInitCB"></a>
+
+<h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
+  appInitCB ⇒ Promise \| void</h5>
+An optional {{book.guide.appLifeCycle}} invoked one time, later inthe app startup process.  It supports blocking asyncinitialization.This hook is invoked when the app is **nearly up-and-running**.- The {{book.guide.detail_reactRegistration}} has already occurred  _(via the {{book.api.registerRootAppElmCB}} callback)_.  As a  result, you can rely on utilities that require an app-specific  `rootAppElm` to exist.- You have access to the `appState` and `dispatch()` function,  assuming you are using {{book.ext.redux}} (when detected by  **feature-u**'s plugable aspects).Just like the {{book.api.appWillStartCB}} hook, you may perform anytype of general initialization that is required by your feature.However the **hallmark of this hook** is **you can block for anyasynchronous initialization to complete**.  By simply returning apromise, **feature-u** will wait for the process to complete.The user is kept advised of any long-running async processes.  Bydefault an `'initializing feature: {feature.name}'` message isused, but you can customize it through the supplied{{book.api.showStatusCB}} function parameter.For more info with examples, please see the Guide's{{book.guide.appInit}}.**Please Note** this function uses named parameters.
+
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>showStatus</td><td><a href="#showStatusCB"><code>showStatusCB</code></a></td><td><p>the function that (when invoked)
+will communicate a blocking &quot;persistent&quot; status message to the end
+user.</p>
+</td>
+    </tr><tr>
+    <td>fassets</td><td><a href="#Fassets"><code>Fassets</code></a></td><td><p>the Fassets object used in cross-feature-communication.</p>
+</td>
+    </tr><tr>
+    <td>[appState]</td><td>Any</td><td><p>the redux top-level app state (when redux
+is in use).</p>
+</td>
+    </tr><tr>
+    <td>[dispatch]</td><td>function</td><td><p>the redux dispatch() function (when
+redux is in use).</p>
+</td>
+    </tr>  </tbody>
+</table>
+
+**Returns**: Promise \| void - optionally, a promise (for asynchronousprocesses) - and feature-u will wait for the process to complete.Use a void return (for synchronous processes) - and no blockingwill occur.  
 
 <br/><br/><br/>
 
@@ -480,7 +521,7 @@ root.</p>
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
   appDidStartCB ⇒</h5>
-An optional {{book.guide.appLifeCycle}} invoked one time,immediately after the app has started.Because the app is up-and-running at this time, you have access tothe `appState` and `dispatch()` function ... assuming you are using{{book.ext.redux}} (when detected by feature-u's plugable aspects).For more info with examples, please see the Guide's{{book.guide.appDidStart}}.**Please Note** this function uses named parameters.
+An optional {{book.guide.appLifeCycle}} invoked one time,once the app startup process has completed.This life-cycle hook can be used to trigger **"the app isrunning"** events.  A typical usage is to **"kick start"** someearly application logic.Because the app is up-and-running at this time, you have access tothe `appState` and `dispatch()` function ... assuming you are using{{book.ext.redux}} (when detected by **feature-u**'s plugable aspects).For more info with examples, please see the Guide's{{book.guide.appDidStart}}.**Please Note** this function uses named parameters.
 
 <table>
   <thead>
@@ -569,6 +610,35 @@ registered.</p>
     <td>fassets</td><td><a href="#Fassets"><code>Fassets</code></a></td><td><p>the Fassets object used in cross-feature-communication
 (rarely needed except to allow client to inject their own
 FassetsContext.Provider for a null rootAppElm).</p>
+</td>
+    </tr>  </tbody>
+</table>
+
+**Returns**: void  
+
+<br/><br/><br/>
+
+<a id="showStatusCB"></a>
+
+<h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
+  showStatusCB ⇒</h5>
+The optional {{book.api.launchApp}} callback hook that communicatesa blocking "persistent" status message to the end user.These status messages originate from the blocking that occurs inthe asynchronous processes managed by the {{book.guide.appInitCB}}life-cycle-hook.By design **feature-u** has no ability to manifest messages to theend user, because this is very app-specific in styling and otherheuristics.  By default (when **NO** `showStatus` parameter issupplied, **feature-u** will simply **console log** these messages.A typical manifestation of this callback is to display a runningpersistent Splash Screen, seeded with the supplied message.Please refer to {{book.guide.appInitCB}} for more details andexamples.
+
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>[msg]</td><td>string</td><td><p>the &quot;persistent&quot; message to display.  When
+NO message is supplied (i.e. <code>&#39;&#39;</code>), <strong>all</strong> user notifications
+should be cleared <em>(for example, take the Splash Screen down)</em>.</p>
+</td>
+    </tr><tr>
+    <td>[err]</td><td>Error</td><td><p>an optional error to communicate to the
+user.</p>
 </td>
     </tr>  </tbody>
 </table>

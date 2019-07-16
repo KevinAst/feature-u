@@ -1,7 +1,7 @@
 # A Closer Look
 
 As previously mentioned, the basic process of **feature-u** is that
-each feature promotes a {{book.api.Feature}} object that calalogs
+each feature promotes a {{book.api.Feature}} object that catalogs
 various aspects of that feature ... _things like: the feature's name,
 it's Public Face, whether it is enabled, initialization constructs, and
 resources used to configure it's slice of the frameworks in use._
@@ -89,6 +89,7 @@ export default createFeature({
   },
 
   appWillStart: (...) => ..., // builtin aspect (Application Life Cycle Hook)
+  appInit:      (...) => ..., // ditto
   appDidStart:  (...) => ..., // ditto
 
   reducer: ..., // feature redux reducer (extended aspect from the feature-redux plugin)
@@ -140,17 +141,23 @@ object properties (via {{book.api.createFeature}}).
   before the app starts up.  This life-cycle hook can do any type of
   initialization, and/or optionally supplement the app's top-level
   content (using a non-null return) _(please refer to:
-  {{book.api.appWillStartCB}})_.
+  {{book.guide.appWillStart}})_.
 
+- {{book.guide.appInitCB}}
+
+  An optional {{book.guide.appLifeCycle}} invoked one time, later in
+  the app startup process.  This life-cycle hook supports blocking
+  async initialization (by simply returning a promise) _(please refer
+  to: {{book.guide.appInit}})_.
 
 - {{book.guide.appDidStartCB}}
   
-  An optional {{book.guide.appLifeCycle}} invoked one time, immediately
-  after the app has started.  Because the app is up-and-running at
-  this time, you have access to the appState and the dispatch()
-  function ... assuming you are using redux (when detected by
-  **feature-u**'s plugable aspects) _(please refer to:
-  {{book.api.appDidStartCB}})_.
+  An optional {{book.guide.appLifeCycle}} invoked one time,
+  immediately after the app has started.  Because the app is
+  up-and-running at this time, you have access to the appState and the
+  dispatch() function ... assuming you are using redux (when detected
+  by **feature-u**'s plugable aspects) _(please refer to:
+  {{book.guide.appDidStart}})_.
 
 
 ### Extendable aspects

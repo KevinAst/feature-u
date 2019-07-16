@@ -1,15 +1,19 @@
 # Application Life Cycle Hooks
 
-Because **feature-u** is in control of launching the app, life cycle
-hooks for the application can be introduced, allowing features to
-perform app-specific initialization, and even inject components into
-the root of the app.
+Because **feature-u** is in control of launching your application, it
+has a unique opportunity to introduce **Application Life Cycle
+Hooks**.  These hooks allow your **features to initialize themselves**,
+performing app-specific initialization and even inject static content
+in the root of your DOM.
 
-Two hooks are provided through the following built-in
+Three hooks are provided through the following built-in
 {{book.api.Feature}} aspects:
 
-1. [`Feature.appWillStart`](#appwillstart) - invoked one time at app startup time
-2. [`Feature.appDidStart`](#appdidstart)   - invoked one time immediately after app has started
+1. [`Feature.appWillStart`](#appwillstart) - invoked early in app startup _(supports accumulative static root DOM injection)_
+2. [`Feature.appInit`](#appinit)           - invoked later in app startup _(supports blocking async initialization)_
+3. [`Feature.appDidStart`](#appdidstart)   - invoked when app startup completes _(triggers "app is running" processes)_
+
+<p align="center"><img class="diagram" src="img/intro_AppInit.png" alt="App Initialization" width="90%"></p>
 
 Application Life Cycle Hooks **greatly simplify your app's mainline
 startup process**, because _initialization specific to a given feature
@@ -19,31 +23,34 @@ startup process**, because _initialization specific to a given feature
 ## appWillStart
 
 The Feature {{book.api.appWillStartCB}} life-cycle hook is invoked one
-time, just before the app starts up.
+time, very early in the app startup process.  It supports both general
+app-specific initialization, as well as accumulative static root DOM
+injection.
 
 **API**: {{book.api.appWillStartCB$}}
 
-This life-cycle hook can do any type of initialization.  For example:
-initialize your database:
+Here you may perform any type of general initialization that is
+required by your feature.  The following example initializes a **PWA
+service worker**:
 
 ```js
 appWillStart({fassets, curRootAppElm}) {
-  initFireBase();
+  serviceWorker.register();
 }
 ```
 
 ### Injecting DOM Content
 
 In addition, the {{book.api.appWillStartCB}} life-cycle hook can
-optionally supplement the app's top-level root element (i.e. react
-component instance).  Any significant return (truthy) is interpreted
-as the app's new rootAppElm.
+optionally inject static content in the app's DOM root.  Any return is
+interpreted as the app's new `rootAppElm` _(an accumulative process
+... see below)_.
 
 Here is an example that injects new root-level content:
 
 ```js
 appWillStart({fassets, curRootAppElm}) {
-  ... any other initialization ...
+  ... other app-specific initialization here ...
   return (
     <Drawer ...>
       {curRootAppElm}
@@ -67,9 +74,11 @@ appWillStart: ({fassets, curRootAppElm}) => (
 **IMPORTANT**: 
 ---
 
-When injecting DOM content (via the function return), the supplied
-`curRootAppElm` parameter **must be included** as part of this
-definition.
+You may have noticed _(in the examples above)_ that injecting DOM
+content _(via the function return)_ is an accumulative process.  Any new
+`rootAppElm` returned from this hook **must include** the supplied
+`curRootAppElm` parameter.
+
 The `curRootAppElm` parameter (when non-null) represents content from
 other features (within your app) or aspects (used by your app).
 As a result, by including it in your injection, it accommodates the
@@ -122,22 +131,79 @@ appWillStart({fassets, curRootAppElm}) {
 ```
 
 
+## appInit
+
+The Feature {{book.api.appInitCB}} life-cycle hook is invoked one time,
+later in the app startup process.  It supports blocking async
+initialization.
+
+**API**: {{book.api.appInitCB$}}
+
+This hook is invoked when the app is **nearly up-and-running**.
+
+- The {{book.guide.detail_reactRegistration}} has already occurred
+  _(via the {{book.api.registerRootAppElmCB}} callback)_.  As a
+  result, you can rely on utilities that require an app-specific
+  `rootAppElm` to exist.
+
+- You have access to the `appState` and `dispatch()` function,
+  assuming you are using {{book.ext.redux}} (when detected by
+  **feature-u**'s plugable aspects).
+
+Just like the [`appWillStart`](#appwillstart) hook, you may perform
+any type of general initialization that is required by your feature.
+
+However the **hallmark of this hook** is **you can block for any
+asynchronous initialization to complete**.  By simply returning a
+promise, **feature-u** will wait for the process to complete.
+
+The user is kept advised of any long-running async processes.  By
+default an `'initializing feature: {feature.name}'` message is used,
+but you can customize it through the supplied
+{{book.api.showStatusCB}} function parameter.
+
+The following example shows three processes managed by `appInit()`
+_(one synchronous, and two asynchronous)_:
+
+```js
+async appInit({showStatus, fassets, appState, dispatch}) {
+
+  // default view is our TODO List
+  showStatus('Defaulting view to TODO List);
+  dispatch( fassets.actions.changeView('ToDoList') );
+
+  // initialize our DB Connection
+  showStatus('Initializing our DB Connection);
+  await initDB();
+
+  // maintain the current GPS device location in our appState
+  showStatus('Initializing GPS Location');
+  const location = await getCurPos();
+  dispatch( setLocation(location) );
+},
+```
+
+
 ## appDidStart
 
 The Feature {{book.api.appDidStartCB}} life-cycle hook is invoked one
-time immediately after app has started.
+time, once the app startup process has completed.  It can be used to
+trigger **"the app is running"** events.
 
 **API**: {{book.api.appDidStartCB$}}
 
-Because the app is up-and-running at this time, you have access to the
-appState and dispatch() function ... assuming you are using redux
-(when detected by **feature-u**'s plugable aspects).
+Because the app is **up-and-running** at this time, you have access to
+the `appState` and `dispatch()` function ... assuming you are using
+{{book.ext.redux}} (when detected by **feature-u**'s plugable
+aspects).
 
-A typical usage for this hook is to dispatch some type of bootstrap
-action.  Here is a startup feature, that issues a bootstrap action:
+A typical usage for this hook is to **"kick start"** some early
+application logic.  The following example starts the process of
+authenticating the user ... either an automatic signin (with saved
+credentials), or a manual signin (managing the signin screens):
 
 ```js
 appDidStart({fassets, appState, dispatch}) {
-  dispatch( actions.bootstrap() );
+  dispatch( actions.authSignIn() );
 }
 ```
