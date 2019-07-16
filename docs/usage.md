@@ -216,14 +216,14 @@ The subsequent sections will develop a more thorough understanding!
 
 Want to see a real **feature-u** app?
 
-{{book.ext.eateryNod}} is the application _where **feature-u** was
-conceived_.  It is a {{book.ext.reactNative}} {{book.ext.expo}} mobile
-app, and is one of my sandbox applications that I use to test
-frameworks.  _I like to develop apps that I can use, but have enough
-real-world requirements to make it interesting._
+{{book.ext.eateryNodW}} is the application _where **feature-u** was
+conceived_.  It is a {{book.ext.pwa}}, and is one of my sandbox
+applications that I use to test frameworks.  _I like to develop apps
+that I can use, but have enough real-world requirements to make it
+interesting._
 
-**{{book.ext.eateryNod}}** randomly selects a "date night" restaurant
+**{{book.ext.eateryNodW}}** randomly selects a "date night" restaurant
 from a pool of favorites.  _My wife and I have a steady "date night",
 and we are always indecisive on which of our favorite restaurants to
-frequent :-)_ So **{{book.ext.eateryNod}}** provides the spinning
+frequent :-)_ So **{{book.ext.eateryNodW}}** provides the spinning
 wheel!

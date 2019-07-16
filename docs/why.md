@@ -12,9 +12,8 @@ I hope you enjoy this effort, and comments are always welcome.
 **&lt;/Kevin&gt;**
 
 **P.S.** The **feature-u** library was pulled from a sandbox project
-{{book.ext.eateryNod}} that I use to study several technologies and
-frameworks.  It is a {{book.ext.reactNative}} {{book.ext.expo}} mobile
-app.
+{{book.ext.eateryNodW}} _(a {{book.ext.pwa}})_ that I use to study
+several technologies and frameworks.
 
 **P.P.S.** If you are wondering what the "-u" stands for, it is merely a
 succinct suffix that distinguishes a number of my published

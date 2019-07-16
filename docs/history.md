@@ -119,7 +119,10 @@ API was impacted)_.
 
 2. **Docs**: Documentation improvements include:
 
-   - ?? is there anything in this category?
+   - Changed the sample application reference to
+     {{book.ext.eateryNodW}} _(from {{book.ext.eateryNod}})_.
+
+?? anything else?
 
 
 
