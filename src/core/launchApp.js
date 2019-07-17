@@ -682,8 +682,6 @@ op.alch.injectRootAppElm = function(fassets, aspects, curRootAppElm) {
 //* feature-life-cycle-hook: appInit(fassets, activeFeatures, aspects, showStatus): promise
 //*-----------------------------------------------------------------------------------------
 
-// ?? NEW: appInit ... ?? UNIT TEST THIS
-
 op.flch.appInit = function(fassets, activeFeatures, aspects, showStatus) {
 
   // wrap entire process
@@ -691,11 +689,9 @@ op.flch.appInit = function(fassets, activeFeatures, aspects, showStatus) {
   return new Promise( (resolve, reject) => {
 
     // maintain: running counter of execution order of life-cycle-hooks (unit-test related)
-    // ?? DONE: TEST: work out test details
     op.flch.appInit.executionOrder = executionOrder++;
     
     // log summary
-    // ?? DONE: TEST: visually see this work
     const hookCount   = activeFeatures.reduce( (count, feature) => feature.appInit ? count+1 : count, 0);
     const hookSummary = activeFeatures.map( (feature) => `\n  Feature.name:${feature.name}${feature.appInit ? ' <-- defines: appInit()' : ''}` );
     logf(`feature-life-cycle-hook ... PROCESSING: Feature.appInit() ... ${hookCount} hooks:${hookSummary}`);

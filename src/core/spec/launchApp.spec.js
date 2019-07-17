@@ -1,4 +1,3 @@
-// ?? FINISH UPDATE BY DOING UNIT TESTS
 import launchApp, {op}  from '../launchApp';  // module under test INTERNAL 
 import {createFeature}  from '../..';
 
@@ -33,6 +32,15 @@ describe('launchApp() parameter validation)', () => {
     // THROW: launchApp() parameter violation: registerRootAppElm must be a function
   });
 
+  test('showStatus must be a function', () => {
+    expect( () => launchApp({
+      features: [],
+      registerRootAppElm: (p) => p,
+      showStatus: 'Im NOT a function',
+    })).toThrow(/showStatus must be a function/);
+    // THROW: launchApp() parameter violation: showStatus must be a function
+  });
+
   test('unrecognized named parameter', () => {
     expect( () => launchApp({
       features: [],
@@ -49,6 +57,8 @@ describe('launchApp() parameter validation)', () => {
     },'badPositionalParm')).toThrow(/unrecognized positional parameters/);
     // THROW: launchApp() parameter violation: unrecognized positional parameters (only named parameters can be specified)
   });
+
+  // ?? add showStatus checks
 
 });
 
