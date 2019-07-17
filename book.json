@@ -204,7 +204,7 @@
       "coreApi":                      "<a href='/coreApi.html'><code>Core API</code></a>",
 
         "createFeature":              "<a href='/api.html#createFeature'><code>createFeature()</code></a>",
-        "createFeature$":             "<a href='/api.html#createFeature'><code>createFeature({name, [enabled], [fassets], [appWillStart], [appDidStart], [extendedAspects]}): Feature</code></a>",
+        "createFeature$":             "<a href='/api.html#createFeature'><code>createFeature({name, [enabled], [fassets], [appWillStart], [appInit], [appDidStart], [extendedAspects]}): Feature</code></a>",
           "appWillStartCB":           "<a href='/api.html#appWillStartCB'><code>appWillStart()</code></a>",
           "appWillStartCB$":          "<a href='/api.html#appWillStartCB'><code>appWillStart({fassets, curRootAppElm}): rootAppElm | void</code></a>",
           "appInitCB":                "<a href='/api.html#appInitCB'><code>appInit()</code></a>",
