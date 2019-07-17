@@ -19,6 +19,9 @@ let executionOrder = 1; // running counter of execution order of life-cycle-hook
  *
  * **Please Note** this function uses named parameters.
  *
+ * @param {Feature[]} features the features that comprise this
+ * application.
+ *
  * @param {Aspect[]} [aspects] the set of plugable Aspects that extend
  * **feature-u**, integrating other frameworks to match your specific
  * run-time stack.<br/><br/>
@@ -26,9 +29,6 @@ let executionOrder = 1; // running counter of execution order of life-cycle-hook
  * When NO Aspects are supplied _(an atypical case)_, only the very
  * basic **feature-u** characteristics are in effect (like fassets
  * and life-cycle hooks).
- *
- * @param {Feature[]} features the features that comprise this
- * application.
  *
  * @param {registerRootAppElmCB} registerRootAppElm the callback hook
  * that registers the supplied root application element to the specific
@@ -53,8 +53,8 @@ let executionOrder = 1; // running counter of execution order of life-cycle-hook
  *
  * @function launchApp
  */
-export default function launchApp({aspects=[],
-                                   features,
+export default function launchApp({features,
+                                   aspects=[],
                                    registerRootAppElm,
                                    showStatus=showStatusFallback,
                                    ...unknownArgs}={}) {
@@ -212,7 +212,9 @@ launchApp.diag = {
  * supplied, **feature-u** will simply **console log** these messages.
  *
  * A typical manifestation of this callback is to display a running
- * persistent Splash Screen, seeded with the supplied message.
+ * persistent SplashScreen, seeded with the supplied message. The
+ * SplashScreen can be taken down when NO message is supplied
+ * (i.e. `''`).
  *
  * Please refer to {{book.guide.appInitCB}} for more details and
  * examples.
@@ -221,7 +223,7 @@ launchApp.diag = {
  * 
  * @param {string} [msg] - the "persistent" message to display.  When
  * NO message is supplied (i.e. `''`), **all** user notifications
- * should be cleared _(for example, take the Splash Screen down)_.
+ * should be cleared _(for example, take the SplashScreen down)_.
  * 
  * @param {Error} [err] - an optional error to communicate to the
  * user.

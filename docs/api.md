@@ -157,7 +157,7 @@ desired {{book.api.AspectContent}}.</p>
 <a id="launchApp"></a>
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
-  launchApp([aspects], features, registerRootAppElm, [showStatus]) ⇒ [`Fassets`](#Fassets)</h5>
+  launchApp(features, [aspects], registerRootAppElm, [showStatus]) ⇒ [`Fassets`](#Fassets)</h5>
 Launch an application by assembling the supplied features, drivingthe configuration of the frameworks in use _(as orchestrated by thesupplied set of plugable Aspects)_.For more information _(with examples)_, please refer to{{book.guide.detail_launchingApp}}.**Please Note** this function uses named parameters.
 
 <table>
@@ -168,16 +168,16 @@ Launch an application by assembling the supplied features, drivingthe configura
   </thead>
   <tbody>
 <tr>
+    <td>features</td><td><a href="#Feature"><code>Array.&lt;Feature&gt;</code></a></td><td><p>the features that comprise this
+application.</p>
+</td>
+    </tr><tr>
     <td>[aspects]</td><td><a href="#Aspect"><code>Array.&lt;Aspect&gt;</code></a></td><td><p>the set of plugable Aspects that extend
 <strong>feature-u</strong>, integrating other frameworks to match your specific
 run-time stack.<br/><br/></p>
 <p>When NO Aspects are supplied <em>(an atypical case)</em>, only the very
 basic <strong>feature-u</strong> characteristics are in effect (like fassets
 and life-cycle hooks).</p>
-</td>
-    </tr><tr>
-    <td>features</td><td><a href="#Feature"><code>Array.&lt;Feature&gt;</code></a></td><td><p>the features that comprise this
-application.</p>
 </td>
     </tr><tr>
     <td>registerRootAppElm</td><td><a href="#registerRootAppElmCB"><code>registerRootAppElmCB</code></a></td><td><p>the callback hook
@@ -622,7 +622,7 @@ FassetsContext.Provider for a null rootAppElm).</p>
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
   showStatusCB ⇒</h5>
-The optional {{book.api.launchApp}} callback hook that communicatesa blocking "persistent" status message to the end user.These status messages originate from the blocking that occurs inthe asynchronous processes managed by the {{book.guide.appInitCB}}life-cycle-hook.By design **feature-u** has no ability to manifest messages to theend user, because this is very app-specific in styling and otherheuristics.  By default (when **NO** `showStatus` parameter issupplied, **feature-u** will simply **console log** these messages.A typical manifestation of this callback is to display a runningpersistent Splash Screen, seeded with the supplied message.Please refer to {{book.guide.appInitCB}} for more details andexamples.
+The optional {{book.api.launchApp}} callback hook that communicatesa blocking "persistent" status message to the end user.These status messages originate from the blocking that occurs inthe asynchronous processes managed by the {{book.guide.appInitCB}}life-cycle-hook.By design **feature-u** has no ability to manifest messages to theend user, because this is very app-specific in styling and otherheuristics.  By default (when **NO** `showStatus` parameter issupplied, **feature-u** will simply **console log** these messages.A typical manifestation of this callback is to display a runningpersistent SplashScreen, seeded with the supplied message. TheSplashScreen can be taken down when NO message is supplied(i.e. `''`).Please refer to {{book.guide.appInitCB}} for more details andexamples.
 
 <table>
   <thead>
@@ -634,7 +634,7 @@ The optional {{book.api.launchApp}} callback hook that communicatesa blocking "
 <tr>
     <td>[msg]</td><td>string</td><td><p>the &quot;persistent&quot; message to display.  When
 NO message is supplied (i.e. <code>&#39;&#39;</code>), <strong>all</strong> user notifications
-should be cleared <em>(for example, take the Splash Screen down)</em>.</p>
+should be cleared <em>(for example, take the SplashScreen down)</em>.</p>
 </td>
     </tr><tr>
     <td>[err]</td><td>Error</td><td><p>an optional error to communicate to the

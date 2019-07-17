@@ -218,7 +218,7 @@
           "expandWithFassetsCB$":      "<a href='/api.html#expandWithFassetsCB'><code>expandWithFassetsCB(fassets): AspectContent</code></a>",
 
         "launchApp":                  "<a href='/api.html#launchApp'><code>launchApp()</code></a>",
-        "launchApp$":                 "<a href='/api.html#launchApp'><code>launchApp({[aspects], features, registerRootAppElm}): Fassets</code></a>",
+        "launchApp$":                 "<a href='/api.html#launchApp'><code>launchApp({features, [aspects], registerRootAppElm, [showStatus]}): Fassets</code></a>",
           "registerRootAppElmCB":     "<a href='/api.html#registerRootAppElmCB'><code>registerRootAppElm()</code></a>",
           "registerRootAppElmCB$":    "<a href='/api.html#registerRootAppElmCB'><code>registerRootAppElm(rootAppElm, fassets): void</code></a>",
           "showStatusCB":             "<a href='/api.html#showStatusCB'><code>showStatus()</code></a>",
