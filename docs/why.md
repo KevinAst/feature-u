@@ -118,3 +118,27 @@ succinct suffix that distinguishes a number of my published
    it actually is a very simple process.
 
    **Solution:** {{book.guide.detail_launchingApp}}
+
+1. **Operates in any React Platform:**
+
+   **feature-u** is compatible with any of the **React Platforms**,
+   including: {{book.ext.reactWeb}} {{book.ext.reactNative}}
+   {{book.ext.expo}}.
+
+   **Solution:** {{book.guide.detail_reactRegistration}}
+
+1. **Plug-and-Play:**
+
+   This is probably the most important outcome of using **feature-u**.
+   
+   By using the various constructs provided by **feature-u**, the mere
+   existence of a feature will automatically emit it's characteristics.
+   In other words, it **plugs-and-plays**!
+   
+   This even extends a feature's "logical existence", where it can be
+   dynamically disabled via {{book.guide.enablement}}.
+   
+   From this perspective, you can think of each feature as it's own
+   isolated **mini application**.
+
+   **Solution:** All **feature-u** constructs :-)
