@@ -134,17 +134,50 @@ export default function launchApp({features,
     registerRootAppElm(rootAppElm, fassets);
 //}, 0);
 
+
+  // wrap the showStatus() function to prune duplicate status
+  // ... this happens INTERNALLY when monitoring the next unresolved asynchronous appInit() process
+  const priorStatus = {
+    msg: undefined,
+    err: undefined,
+  };
+  function showStatusNoDupes(msg, err) {
+
+    // no-op on duplicate back-to-back status
+    if (msg === priorStatus.msg && err === priorStatus.err) {
+      return;
+    }
+
+    // retain the status info NOW reported
+    priorStatus.msg = msg;
+    priorStatus.err = err;
+    
+    // pass-through to supplied function
+    showStatus(msg, err);
+  }
+
   // apply Feature.appInit() life-cycle hook
-  op.flch.appInit(fassets, activeFeatures, aspects, showStatus)
+  op.flch.appInit(fassets, activeFeatures, aspects, showStatusNoDupes)
     .then( () => {
 
-      // ... once all async processes of feature.appInit() have completed,
-      //     continue on with our launchApp() process
+      // >>> once all async processes of feature.appInit() have completed,
+      //     continue on with our launchApp() processes
 
-      // apply Feature.appDidStart() life-cycle hook
-      op.flch.appDidStart(fassets, activeFeatures, aspects);
+      // because of the "covert" async nature of launchApp(),
+      // we report any errors via the showStatus() mechanism.
+      try {
 
-      logf('COMPLETE: your application has now started');
+        // apply Feature.appDidStart() life-cycle hook
+        op.flch.appDidStart(fassets, activeFeatures, aspects);
+
+        logf('COMPLETE: Your application has now started');
+      }
+      catch(err) {
+        const errMsg = 'A problem was encountered in a appDidStart() life-cycle hook';
+        logf(`INCOMPLETE: Your application did NOT start ... ${errMsg}`, err);
+        showStatusNoDupes(errMsg, err);
+      }
+
     });
 
   // expose our new App object (used in feature cross-communication)
