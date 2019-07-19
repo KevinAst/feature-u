@@ -84,7 +84,7 @@ reference the most current release.
 
 Release           | What                                   | *When*
 ------------------|----------------------------------------|------------------
-[v2.1.0](#v2_1_0) | appInit() Life Cycle Hook              | *July xx, 2019*
+[v2.1.0](#v2_1_0) | appInit() Life Cycle Hook              | *July 19, 2019*
 [v2.0.0](#v2_0_0) | React Hooks                            | *May 10, 2019*
 [v1.0.1](#v1_0_1) | Docs Update                            | *September 5, 2018*
 [v1.0.0](#v1_0_0) | UI Composition                         | *August 14, 2018*
@@ -100,7 +100,7 @@ Release           | What                                   | *When*
 <!-- ************************************************************* -->
 <br/><br/><br/>
 <h3 id="v2_1_0" style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
-  v2.1.0 - appInit() Life Cycle Hook <i>(July xx, 2019)</i>
+  v2.1.0 - appInit() Life Cycle Hook <i>(July 19, 2019)</i>
 </h3>
 
 [Full Docs](https://feature-u.js.org/2.1.0/)
@@ -126,8 +126,6 @@ API was impacted)_.
 
    - Changed the sample application reference to
      {{book.ext.eateryNodW}} _(from {{book.ext.eateryNod}})_.
-
-?? anything else?
 
 
 
