@@ -43,6 +43,7 @@
   * [Launching Your Application](detail.md#launching-your-application)
     * [Export fassets](detail.md#export-fassets)
     * [React Registration](detail.md#react-registration)
+    * [Covert Asynchronicity](detail.md#covert-asynchronicity)
 * [Application Life Cycle Hooks](appLifeCycle.md)
   * [appWillStart](appLifeCycle.md#appwillstart)
     * [Injecting DOM Content](appLifeCycle.md#injecting-dom-content)

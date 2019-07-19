@@ -267,6 +267,10 @@
         "extendFeatureProperty$":          "<a href='/api.html#extendFeatureProperty'><code>extendFeatureProperty(name, owner): void</code></a>"
     },
 
+    "version": {
+      "v2_1_0":    "<a href='/history.html#v2_1_0'><code>V2.1.0</code></a>"
+    },
+
     "ext": {
       "actionU":            "<a href='https://action-u.js.org/'><code>action-u</code></a>",
       "astxReduxUtil":      "<a href='https://astx-redux-util.js.org/'><code>astx-redux-util</code></a>",

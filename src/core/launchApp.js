@@ -246,7 +246,7 @@ launchApp.diag = {
  *
  * A typical manifestation of this callback is to display a running
  * persistent SplashScreen, seeded with the supplied message. The
- * SplashScreen can be taken down when NO message is supplied
+ * SplashScreen should be taken down when NO message is supplied
  * (i.e. `''`).
  *
  * Please refer to {{book.guide.appInitCB}} for more details and

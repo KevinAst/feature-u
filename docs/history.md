@@ -117,7 +117,12 @@ API was impacted)_.
 1. **Added**: A new {{book.guide.appInitCB}} Application Life Cycle
    Hook was added, supporting blocking async initialization.
 
-2. **Docs**: Documentation improvements include:
+2. **Added**: In support of {{book.guide.appInitCB}}, the
+   {{book.api.showStatusCB}} optional callback parameter was added to
+   {{book.api.launchAppCB}} allowing the application domain to
+   communicate blocking "persistent" status messages to the end user.
+
+3. **Docs**: Documentation improvements include:
 
    - Changed the sample application reference to
      {{book.ext.eateryNodW}} _(from {{book.ext.eateryNod}})_.
