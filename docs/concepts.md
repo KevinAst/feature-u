@@ -254,16 +254,17 @@ Let's see how {{book.api.launchApp}} accommodates the two sub-goals of running t
 
 ### App Initialization
 
-Because {{book.api.launchApp}} is in control of starting the app, it can
-introduce {{book.guide.appLifeCycles}}.
+Because {{book.api.launchApp}} is in control of starting the app, it
+has a unique opportunity to introduce {{book.guide.appLifeCycles}}.
 
 This allows each feature to perform app-specific initialization, and
-even inject components into the root of the app.
+even inject static content in the root of your DOM.
 
-There are two hooks:
+There are three hooks:
 
-1. {{book.guide.appWillStartCB}} - invoked one time at app startup time
-2. {{book.guide.appDidStartCB}}  - invoked one time immediately after app has started
+1. {{book.guide.appWillStartCB}} - invoked early in app startup _(supports accumulative static root DOM injection)_
+2. {{book.guide.appInitCB}}      - invoked later in app startup _(supports blocking async initialization)_
+3. {{book.guide.appDidStartCB}}  - invoked when app startup completes _(triggers "app is running" processes)_
 
 <p align="center"><img class="diagram" src="img/intro_AppInit.png" alt="App Initialization" width="90%"></p>
 

@@ -18,10 +18,10 @@ to the implementation, you are pretty much left to fend for yourself.
 process.  It automates the mundane details of managing features
 and helps to promote features that are truly **plug-and-play**.
 
-Want to see a real **feature-u** app?  {{book.ext.eateryNod}} is the
+Want to see a real **feature-u** app?  {{book.ext.eateryNodW}} is the
 application _where **feature-u** was conceived_.  It is a
-{{book.ext.reactNative}} {{book.ext.expo}} mobile app, and is one of
-my sandbox applications that I use to test frameworks.
+{{book.ext.pwa}}, and is one of my sandbox applications that I use to
+test frameworks.
 
 **feature-u** opens new doors into the exciting world of
 feature-based development.  It frees you up to **focus your attention

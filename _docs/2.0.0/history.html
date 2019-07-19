@@ -2348,6 +2348,11 @@ reference the most current release.</p>
 </thead>
 <tbody>
 <tr>
+  <td><a href="#v2_1_0">v2.1.0</a></td>
+  <td>appInit() Life Cycle Hook</td>
+  <td><em>July 19, 2019</em></td>
+</tr>
+<tr>
 <td><a href="#v2_0_0">v2.0.0</a></td>
 <td>React Hooks</td>
 <td><em>May 10, 2019</em></td>
@@ -2376,6 +2381,37 @@ reference the most current release.</p>
 </table>
 <p><br><br><br></p>
 <h2 id="details">Details:</h2>
+<!-- ************************************************************* -->
+<p><br><br><br></p>
+<h3 id="v2_1_0" style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
+  v2.1.0 - appInit() Life Cycle Hook <i>(July 19, 2019)</i>
+</h3>
+
+<p><a href="https://feature-u.js.org/2.1.0/" target="_blank">Full Docs</a>
+&#x2022;
+<a href="https://github.com/KevinAst/feature-u/releases/tag/v2.1.0" target="_blank">GitHub Release</a>
+&#x2022;
+<a href="https://github.com/KevinAst/feature-u/tree/v2.1.0" target="_blank">GitHub Content</a>
+&#x2022;
+<a href="https://github.com/KevinAst/feature-u/compare/v2.0.0-docs...v2.1.0" target="_blank">Diff</a></p>
+<p><strong>NOTE</strong>: This release is a <strong>non-breaking change</strong> <em>(i.e. no prior
+API was impacted)</em>.</p>
+<ol>
+<li><p><strong>Added</strong>: A new <a href="../2.1.0/appLifeCycle.html#appinit"><code>Feature.appInit()</code></a> Application Life Cycle
+Hook was added, supporting blocking async initialization.</p>
+</li>
+<li><p><strong>Added</strong>: In support of <a href="../2.1.0/appLifeCycle.html#appinit"><code>Feature.appInit()</code></a>, the
+<a href="../2.1.0/api.html#showStatusCB"><code>showStatus()</code></a> optional callback parameter was added to
+<a href="../2.1.0/api.html#launchApp"><code>launchApp()</code></a> allowing the application domain to
+communicate blocking &quot;persistent&quot; status messages to the end user.</p>
+</li>
+<li><p><strong>Docs</strong>: Documentation improvements include:</p>
+<ul>
+<li>Changed the sample application reference to
+<a href="https://github.com/KevinAst/eatery-nod-w" target="_blank"><code>eatery-nod-w</code></a> <em>(from <a href="https://github.com/KevinAst/eatery-nod" target="_blank"><code>eatery-nod</code></a>)</em>.</li>
+</ul>
+</li>
+</ol>
 <!-- ************************************************************* -->
 <p><br><br><br></p>
 <h3 id="v2_0_0" style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">

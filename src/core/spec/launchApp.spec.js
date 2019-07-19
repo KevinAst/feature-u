@@ -32,6 +32,15 @@ describe('launchApp() parameter validation)', () => {
     // THROW: launchApp() parameter violation: registerRootAppElm must be a function
   });
 
+  test('showStatus must be a function', () => {
+    expect( () => launchApp({
+      features: [],
+      registerRootAppElm: (p) => p,
+      showStatus: 'Im NOT a function',
+    })).toThrow(/showStatus must be a function/);
+    // THROW: launchApp() parameter violation: showStatus must be a function
+  });
+
   test('unrecognized named parameter', () => {
     expect( () => launchApp({
       features: [],
@@ -49,6 +58,8 @@ describe('launchApp() parameter validation)', () => {
     // THROW: launchApp() parameter violation: unrecognized positional parameters (only named parameters can be specified)
   });
 
+  // ?? add showStatus checks
+
 });
 
 
@@ -56,7 +67,7 @@ describe('launchApp() verify execution order of life cycle hooks (both Aspects a
 
   beforeAll(() => {
     // execute launchApp()
-    // ... ALOWING it to populate the executionOrder property of each life-cycle helper function
+    // ... ALLOWING it to populate the executionOrder property of each life-cycle helper function
     launchApp({
       // NO Aspects 
       features: [
@@ -79,6 +90,7 @@ describe('launchApp() verify execution order of life cycle hooks (both Aspects a
     { type: 'alch', func: 'initialRootAppElm' },
     { type: 'flch', func: 'appWillStart' },
     { type: 'alch', func: 'injectRootAppElm' },
+    { type: 'flch', func: 'appInit' },
     { type: 'flch', func: 'appDidStart' },
   ];
 

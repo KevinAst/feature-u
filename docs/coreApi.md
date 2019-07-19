@@ -12,6 +12,7 @@ this list:_
 * {{book.api.createFeature$}}
   * {{book.api.fassetsAspect}}
   * {{book.api.appWillStartCB$}}
+  * {{book.api.appInitCB$}}
   * {{book.api.appDidStartCB$}}
 
 
@@ -21,6 +22,7 @@ this list:_
 
 * {{book.api.launchApp$}}
   * {{book.api.registerRootAppElmCB$}}
+  * {{book.api.showStatusCB$}}
 
 
 * {{book.api.useFassets$}}

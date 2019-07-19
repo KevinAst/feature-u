@@ -830,6 +830,7 @@ a parameter.  This covers any process that is under the control of
 - app life-cycle hooks:
   
   - {{book.api.appWillStartCB$}}
+  - {{book.api.appInitCB$}}
   - {{book.api.appDidStartCB$}}
 
 

@@ -1,7 +1,7 @@
 # A Closer Look
 
 As previously mentioned, the basic process of **feature-u** is that
-each feature promotes a {{book.api.Feature}} object that calalogs
+each feature promotes a {{book.api.Feature}} object that catalogs
 various aspects of that feature ... _things like: the feature's name,
 it's Public Face, whether it is enabled, initialization constructs, and
 resources used to configure it's slice of the frameworks in use._
@@ -89,6 +89,7 @@ export default createFeature({
   },
 
   appWillStart: (...) => ..., // builtin aspect (Application Life Cycle Hook)
+  appInit:      (...) => ..., // ditto
   appDidStart:  (...) => ..., // ditto
 
   reducer: ..., // feature redux reducer (extended aspect from the feature-redux plugin)
@@ -140,17 +141,23 @@ object properties (via {{book.api.createFeature}}).
   before the app starts up.  This life-cycle hook can do any type of
   initialization, and/or optionally supplement the app's top-level
   content (using a non-null return) _(please refer to:
-  {{book.api.appWillStartCB}})_.
+  {{book.guide.appWillStart}})_.
 
+- {{book.guide.appInitCB}}
+
+  An optional {{book.guide.appLifeCycle}} invoked one time, later in
+  the app startup process.  This life-cycle hook supports blocking
+  async initialization (by simply returning a promise) _(please refer
+  to: {{book.guide.appInit}})_.
 
 - {{book.guide.appDidStartCB}}
   
-  An optional {{book.guide.appLifeCycle}} invoked one time, immediately
-  after the app has started.  Because the app is up-and-running at
-  this time, you have access to the appState and the dispatch()
-  function ... assuming you are using redux (when detected by
-  **feature-u**'s plugable aspects) _(please refer to:
-  {{book.api.appDidStartCB}})_.
+  An optional {{book.guide.appLifeCycle}} invoked one time,
+  immediately after the app has started.  Because the app is
+  up-and-running at this time, you have access to the appState and the
+  dispatch() function ... assuming you are using redux (when detected
+  by **feature-u**'s plugable aspects) _(please refer to:
+  {{book.guide.appDidStart}})_.
 
 
 ### Extendable aspects
@@ -262,7 +269,7 @@ you a feel of what is possible_).
 <!-- *** SECTION ********************************************************************************  -->
 ## Launching Your Application
 
-By interpreting the set of Aspects and Features that comprise an
+By interpreting the set of Features and Aspects that comprise an
 application, **feature-u** can actually coordinate the launch of your
 application (i.e. **start it running**)!
 
@@ -285,27 +292,33 @@ As a result, your application mainline is very simple and generic.
 There is no real app-specific code in it ... **not even any global
 initialization**!  That is because **each feature can inject their own
 app-specific constructs**!!  The mainline merely accumulates the
-Aspects and Features, and starts the app by invoking {{book.api.launchApp}}:
+Features and Aspects, and starts the app by invoking {{book.api.launchApp}}:
 
 **src/app.js**
 ```js
 import React                 from 'react';
 import ReactDOM              from 'react-dom';
 import {launchApp}           from 'feature-u';
+import features              from './features';          // *2*
 import {createReducerAspect} from 'feature-redux';       // *1*
 import {createLogicAspect}   from 'feature-redux-logic'; // *1*
 import {createRouteAspect}   from 'feature-router';      // *1*
-import features              from './features';          // *2*
-import SplashScreen          from './util/comp/SplashScreen';
+import SplashScreen {splash} from './util/comp/SplashScreen';
 
 // launch our app, exposing the feature-u Fassets object (facilitating cross-feature-communication)!
 export default launchApp({         // *4*
-  aspects: appAspects(),           // *1*
+
   features,                        // *2*
+  aspects: appAspects(),           // *1*
+
   registerRootAppElm(rootAppElm) { // *3*
     ReactDOM.render(rootAppElm,
                     getElementById('myAppRoot'));
-  }
+  },
+
+  showStatus(msg='', err=null) {   // *5*
+    splash(msg, err);
+  },
 });
 
 // accumulate/configure the Aspect plugins matching our app's run-time stack
@@ -330,17 +343,23 @@ function appAspects() {
 }
 ```
 
-The Aspect collection _(see `*1*` in the code snippet above)_ reflects
-the frameworks of our run-time stack _(in our example
-{{book.ext.redux}}, {{book.ext.reduxLogic}}, and
-{{book.ext.featureRouter}} )_ and extend the acceptable Feature
-properties _(`Feature.reducer`, `Feature.logic`, and `Feature.route`
-respectively)_ ... _**see:** {{book.guide.detail_extendableAspects}}_.
-In this case, all our Aspects were pulled from external npm packages,
-however you can define your own using {{book.api.createAspect}}.
+- All of our supplied app features are accumulated from the `features/`
+  directory ... _(see **`*2*`** in the code snippet above)_.
+  
+- The Aspect collection _(see **`*1*`** in the code snippet above)_ reflects
+  the frameworks of our run-time stack _(in our example
+  {{book.ext.redux}}, {{book.ext.reduxLogic}}, and
+  {{book.ext.featureRouter}} )_ and extend the acceptable Feature
+  properties _(`Feature.reducer`, `Feature.logic`, and `Feature.route`
+  respectively)_ ... _**see:** {{book.guide.detail_extendableAspects}}_.
+  In this case, all our Aspects were pulled from external npm packages,
+  however you can define your own using {{book.api.createAspect}}.
 
-All of our supplied app features are accumulated from the `features/`
-directory ... _(see `*2*` in the code snippet above)_.
+- The {{book.api.showStatusCB}} callback parameter _(see **`*5*`** in the
+  code snippet above)_ uses a SplashScreen to communicate status
+  messages to the end user, resulting from long-running async
+  processes _(like {{book.guide.appInitCB}})_.
+
 
 ## Export fassets
 
@@ -348,7 +367,7 @@ The {{book.api.FassetsObject}} _(emitted from {{book.api.launchApp}})_
 promotes the accumulated Public Face of all features.  This is the
 basis of {{book.guide.crossCom}}.
 
-By **feature-u** decree, this object should be exported _(see `*4*`
+By **feature-u** decree, this object should be exported _(see **`*4*`**
 in the code snippet above)_, providing import access to other modules.
 **SideBar**: In reality there are several ways to access the
 `fassets` object _(depending on the context)_, import is just one
@@ -358,10 +377,10 @@ You can find more information about the {{book.api.FassetsObject}} in
 {{book.guide.crossCom}}.
 
 
-### React Registration
+## React Registration
 
 The {{book.api.launchApp}} function uses a
-{{book.api.registerRootAppElmCB}} callback _(see `*3*` in the code
+{{book.api.registerRootAppElmCB}} callback _(see **`*3*`** in the code
 snippet above)_ to catalog the supplied `rootAppElm` to the specific
 React platform in use.
 
@@ -370,13 +389,13 @@ React platform in use.
 **NOTE** regarding the `rootAppElm`:
 
 - Typically the supplied `rootAppElm` will have definition, based on the
-  Aspects and Features that are in use.  In this case, it is the
+  Features and Aspects that are in use.  In this case, it is the
   responsibility of this callback to register this content in some way
   (either directly or indirectly).
 
 - However, there are atypical isolated cases where the supplied
   `rootAppElm` can be null.  This can happen when the app chooses NOT to
-  use Aspects/Features that inject any UI content.  In this case, the
+  use Features/Aspects that inject any UI content.  In this case, the
   callback is free to register it's own content.
 
 Because this registration is accomplished by your app-specific code,
@@ -387,8 +406,8 @@ Because this registration is accomplished by your app-specific code,
 import ReactDOM from 'react-dom';
 ...
 export default launchApp({
-  aspects,
   features,
+  aspects,
   registerRootAppElm(rootAppElm) { // *3*
     ReactDOM.render(rootAppElm,
                     getElementById('myAppRoot'));
@@ -401,8 +420,8 @@ export default launchApp({
 import {AppRegistry} from 'react-native';
 ...
 export default launchApp({
-  aspects,
   features,
+  aspects,
   registerRootAppElm(rootAppElm) { // *3*
     AppRegistry.registerComponent('myAppKey',
                                   ()=>rootAppElm); // convert rootAppElm to a React Component
@@ -415,10 +434,44 @@ export default launchApp({
 import Expo from 'expo';
 ...
 export default launchApp({
-  aspects,
   features,
+  aspects,
   registerRootAppElm(rootAppElm) { // *3*
     Expo.registerRootComponent(()=>rootAppElm); // convert rootAppElm to a React Component
   }
 });
 ```
+
+## Covert Asynchronicity
+
+It is worth noting that "under the covers" {{book.api.launchApp}} is
+actually an asynchronous function, _in a "covert" sort of way_.
+
+For simplicity _(and backward compatibility)_, {{book.api.launchApp}}
+returns _just before any
+{{book.guide.appInitCB}} / {{book.guide.appDidStartCB}}
+{{book.guide.appLifeCycles}} execute_.  The returned
+{{book.api.FassetsObject}} is fully resolved and functional.
+
+However, {{book.api.launchApp}} is still potentially working in the
+background, due to the blocking nature of the asynchronous
+{{book.guide.appInitCB}} {{book.guide.appLifeCycle}} _(introduced in
+{{book.version.v2_1_0}})_.
+
+This heuristic has two ramifications:
+
+1. Any logic that runs after the return of {{book.api.launchApp}}
+   **should not assume** that the app is "up and running".  Rather you
+   should rely on the {{book.guide.appDidStartCB}}
+   {{book.guide.appLifeCycle}}.
+
+   In reality, this has always been an implicit "best practice".
+
+2. Any errors that occur in the {{book.guide.appInitCB}} life cycle
+   methods (and beyond) are reported via that {{book.api.showStatusCB}}
+   callback.
+
+The bottom line of {{book.api.launchApp}} is that it's "Covert
+Asynchronous" behavior is "by design", because it seems reasonable
+_(in the authors opinion)_, and has the added benefit of being backward
+compatible to all prior **feature-u** versions.

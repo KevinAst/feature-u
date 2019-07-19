@@ -94,8 +94,12 @@
 
       "appWillStart":     "<a href='/appLifeCycle.html#appwillstart'><code>appWillStart</code></a>",
       "appWillStartCB":   "<a href='/appLifeCycle.html#appwillstart'><code>Feature.appWillStart()</code></a>",
-      "appWillStartCB$":  "<a href='/appLifeCycle.html#appwillstart'><code>Feature.appWillStart({fassets, curRootAppElm}): rootAppElm | falsy</code></a>",
+      "appWillStartCB$":  "<a href='/appLifeCycle.html#appwillstart'><code>Feature.appWillStart({fassets, curRootAppElm}): rootAppElm | void</code></a>",
         "injectingDomContent":     "<a href='/appLifeCycle.html#injecting-dom-content'><code>Injecting DOM Content</code></a>",
+
+      "appInit":          "<a href='/appLifeCycle.html#appinit'><code>appInit</code></a>",
+      "appInitCB":        "<a href='/appLifeCycle.html#appinit'><code>Feature.appInit()</code></a>",
+      "appInitCB$":       "<a href='/appLifeCycle.html#appinit'><code>Feature.appInit({showStatus, fassets, [appState], [dispatch]}): promise | void</code></a>",
 
       "appDidStart":      "<a href='/appLifeCycle.html#appdidstart'><code>appDidStart</code></a>",
       "appDidStartCB":    "<a href='/appLifeCycle.html#appdidstart'><code>Feature.appDidStart()</code></a>",
@@ -200,9 +204,11 @@
       "coreApi":                      "<a href='/coreApi.html'><code>Core API</code></a>",
 
         "createFeature":              "<a href='/api.html#createFeature'><code>createFeature()</code></a>",
-        "createFeature$":             "<a href='/api.html#createFeature'><code>createFeature({name, [enabled], [fassets], [appWillStart], [appDidStart], [extendedAspects]}): Feature</code></a>",
+        "createFeature$":             "<a href='/api.html#createFeature'><code>createFeature({name, [enabled], [fassets], [appWillStart], [appInit], [appDidStart], [extendedAspects]}): Feature</code></a>",
           "appWillStartCB":           "<a href='/api.html#appWillStartCB'><code>appWillStart()</code></a>",
-          "appWillStartCB$":          "<a href='/api.html#appWillStartCB'><code>appWillStart({fassets, curRootAppElm}): rootAppElm | falsy</code></a>",
+          "appWillStartCB$":          "<a href='/api.html#appWillStartCB'><code>appWillStart({fassets, curRootAppElm}): rootAppElm | void</code></a>",
+          "appInitCB":                "<a href='/api.html#appInitCB'><code>appInit()</code></a>",
+          "appInitCB$":               "<a href='/api.html#appInitCB'><code>appInit({showStatus, fassets, [appState], [dispatch]}): promise | void</code></a>",
           "appDidStartCB":            "<a href='/api.html#appDidStartCB'><code>appDidStart()</code></a>",
           "appDidStartCB$":           "<a href='/api.html#appDidStartCB'><code>appDidStart({fassets, [appState], [dispatch]}): void</code></a>",
 
@@ -212,9 +218,11 @@
           "expandWithFassetsCB$":      "<a href='/api.html#expandWithFassetsCB'><code>expandWithFassetsCB(fassets): AspectContent</code></a>",
 
         "launchApp":                  "<a href='/api.html#launchApp'><code>launchApp()</code></a>",
-        "launchApp$":                 "<a href='/api.html#launchApp'><code>launchApp({[aspects], features, registerRootAppElm}): Fassets</code></a>",
+        "launchApp$":                 "<a href='/api.html#launchApp'><code>launchApp({features, [aspects], registerRootAppElm, [showStatus]}): Fassets</code></a>",
           "registerRootAppElmCB":     "<a href='/api.html#registerRootAppElmCB'><code>registerRootAppElm()</code></a>",
           "registerRootAppElmCB$":    "<a href='/api.html#registerRootAppElmCB'><code>registerRootAppElm(rootAppElm, fassets): void</code></a>",
+          "showStatusCB":             "<a href='/api.html#showStatusCB'><code>showStatus()</code></a>",
+          "showStatusCB$":            "<a href='/api.html#showStatusCB'><code>showStatus([msg], [err]): void</code></a>",
 
         "useFassets":                 "<a href='/api.html#useFassets'><code>useFassets()</code></a>",
         "useFassets$":                "<a href='/api.html#useFassets'><code>useFassets(fassetsKey | mapFassetsToPropsStruct): Fassets | fassets-resource | fassetsProps</code></a>",
@@ -259,10 +267,15 @@
         "extendFeatureProperty$":          "<a href='/api.html#extendFeatureProperty'><code>extendFeatureProperty(name, owner): void</code></a>"
     },
 
+    "version": {
+      "v2_1_0":    "<a href='/history.html#v2_1_0'><code>V2.1.0</code></a>"
+    },
+
     "ext": {
       "actionU":            "<a href='https://action-u.js.org/'><code>action-u</code></a>",
       "astxReduxUtil":      "<a href='https://astx-redux-util.js.org/'><code>astx-redux-util</code></a>",
       "eateryNod":          "<a href='https://github.com/KevinAst/eatery-nod'><code>eatery-nod</code></a>",
+      "eateryNodW":         "<a href='https://github.com/KevinAst/eatery-nod-w'><code>eatery-nod-w</code></a>",
       "expo":               "<a href='https://expo.io/'><code>expo</code></a>",
       "featureRedux":       "<a href='https://github.com/KevinAst/feature-redux'><code>feature-redux</code></a>",
       "featureReduxLogic":  "<a href='https://github.com/KevinAst/feature-redux-logic'><code>feature-redux-logic</code></a>",
@@ -272,6 +285,7 @@
       "reactHooks":         "<a href='https://reactjs.org/docs/hooks-intro.html'><code>react hooks</code></a>",
       "reactWeb":           "<a href='https://reactjs.org/'><code>react-web</code></a>",
       "reactContext":       "<a href='https://reactjs.org/docs/context.html'><code>react context</code></a>",
+      "pwa":                "<a href='https://developers.google.com/web/progressive-web-apps/'><code>PWA</code></a>",
       "reactNative":        "<a href='https://facebook.github.io/react-native/'><code>react-native</code></a>",
       "reactRouter":        "<a href='https://reacttraining.com/react-router/'><code>react-router</code></a>",
       "redux":              "<a href='http://redux.js.org/'><code>redux</code></a>",
