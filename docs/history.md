@@ -114,18 +114,18 @@ Release           | What                                   | *When*
 **NOTE**: This release is a **non-breaking change** _(i.e. no prior
 API was impacted)_.
 
-1. **Added**: A new {{book.guide.appInitCB}} Application Life Cycle
+1. **Added**: A new [`Feature.appInit()`](../2.1.0/appLifeCycle.html#appinit) Application Life Cycle
    Hook was added, supporting blocking async initialization.
 
-2. **Added**: In support of {{book.guide.appInitCB}}, the
-   {{book.api.showStatusCB}} optional callback parameter was added to
-   {{book.api.launchAppCB}} allowing the application domain to
+2. **Added**: In support of [`Feature.appInit()`](../2.1.0/appLifeCycle.html#appinit), the
+   [`showStatus()`](../2.1.0/api.html#showStatusCB) optional callback parameter was added to
+   [`launchApp()`](../2.1.0/api.html#launchApp) allowing the application domain to
    communicate blocking "persistent" status messages to the end user.
 
 3. **Docs**: Documentation improvements include:
 
    - Changed the sample application reference to
-     {{book.ext.eateryNodW}} _(from {{book.ext.eateryNod}})_.
+     [`eatery-nod-w`](https://github.com/KevinAst/eatery-nod-w) _(from [`eatery-nod`](https://github.com/KevinAst/eatery-nod))_.
 
 
 
@@ -248,7 +248,7 @@ releases.  _A retrofit of client code is necessary (see the
    [`Cross Feature Communication`](../1.0.0/crossCommunication.html)
    has been completely re-designed to include
    [`UI Composition`](../1.0.0/crossCommunication.html#ui-composition)
-   as a core offering of **feature-u** _(thanks {{book.ext.jeffbski}} for
+   as a core offering of **feature-u** _(thanks [@jeffbski](https://github.com/jeffbski) for
    the design collaboration)_!
 
    - This refactor promotes **one solution** for all 
