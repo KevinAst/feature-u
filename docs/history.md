@@ -84,6 +84,7 @@ reference the most current release.
 
 Release           | What                                   | *When*
 ------------------|----------------------------------------|------------------
+[v2.1.1](#v2_1_1) | Introduction Video                     | *December xx, 2019*
 [v2.1.0](#v2_1_0) | appInit() Life Cycle Hook              | *July 19, 2019*
 [v2.0.0](#v2_0_0) | React Hooks                            | *May 10, 2019*
 [v1.0.1](#v1_0_1) | Docs Update                            | *September 5, 2018*
@@ -95,6 +96,34 @@ Release           | What                                   | *When*
 <br/><br/><br/>
 ## Details:
 
+
+
+<!-- ************************************************************* -->
+<br/><br/><br/>
+<h3 id="v2_1_1" style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
+  v2.1.1 - Introduction Video <i>(December xx, 2019)</i>
+</h3>
+
+[Full Docs](https://feature-u.js.org/2.1.1/)
+&bull;
+[GitHub Release](https://github.com/KevinAst/feature-u/releases/tag/v2.1.1)
+&bull;
+[GitHub Content](https://github.com/KevinAst/feature-u/tree/v2.1.1)
+&bull;
+[Diff](https://github.com/KevinAst/feature-u/compare/v2.1.0-docs...v2.1.1)
+
+**NOTE**: This release is a **non-breaking change** _(i.e. no prior
+API was impacted)_.
+
+1. The ??"feature-u In Action"?? section was added, which is a video introduction to **feature-u**.
+
+   ?? {{book.api.createFeature}}
+
+2. **Docs**: Documentation improvements include:
+
+   - ??
+
+3. ?? more
 
 
 <!-- ************************************************************* -->
