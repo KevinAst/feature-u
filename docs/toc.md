@@ -26,6 +26,11 @@
       * [Resource Contracts](concepts.md#resource-contracts)
     * [Feature Enablement](concepts.md#feature-enablement)
   * [In Summary](concepts.md#in-summary)
+* [Playful Features Video](presentation.md)
+  * [Presentation Syllabus](presentation.md#presentation-syllabus)
+  * [Presentation Resources](presentation.md#presentation-resources)
+  * [Presentation](presentation.md#presentation)
+  * [Video Table of Contents](presentation.md#video-table-of-contents)
 * [Benefits](benefits.md)
 
 ----

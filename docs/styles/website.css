@@ -33,3 +33,10 @@
                                 /* blur around frame */
   box-shadow: 0 0 8px 8px white inset;
 }
+
+/* simulated links used to inject content in youtube video iframe */
+.video-link {
+  cursor:          pointer;
+  font-weight:     bold;
+  text-decoration: underline;
+}

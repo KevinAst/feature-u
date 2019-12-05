@@ -18,10 +18,9 @@ to the implementation, you are pretty much left to fend for yourself.
 process.  It automates the mundane details of managing features
 and helps to promote features that are truly **plug-and-play**.
 
-Want to see a real **feature-u** app?  {{book.ext.eateryNodW}} is the
-application _where **feature-u** was conceived_.  It is a
-{{book.ext.pwa}}, and is one of my sandbox applications that I use to
-test frameworks.
+You can quickly **"come up to speed"** with **feature-u** by reviewing
+the {{book.guide.playfulFeaturesVideo}}, that builds concepts,
+and demonstrates them in a real world app ({{book.ext.eateryNodW}}).
 
 **feature-u** opens new doors into the exciting world of
 feature-based development.  It frees you up to **focus your attention
@@ -40,6 +39,8 @@ on the "business end" of your features!**
 - {{book.guide.start}} ... _installation and access_
 
 - {{book.guide.basicConcepts}} ... _a full introduction to **feature-u** concepts and terminology **(a must read)**_
+
+- {{book.guide.playfulFeaturesVideo}} ... _a **feature-u** presentation to get you started **(a must see)**_
 
 - {{book.guide.benefits}} ... _understand the benefits of **feature-u**_
 
