@@ -84,7 +84,7 @@ reference the most current release.
 
 Release           | What                                   | *When*
 ------------------|----------------------------------------|------------------
-[v2.1.1](#v2_1_1) | Playful Features Video                 | *December xx, 2019*
+[v2.1.1](#v2_1_1) | Playful Features                       | *December xx, 2019*
 [v2.1.0](#v2_1_0) | appInit() Life Cycle Hook              | *July 19, 2019*
 [v2.0.0](#v2_0_0) | React Hooks                            | *May 10, 2019*
 [v1.0.1](#v1_0_1) | Docs Update                            | *September 5, 2018*
@@ -101,7 +101,7 @@ Release           | What                                   | *When*
 <!-- ************************************************************* -->
 <br/><br/><br/>
 <h3 id="v2_1_1" style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
-  v2.1.1 - Playful Features Video <i>(December xx, 2019)</i>
+  v2.1.1 - Playful Features <i>(December xx, 2019)</i>
 </h3>
 
 [Full Docs](https://feature-u.js.org/2.1.1/)
@@ -115,14 +115,14 @@ Release           | What                                   | *When*
 **NOTE**: This release is a **non-breaking change** _(i.e. no prior
 API was impacted)_.
 
-1. The {{book.guide.playfulFeaturesVideo}} was added, which is a
+1. The {{book.guide.playfulFeaturesVideo}} was added ... a
    **feature-u** presentation that builds concepts, and demonstrates them
    in a real world app ({{book.ext.eateryNodW}}).
 
-2. **Docs**: Documentation improvements include:
-   - ??
+2. **Security**: ?? TODO: Update dependent lib versions to address potential security vulnerabilities.
 
-3. ?? more
+3. **Docs**: Documentation improvements include:
+   - ??
 
 
 <!-- ************************************************************* -->

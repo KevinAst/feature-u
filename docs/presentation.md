@@ -1,11 +1,11 @@
-# Playful Features Video
+# Playful Features
 
 **_Feature-Driven Development that "Plugs and Plays"_**
 
-When grasping a new concept, it is sometimes better to see it in
-action!  This section contains a screen cast video of a presentation
-that has been given to a number of regional conferences and local
-meetup groups.
+When grasping a new concept, it is helpful to **see it in action!**
+This section contains a **screencast video** of a presentation that
+has been given to a number of regional conferences and local meetup
+groups.
 
 The presentation closely follows the {{book.guide.basicConcepts}}
 section, and demonstrates the newly developed concepts in a real world
@@ -75,10 +75,9 @@ up to focus your attention on the "business end" of your features!
 
 ## Presentation
 
-It is recommended that you initially view the video in it's entirety.
-For subsequent review, you may directly reference specific sections
-through the {{book.guide.playfulFeaturesVideo_TOC}} (just below the
-video).
+_It is recommended that you initially watch the video in it's entirety.
+For subsequent review, you may reference specific sections through the
+{{book.guide.playfulFeatures_videoContent}} (below)._
 
 <p align="center">
   <iframe name="featureVideo"
@@ -91,7 +90,7 @@ video).
           allowfullscreen></iframe>
 </p>
 
-## Video Table of Contents
+## Video Content
 
 <script>
   function advanceVideo(h, m, s) {
@@ -121,7 +120,7 @@ video).
   &nbsp;&nbsp;<span class="video-link" onclick="advanceVideo(0, 10,03)">10:03</span>       2. Feature Collaboration
 </ul>
 
-<b>feature-u setup</b><br/>
+<b>Why feature-u</b><br/>
 <ul>
   <li><span class="video-link" onclick="advanceVideo(0,11,42)">11:42</span> Why feature-u was created
 </ul>
@@ -129,12 +128,12 @@ video).
 <b>Ultimate Goal</b><br/>
 <ul>
   <li><span class="video-link" onclick="advanceVideo(0,12, 5)">12:05</span> Plug-and-Play
-  <li><span class="video-link" onclick="advanceVideo(0,13,29)">13:29</span> Covered in this Session
+  <li><span class="video-link" onclick="advanceVideo(0,13,29)">13:29</span> What is Covered in this Session
 </ul>
 
 <b>DEMO App</b><br/>
 <ul>
-  <li><span class="video-link" onclick="advanceVideo(0,14,4)">14:04</span> eatery-nod uses feature-u
+  <li><span class="video-link" onclick="advanceVideo(0,14,4)">14:04</span> eatery-nod: a feature-u app
 </ul>
 
 <b>Sneak Peek</b><br/>
@@ -147,7 +146,7 @@ video).
 </ol>
 </ul>
 
-<b>feature-u Solution</b><br/>
+<b>The feature-u Solution</b><br/>
 <ul>
   <li><span class="video-link" onclick="advanceVideo(0,27,14)">27:14</span> feature-u basics
   <li><span class="video-link" onclick="advanceVideo(0,27,21)">27:21</span> launchApp()
@@ -177,7 +176,7 @@ video).
   <ul>
     <li><span class="video-link" onclick="advanceVideo(0,49,46)">49:46</span> PUSH: fassets define
     <li><span class="video-link" onclick="advanceVideo(0,50,58)">50:58</span> UI Composition
-    <li><span class="video-link" onclick="advanceVideo(0,53,16)">53:16</span> PULL: Usage Contract (EXCITING)
+    <li><span class="video-link" onclick="advanceVideo(0,53,16)">53:16</span> PULL: Usage Contract (This is EXCITING!)
   </ul>
   <li><span class="video-link" onclick="advanceVideo(0,57, 3)">57:03</span> DEMO (Feature Collaboration)
 </ul>
@@ -191,7 +190,7 @@ video).
 <b>Final Thoughts</b><br/>
 <ul>
   <li><span class="video-link" onclick="advanceVideo(1, 6,25)">1:06:25</span> feature-u Context Diagram
-  <li><span class="video-link" onclick="advanceVideo(1, 7, 8)">1:07:08</span> Higher Level Abstraction
+  <li><span class="video-link" onclick="advanceVideo(1, 7, 8)">1:07:08</span> Features are a Higher Level Abstraction
   <li><span class="video-link" onclick="advanceVideo(1, 8, 9)">1:08:09</span> feature-u is NON Intrusive!
   <li><span class="video-link" onclick="advanceVideo(1, 8,54)">1:08:54</span> feature-u frees you up!!
   <li><span class="video-link" onclick="advanceVideo(1, 9,31)">1:09:31</span> feature-u Benefits

@@ -71,8 +71,9 @@
           "basicConcepts_featureEnablement":              "<a href='/concepts.html#feature-enablement'><code>Feature Enablement</code></a>",
         "basicConcepts_inSummary":                        "<a href='/concepts.html#in-summary'><code>In Summary</code></a>",
 
-      "playfulFeaturesVideo": "<a href='/presentation.html'><code>Playful Features Video</code></a>",
-        "playfulFeaturesVideo_TOC": "<a href='/presentation.html#video-table-of-contents'><code>Video Table of Contents</code></a>",
+      "playfulFeatures":                "<a href='/presentation.html'><code>Playful Features</code></a>",
+      "playfulFeaturesVideo":           "<a href='/presentation.html'><code>Playful Features Video</code></a>",
+        "playfulFeatures_videoContent": "<a href='/presentation.html#video-content'><code>Video Content</code></a>",
 
       "benefits":        "<a href='/benefits.html'><code>Benefits</code></a>",
 
