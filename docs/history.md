@@ -122,7 +122,15 @@ API was impacted)_.
 2. **Security**: ?? TODO: Update dependent lib versions to address potential security vulnerabilities.
 
 3. **Docs**: Documentation improvements include:
-   - ??
+
+   - Sample code for the app's mainline startup process was simplified
+     by extracting `Aspect` plugin accumulation/configuration through
+     an `aspects/` directory (see: {{book.guide.usage_aspectAccumulation}}
+     and {{book.guide.usage_launchapp}}).  This is consistent with how
+     features are accumulated.
+
+   - ?? more?
+
 
 
 <!-- ************************************************************* -->
