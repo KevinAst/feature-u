@@ -40,3 +40,7 @@
   font-weight:     bold;
   text-decoration: underline;
 }
+
+.highlight {
+  background-color: yellow !important;
+}
