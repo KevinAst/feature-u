@@ -119,7 +119,8 @@ API was impacted)_.
    **feature-u** presentation that builds concepts, and demonstrates them
    in a real world app ({{book.ext.eateryNodW}}).
 
-2. **Security**: ?? TODO: Update dependent lib versions to address potential security vulnerabilities.
+2. **Security**: Address potential security vulnerabilities in dependent libs
+   (mostly devDependencies completely unrelated to deployment)!
 
 3. **Docs**: Documentation improvements include:
 
