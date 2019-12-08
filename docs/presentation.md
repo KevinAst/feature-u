@@ -115,7 +115,7 @@ For subsequent review, you may reference specific sections through the
   <li><span class="video-link" onclick="advanceVideo(0, 4, 37)">4:37</span> Let's Start
   <li><span class="video-link" onclick="advanceVideo(0, 4, 46)">4:46</span> Project Organization
   <li><span class="video-link" onclick="advanceVideo(0, 6, 48)">6:48</span> Goals/Hurdles
-  <li><span class="video-link" onclick="advanceVideo(0, 8, 44)">8:44</span> Primary Tenets<br/>
+  <li><span class="video-link" onclick="advanceVideo(0, 8, 44)">8:44</span> Two Primary Tenets<br/>
   &nbsp;&nbsp;<span class="video-link" onclick="advanceVideo(0, 9, 13)">9:13</span> &nbsp; 1. Feature Runtime Consolidation<br/>
   &nbsp;&nbsp;<span class="video-link" onclick="advanceVideo(0, 10,03)">10:03</span>       2. Feature Collaboration
 </ul>
