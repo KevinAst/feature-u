@@ -49,8 +49,7 @@
     "docs:clean":            "rimraf _book _docs/cur",
     "lint":                  "echo '*** Verify code quality (lint):' && eslint src",
     "pkgReview":             "echo '*** Showing outdated installed packages:' && npm outdated --long || true",
-    "OLD:prepublish":        "npm-run-all lint pkgReview clean build:plat:all test cov",
-    "prepublish":            "npm-run-all lint clean build:plat:all test cov",
+    "prepublish":            "npm-run-all lint pkgReview clean build:plat:all test cov",
     "start":                 "npm run dev",
     "test":                  "jest src",
     "test:watch":            "npm run test -- --watch"
