@@ -296,64 +296,36 @@ Features and Aspects, and starts the app by invoking {{book.api.launchApp}}:
 
 **src/app.js**
 ```js
-import React                 from 'react';
-import ReactDOM              from 'react-dom';
-import {launchApp}           from 'feature-u';
-import features              from './features';          // *2*
-import {createReducerAspect} from 'feature-redux';       // *1*
-import {createLogicAspect}   from 'feature-redux-logic'; // *1*
-import {createRouteAspect}   from 'feature-router';      // *1*
-import SplashScreen {splash} from './util/comp/SplashScreen';
+import ReactDOM     from 'react-dom';
+import {launchApp}  from 'feature-u';
+import features     from 'features';
+import aspects      from 'aspects';
+import {splash}     from 'util/SplashScreen';
 
-// launch our app, exposing the feature-u Fassets object (facilitating cross-feature-communication)!
+// launch our app, exposing the Fassets object (facilitating cross-feature-communication)
 export default launchApp({         // *4*
-
-  features,                        // *2*
-  aspects: appAspects(),           // *1*
+                                    
+  features,                        // *1*
+  aspects,                         // *2*
 
   registerRootAppElm(rootAppElm) { // *3*
     ReactDOM.render(rootAppElm,
-                    getElementById('myAppRoot'));
+                    document.getElementById('root'));
   },
 
   showStatus(msg='', err=null) {   // *5*
     splash(msg, err);
   },
 });
-
-// accumulate/configure the Aspect plugins matching our app's run-time stack
-function appAspects() {
-
-  // define our framework run-time stack
-  const reducerAspect = createReducerAspect(); // *1*
-  const logicAspect   = createLogicAspect();   // *1*
-  const routeAspect   = createRouteAspect();   // *1*
-  const aspects = [                            // *1*
-    reducerAspect, // redux          ... extending: Feature.reducer
-    logicAspect,   // redux-logic    ... extending: Feature.logic
-    routeAspect,   // Feature Routes ... extending: Feature.route
-  ];
-
-  // configure Aspects (as needed)
-  // ... StateRouter fallback screen (when no routes are in effect)
-  routeAspect.config.fallbackElm$ = <SplashScreen msg="I'm trying to think but it hurts!"/>;
-
-  // beam me up Scotty :-)
-  return aspects;
-}
 ```
 
-- All of our supplied app features are accumulated from the `features/`
-  directory ... _(see **`*2*`** in the code snippet above)_.
-  
-- The Aspect collection _(see **`*1*`** in the code snippet above)_ reflects
-  the frameworks of our run-time stack _(in our example
-  {{book.ext.redux}}, {{book.ext.reduxLogic}}, and
-  {{book.ext.featureRouter}} )_ and extend the acceptable Feature
-  properties _(`Feature.reducer`, `Feature.logic`, and `Feature.route`
-  respectively)_ ... _**see:** {{book.guide.detail_extendableAspects}}_.
-  In this case, all our Aspects were pulled from external npm packages,
-  however you can define your own using {{book.api.createAspect}}.
+- All app features are supplied (accumulated from the `features/`
+  directory) ... _**see:** **`*1*`** (above) and
+  {{book.guide.usage_featureAccumulation}}_
+
+- The app aspects (i.e. the run-time stack) are supplied (accumulated
+  from the `aspects/` directory) ... _**see:** **`*2*`** (above) and
+  {{book.guide.usage_aspectAccumulation}}_
 
 - The {{book.api.showStatusCB}} callback parameter _(see **`*5*`** in the
   code snippet above)_ uses a SplashScreen to communicate status

@@ -84,6 +84,7 @@ reference the most current release.
 
 Release           | What                                   | *When*
 ------------------|----------------------------------------|------------------
+[v2.1.1](#v2_1_1) | Playful Features                       | *December 9, 2019*
 [v2.1.0](#v2_1_0) | appInit() Life Cycle Hook              | *July 19, 2019*
 [v2.0.0](#v2_0_0) | React Hooks                            | *May 10, 2019*
 [v1.0.1](#v1_0_1) | Docs Update                            | *September 5, 2018*
@@ -94,6 +95,40 @@ Release           | What                                   | *When*
 
 <br/><br/><br/>
 ## Details:
+
+
+
+<!-- ************************************************************* -->
+<br/><br/><br/>
+<h3 id="v2_1_1" style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
+  v2.1.1 - Playful Features <i>(December 9, 2019)</i>
+</h3>
+
+[Full Docs](https://feature-u.js.org/2.1.1/)
+&bull;
+[GitHub Release](https://github.com/KevinAst/feature-u/releases/tag/v2.1.1)
+&bull;
+[GitHub Content](https://github.com/KevinAst/feature-u/tree/v2.1.1)
+&bull;
+[Diff](https://github.com/KevinAst/feature-u/compare/v2.1.0-docs...v2.1.1)
+
+**NOTE**: This release is a **non-breaking change** _(i.e. no prior
+API was impacted)_.
+
+1. **Added**: The [`Playful Features Video`](../2.1.1/presentation.html) was added ... a
+   **feature-u** presentation that builds concepts, and demonstrates them
+   in a real world app ([`eatery-nod-w`](https://github.com/KevinAst/eatery-nod-w)).
+
+2. **Security**: Address potential security vulnerabilities in dependent libs
+   (mostly devDependencies completely unrelated to deployment)!
+
+3. **Docs**: Documentation improvements include:
+
+   - Sample code for the app's mainline startup process was simplified
+     by extracting `Aspect` plugin accumulation/configuration through
+     an `aspects/` directory (see: [`Aspect Accumulation`](../2.1.1/usage.html#aspect-accumulation)
+     and [`launchApp()`](../2.1.1/usage.html#launchapp)).  This is consistent with how
+     features are accumulated.
 
 
 

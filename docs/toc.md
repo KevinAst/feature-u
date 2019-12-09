@@ -1,6 +1,6 @@
 # Table of content 
 
-### feature-u (2.1.0)
+### feature-u (2.1.1)
 * [Getting Started](start.md)
   * [Install](start.md#install)
   * [Access](start.md#access)
@@ -26,6 +26,11 @@
       * [Resource Contracts](concepts.md#resource-contracts)
     * [Feature Enablement](concepts.md#feature-enablement)
   * [In Summary](concepts.md#in-summary)
+* [Playful Features](presentation.md)
+  * [Presentation](presentation.md#presentation)
+  * [Video Content](presentation.md#video-content)
+  * [Presentation Resources](presentation.md#presentation-resources)
+  * [Presentation Syllabus](presentation.md#presentation-syllabus)
 * [Benefits](benefits.md)
 
 ----
@@ -33,6 +38,7 @@
   * [Directory Structure](usage.md#directory-structure)
   * [Feature Object](usage.md#feature-object)
   * [Feature Accumulation](usage.md#feature-accumulation)
+  * [Aspect Accumulation](usage.md#aspect-accumulation)
   * [launchApp()](usage.md#launchapp)
   * [Real Example](usage.md#real-example)
 * [A Closer Look](detail.md)
@@ -144,6 +150,8 @@
 * [Distribution](dist.md)
 * [Why feature-u?](why.md)
 * [Revision History](history.md)
+  * [v2.1.1 (December 9, 2019)](history.md#v2_1_1)
+    * [Full Docs](https://feature-u.js.org/2.1.1/)
   * [v2.1.0 (July 19, 2019)](history.md#v2_1_0)
     * [Full Docs](https://feature-u.js.org/2.1.0/)
   * [v2.0.0 (May 10, 2019)](history.md#v2_0_0)
