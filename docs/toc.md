@@ -27,10 +27,10 @@
     * [Feature Enablement](concepts.md#feature-enablement)
   * [In Summary](concepts.md#in-summary)
 * [Playful Features](presentation.md)
-  * [Presentation Syllabus](presentation.md#presentation-syllabus)
-  * [Presentation Resources](presentation.md#presentation-resources)
   * [Presentation](presentation.md#presentation)
   * [Video Content](presentation.md#video-content)
+  * [Presentation Resources](presentation.md#presentation-resources)
+  * [Presentation Syllabus](presentation.md#presentation-syllabus)
 * [Benefits](benefits.md)
 
 ----

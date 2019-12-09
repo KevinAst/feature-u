@@ -12,6 +12,148 @@ section, and demonstrates the newly developed concepts in a real world
 app ({{book.ext.eateryNodW}}).
 
 
+## Presentation
+
+_It is recommended that you initially watch the video in it's entirety.
+For subsequent review, you may reference specific sections through the
+{{book.guide.playfulFeatures_videoContent}} (below)._
+
+<p align="center">
+  <iframe name="featureVideo"
+          id="featureVideo"
+          width="700"
+          height="394"
+          src="https://www.youtube.com/embed/VKdAC3-lKjo"
+          frameborder="0"
+          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen></iframe>
+</p>
+
+
+## Video Content
+
+<script>
+  function advanceVideo(h, m, s) {
+    var featureVideo = window.frames['featureVideo'];
+    var startSeconds = h*3600 + m*60 + s;
+    featureVideo.location.replace('https://www.youtube.com/embed/VKdAC3-lKjo?start=' + startSeconds + '&autoplay=1');
+  }
+</script>
+
+<div style="overflow-y: scroll; height:350px; width:60%; border: 2px solid grey; margin-left: 30px; padding: 5px;">
+
+  <b>Intro</b><br/>
+  <ul>
+    <li><span class="video-link" onclick="advanceVideo(0,0,1)"  >0:01</span> Welcome
+    <li><span class="video-link" onclick="advanceVideo(0,0,15)" >0:15</span> Bio
+    <li><span class="video-link" onclick="advanceVideo(0,1,49)" >1:49</span> Playful Features Intro
+    <li><span class="video-link" onclick="advanceVideo(0,2,30)" >2:30</span> Resource Review
+  </ul>
+  
+  <b>Let's Begin</b><br/>
+  <ul>
+    <li><span class="video-link" onclick="advanceVideo(0, 4, 37)">4:37</span> Let's Start
+    <li><span class="video-link" onclick="advanceVideo(0, 4, 46)">4:46</span> Project Organization
+    <li><span class="video-link" onclick="advanceVideo(0, 6, 48)">6:48</span> Goals/Hurdles
+    <li><span class="video-link" onclick="advanceVideo(0, 8, 44)">8:44</span> Two Primary Tenets<br/>
+    &nbsp;&nbsp;<span class="video-link" onclick="advanceVideo(0, 9, 13)">9:13</span> &nbsp; 1. Feature Runtime Consolidation<br/>
+    &nbsp;&nbsp;<span class="video-link" onclick="advanceVideo(0, 10,03)">10:03</span>       2. Feature Collaboration
+  </ul>
+  
+  <b>Why feature-u</b><br/>
+  <ul>
+    <li><span class="video-link" onclick="advanceVideo(0,11,42)">11:42</span> Why feature-u was created
+  </ul>
+  
+  <b>Ultimate Goal</b><br/>
+  <ul>
+    <li><span class="video-link" onclick="advanceVideo(0,12, 5)">12:05</span> Plug-and-Play
+    <li><span class="video-link" onclick="advanceVideo(0,13,29)">13:29</span> What is Covered in this Session
+  </ul>
+  
+  <b>DEMO App</b><br/>
+  <ul>
+    <li><span class="video-link" onclick="advanceVideo(0,14,4)">14:04</span> eatery-nod: a feature-u app
+  </ul>
+  
+  <b>Sneak Peek</b><br/>
+  <ul>
+    <li><span class="video-link" onclick="advanceVideo(0,20,45)">20:45</span> Sneak Peek
+  <ol>
+    <li><span class="video-link" onclick="advanceVideo(0,21, 3)">21:03</span> Simplified App Startup
+    <li><span class="video-link" onclick="advanceVideo(0,23, 3)">23:03</span> Plug-and-Play
+    <li><span class="video-link" onclick="advanceVideo(0,25,15)">25:15</span> A/B Feature Swap
+  </ol>
+  </ul>
+  
+  <b>The feature-u Solution</b><br/>
+  <ul>
+    <li><span class="video-link" onclick="advanceVideo(0,27,14)">27:14</span> feature-u basics
+    <li><span class="video-link" onclick="advanceVideo(0,27,21)">27:21</span> launchApp()
+    <li><span class="video-link" onclick="advanceVideo(0,27,58)">27:58</span> Feature objects
+  </ul>
+  
+  <b>1. Feature Runtime Consolidation</b><br/>
+  <ul>
+    <li><span class="video-link" onclick="advanceVideo(0,29,27)">29:27</span> Feature Runtime Consolidation
+    <li><span class="video-link" onclick="advanceVideo(0,29,48)">29:48</span> App Initialization
+    <li><span class="video-link" onclick="advanceVideo(0,32,53)">32:53</span> Framework Configuration
+    <li><span class="video-link" onclick="advanceVideo(0,36, 9)">36:09</span> DEMO (App Startup)
+  </ul>
+  
+  <b>Feature Enablement</b><br/>
+  <ul>
+    <li><span class="video-link" onclick="advanceVideo(0,42,34)">42:34</span> Feature Enablement
+    <li><span class="video-link" onclick="advanceVideo(0,43,39)">43:39</span> DEMO (Feature Enablement)
+  </ul>
+  
+  <b>2. Feature Collaboration</b><br/>
+  <ul>
+    <li><span class="video-link" onclick="advanceVideo(0,45,45)">45:45</span> Feature Collaboration
+    <li><span class="video-link" onclick="advanceVideo(0,46, 7)">46:07</span> fassets - Feature Assets
+    <li><span class="video-link" onclick="advanceVideo(0,47,26)">47:26</span> fassets diagram
+    <li>fassets Code Snippets
+    <ul>
+      <li><span class="video-link" onclick="advanceVideo(0,49,46)">49:46</span> PUSH: fassets define
+      <li><span class="video-link" onclick="advanceVideo(0,50,58)">50:58</span> UI Composition
+      <li><span class="video-link" onclick="advanceVideo(0,53,16)">53:16</span> PULL: Usage Contract (This is EXCITING!)
+    </ul>
+    <li><span class="video-link" onclick="advanceVideo(0,57, 3)">57:03</span> DEMO (Feature Collaboration)
+  </ul>
+  
+  <b>A/B Feature Swap</b><br/>
+  <ul>
+    <li><span class="video-link" onclick="advanceVideo(0,59,25)">59:25</span>   A/B Feature Swap
+    <li><span class="video-link" onclick="advanceVideo(1, 2,15)">1:02:15</span> DEMO (A/B Feature Swap)
+  </ul>
+  
+  <b>Final Thoughts</b><br/>
+  <ul>
+    <li><span class="video-link" onclick="advanceVideo(1, 6,25)">1:06:25</span> feature-u Context Diagram
+    <li><span class="video-link" onclick="advanceVideo(1, 7, 8)">1:07:08</span> Features are a Higher Level Abstraction
+    <li><span class="video-link" onclick="advanceVideo(1, 8, 9)">1:08:09</span> feature-u is NON Intrusive!
+    <li><span class="video-link" onclick="advanceVideo(1, 8,54)">1:08:54</span> feature-u frees you up!!
+    <li><span class="video-link" onclick="advanceVideo(1, 9,31)">1:09:31</span> feature-u Benefits
+    <li><span class="video-link" onclick="advanceVideo(1,10, 2)">1:10:02</span> That's all Folks
+  </ul>
+
+</div>
+
+
+## Presentation Resources
+
+- **feature-u**:
+  - [`slides`](https://speakerdeck.com/kevinast/playful-features-dot-dot-dot-feature-based-development-that-plugs-and-plays): presentation slides (PDF)
+  - [`teaser`](http://bit.ly/feature-u-teaser): what is **feature-u**?
+  - [`repo`](https://github.com/KevinAst/feature-u): source code
+- **plugins** _(extending **feature-u**)_:
+  - [`feature-redux`](https://github.com/KevinAst/feature-redux): [`redux`](https://redux.js.org/) plugin _(state management)_
+  - [`feature-redux-logic`](https://github.com/KevinAst/feature-redux-logic): [`redux-logic`](https://github.com/jeffbski/redux-logic) plugin _(managing business logic and async processes)_
+  - [`feature-router`](https://github.com/KevinAst/feature-router): StateRouter plugin _(feature-driven navigation using redux state)_
+- **sample app**:
+  - [`eatery-nod-w`](https://github.com/KevinAst/eatery-nod-w): a PWA web app **using feature-u** _(a Date Night Random Restaurant Selector)_
+
+
 ## Presentation Syllabus
 
 **Feature-Driven Development** (**FDD**) has become more prevalent in
@@ -58,143 +200,3 @@ In short, your features **can become more playful** ... they can **plug-and-play
 
 **feature-u** opens new doors into the exciting world of **FDD**. It frees you
 up to focus your attention on the "business end" of your features!
-
-## Presentation Resources
-
-- **feature-u**:
-  - [`slides`](https://speakerdeck.com/kevinast/playful-features-dot-dot-dot-feature-based-development-that-plugs-and-plays): presentation slides (PDF)
-  - [`teaser`](http://bit.ly/feature-u-teaser): what is **feature-u**?
-  - [`repo`](https://github.com/KevinAst/feature-u): source code
-- **plugins** _(extending **feature-u**)_:
-  - [`feature-redux`](https://github.com/KevinAst/feature-redux): [`redux`](https://redux.js.org/) plugin _(state management)_
-  - [`feature-redux-logic`](https://github.com/KevinAst/feature-redux-logic): [`redux-logic`](https://github.com/jeffbski/redux-logic) plugin _(managing business logic and async processes)_
-  - [`feature-router`](https://github.com/KevinAst/feature-router): StateRouter plugin _(feature-driven navigation using redux state)_
-- **sample app**:
-  - [`eatery-nod-w`](https://github.com/KevinAst/eatery-nod-w): a PWA web app **using feature-u** _(a Date Night Random Restaurant Selector)_
-
-
-## Presentation
-
-_It is recommended that you initially watch the video in it's entirety.
-For subsequent review, you may reference specific sections through the
-{{book.guide.playfulFeatures_videoContent}} (below)._
-
-<p align="center">
-  <iframe name="featureVideo"
-          id="featureVideo"
-          width="700"
-          height="394"
-          src="https://www.youtube.com/embed/VKdAC3-lKjo"
-          frameborder="0"
-          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen></iframe>
-</p>
-
-## Video Content
-
-<script>
-  function advanceVideo(h, m, s) {
-    var featureVideo = window.frames['featureVideo'];
-    var startSeconds = h*3600 + m*60 + s;
-    featureVideo.location.replace('https://www.youtube.com/embed/VKdAC3-lKjo?start=' + startSeconds + '&autoplay=1');
-  }
-</script>
-
-<div style="overflow-y: scroll; height:350px; width:60%; border: 2px solid grey; margin-left: 30px; padding: 5px;">
-
-<b>Intro</b><br/>
-<ul>
-  <li><span class="video-link" onclick="advanceVideo(0,0,1)"  >0:01</span> Welcome
-  <li><span class="video-link" onclick="advanceVideo(0,0,15)" >0:15</span> Bio
-  <li><span class="video-link" onclick="advanceVideo(0,1,49)" >1:49</span> Playful Features Intro
-  <li><span class="video-link" onclick="advanceVideo(0,2,30)" >2:30</span> Resource Review
-</ul>
-
-<b>Let's Begin</b><br/>
-<ul>
-  <li><span class="video-link" onclick="advanceVideo(0, 4, 37)">4:37</span> Let's Start
-  <li><span class="video-link" onclick="advanceVideo(0, 4, 46)">4:46</span> Project Organization
-  <li><span class="video-link" onclick="advanceVideo(0, 6, 48)">6:48</span> Goals/Hurdles
-  <li><span class="video-link" onclick="advanceVideo(0, 8, 44)">8:44</span> Two Primary Tenets<br/>
-  &nbsp;&nbsp;<span class="video-link" onclick="advanceVideo(0, 9, 13)">9:13</span> &nbsp; 1. Feature Runtime Consolidation<br/>
-  &nbsp;&nbsp;<span class="video-link" onclick="advanceVideo(0, 10,03)">10:03</span>       2. Feature Collaboration
-</ul>
-
-<b>Why feature-u</b><br/>
-<ul>
-  <li><span class="video-link" onclick="advanceVideo(0,11,42)">11:42</span> Why feature-u was created
-</ul>
-
-<b>Ultimate Goal</b><br/>
-<ul>
-  <li><span class="video-link" onclick="advanceVideo(0,12, 5)">12:05</span> Plug-and-Play
-  <li><span class="video-link" onclick="advanceVideo(0,13,29)">13:29</span> What is Covered in this Session
-</ul>
-
-<b>DEMO App</b><br/>
-<ul>
-  <li><span class="video-link" onclick="advanceVideo(0,14,4)">14:04</span> eatery-nod: a feature-u app
-</ul>
-
-<b>Sneak Peek</b><br/>
-<ul>
-  <li><span class="video-link" onclick="advanceVideo(0,20,45)">20:45</span> Sneak Peek
-<ol>
-  <li><span class="video-link" onclick="advanceVideo(0,21, 3)">21:03</span> Simplified App Startup
-  <li><span class="video-link" onclick="advanceVideo(0,23, 3)">23:03</span> Plug-and-Play
-  <li><span class="video-link" onclick="advanceVideo(0,25,15)">25:15</span> A/B Feature Swap
-</ol>
-</ul>
-
-<b>The feature-u Solution</b><br/>
-<ul>
-  <li><span class="video-link" onclick="advanceVideo(0,27,14)">27:14</span> feature-u basics
-  <li><span class="video-link" onclick="advanceVideo(0,27,21)">27:21</span> launchApp()
-  <li><span class="video-link" onclick="advanceVideo(0,27,58)">27:58</span> Feature objects
-</ul>
-
-<b>1. Feature Runtime Consolidation</b><br/>
-<ul>
-  <li><span class="video-link" onclick="advanceVideo(0,29,27)">29:27</span> Feature Runtime Consolidation
-  <li><span class="video-link" onclick="advanceVideo(0,29,48)">29:48</span> App Initialization
-  <li><span class="video-link" onclick="advanceVideo(0,32,53)">32:53</span> Framework Configuration
-  <li><span class="video-link" onclick="advanceVideo(0,36, 9)">36:09</span> DEMO (App Startup)
-</ul>
-
-<b>Feature Enablement</b><br/>
-<ul>
-  <li><span class="video-link" onclick="advanceVideo(0,42,34)">42:34</span> Feature Enablement
-  <li><span class="video-link" onclick="advanceVideo(0,43,39)">43:39</span> DEMO (Feature Enablement)
-</ul>
-
-<b>2. Feature Collaboration</b><br/>
-<ul>
-  <li><span class="video-link" onclick="advanceVideo(0,45,45)">45:45</span> Feature Collaboration
-  <li><span class="video-link" onclick="advanceVideo(0,46, 7)">46:07</span> fassets - Feature Assets
-  <li><span class="video-link" onclick="advanceVideo(0,47,26)">47:26</span> fassets diagram
-  <li>fassets Code Snippets
-  <ul>
-    <li><span class="video-link" onclick="advanceVideo(0,49,46)">49:46</span> PUSH: fassets define
-    <li><span class="video-link" onclick="advanceVideo(0,50,58)">50:58</span> UI Composition
-    <li><span class="video-link" onclick="advanceVideo(0,53,16)">53:16</span> PULL: Usage Contract (This is EXCITING!)
-  </ul>
-  <li><span class="video-link" onclick="advanceVideo(0,57, 3)">57:03</span> DEMO (Feature Collaboration)
-</ul>
-
-<b>A/B Feature Swap</b><br/>
-<ul>
-  <li><span class="video-link" onclick="advanceVideo(0,59,25)">59:25</span>   A/B Feature Swap
-  <li><span class="video-link" onclick="advanceVideo(1, 2,15)">1:02:15</span> DEMO (A/B Feature Swap)
-</ul>
-
-<b>Final Thoughts</b><br/>
-<ul>
-  <li><span class="video-link" onclick="advanceVideo(1, 6,25)">1:06:25</span> feature-u Context Diagram
-  <li><span class="video-link" onclick="advanceVideo(1, 7, 8)">1:07:08</span> Features are a Higher Level Abstraction
-  <li><span class="video-link" onclick="advanceVideo(1, 8, 9)">1:08:09</span> feature-u is NON Intrusive!
-  <li><span class="video-link" onclick="advanceVideo(1, 8,54)">1:08:54</span> feature-u frees you up!!
-  <li><span class="video-link" onclick="advanceVideo(1, 9,31)">1:09:31</span> feature-u Benefits
-  <li><span class="video-link" onclick="advanceVideo(1,10, 2)">1:10:02</span> That's all Folks
-</ul>
-
-</div>
