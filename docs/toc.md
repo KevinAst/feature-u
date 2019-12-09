@@ -150,7 +150,7 @@
 * [Distribution](dist.md)
 * [Why feature-u?](why.md)
 * [Revision History](history.md)
-  * [v2.1.1 (December xx, 2019)](history.md#v2_1_1)
+  * [v2.1.1 (December 9, 2019)](history.md#v2_1_1)
     * [Full Docs](https://feature-u.js.org/2.1.1/)
   * [v2.1.0 (July 19, 2019)](history.md#v2_1_0)
     * [Full Docs](https://feature-u.js.org/2.1.0/)
