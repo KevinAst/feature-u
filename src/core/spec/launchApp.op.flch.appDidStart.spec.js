@@ -15,8 +15,8 @@ describe('launchApp.op.flch.appDidStart(fassets, activeFeatures, aspects): void'
 
     let accumFromAppDidStart = '';
 
-    function appDidStart({fassets, appState, dispatch}) { // reusable function
-      accumFromAppDidStart += `appDidStart for feature: ${this.name} (fassets: ${fassets}, appState: ${appState}, dispatch: ${dispatch})`;
+    function appDidStart({fassets, getState, dispatch}) { // reusable function
+      accumFromAppDidStart += `appDidStart for feature: ${this.name} (fassets: ${fassets}, getState: ${getState ? getState() : undefined}, dispatch: ${dispatch})`;
     }
 
     const activeFeatures = [
@@ -55,8 +55,8 @@ describe('launchApp.op.flch.appDidStart(fassets, activeFeatures, aspects): void'
 
     applyTest({
       aspects: [], // no aspects
-      expected: 'appDidStart for feature: feature1 (fassets: fassets-pass-through-for-testing, appState: undefined, dispatch: undefined)' +
-                'appDidStart for feature: feature3 (fassets: fassets-pass-through-for-testing, appState: undefined, dispatch: undefined)',
+      expected: 'appDidStart for feature: feature1 (fassets: fassets-pass-through-for-testing, getState: undefined, dispatch: undefined)' +
+                'appDidStart for feature: feature3 (fassets: fassets-pass-through-for-testing, getState: undefined, dispatch: undefined)',
     });
 
   });
@@ -75,8 +75,8 @@ describe('launchApp.op.flch.appDidStart(fassets, activeFeatures, aspects): void'
           },
         }),
       ],
-      expected: 'appDidStart for feature: feature1 (fassets: fassets-pass-through-for-testing, appState: pretendState, dispatch: pretendDispatch)' +
-                'appDidStart for feature: feature3 (fassets: fassets-pass-through-for-testing, appState: pretendState, dispatch: pretendDispatch)',
+      expected: 'appDidStart for feature: feature1 (fassets: fassets-pass-through-for-testing, getState: pretendState, dispatch: pretendDispatch)' +
+                'appDidStart for feature: feature3 (fassets: fassets-pass-through-for-testing, getState: pretendState, dispatch: pretendDispatch)',
     });
 
   });
