@@ -730,18 +730,18 @@ op.flch.appInit = function(fassets, activeFeatures, aspects, showStatus) {
     logf(`feature-life-cycle-hook ... PROCESSING: Feature.appInit() ... ${hookCount} hooks:${hookSummary}`);
     
     // locate the redux app store (if any) from our aspects
-    // ... used as a convenience to pass appState/dispatch to appInit()
+    // ... used as a convenience to pass getState/dispatch to appInit()
     // ... we define this from the cross-aspect redux method: Aspect.getReduxStore()
     const reduxAspect = aspects.find( aspect => aspect.getReduxStore ? true : false );
-    const [appState, dispatch] = reduxAspect 
-                               ? [reduxAspect.getReduxStore().getState(), reduxAspect.getReduxStore().dispatch]
+    const [getState, dispatch] = reduxAspect 
+                               ? [reduxAspect.getReduxStore().getState, reduxAspect.getReduxStore().dispatch]
                                : [undefined, undefined];
     
     // invoke Feature.appInit() life-cycle hooks
     // ... accomplished in AsyncInit class
     const asyncInits = activeFeatures.reduce( (accum, feature) => {
       if (feature.appInit) {
-        accum.push( new AsyncInit(feature, fassets, appState, dispatch, showStatus, monitorNextAsyncInit) );
+        accum.push( new AsyncInit(feature, fassets, getState, dispatch, showStatus, monitorNextAsyncInit) );
       }
       return accum;
     }, []);
@@ -790,7 +790,7 @@ class AsyncInit {
   // class constructor
   constructor(feature,       // feature KNOWN TO HAVE appInit() hook
               fassets,
-              appState,
+              getState,
               dispatch,
               showStatusApp, // the app-specific showStatus() callback function
               monitorNextAsyncInit) {
@@ -813,7 +813,7 @@ class AsyncInit {
     try {
       optionalPromise = feature.appInit({showStatus: this.showStatus,
                                          fassets,
-                                         appState,
+                                         getState,
                                          dispatch});
     }
     catch(err) {
@@ -898,18 +898,18 @@ op.flch.appDidStart = function(fassets, activeFeatures, aspects) {
   logf(`feature-life-cycle-hook ... PROCESSING: Feature.appDidStart() ... ${hookCount} hooks:${hookSummary}`);
 
   // locate the redux app store (if any) from our aspects
-  // ... used as a convenience to pass appState/dispatch to appDidStart()
+  // ... used as a convenience to pass getState/dispatch to appDidStart()
   // ... we define this from the cross-aspect redux method: Aspect.getReduxStore()
   const reduxAspect = aspects.find( aspect => aspect.getReduxStore ? true : false );
-  const [appState, dispatch] = reduxAspect 
-                                ? [reduxAspect.getReduxStore().getState(), reduxAspect.getReduxStore().dispatch]
+  const [getState, dispatch] = reduxAspect 
+                                ? [reduxAspect.getReduxStore().getState, reduxAspect.getReduxStore().dispatch]
                                 : [undefined, undefined];
 
   // apply Feature.appDidStart() life-cycle hooks
   activeFeatures.forEach( feature => {
     if (feature.appDidStart) {
       logf(`feature-life-cycle-hook ... Feature.name:${feature.name} ... invoking it's defined Feature.appDidStart()`);
-      feature.appDidStart({fassets, appState, dispatch});
+      feature.appDidStart({fassets, getState, dispatch});
     }
   });
 };
