@@ -84,6 +84,7 @@ reference the most current release.
 
 Release           | What                                   | *When*
 ------------------|----------------------------------------|------------------
+[v3.0.0](#v3_0_0) | Hooks and Aspect Plugin Changes        | *January, xx, 2020*
 [v2.1.1](#v2_1_1) | Playful Features                       | *December 9, 2019*
 [v2.1.0](#v2_1_0) | appInit() Life Cycle Hook              | *July 19, 2019*
 [v2.0.0](#v2_0_0) | React Hooks                            | *May 10, 2019*
@@ -96,6 +97,31 @@ Release           | What                                   | *When*
 <br/><br/><br/>
 ## Details:
 
+<!-- ************************************************************* -->
+<br/><br/><br/>
+<h3 id="v3_0_0" style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
+  v3.0.0 - Playful Features <i>(December 9, 2019)</i>
+</h3>
+
+[Full Docs](https://feature-u.js.org/3.0.0/)
+&bull;
+[GitHub Release](https://github.com/KevinAst/feature-u/releases/tag/v3.0.0)
+&bull;
+[GitHub Content](https://github.com/KevinAst/feature-u/tree/v3.0.0)
+&bull;
+[Diff](https://github.com/KevinAst/feature-u/compare/v2.1.1-docs...v3.0.0)
+
+**NOTE**: This release contains **breaking changes** from prior
+releases.  _A retrofit of client code is necessary_.
+
+1. **Added**: ?? more
+
+2. **Security**: ?? Address potential security vulnerabilities in dependent libs
+   (mostly devDependencies completely unrelated to deployment)!
+
+3. **Docs**: Documentation improvements include:
+
+   - ?? more
 
 
 <!-- ************************************************************* -->
