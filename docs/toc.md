@@ -131,6 +131,7 @@
     * [assembleAspectResources()](extending.md#aspectassembleaspectresources)
     * [initialRootAppElm()](extending.md#aspectinitialrootappelm)
     * [injectRootAppElm()](extending.md#aspectinjectrootappelm)
+    * [injectParamsInHooks()](extending.md#aspectinjectparamsinhooks)
     * [config](extending.md#aspectconfig)
     * [additionalMethods()](extending.md#aspectadditionalmethods)
   * [Extension API](extensionApi.md)

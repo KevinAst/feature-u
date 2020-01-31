@@ -100,7 +100,7 @@ Release           | What                                   | *When*
 <!-- ************************************************************* -->
 <br/><br/><br/>
 <h3 id="v3_0_0" style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
-  v3.0.0 - Playful Features <i>(December 9, 2019)</i>
+  v3.0.0 - Hooks and Aspect Plugin Changes <i>(January, xx, 2020)</i>
 </h3>
 
 [Full Docs](https://feature-u.js.org/3.0.0/)
@@ -112,14 +112,36 @@ Release           | What                                   | *When*
 [Diff](https://github.com/KevinAst/feature-u/compare/v2.1.1-docs...v3.0.0)
 
 **NOTE**: This release contains **breaking changes** from prior
-releases.  _A retrofit of client code is necessary_.
+releases.  _A retrofit of client code may be necessary (depending on
+your usage)_.
 
-1. **Added**: ?? more
+1. **Changed**: For redux users, the {{book.guide.appLifeCycles}} that
+   promote the redux `appState` parameter, are now being passed the
+   redux `getState` function. To obtain the `appState` you merely
+   invoke: `getState()`. This gives async long-running processes
+   access to the most current state changes (over time) **... thanks
+   [@sylvainlg](https://github.com/sylvainlg)!!**
 
-2. **Security**: ?? Address potential security vulnerabilities in dependent libs
+   **Please Note**: Prior to this release, these parameters were
+   promoted directly by **feature-u** _(using conditional logic that
+   detected the **feature-redux** aspect)_.  This coupling has been
+   removed.  These parameters are now promoted though the
+   **feature-redux** aspect, using the new
+   {{book.guide.injectParamsInHooksMeth}} hook _(mentioned below)_.
+   As a result, you must update {{book.ext.featureRedux}} to **V3** or
+   greater.
+
+2. **Added**: For Aspect Extension users, a new
+   {{book.guide.injectParamsInHooksMeth}} **Aspect Life Cycle Method**
+   has been added that allows the Aspect to promote `namedParams` into
+   the feature's {{book.guide.appLifeCycles}}.
+
+3. **Added**: ?? more
+
+4. **Security**: ?? Address potential security vulnerabilities in dependent libs
    (mostly devDependencies completely unrelated to deployment)!
 
-3. **Docs**: Documentation improvements include:
+5. **Docs**: Documentation improvements include:
 
    - ?? more
 

@@ -319,6 +319,7 @@ discussion of each:
  - {{book.guide.assembleAspectResourcesMeth$}}
  - {{book.guide.initialRootAppElmMeth$}}
  - {{book.guide.injectRootAppElmMeth$}}
+ - {{book.guide.injectParamsInHooksMeth$}}
  - {{book.guide.aspectConfig}}
  - {{book.guide.additionalMethods}}
 
@@ -573,6 +574,34 @@ included as part of this definition!
 **RETURN**: a new react app element root (which in turn must contain
 the supplied curRootAppElm), or simply the supplied curRootAppElm (if
 no change).
+
+
+### Aspect.injectParamsInHooks()
+
+**API:** {{book.api.injectParamsInHooksMeth$}}
+
+{{book.api.injectParamsInHooksMeth}} is
+an optional Aspect method that promotes `namedParams` into the
+feature's {{book.guide.appLifeCycles}}, from this aspect.  This
+hook is executed after all aspects have assembled their feature
+content (i.e. after {{book.api.assembleFeatureContentMeth}}).
+
+Here is a `namedParams` example from a redux aspect, promoting it's
+state and dispatch functions:
+
+```js
+{getState, dispatch}
+```
+
+Any aspect may promote their own set of `namedParams`.  **feature-u**
+will insure there are no name clashes across aspects (which results in
+an exception).  If your parameter names have a high potential for
+clashing, a **best practice** would be to qualify them in some way to
+better insure uniqueness.
+
+**RETURN**: a plain object that will be injected (as
+named parameters) into the feature's {{book.guide.appLifeCycles}},
+from this aspect.  
 
 
 

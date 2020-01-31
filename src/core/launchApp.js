@@ -1,5 +1,6 @@
 import React                from 'react';
 import isFunction           from 'lodash.isfunction';
+import isPlainObject        from 'lodash.isplainobject';
 import verify               from '../util/verify';
 import {isAspectProperty}   from '../extend/createAspect';
 import {isFeatureProperty}  from './createFeature';
@@ -156,8 +157,12 @@ export default function launchApp({features,
     showStatus(msg, err);
   }
 
+  // gather the set of additional "Aspect Injected" named parameters
+  // to pass into our remaining Application Life Cycle Hooks
+  const additionalHooksParams = op.alch.injectParamsInHooks(fassets, aspects);
+
   // apply Feature.appInit() life-cycle hook
-  op.flch.appInit(fassets, activeFeatures, aspects, showStatusNoDupes)
+  op.flch.appInit(fassets, activeFeatures, additionalHooksParams, showStatusNoDupes)
     .then( () => {
 
       // >>> once all async processes of feature.appInit() have completed,
@@ -168,7 +173,7 @@ export default function launchApp({features,
       try {
 
         // apply Feature.appDidStart() life-cycle hook
-        op.flch.appDidStart(fassets, activeFeatures, aspects);
+        op.flch.appDidStart(fassets, activeFeatures, additionalHooksParams);
 
         logf('COMPLETE: Your application has now started');
       }
@@ -711,11 +716,62 @@ op.alch.injectRootAppElm = function(fassets, aspects, curRootAppElm) {
 
 
 
+//*---------------------------------------------------------------------------------------
+//* aspect-life-cycle-hook: injectParamsInHooks(fassets, aspects): namedParams
+//*---------------------------------------------------------------------------------------
+
+op.alch.injectParamsInHooks = function (fassets, aspects) {
+
+  // maintain: running counter of execution order of life-cycle-hooks (unit-test related)
+  op.alch.injectParamsInHooks.executionOrder = executionOrder++;
+ 
+  // gather the set of additional "Aspect Injected" named parameters
+  // to pass into our remaining Application Life Cycle Hooks
+  const allNamedParams = aspects.reduce( (accumNamedParams, aspect) => {
+
+    // when this aspect provides the hook, gather it's injected params
+    if (aspect.injectParamsInHooks) {
+
+      // invoke the aspect's hook
+      //   + injectParamsInHooks(fassets): namedParams
+      logf(`aspect-life-cycle-hook ... Aspect.name:${aspect.name} ... invoking it's defined Aspect.injectParamsInHooks()`);
+      const aspectNamedParams = aspect.injectParamsInHooks(fassets);
+
+      // verify the return value
+      const check = verify.prefix(`Aspect.name:${aspect.name} injectParamsInHooks() return violation: `);
+      // ... required
+      check(aspectNamedParams, 'nothing was returned ... expecting namedParams (a plain object) ... use empty object {} for nothing');
+      // ... expecting namedParams (a plain object)
+      check(isPlainObject(aspectNamedParams), `expecting namedParams (a plain object) ... NOT: ${aspectNamedParams}`);
+      // ... insure NO name clashes with other aspect injections
+      const aspectNamedParamKeys = Object.keys(aspectNamedParams);
+      const accumNamedParamKeys  = Object.keys(accumNamedParams);
+      const nameClashes          = accumNamedParamKeys.filter( (entry) => aspectNamedParamKeys.includes(entry) );
+      check(nameClashes.length === 0, `the following parameter names clashed with other aspects: ${nameClashes}`);
+      // ... insure NO reserved words are used
+      const reservedNamedParamKeys = ['showStatus', 'fassets']; // from app-life-cycle-hooks: appInit(), and appDidStart()
+      const reservedNameClashes    = reservedNamedParamKeys.filter( (entry) => aspectNamedParamKeys.includes(entry) );
+      check(reservedNameClashes.length === 0, `the following parameter names are reserved by feature-u and cannot be used: ${reservedNameClashes}`);
+
+      // accumulate this aspect's namedParams
+      accumNamedParams = {...accumNamedParams, ...aspectNamedParams};
+    }
+
+    // keep accumulating from other aspects
+    return accumNamedParams;
+  }, {} );
+
+  // that's all folks
+  return allNamedParams;
+};
+
+
+
 //*-----------------------------------------------------------------------------------------
-//* feature-life-cycle-hook: appInit(fassets, activeFeatures, aspects, showStatus): promise
+//* feature-life-cycle-hook: appInit(fassets, activeFeatures, additionalHooksParams, showStatus): promise
 //*-----------------------------------------------------------------------------------------
 
-op.flch.appInit = function(fassets, activeFeatures, aspects, showStatus) {
+op.flch.appInit = function(fassets, activeFeatures, additionalHooksParams, showStatus) {
 
   // wrap entire process
   // ... will resolve when ALL feature.appInit() have completed!
@@ -729,19 +785,11 @@ op.flch.appInit = function(fassets, activeFeatures, aspects, showStatus) {
     const hookSummary = activeFeatures.map( (feature) => `\n  Feature.name:${feature.name}${feature.appInit ? ' <-- defines: appInit()' : ''}` );
     logf(`feature-life-cycle-hook ... PROCESSING: Feature.appInit() ... ${hookCount} hooks:${hookSummary}`);
     
-    // locate the redux app store (if any) from our aspects
-    // ... used as a convenience to pass getState/dispatch to appInit()
-    // ... we define this from the cross-aspect redux method: Aspect.getReduxStore()
-    const reduxAspect = aspects.find( aspect => aspect.getReduxStore ? true : false );
-    const [getState, dispatch] = reduxAspect 
-                               ? [reduxAspect.getReduxStore().getState, reduxAspect.getReduxStore().dispatch]
-                               : [undefined, undefined];
-    
     // invoke Feature.appInit() life-cycle hooks
     // ... accomplished in AsyncInit class
     const asyncInits = activeFeatures.reduce( (accum, feature) => {
       if (feature.appInit) {
-        accum.push( new AsyncInit(feature, fassets, getState, dispatch, showStatus, monitorNextAsyncInit) );
+        accum.push( new AsyncInit(feature, fassets, additionalHooksParams, showStatus, monitorNextAsyncInit) );
       }
       return accum;
     }, []);
@@ -790,8 +838,7 @@ class AsyncInit {
   // class constructor
   constructor(feature,       // feature KNOWN TO HAVE appInit() hook
               fassets,
-              getState,
-              dispatch,
+              additionalHooksParams,
               showStatusApp, // the app-specific showStatus() callback function
               monitorNextAsyncInit) {
 
@@ -813,8 +860,7 @@ class AsyncInit {
     try {
       optionalPromise = feature.appInit({showStatus: this.showStatus,
                                          fassets,
-                                         getState,
-                                         dispatch});
+                                         ...additionalHooksParams});
     }
     catch(err) {
       this.err = err;
@@ -884,10 +930,10 @@ class AsyncInit {
 
 
 //*------------------------------------------------------------------------------
-//* feature-life-cycle-hook: appDidStart(fassets, activeFeatures, aspects): void
+//* feature-life-cycle-hook: appDidStart(fassets, activeFeatures, additionalHooksParams): void
 //*------------------------------------------------------------------------------
 
-op.flch.appDidStart = function(fassets, activeFeatures, aspects) {
+op.flch.appDidStart = function(fassets, activeFeatures, additionalHooksParams) {
 
   // maintain: running counter of execution order of life-cycle-hooks (unit-test related)
   op.flch.appDidStart.executionOrder = executionOrder++;
@@ -897,19 +943,11 @@ op.flch.appDidStart = function(fassets, activeFeatures, aspects) {
   const hookSummary = activeFeatures.map( (feature) => `\n  Feature.name:${feature.name}${feature.appDidStart ? ' <-- defines: appDidStart()' : ''}` );
   logf(`feature-life-cycle-hook ... PROCESSING: Feature.appDidStart() ... ${hookCount} hooks:${hookSummary}`);
 
-  // locate the redux app store (if any) from our aspects
-  // ... used as a convenience to pass getState/dispatch to appDidStart()
-  // ... we define this from the cross-aspect redux method: Aspect.getReduxStore()
-  const reduxAspect = aspects.find( aspect => aspect.getReduxStore ? true : false );
-  const [getState, dispatch] = reduxAspect 
-                                ? [reduxAspect.getReduxStore().getState, reduxAspect.getReduxStore().dispatch]
-                                : [undefined, undefined];
-
   // apply Feature.appDidStart() life-cycle hooks
   activeFeatures.forEach( feature => {
     if (feature.appDidStart) {
       logf(`feature-life-cycle-hook ... Feature.name:${feature.name} ... invoking it's defined Feature.appDidStart()`);
-      feature.appDidStart({fassets, getState, dispatch});
+      feature.appDidStart({fassets, ...additionalHooksParams});
     }
   });
 };

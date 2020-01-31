@@ -17,7 +17,7 @@ convenience this list:_
   * {{book.api.assembleAspectResourcesMeth$}}
   * {{book.api.initialRootAppElmMeth$}}
   * {{book.api.injectRootAppElmMeth$}}
-
+  * {{book.api.injectParamsInHooksMeth$}}
 
 * {{book.api.extendAspectProperty$}}
 

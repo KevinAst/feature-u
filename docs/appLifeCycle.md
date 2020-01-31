@@ -146,9 +146,14 @@ This hook is invoked when the app is **nearly up-and-running**.
   result, you can rely on utilities that require an app-specific
   `rootAppElm` to exist.
 
-- You have access to the `appState` and `dispatch()` function,
+- You have access to the `getState()` and `dispatch()` functions,
   assuming you are using {{book.ext.redux}} (when detected by
-  **feature-u**'s plugable aspects).
+  **feature-u**'s plugable aspects).  
+
+  These parameters are actually injected by the
+  {{book.ext.featureRedux}} Aspect, and are examples of what can be
+  injected by any Aspect _(please refer your specific Aspect's
+  documentation to determine other parameters)_.
 
 Just like the [`appWillStart`](#appwillstart) hook, you may perform
 any type of general initialization that is required by your feature.
@@ -166,7 +171,7 @@ The following example shows three processes managed by `appInit()`
 _(one synchronous, and two asynchronous)_:
 
 ```js
-async appInit({showStatus, fassets, appState, dispatch}) {
+async appInit({showStatus, fassets, getState, dispatch}) {
 
   // default view is our TODO List
   showStatus('Defaulting view to TODO List);
@@ -193,9 +198,12 @@ trigger **"the app is running"** events.
 **API**: {{book.api.appDidStartCB$}}
 
 Because the app is **up-and-running** at this time, you have access to
-the `appState` and `dispatch()` function ... assuming you are using
+the `getState()` and `dispatch()` functions, assuming you are using
 {{book.ext.redux}} (when detected by **feature-u**'s plugable
-aspects).
+aspects).  These parameters are actually injected by the
+{{book.ext.featureRedux}} Aspect, and are examples of what can be
+injected by any Aspect _(please refer your specific Aspect's
+documentation to determine other parameters)_.
 
 A typical usage for this hook is to **"kick start"** some early
 application logic.  The following example starts the process of
@@ -203,7 +211,7 @@ authenticating the user ... either an automatic signin (with saved
 credentials), or a manual signin (managing the signin screens):
 
 ```js
-appDidStart({fassets, appState, dispatch}) {
+appDidStart({fassets, getState, dispatch}) {
   dispatch( actions.authSignIn() );
 }
 ```

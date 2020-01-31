@@ -154,7 +154,7 @@ object properties (via {{book.api.createFeature}}).
   
   An optional {{book.guide.appLifeCycle}} invoked one time,
   immediately after the app has started.  Because the app is
-  up-and-running at this time, you have access to the appState and the
+  up-and-running at this time, you have access to the getState() and the
   dispatch() function ... assuming you are using redux (when detected
   by **feature-u**'s plugable aspects) _(please refer to:
   {{book.guide.appDidStart}})_.

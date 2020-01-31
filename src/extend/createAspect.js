@@ -89,6 +89,14 @@ import logf                 from '../util/logf';
  * to use {{book.api.initialRootAppElmMeth}} verses
  * {{book.api.injectRootAppElmMeth}}.
  *
+ * @param {injectParamsInHooksMeth} [injectParamsInHooks] an
+ * optional Aspect method that promotes `namedParams` into the
+ * feature's {{book.guide.appLifeCycles}}, from this aspect.<br/><br/>
+
+ * This hook is executed after all aspects have assembled their
+ * feature content (i.e. after
+ * {{book.api.assembleFeatureContentMeth}}).
+ *
  * @param {Any} [config] an optional sub-object that can be used for
  * any type of configuration that a specific Aspect may need _(see:
  * {{book.guide.aspectConfig}})_.
@@ -111,6 +119,7 @@ export default function createAspect({name,
                                       assembleAspectResources,
                                       initialRootAppElm,
                                       injectRootAppElm,
+                                      injectParamsInHooks,
                                       config={},
                                       ...additionalMethods}={}) {
 
@@ -151,6 +160,10 @@ export default function createAspect({name,
     check(isFunction(injectRootAppElm),        'injectRootAppElm (when supplied) must be a function');
   }
 
+  if (injectParamsInHooks) {
+    check(isFunction(injectParamsInHooks),     'injectParamsInHooks (when supplied) must be a function');
+  }
+
   check(config,                                'config is required');
   check(isPlainObject(config),                 'config must be a plain object literal');
 
@@ -171,6 +184,7 @@ export default function createAspect({name,
     assembleAspectResources,
     initialRootAppElm,
     injectRootAppElm,
+    injectParamsInHooks,
     config,
     ...additionalMethods,
   };
@@ -201,6 +215,7 @@ const validAspectProps = {
   assembleAspectResources:  'builtin',
   initialRootAppElm:        'builtin',
   injectRootAppElm:         'builtin',
+  injectParamsInHooks:      'builtin',
   config:                   'builtin',
 };
 
@@ -534,4 +549,41 @@ export function extendAspectProperty(name, owner) {
  * @return {reactElm} a new react app element root (which in turn must
  * contain the supplied curRootAppElm), or simply the supplied
  * curRootAppElm (if no change).
+ */
+
+
+
+//***
+//*** Specification: injectParamsInHooksMeth
+//***
+
+/**
+ * An optional Aspect method that promotes `namedParams` into the
+ * feature's {{book.guide.appLifeCycles}}, from this aspect.  This
+ * hook is executed after all aspects have assembled their feature
+ * content (i.e. after {{book.api.assembleFeatureContentMeth}}).
+ *
+ * Here is a `namedParams` example from a redux aspect, promoting it's
+ * state and dispatch functions:
+ * 
+ * ```js
+ * {getState, dispatch}
+ * ```
+ * 
+ * **API:** {{book.api.injectParamsInHooksMeth$}}
+ *
+ * Any aspect may promote their own set of `namedParams`.  **feature-u**
+ * will insure there are no name clashes across aspects (which results
+ * in an exception).  If your parameter names have a high potential
+ * for clashing, a **best practice** would be to qualify them in some
+ * way to better insure uniqueness.
+ *
+ * @callback injectParamsInHooksMeth
+ *
+ * @param {Fassets} fassets the Fassets object used in feature
+ * cross-communication.
+ *
+ * @return {namedParams} a plain object that will be injected (as
+ * named parameters) into the feature's {{book.guide.appLifeCycles}},
+ * from this aspect.
  */

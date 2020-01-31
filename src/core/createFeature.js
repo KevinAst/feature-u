@@ -48,10 +48,7 @@ import logf        from '../util/logf';
  *
  * @param {appDidStartCB} [appDidStart] an optional
  * {{book.guide.appLifeCycle}} invoked one time, immediately after the
- * app has started.  Because the app is up-and-running at this time,
- * you have access to the appState and the dispatch() function
- * ... assuming you are using redux (when detected by **feature-u**'s
- * plugable aspects) _(please refer to: {{book.guide.appDidStart}})_.
+ * app has started _(please refer to: {{book.guide.appDidStart}})_.
  * 
  * @param {AspectContent} [extendedAspect] additional aspects, as
  * defined by the feature-u's Aspect plugins (please refer to:
@@ -309,9 +306,14 @@ export function extendFeatureProperty(name, owner) {
  *   result, you can rely on utilities that require an app-specific
  *   `rootAppElm` to exist.
  * 
- * - You have access to the `appState` and `dispatch()` function,
+ * - You have access to the `getState()` and `dispatch()` function,
  *   assuming you are using {{book.ext.redux}} (when detected by
  *   **feature-u**'s plugable aspects).
+ *
+ *   These parameters are actually injected by the
+ *   {{book.ext.featureRedux}} Aspect, and are examples of what can be
+ *   injected by any Aspect _(please refer your specific Aspect's
+ *   documentation to determine other parameters)_.
  * 
  * Just like the {{book.api.appWillStartCB}} hook, you may perform any
  * type of general initialization that is required by your feature.
@@ -338,11 +340,16 @@ export function extendFeatureProperty(name, owner) {
  * 
  * @param {Fassets} fassets the Fassets object used in cross-feature-communication.
  * 
- * @param {Any} [appState] - the redux top-level app state (when redux
- * is in use).
+ * @param {Any} [getState] - the redux function returning the top-level
+ * app state (when redux is in use).
  * 
  * @param {function} [dispatch] - the redux dispatch() function (when
  * redux is in use).
+ * 
+ * @param {any} [injectedAspectParams] - additional parameters
+ * injected by Aspect plugins _(please refer your specific Aspect's
+ * documentation to determine other parameters)_.  The `getState` and
+ * `dispatch` params (above) are examples of this.
  *
  * @return {Promise|void} optionally, a promise (for asynchronous
  * processes) - and feature-u will wait for the process to complete.
@@ -364,8 +371,12 @@ export function extendFeatureProperty(name, owner) {
  * early application logic.
  *
  * Because the app is up-and-running at this time, you have access to
- * the `appState` and `dispatch()` function ... assuming you are using
+ * the `getState()` and `dispatch()` function ... assuming you are using
  * {{book.ext.redux}} (when detected by **feature-u**'s plugable aspects).
+ * These parameters are actually injected by the
+ * {{book.ext.featureRedux}} Aspect, and are examples of what can be
+ * injected by any Aspect _(please refer your specific Aspect's
+ * documentation to determine other parameters)_.
  *
  * For more info with examples, please see the Guide's
  * {{book.guide.appDidStart}}.
@@ -376,11 +387,16 @@ export function extendFeatureProperty(name, owner) {
  * 
  * @param {Fassets} fassets the Fassets object used in cross-feature-communication.
  * 
- * @param {Any} [appState] - the redux top-level app state (when redux
- * is in use).
+ * @param {Any} [getState] - the redux function returning the top-level
+ * app state (when redux is in use).
  * 
  * @param {function} [dispatch] - the redux dispatch() function (when
  * redux is in use).
+ * 
+ * @param {any} [injectedAspectParams] - additional parameters
+ * injected by Aspect plugins _(please refer your specific Aspect's
+ * documentation to determine other parameters)_.  The `getState` and
+ * `dispatch` params (above) are examples of this.
  *
  * @return void
  */

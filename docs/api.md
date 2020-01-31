@@ -80,10 +80,7 @@ initialization (by simply returning a promise) <em>(please refer to:
     </tr><tr>
     <td>[appDidStart]</td><td><a href="#appDidStartCB"><code>appDidStartCB</code></a></td><td></td><td><p>an optional
 {{book.guide.appLifeCycle}} invoked one time, immediately after the
-app has started.  Because the app is up-and-running at this time,
-you have access to the appState and the dispatch() function
-... assuming you are using redux (when detected by <strong>feature-u</strong>&#39;s
-plugable aspects) <em>(please refer to: {{book.guide.appDidStart}})</em>.</p>
+app has started <em>(please refer to: {{book.guide.appDidStart}})</em>.</p>
 </td>
     </tr><tr>
     <td>[extendedAspect]</td><td><a href="#AspectContent"><code>AspectContent</code></a></td><td></td><td><p>additional aspects, as
@@ -261,7 +258,7 @@ be wrapped <em>(see discussion above)</em>.</p>
 <a id="createAspect"></a>
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
-  createAspect(name, [genesis], validateFeatureContent, [expandFeatureContent], assembleFeatureContent, [assembleAspectResources], [initialRootAppElm], [injectRootAppElm], [config], [additionalMethods]) ⇒ [`Aspect`](#Aspect)</h5>
+  createAspect(name, [genesis], validateFeatureContent, [expandFeatureContent], assembleFeatureContent, [assembleAspectResources], [initialRootAppElm], [injectRootAppElm], [injectParamsInHooks], [config], [additionalMethods]) ⇒ [`Aspect`](#Aspect)</h5>
 Create an {{book.api.Aspect}} object, used to extend **feature-u**.The {{book.api.Aspect}} object promotes a series of life-cyclemethods that **feature-u** invokes in a controlled way.  Thislife-cycle is controlled by {{book.api.launchApp}} _... it issupplied the Aspects, and it invokes their methods._The essential characteristics of the {{book.api.Aspect}} life-cycle is to:- accumulate {{book.api.AspectContent}} across all features- perform the desired setup and configuration- expose the framework in some way _(by injecting a component in the  root DOM, or some {{book.guide.extending_aspectCrossCommunication}}  mechanism)_The {{book.guide.extending}} section provides more insight on how{{book.api.Aspect}}s are created and used.**Please Note** this function uses named parameters.  The order inwhich these items are presented represents the same order they areexecuted.
 
 <table>
@@ -332,6 +329,14 @@ the display of the entire application.<br/><br/></p>
 <p>The {{book.guide.extending_definingAppElm}} section highlights when
 to use {{book.api.initialRootAppElmMeth}} verses
 {{book.api.injectRootAppElmMeth}}.</p>
+</td>
+    </tr><tr>
+    <td>[injectParamsInHooks]</td><td><a href="#injectParamsInHooksMeth"><code>injectParamsInHooksMeth</code></a></td><td><p>an
+optional Aspect method that promotes <code>namedParams</code> into the
+feature&#39;s {{book.guide.appLifeCycles}}, from this aspect.<br/><br/>
+This hook is executed after all aspects have assembled their
+feature content (i.e. after
+{{book.api.assembleFeatureContentMeth}}).</p>
 </td>
     </tr><tr>
     <td>[config]</td><td>Any</td><td><p>an optional sub-object that can be used for
@@ -485,7 +490,7 @@ root.</p>
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
   appInitCB ⇒ Promise \| void</h5>
-An optional {{book.guide.appLifeCycle}} invoked one time, later inthe app startup process.  It supports blocking asyncinitialization.This hook is invoked when the app is **nearly up-and-running**.- The {{book.guide.detail_reactRegistration}} has already occurred  _(via the {{book.api.registerRootAppElmCB}} callback)_.  As a  result, you can rely on utilities that require an app-specific  `rootAppElm` to exist.- You have access to the `appState` and `dispatch()` function,  assuming you are using {{book.ext.redux}} (when detected by  **feature-u**'s plugable aspects).Just like the {{book.api.appWillStartCB}} hook, you may perform anytype of general initialization that is required by your feature.However the **hallmark of this hook** is **you can block for anyasynchronous initialization to complete**.  By simply returning apromise, **feature-u** will wait for the process to complete.The user is kept advised of any long-running async processes.  Bydefault an `'initializing feature: {feature.name}'` message isused, but you can customize it through the supplied{{book.api.showStatusCB}} function parameter.For more info with examples, please see the Guide's{{book.guide.appInit}}.**Please Note** this function uses named parameters.
+An optional {{book.guide.appLifeCycle}} invoked one time, later inthe app startup process.  It supports blocking asyncinitialization.This hook is invoked when the app is **nearly up-and-running**.- The {{book.guide.detail_reactRegistration}} has already occurred  _(via the {{book.api.registerRootAppElmCB}} callback)_.  As a  result, you can rely on utilities that require an app-specific  `rootAppElm` to exist.- You have access to the `getState()` and `dispatch()` function,  assuming you are using {{book.ext.redux}} (when detected by  **feature-u**'s plugable aspects).  These parameters are actually injected by the  {{book.ext.featureRedux}} Aspect, and are examples of what can be  injected by any Aspect _(please refer your specific Aspect's  documentation to determine other parameters)_.Just like the {{book.api.appWillStartCB}} hook, you may perform anytype of general initialization that is required by your feature.However the **hallmark of this hook** is **you can block for anyasynchronous initialization to complete**.  By simply returning apromise, **feature-u** will wait for the process to complete.The user is kept advised of any long-running async processes.  Bydefault an `'initializing feature: {feature.name}'` message isused, but you can customize it through the supplied{{book.api.showStatusCB}} function parameter.For more info with examples, please see the Guide's{{book.guide.appInit}}.**Please Note** this function uses named parameters.
 
 <table>
   <thead>
@@ -503,12 +508,18 @@ user.</p>
     <td>fassets</td><td><a href="#Fassets"><code>Fassets</code></a></td><td><p>the Fassets object used in cross-feature-communication.</p>
 </td>
     </tr><tr>
-    <td>[appState]</td><td>Any</td><td><p>the redux top-level app state (when redux
-is in use).</p>
+    <td>[getState]</td><td>Any</td><td><p>the redux function returning the top-level
+app state (when redux is in use).</p>
 </td>
     </tr><tr>
     <td>[dispatch]</td><td>function</td><td><p>the redux dispatch() function (when
 redux is in use).</p>
+</td>
+    </tr><tr>
+    <td>[injectedAspectParams]</td><td>any</td><td><p>additional parameters
+injected by Aspect plugins <em>(please refer your specific Aspect&#39;s
+documentation to determine other parameters)</em>.  The <code>getState</code> and
+<code>dispatch</code> params (above) are examples of this.</p>
 </td>
     </tr>  </tbody>
 </table>
@@ -521,7 +532,7 @@ redux is in use).</p>
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
   appDidStartCB ⇒</h5>
-An optional {{book.guide.appLifeCycle}} invoked one time,once the app startup process has completed.This life-cycle hook can be used to trigger **"the app isrunning"** events.  A typical usage is to **"kick start"** someearly application logic.Because the app is up-and-running at this time, you have access tothe `appState` and `dispatch()` function ... assuming you are using{{book.ext.redux}} (when detected by **feature-u**'s plugable aspects).For more info with examples, please see the Guide's{{book.guide.appDidStart}}.**Please Note** this function uses named parameters.
+An optional {{book.guide.appLifeCycle}} invoked one time,once the app startup process has completed.This life-cycle hook can be used to trigger **"the app isrunning"** events.  A typical usage is to **"kick start"** someearly application logic.Because the app is up-and-running at this time, you have access tothe `getState()` and `dispatch()` function ... assuming you are using{{book.ext.redux}} (when detected by **feature-u**'s plugable aspects).These parameters are actually injected by the{{book.ext.featureRedux}} Aspect, and are examples of what can beinjected by any Aspect _(please refer your specific Aspect'sdocumentation to determine other parameters)_.For more info with examples, please see the Guide's{{book.guide.appDidStart}}.**Please Note** this function uses named parameters.
 
 <table>
   <thead>
@@ -534,12 +545,18 @@ An optional {{book.guide.appLifeCycle}} invoked one time,once the app startup p
     <td>fassets</td><td><a href="#Fassets"><code>Fassets</code></a></td><td><p>the Fassets object used in cross-feature-communication.</p>
 </td>
     </tr><tr>
-    <td>[appState]</td><td>Any</td><td><p>the redux top-level app state (when redux
-is in use).</p>
+    <td>[getState]</td><td>Any</td><td><p>the redux function returning the top-level
+app state (when redux is in use).</p>
 </td>
     </tr><tr>
     <td>[dispatch]</td><td>function</td><td><p>the redux dispatch() function (when
 redux is in use).</p>
+</td>
+    </tr><tr>
+    <td>[injectedAspectParams]</td><td>any</td><td><p>additional parameters
+injected by Aspect plugins <em>(please refer your specific Aspect&#39;s
+documentation to determine other parameters)</em>.  The <code>getState</code> and
+<code>dispatch</code> params (above) are examples of this.</p>
 </td>
     </tr>  </tbody>
 </table>
@@ -868,3 +885,27 @@ cross-communication.</p>
 </table>
 
 **Returns**: reactElm - a new react app element root (which in turn mustcontain the supplied curRootAppElm), or simply the suppliedcurRootAppElm (if no change).  
+
+<br/><br/><br/>
+
+<a id="injectParamsInHooksMeth"></a>
+
+<h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
+  injectParamsInHooksMeth ⇒ namedParams</h5>
+An optional Aspect method that promotes `namedParams` into thefeature's {{book.guide.appLifeCycles}}, from this aspect.  Thishook is executed after all aspects have assembled their featurecontent (i.e. after {{book.api.assembleFeatureContentMeth}}).Here is a `namedParams` example from a redux aspect, promoting it'sstate and dispatch functions:```js{getState, dispatch}```**API:** {{book.api.injectParamsInHooksMeth$}}Any aspect may promote their own set of `namedParams`.  **feature-u**will insure there are no name clashes across aspects (which resultsin an exception).  If your parameter names have a high potentialfor clashing, a **best practice** would be to qualify them in someway to better insure uniqueness.
+
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>fassets</td><td><a href="#Fassets"><code>Fassets</code></a></td><td><p>the Fassets object used in feature
+cross-communication.</p>
+</td>
+    </tr>  </tbody>
+</table>
+
+**Returns**: namedParams - a plain object that will be injected (asnamed parameters) into the feature's {{book.guide.appLifeCycles}},from this aspect.  

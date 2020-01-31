@@ -133,6 +133,19 @@ describe('createAspect() tests', () => {
       });
     });
 
+    describe('aspect.injectParamsInHooks', () => {
+      const primePump = {
+        name:                    'myAspectName',
+        validateFeatureContent:  identityFn,
+        assembleFeatureContent:  identityFn,
+      };
+
+      test('injectParamsInHooks must be a function', () => {
+        expect(()=>createAspect({...primePump, injectParamsInHooks:123}))
+          .toThrow(/injectParamsInHooks.*must be a function/);
+      });
+    });
+
     describe('aspect.config', () => {
       const primePump = {
         name:                    'myAspectName',
@@ -230,6 +243,7 @@ describe('createAspect() tests', () => {
       assembleAspectResources: () => 'MY assembleAspectResources',
       initialRootAppElm:       () => 'MY initialRootAppElm',
       injectRootAppElm:        () => 'MY injectRootAppElm',
+      injectParamsInHooks:     () => 'MY injectParamsInHooks',
       config:                  { myConfig: 123 },
     });
 
@@ -263,6 +277,10 @@ describe('createAspect() tests', () => {
 
     test('aspect.injectRootAppElm', () => {
       expect(aspect.injectRootAppElm()).toEqual('MY injectRootAppElm');
+    });
+
+    test('aspect.injectParamsInHooks', () => {
+      expect(aspect.injectParamsInHooks()).toEqual('MY injectParamsInHooks');
     });
 
     test('aspect.config', () => {

@@ -104,11 +104,11 @@
 
       "appInit":          "<a href='/appLifeCycle.html#appinit'><code>appInit</code></a>",
       "appInitCB":        "<a href='/appLifeCycle.html#appinit'><code>Feature.appInit()</code></a>",
-      "appInitCB$":       "<a href='/appLifeCycle.html#appinit'><code>Feature.appInit({showStatus, fassets, [appState], [dispatch]}): promise | void</code></a>",
+      "appInitCB$":       "<a href='/appLifeCycle.html#appinit'><code>Feature.appInit({showStatus, fassets, [getState], [dispatch], [injectedAspectParams]}): promise | void</code></a>",
 
       "appDidStart":      "<a href='/appLifeCycle.html#appdidstart'><code>appDidStart</code></a>",
       "appDidStartCB":    "<a href='/appLifeCycle.html#appdidstart'><code>Feature.appDidStart()</code></a>",
-      "appDidStartCB$":   "<a href='/appLifeCycle.html#appdidstart'><code>Feature.appDidStart({fassets, [appState], [dispatch]}): void</code></a>",
+      "appDidStartCB$":   "<a href='/appLifeCycle.html#appdidstart'><code>Feature.appDidStart({fassets, [getState], [dispatch], [injectedAspectParams]}): void</code></a>",
 
       "crossCom":                         "<a href='/crossCommunication.html'><code>Cross Feature Communication</code></a>",
         "crossCom_fassetsBasics":         "<a href='/crossCommunication.html#basic-concepts-fassets'><code>Basic Concepts: fassets</code></a>",
@@ -179,6 +179,9 @@
         "injectRootAppElmMeth":          "<a href='/extending.html#aspectinjectrootappelm'><code>Aspect.injectRootAppElm()</code></a>",
         "injectRootAppElmMeth$":         "<a href='/extending.html#aspectinjectrootappelm'><code>Aspect.injectRootAppElm(fassets, curRootAppElm): rootAppElm</code></a>",
 
+        "injectParamsInHooksMeth":       "<a href='/extending.html#aspectinjectparamsinhooks'><code>Aspect.injectParamsInHooks()</code></a>",
+        "injectParamsInHooksMeth$":      "<a href='/extending.html#aspectinjectparamsinhooks'><code>Aspect.injectParamsInHooks(fassets): namedParams</code></a>",
+
         "additionalMethods":             "<a href='/extending.html#aspectadditionalmethods'><code>Aspect.additionalMethods()</code></a>",
 
         "aspectConfig":                  "<a href='/extending.html#aspectconfig'><code>Aspect.config</code></a>",
@@ -213,9 +216,9 @@
           "appWillStartCB":           "<a href='/api.html#appWillStartCB'><code>appWillStart()</code></a>",
           "appWillStartCB$":          "<a href='/api.html#appWillStartCB'><code>appWillStart({fassets, curRootAppElm}): rootAppElm | void</code></a>",
           "appInitCB":                "<a href='/api.html#appInitCB'><code>appInit()</code></a>",
-          "appInitCB$":               "<a href='/api.html#appInitCB'><code>appInit({showStatus, fassets, [appState], [dispatch]}): promise | void</code></a>",
+          "appInitCB$":               "<a href='/api.html#appInitCB'><code>appInit({showStatus, fassets, [getState], [dispatch], [injectedAspectParams]}): promise | void</code></a>",
           "appDidStartCB":            "<a href='/api.html#appDidStartCB'><code>appDidStart()</code></a>",
-          "appDidStartCB$":           "<a href='/api.html#appDidStartCB'><code>appDidStart({fassets, [appState], [dispatch]}): void</code></a>",
+          "appDidStartCB$":           "<a href='/api.html#appDidStartCB'><code>appDidStart({fassets, [getState], [dispatch], [injectedAspectParams]}): void</code></a>",
 
         "expandWithFassets":           "<a href='/api.html#expandWithFassets'><code>expandWithFassets()</code></a>",
         "expandWithFassets$":          "<a href='/api.html#expandWithFassets'><code>expandWithFassets(expandWithFassetsCB): expandWithFassetsCB</code></a>",
@@ -264,6 +267,9 @@
 
           "injectRootAppElmMeth":          "<a href='/api.html#injectRootAppElmMeth'><code>injectRootAppElm()</code></a>",
           "injectRootAppElmMeth$":         "<a href='/api.html#injectRootAppElmMeth'><code>injectRootAppElm(fassets, curRootAppElm): rootAppElm</code></a>",
+
+          "injectParamsInHooksMeth":       "<a href='/api.html#injectParamsInHooksMeth'><code>injectParamsInHooks()</code></a>",
+          "injectParamsInHooksMeth$":      "<a href='/api.html#injectParamsInHooksMeth'><code>injectParamsInHooks(fassets): namedParams</code></a>",
 
         "extendAspectProperty":            "<a href='/api.html#extendAspectProperty'><code>extendAspectProperty()</code></a>",
         "extendAspectProperty$":           "<a href='/api.html#extendAspectProperty'><code>extendAspectProperty(name, owner): void</code></a>",
