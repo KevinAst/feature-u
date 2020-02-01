@@ -13,7 +13,8 @@ import logf                 from '../util/logf';
  * life-cycle is controlled by {{book.api.launchApp}} _... it is
  * supplied the Aspects, and it invokes their methods._
  * 
- * The essential characteristics of the {{book.api.Aspect}} life-cycle is to:
+ * The essential characteristics of a typical {{book.api.Aspect}}
+ * life-cycle is to:
  * 
  * - accumulate {{book.api.AspectContent}} across all features
  * - perform the desired setup and configuration
@@ -24,80 +25,90 @@ import logf                 from '../util/logf';
  * The {{book.guide.extending}} section provides more insight on how
  * {{book.api.Aspect}}s are created and used.
  * 
+ * Aspect Plugins have NO one specific method that is required.  Rather
+ * the requirement is to **specify something** _(so as to not have an
+ * empty plugin that does nothing)_.
+ * Please refer to the **"No Single Aspect Method
+ * is Required"** discussion in the
+ * {{book.guide.extending_aspectLifeCycleMethods}}.
+ * 
  * **Please Note** this function uses named parameters.  The order in
  * which these items are presented represents the same order they are
  * executed.
  *
  * @param {string} name the `Aspect.name` is used to "key"
  * {{book.api.AspectContent}} of this type in the {{book.api.Feature}}
- * object.<br/><br/>
+ * object. <br/>
  * 
  * For example: an `Aspect.name: 'xyz'` would permit a `Feature.xyz:
- * xyzContent` construct.<br/><br/>
+ * xyzContent` construct.<br/>
  * 
  * As a result, Aspect names cannot clash with built-in aspects, and
- * they must be unique _(across all aspects that are in-use)_.
+ * they must be unique _(across all aspects that are in-use)_.<br/>
  *
- * @param {genesisMeth} [genesis] an optional Life Cycle Hook invoked
+ * The `Aspect.name` is required, primarily for identity
+ * purposes _(in logs and such)_.
+ *
+ * @param {genesisMeth} [genesis] a Life Cycle Hook invoked
  * one time, at the very beginning of the app's start up process.
  * This hook can perform Aspect related **initialization** and
  * **validation**:
  *
- * @param {validateFeatureContentMeth} validateFeatureContent a
+ * @param {validateFeatureContentMeth} [validateFeatureContent] a
  * validation hook allowing this aspect to verify it's content on the
  * supplied feature (which is known to contain this aspect).
  *
  * @param {expandFeatureContentMeth} [expandFeatureContent] an
- * optional aspect expansion hook, defaulting to the algorithm defined
- * by {{book.api.expandWithFassets}}.<br/><br/>
+ * aspect expansion hook, defaulting to the algorithm defined
+ * by {{book.api.expandWithFassets}}.<br/>
  *
  * This function rarely needs to be overridden.  It provides a hook to
  * aspects that need to transfer additional content from the expansion
  * function to the expanded content.
  *
- * @param {assembleFeatureContentMeth} assembleFeatureContent the
+ * @param {assembleFeatureContentMeth} [assembleFeatureContent] the
  * Aspect method that assembles content for this aspect across all
- * features, retaining needed state for subsequent ops.<br/><br/>
+ * features, retaining needed state for subsequent ops.<br/>
  *
- * This method is required because this is the primary task that is
- * accomplished by all aspects.
+ * This method is typically the primary task that is accomplished by
+ * most aspects.
  *
  * @param {assembleAspectResourcesMeth} [assembleAspectResources] an
- * optional Aspect method that assemble resources for this aspect
+ * Aspect method that assemble resources for this aspect
  * across all other aspects, retaining needed state for subsequent
- * ops.<br/><br/>
+ * ops.<br/>
  *
  * This hook is executed after all the aspects have assembled their
  * feature content (i.e. after
  * {{book.api.assembleFeatureContentMeth}}).
  *
- * @param {initialRootAppElmMeth} [initialRootAppElm] an optional
+ * @param {initialRootAppElmMeth} [initialRootAppElm] a
  * callback hook that promotes some characteristic of this aspect
  * within the `rootAppElm` ... the top-level react DOM that represents
- * the display of the entire application.<br/><br/>
+ * the display of the entire application.<br/>
  * 
  * The {{book.guide.extending_definingAppElm}} section highlights when
  * to use {{book.api.initialRootAppElmMeth}} verses
  * {{book.api.injectRootAppElmMeth}}.
  *
- * @param {injectRootAppElmMeth} [injectRootAppElm] an optional
+ * @param {injectRootAppElmMeth} [injectRootAppElm] a
  * callback hook that promotes some characteristic of this aspect
  * within the `rootAppElm` ... the top-level react DOM that represents
- * the display of the entire application.<br/><br/>
+ * the display of the entire application.<br/>
  * 
  * The {{book.guide.extending_definingAppElm}} section highlights when
  * to use {{book.api.initialRootAppElmMeth}} verses
  * {{book.api.injectRootAppElmMeth}}.
  *
  * @param {injectParamsInHooksMeth} [injectParamsInHooks] an
- * optional Aspect method that promotes `namedParams` into the
- * feature's {{book.guide.appLifeCycles}}, from this aspect.<br/><br/>
+ * Aspect method that promotes `namedParams` into the
+ * feature's {{book.guide.appLifeCycles}}, from this aspect.<br/>
 
  * This hook is executed after all aspects have assembled their
  * feature content (i.e. after
  * {{book.api.assembleFeatureContentMeth}}).
  *
- * @param {Any} [config] an optional sub-object that can be used for
+ * @param {Any} [config] a sub-object that can be used for
  * any type of configuration that a specific Aspect may need _(see:
  * {{book.guide.aspectConfig}})_.
  * 
@@ -129,47 +140,78 @@ export default function createAspect({name,
 
   const check = verify.prefix('createAspect() parameter violation: ');
 
-  check(name,            'name is required');
+  // ... name
+  check(name,            'name is required (at minimum for identity purposes)');
   check(isString(name),  'name must be a string');
   check(!isFeatureProperty(name), `Aspect.name: '${name}' is a reserved Feature keyword`);
   // NOTE: Aspect.name uniqueness is validated in launchApp() (once we know all aspects in-use)
 
-  if (genesis) {
-    check(isFunction(genesis),                 'genesis (when supplied) must be a function');
+  // ... namedParams
+  //     NOTE: arguments is a bit tricky
+  //           - it represents raw client-supplied args
+  //           - WITHOUT default semantics (in signature above)
+  //                                                   arguments.length  arguments[0]  name
+  //                                                   ================  ============  =========
+  //           - EX1: if client supplies NO params:           0            undefined   undefined
+  //           - EX2: if client supplies (123)                1            123         undefined (TRICKY)
+  //           - EX3: if client supplies (new Date())         1            Date        undefined (TRICKY)
+  //           - EX4: if client supplies (123, 456)           2            123         undefined (TRICKY)
+  //                  TRICKY: NOT SURE I fully understand this
+  //           - SO: placement order of this check is critical
+  //                 to get the desired message precedence to user
+  //                 i.e. our ONE required param check IS DONE FIRST
+  const namedParams = arguments[0];
+  // ... from TRICKY above, this check will never fire ... precedence to 'name is required' when NO params
+  check(isPlainObject(namedParams), `Aspect.name:${name} ... only named parameters may be supplied`);
+
+  // ... unrecognized positional parameter
+  //     NOTE: when defaulting entire struct, arguments.length is 0
+  //           ... from NOTE above, this check will only fire where 1st parm is {name ...} -AND- a 2nd param is supplied
+  check(arguments.length <= 1, `Aspect.name:${name} ... unrecognized positional parameters (only named parameters can be specified) ... ${arguments.length} positional parameters were found`);
+
+  // ... all method params - when supplied, verify are functions -AND- total how many were supplied
+  // ... verify all method params are functions -AND- keep track of how many were supplied
+  let totalMethodsSupplied = 0;
+  ['genesis',
+   'validateFeatureContent',
+   'expandFeatureContent',
+   'assembleFeatureContent',
+   'assembleAspectResources',
+   'initialRootAppElm',
+   'injectRootAppElm',
+   'injectParamsInHooks'].forEach( (paramName) => {
+     const param = namedParams[paramName];
+     if (param) {
+       totalMethodsSupplied++;
+       check(isFunction(param), `Aspect.name:${name} ... ${paramName} (when supplied) must be a function`);
+     }
+   } );
+
+  // ... inject no-ops for critical methods that are assumed to exist throughout the code-base
+  //     NOTE: By NOT requiring these critical methods, we support edge cases where
+  //           aspect content is not needed from the feature set (ex: a plugin "adds value" to another plugin).
+  function noOp() {}
+  // ... validateFeatureContent
+  if (!validateFeatureContent) {
+    validateFeatureContent = noOp;
+  }
+  // ... assembleFeatureContent
+  if (!assembleFeatureContent) {
+    assembleFeatureContent = noOp;
   }
 
-  check(validateFeatureContent,                'validateFeatureContent is required');
-  check(isFunction(validateFeatureContent),    'validateFeatureContent must be a function');
-
-  if (expandFeatureContent) {
-    check(isFunction(expandFeatureContent),    'expandFeatureContent (when supplied) must be a function');
-  }
-
-  check(assembleFeatureContent,                'assembleFeatureContent is required');
-  check(isFunction(assembleFeatureContent),    'assembleFeatureContent must be a function');
-
-  if (assembleAspectResources) {
-    check(isFunction(assembleAspectResources), 'assembleAspectResources (when supplied) must be a function');
-  }
-
-  if (initialRootAppElm) {
-    check(isFunction(initialRootAppElm),       'initialRootAppElm (when supplied) must be a function');
-  }
-
-  if (injectRootAppElm) {
-    check(isFunction(injectRootAppElm),        'injectRootAppElm (when supplied) must be a function');
-  }
-
-  if (injectParamsInHooks) {
-    check(isFunction(injectParamsInHooks),     'injectParamsInHooks (when supplied) must be a function');
-  }
-
-  check(config,                                'config is required');
-  check(isPlainObject(config),                 'config must be a plain object literal');
+  // ... config (NOTE: we default to {} in signature - above)
+  check(config,                 `Aspect.name:${name} ... config is required`);
+  check(isPlainObject(config),  `Aspect.name:${name} ... config must be a plain object literal`);
 
   // ... additionalMethods
   //     ... this validation occurs in launchApp()
   //         BECAUSE we don't know the Aspects in use UNTIL run-time
+
+  // ... must specify at least ONE method param 
+  //     so as to not have an empty plugin that does nothing
+  check(totalMethodsSupplied > 0, `Aspect.name:${name} ... at least one method must be supplied ... an empty Aspect plugin does nothing!`);
+
 
   // ***
   // *** return our new Aspect object
@@ -266,7 +308,7 @@ export function extendAspectProperty(name, owner) {
   // verify supplied name is NOT already reserved (by a different owner)
   if (isAspectProperty(name) &&           // already reserved
       validAspectProps[name] !== owner) { // by a different owner
-    throw new Error(`**ERROR** extendAspectProperty('${name}', '${owner}') ... 'Aspect.${name}' is already reserved by different owner.`);
+    throw new Error(`**ERROR** extendAspectProperty('${name}', '${owner}') ... 'Aspect.name:${name}' is already reserved by different owner.`);
   }
 
   // reserve it
@@ -339,7 +381,7 @@ export function extendAspectProperty(name, owner) {
 //***
 
 /**
- * An optional Life Cycle Hook invoked one time, at the very beginning of
+ * A Life Cycle Hook invoked one time, at the very beginning of
  * the app's start up process.
  * 
  * This hook can perform Aspect related **initialization** and
@@ -350,11 +392,19 @@ export function extendAspectProperty(name, owner) {
  *   {{book.api.extendAspectProperty}} and
  *   {{book.api.extendFeatureProperty}} _(please see:
  *   {{book.guide.extending_aspectCrossCommunication}})_.
- * 
- * - **validation**: this is where an aspect can verify it's own required
- *   configuration (if any). Some aspects require certain settings _(set
- *   by the application)_ in self for them to operate.
  *
+ * - **validation**: It is possible to perform Aspect validation in the
+ *   `genesis()` method ... say for required configuration properties
+ *   injected by the client after instantiation.  This is the reason for
+ *   the optional return string.
+ * 
+ *   This however is somewhat antiquated to Aspects that are promoted as
+ *   singletons (where configuration had to occur after instantiation).
+ * 
+ *   A better technique is to promote an Aspect constructor (that
+ *   requires configuration parameters), and perform your validation in
+ *   the constructor.
+ * 
  * **API:** {{book.api.genesisMeth$}}
  *
  * @callback genesisMeth
@@ -437,10 +487,10 @@ export function extendAspectProperty(name, owner) {
 //***
 
 /**
- * The required Aspect method that assembles content for this aspect
+ * The Aspect method that assembles content for this aspect
  * across all features, retaining needed state for subsequent ops.
- * This method is required because this is the primary task that is
- * accomplished by all aspects.
+ * This method is typically the primary task that is accomplished by
+ * most aspects.
  *
  * **API:** {{book.api.assembleFeatureContentMeth$}}
  *
@@ -462,7 +512,7 @@ export function extendAspectProperty(name, owner) {
 //***
 
 /**
- * An optional Aspect method that assembles resources for this aspect
+ * An Aspect method that assembles resources for this aspect
  * across all other aspects, retaining needed state for subsequent
  * ops.  This hook is executed after all the aspects have assembled
  * their feature content (i.e. after
@@ -494,7 +544,7 @@ export function extendAspectProperty(name, owner) {
 //***
 
 /**
- * An optional callback hook that promotes some characteristic of this
+ * A callback hook that promotes some characteristic of this
  * aspect within the `rootAppElm` ... the top-level react DOM that
  * represents the display of the entire application.
  * 
@@ -526,7 +576,7 @@ export function extendAspectProperty(name, owner) {
 //***
 
 /**
- * An optional callback hook that promotes some characteristic of this
+ * A callback hook that promotes some characteristic of this
  * aspect within the `rootAppElm` ... the top-level react DOM that
  * represents the display of the entire application.
  * 
@@ -558,7 +608,7 @@ export function extendAspectProperty(name, owner) {
 //***
 
 /**
- * An optional Aspect method that promotes `namedParams` into the
+ * An Aspect method that promotes `namedParams` into the
  * feature's {{book.guide.appLifeCycles}}, from this aspect.  This
  * hook is executed after all aspects have assembled their feature
  * content (i.e. after {{book.api.assembleFeatureContentMeth}}).

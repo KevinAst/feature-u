@@ -136,12 +136,19 @@ your usage)_.
    has been added that allows the Aspect to promote `namedParams` into
    the feature's {{book.guide.appLifeCycles}}.
 
-3. **Added**: ?? more
+3. **Changed**: For Aspect Extension users, Aspect Plugins no longer
+   have one specific method that is required.  Rather the requirement
+   is to **specify something** _(so as to not have an empty plugin
+   that does nothing)_.  Please refer to the **"No Single Aspect Method
+   is Required"** discussion in the
+   {{book.guide.extending_aspectLifeCycleMethods}}.
 
-4. **Security**: ?? Address potential security vulnerabilities in dependent libs
+4. **Added**: ?? more
+
+5. **Security**: ?? Address potential security vulnerabilities in dependent libs
    (mostly devDependencies completely unrelated to deployment)!
 
-5. **Docs**: Documentation improvements include:
+6. **Docs**: Documentation improvements include:
 
    - ?? more
 

@@ -24,148 +24,105 @@ describe('createAspect() tests', () => {
         expect(()=>createAspect({}))
           .toThrow(/name is required/);
       });
-
+      
       test('name must be a string', () => {
         expect(()=>createAspect({name:123}))
           .toThrow(/name must be a string/);
       });
-
+      
       test('name value is a reserved Feature keyword', () => {
         expect(()=>createAspect({name:'appWillStart'}))
           .toThrow(/Aspect.name: 'appWillStart' is a reserved Feature keyword/);
       });
     });
 
-    describe('aspect.genesis', () => {
+    describe('invalid positional params', () => { // ... see TRICKY NOTE (in createAspect.js)
+      test('no params', () => {
+        expect(()=>createAspect())
+          .toThrow(/name is required/);
+        // THROW: createAspect() parameter violation: name is required
+      });
+      test('params: (123)', () => {
+        expect(()=>createAspect(123))
+          .toThrow(/name is required/);
+        // THROW: createAspect() parameter violation: name is required
+      });
+      test('params: (new Date())', () => {
+        expect(()=>createAspect(new Date()))
+          .toThrow(/name is required/);
+        // THROW: createAspect() parameter violation: name is required
+      });
+      test('params: (123, 456)', () => {
+        expect(()=>createAspect(123, 456))
+          .toThrow(/name is required/);
+        // THROW: createAspect() parameter violation: name is required
+      });
+      test('params: ({name: "hello"}, 456)', () => {
+        expect(()=>createAspect({name: 'hello'}, 456))
+          .toThrow(/Aspect.name:hello.*unrecognized positional parameters/);
+        // THROW: createAspect() parameter violation: Aspect.name:hello ... unrecognized positional parameters (only named parameters can be specified) ... 2 positional parameters were found
+      });
+    });
+
+    describe('all methods MUST be functions (when supplied)', () => {
+
       const primePump = {
         name: 'myAspectName'
       };
 
-      test('genesis must be a function', () => {
-        expect(()=>createAspect({...primePump, genesis:123}))
-          .toThrow(/genesis .* must be a function/);
-        // THROW: createAspect() parameter violation: genesis (when supplied) must be a function
-      });
-    });
+      ['genesis',
+       'validateFeatureContent',
+       'expandFeatureContent',
+       'assembleFeatureContent',
+       'assembleAspectResources',
+       'initialRootAppElm',
+       'injectRootAppElm',
+       'injectParamsInHooks'].forEach( (methName) => {
 
-    describe('aspect.validateFeatureContent', () => {
-      const primePump = {
-        name: 'myAspectName'
-      };
+         test(`${methName} is NOT function`, () => {
+           const params = {...primePump};
+           params[methName] = 123; // NOT a function
+           expect(()=>createAspect(params))
+             .toThrow(/Aspect.name:myAspectName.*must be a function/);
+           // THROW: Aspect.name:myAspectName ... createAspect() parameter violation: ...methName... (when supplied) must be a function
+         });
 
-      test('validateFeatureContent is required', () => {
-        expect(()=>createAspect({...primePump}))
-          .toThrow(/validateFeatureContent is required/);
-      });
+         test(`${methName} is IS function`, () => {
+           const params = {...primePump};
+           params[methName] = identityFn; // IS a function
+           expect(()=>createAspect(params))
+             .not.toThrow();
+         });
 
-      test('validateFeatureContent must be a function', () => {
-        expect(()=>createAspect({...primePump, validateFeatureContent:123}))
-          .toThrow(/validateFeatureContent must be a function/);
-      });
-    });
-
-    describe('aspect.expandFeatureContent', () => {
-      const primePump = {
-        name:                   'myAspectName',
-        validateFeatureContent: identityFn,
-      };
-
-      test('expandFeatureContent must be a function', () => {
-        expect(()=>createAspect({...primePump, expandFeatureContent:123}))
-          .toThrow(/expandFeatureContent .* must be a function/);
-        // THROW: createAspect() parameter violation: expandFeatureContent (when supplied) must be a function
-      });
-    });
-
-    describe('aspect.assembleFeatureContent', () => {
-      const primePump = {
-        name:                   'myAspectName',
-        validateFeatureContent: identityFn,
-      };
-
-      test('assembleFeatureContent is required', () => {
-        expect(()=>createAspect({...primePump}))
-          .toThrow(/assembleFeatureContent is required/);
-      });
-
-      test('assembleFeatureContent must be a function', () => {
-        expect(()=>createAspect({...primePump, assembleFeatureContent:123}))
-          .toThrow(/assembleFeatureContent must be a function/);
-      });
-    });
-
-    describe('aspect.assembleAspectResources', () => {
-      const primePump = {
-        name:                   'myAspectName',
-        validateFeatureContent: identityFn,
-        assembleFeatureContent: identityFn,
-      };
-
-      test('assembleAspectResources must be a function', () => {
-        expect(()=>createAspect({...primePump, assembleAspectResources:123}))
-          .toThrow(/assembleAspectResources.*must be a function/);
-      });
-    });
-
-    describe('aspect.initialRootAppElm', () => {
-      const primePump = {
-        name:                    'myAspectName',
-        validateFeatureContent:  identityFn,
-        assembleFeatureContent:  identityFn,
-      };
-
-      test('initialRootAppElm must be a function', () => {
-        expect(()=>createAspect({...primePump, initialRootAppElm:123}))
-          .toThrow(/initialRootAppElm.*must be a function/);
-      });
-    });
-
-    describe('aspect.injectRootAppElm', () => {
-      const primePump = {
-        name:                    'myAspectName',
-        validateFeatureContent:  identityFn,
-        assembleFeatureContent:  identityFn,
-      };
-
-      test('injectRootAppElm must be a function', () => {
-        expect(()=>createAspect({...primePump, injectRootAppElm:123}))
-          .toThrow(/injectRootAppElm.*must be a function/);
-      });
-    });
-
-    describe('aspect.injectParamsInHooks', () => {
-      const primePump = {
-        name:                    'myAspectName',
-        validateFeatureContent:  identityFn,
-        assembleFeatureContent:  identityFn,
-      };
-
-      test('injectParamsInHooks must be a function', () => {
-        expect(()=>createAspect({...primePump, injectParamsInHooks:123}))
-          .toThrow(/injectParamsInHooks.*must be a function/);
-      });
+       } );
+    
     });
 
     describe('aspect.config', () => {
       const primePump = {
-        name:                    'myAspectName',
-        validateFeatureContent:  identityFn,
-        assembleFeatureContent:  identityFn,
+        name: 'myAspectName',
       };
-
+    
       test('config is required', () => {
         expect(()=>createAspect({...primePump, config:null}))
-          .toThrow(/config is required/);
-        // THROW:  createAspect() parameter violation: config is required
+          .toThrow(/Aspect.name:myAspectName.*config is required/);
+        // THROW: Aspect.name:myAspectName createAspect() parameter violation: config is required
       });
-
-      test('config is required', () => {
+    
+      test('config must be a plain object', () => {
         expect(()=>createAspect({...primePump, config:()=>1}))
-          .toThrow(/config must be a plain object literal/);
-        // THROW:  createAspect() parameter violation: config must be a plain object literal
+          .toThrow(/Aspect.name:myAspectName.*config must be a plain object literal/);
+        // THROW: Aspect.name:myAspectName createAspect() parameter violation: config must be a plain object literal
       });
     });
 
+    describe('at least ONE method MUST BE SUPPLIED', () => {
+      test('go for it', () => {
+        expect(()=>createAspect({name: 'hello'}))
+          .toThrow(/Aspect.name:hello.*at least one method must be supplied/);
+        // THROW: Aspect.name:hello createAspect() parameter violation: at least one method must be supplied ... an empty Aspect plugin does nothing!
+      });
+    });
 
   });
 

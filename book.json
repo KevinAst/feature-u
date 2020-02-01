@@ -158,6 +158,8 @@
       "extending_aspectLifeCycleMethods":    "<a href='/extending.html#aspect-life-cycle-methods'><code>Aspect Life Cycle Methods</code></a>",
       "extending_aspectLifeCycleHooks":      "<a href='/extending.html#aspect-life-cycle-methods'><code>Aspect Life Cycle Hooks</code></a>",
 
+        "aspectName":    "<a href='/extending.html#aspectname'><code>Aspect.name</code></a>",
+
         "genesisMeth":   "<a href='/extending.html#aspectgenesis'><code>Aspect.genesis()</code></a>",
         "genesisMeth$":  "<a href='/extending.html#aspectgenesis'><code>Aspect.genesis(): string</code></a>",
 
@@ -290,6 +292,7 @@
       "expo":               "<a href='https://expo.io/'><code>expo</code></a>",
       "featureRedux":       "<a href='https://github.com/KevinAst/feature-redux'><code>feature-redux</code></a>",
       "featureReduxLogic":  "<a href='https://github.com/KevinAst/feature-redux-logic'><code>feature-redux-logic</code></a>",
+      "featureReduxPersist":"<a href='https://github.com/sylvainlg/feature-redux-persist'><code>feature-redux-persist</code></a>",
       "featureRouter":      "<a href='https://github.com/KevinAst/feature-router'><code>feature-router</code></a>",
       "react":              "<a href='https://reactjs.org/'><code>react</code></a>",
       "reactHook":          "<a href='https://reactjs.org/docs/hooks-intro.html'><code>React Hook</code></a>",

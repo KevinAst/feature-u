@@ -258,8 +258,8 @@ be wrapped <em>(see discussion above)</em>.</p>
 <a id="createAspect"></a>
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
-  createAspect(name, [genesis], validateFeatureContent, [expandFeatureContent], assembleFeatureContent, [assembleAspectResources], [initialRootAppElm], [injectRootAppElm], [injectParamsInHooks], [config], [additionalMethods]) ⇒ [`Aspect`](#Aspect)</h5>
-Create an {{book.api.Aspect}} object, used to extend **feature-u**.The {{book.api.Aspect}} object promotes a series of life-cyclemethods that **feature-u** invokes in a controlled way.  Thislife-cycle is controlled by {{book.api.launchApp}} _... it issupplied the Aspects, and it invokes their methods._The essential characteristics of the {{book.api.Aspect}} life-cycle is to:- accumulate {{book.api.AspectContent}} across all features- perform the desired setup and configuration- expose the framework in some way _(by injecting a component in the  root DOM, or some {{book.guide.extending_aspectCrossCommunication}}  mechanism)_The {{book.guide.extending}} section provides more insight on how{{book.api.Aspect}}s are created and used.**Please Note** this function uses named parameters.  The order inwhich these items are presented represents the same order they areexecuted.
+  createAspect(name, [genesis], [validateFeatureContent], [expandFeatureContent], [assembleFeatureContent], [assembleAspectResources], [initialRootAppElm], [injectRootAppElm], [injectParamsInHooks], [config], [additionalMethods]) ⇒ [`Aspect`](#Aspect)</h5>
+Create an {{book.api.Aspect}} object, used to extend **feature-u**.The {{book.api.Aspect}} object promotes a series of life-cyclemethods that **feature-u** invokes in a controlled way.  Thislife-cycle is controlled by {{book.api.launchApp}} _... it issupplied the Aspects, and it invokes their methods._The essential characteristics of a typical {{book.api.Aspect}}life-cycle is to:- accumulate {{book.api.AspectContent}} across all features- perform the desired setup and configuration- expose the framework in some way _(by injecting a component in the  root DOM, or some {{book.guide.extending_aspectCrossCommunication}}  mechanism)_The {{book.guide.extending}} section provides more insight on how{{book.api.Aspect}}s are created and used.Aspect Plugins have NO one specific method that is required.  Ratherthe requirement is to **specify something** _(so as to not have anempty plugin that does nothing)_.Please refer to the **"No Single Aspect Methodis Required"** discussion in the{{book.guide.extending_aspectLifeCycleMethods}}.**Please Note** this function uses named parameters.  The order inwhich these items are presented represents the same order they areexecuted.
 
 <table>
   <thead>
@@ -271,75 +271,77 @@ Create an {{book.api.Aspect}} object, used to extend **feature-u**.The {{book.
 <tr>
     <td>name</td><td>string</td><td><p>the <code>Aspect.name</code> is used to &quot;key&quot;
 {{book.api.AspectContent}} of this type in the {{book.api.Feature}}
-object.<br/><br/></p>
+object. <br/></p>
 <p>For example: an <code>Aspect.name: &#39;xyz&#39;</code> would permit a <code>Feature.xyz:
-xyzContent</code> construct.<br/><br/></p>
+xyzContent</code> construct.<br/></p>
 <p>As a result, Aspect names cannot clash with built-in aspects, and
-they must be unique <em>(across all aspects that are in-use)</em>.</p>
+they must be unique <em>(across all aspects that are in-use)</em>.<br/></p>
+<p>The <code>Aspect.name</code> is required, primarily for identity
+purposes <em>(in logs and such)</em>.</p>
 </td>
     </tr><tr>
-    <td>[genesis]</td><td><a href="#genesisMeth"><code>genesisMeth</code></a></td><td><p>an optional Life Cycle Hook invoked
+    <td>[genesis]</td><td><a href="#genesisMeth"><code>genesisMeth</code></a></td><td><p>a Life Cycle Hook invoked
 one time, at the very beginning of the app&#39;s start up process.
 This hook can perform Aspect related <strong>initialization</strong> and
 <strong>validation</strong>:</p>
 </td>
     </tr><tr>
-    <td>validateFeatureContent</td><td><a href="#validateFeatureContentMeth"><code>validateFeatureContentMeth</code></a></td><td><p>a
+    <td>[validateFeatureContent]</td><td><a href="#validateFeatureContentMeth"><code>validateFeatureContentMeth</code></a></td><td><p>a
 validation hook allowing this aspect to verify it&#39;s content on the
 supplied feature (which is known to contain this aspect).</p>
 </td>
     </tr><tr>
     <td>[expandFeatureContent]</td><td><a href="#expandFeatureContentMeth"><code>expandFeatureContentMeth</code></a></td><td><p>an
-optional aspect expansion hook, defaulting to the algorithm defined
-by {{book.api.expandWithFassets}}.<br/><br/></p>
+aspect expansion hook, defaulting to the algorithm defined
+by {{book.api.expandWithFassets}}.<br/></p>
 <p>This function rarely needs to be overridden.  It provides a hook to
 aspects that need to transfer additional content from the expansion
 function to the expanded content.</p>
 </td>
     </tr><tr>
-    <td>assembleFeatureContent</td><td><a href="#assembleFeatureContentMeth"><code>assembleFeatureContentMeth</code></a></td><td><p>the
+    <td>[assembleFeatureContent]</td><td><a href="#assembleFeatureContentMeth"><code>assembleFeatureContentMeth</code></a></td><td><p>the
 Aspect method that assembles content for this aspect across all
-features, retaining needed state for subsequent ops.<br/><br/></p>
-<p>This method is required because this is the primary task that is
-accomplished by all aspects.</p>
+features, retaining needed state for subsequent ops.<br/></p>
+<p>This method is typically the primary task that is accomplished by
+most aspects.</p>
 </td>
     </tr><tr>
     <td>[assembleAspectResources]</td><td><a href="#assembleAspectResourcesMeth"><code>assembleAspectResourcesMeth</code></a></td><td><p>an
-optional Aspect method that assemble resources for this aspect
+Aspect method that assemble resources for this aspect
 across all other aspects, retaining needed state for subsequent
-ops.<br/><br/></p>
+ops.<br/></p>
 <p>This hook is executed after all the aspects have assembled their
 feature content (i.e. after
 {{book.api.assembleFeatureContentMeth}}).</p>
 </td>
     </tr><tr>
-    <td>[initialRootAppElm]</td><td><a href="#initialRootAppElmMeth"><code>initialRootAppElmMeth</code></a></td><td><p>an optional
+    <td>[initialRootAppElm]</td><td><a href="#initialRootAppElmMeth"><code>initialRootAppElmMeth</code></a></td><td><p>a
 callback hook that promotes some characteristic of this aspect
 within the <code>rootAppElm</code> ... the top-level react DOM that represents
-the display of the entire application.<br/><br/></p>
+the display of the entire application.<br/></p>
 <p>The {{book.guide.extending_definingAppElm}} section highlights when
 to use {{book.api.initialRootAppElmMeth}} verses
 {{book.api.injectRootAppElmMeth}}.</p>
 </td>
     </tr><tr>
-    <td>[injectRootAppElm]</td><td><a href="#injectRootAppElmMeth"><code>injectRootAppElmMeth</code></a></td><td><p>an optional
+    <td>[injectRootAppElm]</td><td><a href="#injectRootAppElmMeth"><code>injectRootAppElmMeth</code></a></td><td><p>a
 callback hook that promotes some characteristic of this aspect
 within the <code>rootAppElm</code> ... the top-level react DOM that represents
-the display of the entire application.<br/><br/></p>
+the display of the entire application.<br/></p>
 <p>The {{book.guide.extending_definingAppElm}} section highlights when
 to use {{book.api.initialRootAppElmMeth}} verses
 {{book.api.injectRootAppElmMeth}}.</p>
 </td>
     </tr><tr>
     <td>[injectParamsInHooks]</td><td><a href="#injectParamsInHooksMeth"><code>injectParamsInHooksMeth</code></a></td><td><p>an
-optional Aspect method that promotes <code>namedParams</code> into the
-feature&#39;s {{book.guide.appLifeCycles}}, from this aspect.<br/><br/>
+Aspect method that promotes <code>namedParams</code> into the
+feature&#39;s {{book.guide.appLifeCycles}}, from this aspect.<br/>
 This hook is executed after all aspects have assembled their
 feature content (i.e. after
 {{book.api.assembleFeatureContentMeth}}).</p>
 </td>
     </tr><tr>
-    <td>[config]</td><td>Any</td><td><p>an optional sub-object that can be used for
+    <td>[config]</td><td>Any</td><td><p>a sub-object that can be used for
 any type of configuration that a specific Aspect may need <em>(see:
 {{book.guide.aspectConfig}})</em>.</p>
 </td>
@@ -719,7 +721,7 @@ The content (or payload) of an {{book.api.Aspect}}, specifiedwithin a {{book.ap
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
   genesisMeth ⇒ string</h5>
-An optional Life Cycle Hook invoked one time, at the very beginning ofthe app's start up process.This hook can perform Aspect related **initialization** and**validation**:- **initialization**: this is where where proprietary Aspect/Feature  APIs should be registered (if any) - via  {{book.api.extendAspectProperty}} and  {{book.api.extendFeatureProperty}} _(please see:  {{book.guide.extending_aspectCrossCommunication}})_.- **validation**: this is where an aspect can verify it's own required  configuration (if any). Some aspects require certain settings _(set  by the application)_ in self for them to operate.**API:** {{book.api.genesisMeth$}}
+A Life Cycle Hook invoked one time, at the very beginning ofthe app's start up process.This hook can perform Aspect related **initialization** and**validation**:- **initialization**: this is where where proprietary Aspect/Feature  APIs should be registered (if any) - via  {{book.api.extendAspectProperty}} and  {{book.api.extendFeatureProperty}} _(please see:  {{book.guide.extending_aspectCrossCommunication}})_.- **validation**: It is possible to perform Aspect validation in the  `genesis()` method ... say for required configuration properties  injected by the client after instantiation.  This is the reason for  the optional return string.  This however is somewhat antiquated to Aspects that are promoted as  singletons (where configuration had to occur after instantiation).  A better technique is to promote an Aspect constructor (that  requires configuration parameters), and perform your validation in  the constructor.**API:** {{book.api.genesisMeth$}}
 
 **Returns**: string - an error message when self is in an invalid state(falsy when valid).  Because this validation occurs under thecontrol of {{book.api.launchApp}}, any message is prefixed with:`'launchApp() parameter violation: '`.  
 
@@ -782,7 +784,7 @@ this aspect <strong>and</strong> is in need of expansion (as defined by
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
   assembleFeatureContentMeth ⇒</h5>
-The required Aspect method that assembles content for this aspectacross all features, retaining needed state for subsequent ops.This method is required because this is the primary task that isaccomplished by all aspects.**API:** {{book.api.assembleFeatureContentMeth$}}
+The Aspect method that assembles content for this aspectacross all features, retaining needed state for subsequent ops.This method is typically the primary task that is accomplished bymost aspects.**API:** {{book.api.assembleFeatureContentMeth$}}
 
 <table>
   <thead>
@@ -810,7 +812,7 @@ features that comprise this application.</p>
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
   assembleAspectResourcesMeth ⇒</h5>
-An optional Aspect method that assembles resources for this aspectacross all other aspects, retaining needed state for subsequentops.  This hook is executed after all the aspects have assembledtheir feature content (i.e. after{{book.api.assembleFeatureContentMeth}}).**API:** {{book.api.assembleAspectResourcesMeth$}}This is an optional second-pass (so-to-speak) of Aspect datagathering, that facilitates{{book.guide.extending_aspectCrossCommunication}}.  It allows anextending aspect to gather resources from other aspects, using anadditional API (ex: `Aspect.getXyz()`).
+An Aspect method that assembles resources for this aspectacross all other aspects, retaining needed state for subsequentops.  This hook is executed after all the aspects have assembledtheir feature content (i.e. after{{book.api.assembleFeatureContentMeth}}).**API:** {{book.api.assembleAspectResourcesMeth$}}This is an optional second-pass (so-to-speak) of Aspect datagathering, that facilitates{{book.guide.extending_aspectCrossCommunication}}.  It allows anextending aspect to gather resources from other aspects, using anadditional API (ex: `Aspect.getXyz()`).
 
 <table>
   <thead>
@@ -838,7 +840,7 @@ used in this this application.</p>
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
   initialRootAppElmMeth ⇒ reactElm</h5>
-An optional callback hook that promotes some characteristic of thisaspect within the `rootAppElm` ... the top-level react DOM thatrepresents the display of the entire application.**API:** {{book.api.initialRootAppElmMeth$}}The {{book.guide.extending_definingAppElm}} section highlights whento use {{book.api.initialRootAppElmMeth}} verses{{book.api.injectRootAppElmMeth}}.**NOTE**: When this hook is used, the supplied curRootAppElm MUST beincluded as part of this definition!
+A callback hook that promotes some characteristic of thisaspect within the `rootAppElm` ... the top-level react DOM thatrepresents the display of the entire application.**API:** {{book.api.initialRootAppElmMeth$}}The {{book.guide.extending_definingAppElm}} section highlights whento use {{book.api.initialRootAppElmMeth}} verses{{book.api.injectRootAppElmMeth}}.**NOTE**: When this hook is used, the supplied curRootAppElm MUST beincluded as part of this definition!
 
 <table>
   <thead>
@@ -865,7 +867,7 @@ cross-communication.</p>
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
   injectRootAppElmMeth ⇒ reactElm</h5>
-An optional callback hook that promotes some characteristic of thisaspect within the `rootAppElm` ... the top-level react DOM thatrepresents the display of the entire application.**API:** {{book.api.injectRootAppElmMeth$}}The {{book.guide.extending_definingAppElm}} section highlights whento use {{book.api.initialRootAppElmMeth}} verses{{book.api.injectRootAppElmMeth}}.**NOTE**: When this hook is used, the supplied curRootAppElm MUST beincluded as part of this definition!
+A callback hook that promotes some characteristic of thisaspect within the `rootAppElm` ... the top-level react DOM thatrepresents the display of the entire application.**API:** {{book.api.injectRootAppElmMeth$}}The {{book.guide.extending_definingAppElm}} section highlights whento use {{book.api.initialRootAppElmMeth}} verses{{book.api.injectRootAppElmMeth}}.**NOTE**: When this hook is used, the supplied curRootAppElm MUST beincluded as part of this definition!
 
 <table>
   <thead>
@@ -892,7 +894,7 @@ cross-communication.</p>
 
 <h5 style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
   injectParamsInHooksMeth ⇒ namedParams</h5>
-An optional Aspect method that promotes `namedParams` into thefeature's {{book.guide.appLifeCycles}}, from this aspect.  Thishook is executed after all aspects have assembled their featurecontent (i.e. after {{book.api.assembleFeatureContentMeth}}).Here is a `namedParams` example from a redux aspect, promoting it'sstate and dispatch functions:```js{getState, dispatch}```**API:** {{book.api.injectParamsInHooksMeth$}}Any aspect may promote their own set of `namedParams`.  **feature-u**will insure there are no name clashes across aspects (which resultsin an exception).  If your parameter names have a high potentialfor clashing, a **best practice** would be to qualify them in someway to better insure uniqueness.
+An Aspect method that promotes `namedParams` into thefeature's {{book.guide.appLifeCycles}}, from this aspect.  Thishook is executed after all aspects have assembled their featurecontent (i.e. after {{book.api.assembleFeatureContentMeth}}).Here is a `namedParams` example from a redux aspect, promoting it'sstate and dispatch functions:```js{getState, dispatch}```**API:** {{book.api.injectParamsInHooksMeth$}}Any aspect may promote their own set of `namedParams`.  **feature-u**will insure there are no name clashes across aspects (which resultsin an exception).  If your parameter names have a high potentialfor clashing, a **best practice** would be to qualify them in someway to better insure uniqueness.
 
 <table>
   <thead>
