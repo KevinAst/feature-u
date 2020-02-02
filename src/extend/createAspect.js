@@ -122,17 +122,7 @@ import logf                 from '../util/logf';
  *
  * @function createAspect
  */
-export default function createAspect({name,
-                                      genesis,
-                                      validateFeatureContent,
-                                      expandFeatureContent,
-                                      assembleFeatureContent,
-                                      assembleAspectResources,
-                                      initialRootAppElm,
-                                      injectRootAppElm,
-                                      injectParamsInHooks,
-                                      config={},
-                                      ...additionalMethods}={}) {
+export default function createAspect(namedParams={}) {
 
   // ***
   // *** validate parameters
@@ -140,33 +130,34 @@ export default function createAspect({name,
 
   const check = verify.prefix('createAspect() parameter violation: ');
 
-  // ... name
+  // ... namedParams
+  check(isPlainObject(namedParams), `only named parameters may be supplied`);
+
+  // descturcture our individual namedParams
+  // ... NOTE: We do this here (rather in the function signature) to have access
+  //           to the overall namedParams variable - for validation purposes!
+  //           Access via the JavaScript implicit `arguments[0]` variable is 
+  //           NOT reliable (in this context) exhibiting a number of quirks :-(
+  let {name,   // ... using `let`, because some are reassigned (below)
+       genesis,
+       validateFeatureContent,
+       expandFeatureContent,
+       assembleFeatureContent,
+       assembleAspectResources,
+       initialRootAppElm,
+       injectRootAppElm,
+       injectParamsInHooks,
+       config={},
+       ...additionalMethods} = namedParams;
+
+  // ... name (NOTE: name check takes precedence to facilitate `Aspect.name` identity in subsequent errors :-)
   check(name,            'name is required (at minimum for identity purposes)');
   check(isString(name),  'name must be a string');
   check(!isFeatureProperty(name), `Aspect.name: '${name}' is a reserved Feature keyword`);
   // NOTE: Aspect.name uniqueness is validated in launchApp() (once we know all aspects in-use)
 
-  // ... namedParams
-  //     NOTE: arguments is a bit tricky
-  //           - it represents raw client-supplied args
-  //           - WITHOUT default semantics (in signature above)
-  //                                                   arguments.length  arguments[0]  name
-  //                                                   ================  ============  =========
-  //           - EX1: if client supplies NO params:           0            undefined   undefined
-  //           - EX2: if client supplies (123)                1            123         undefined (TRICKY)
-  //           - EX3: if client supplies (new Date())         1            Date        undefined (TRICKY)
-  //           - EX4: if client supplies (123, 456)           2            123         undefined (TRICKY)
-  //                  TRICKY: NOT SURE I fully understand this
-  //           - SO: placement order of this check is critical
-  //                 to get the desired message precedence to user
-  //                 i.e. our ONE required param check IS DONE FIRST
-  const namedParams = arguments[0];
-  // ... from TRICKY above, this check will never fire ... precedence to 'name is required' when NO params
-  check(isPlainObject(namedParams), `Aspect.name:${name} ... only named parameters may be supplied`);
-
   // ... unrecognized positional parameter
   //     NOTE: when defaulting entire struct, arguments.length is 0
-  //           ... from NOTE above, this check will only fire where 1st parm is {name ...} -AND- a 2nd param is supplied
   check(arguments.length <= 1, `Aspect.name:${name} ... unrecognized positional parameters (only named parameters can be specified) ... ${arguments.length} positional parameters were found`);
 
   // ... all method params - when supplied, verify are functions -AND- total how many were supplied

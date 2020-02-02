@@ -36,32 +36,56 @@ describe('createAspect() tests', () => {
       });
     });
 
-    describe('invalid positional params', () => { // ... see TRICKY NOTE (in createAspect.js)
+    describe('invalid positional params', () => {
+
       test('no params', () => {
         expect(()=>createAspect())
           .toThrow(/name is required/);
         // THROW: createAspect() parameter violation: name is required
       });
+
+      test('params: (undefined)', () => { // NOTE: `(undefined)` is the same as `()` ... because of JavaScript defaulting semantics
+        expect(()=>createAspect(undefined))
+        .toThrow(/name is required/);
+        // THROW: createAspect() parameter violation: name is required
+      });
+
+      test('params: (null)', () => {
+        expect(()=>createAspect(null))
+          .toThrow(/only named parameters may be supplied/);
+        // THROW: createAspect() parameter violation: only named parameters may be supplied
+      });
+
       test('params: (123)', () => {
         expect(()=>createAspect(123))
-          .toThrow(/name is required/);
-        // THROW: createAspect() parameter violation: name is required
+          .toThrow(/only named parameters may be supplied/);
+        // THROW: createAspect() parameter violation: only named parameters may be supplied
       });
+
       test('params: (new Date())', () => {
         expect(()=>createAspect(new Date()))
-          .toThrow(/name is required/);
-        // THROW: createAspect() parameter violation: name is required
+          .toThrow(/only named parameters may be supplied/);
+        // THROW: createAspect() parameter violation: only named parameters may be supplied
       });
+
       test('params: (123, 456)', () => {
         expect(()=>createAspect(123, 456))
-          .toThrow(/name is required/);
-        // THROW: createAspect() parameter violation: name is required
+          .toThrow(/only named parameters may be supplied/);
+        // THROW: createAspect() parameter violation: only named parameters may be supplied
       });
-      test('params: ({name: "hello"}, 456)', () => {
+
+      test('params: ({name: "hello"}, 456)', () => { // NOTE: this has the `Aspect.name` identity in our error :-)
         expect(()=>createAspect({name: 'hello'}, 456))
           .toThrow(/Aspect.name:hello.*unrecognized positional parameters/);
         // THROW: createAspect() parameter violation: Aspect.name:hello ... unrecognized positional parameters (only named parameters can be specified) ... 2 positional parameters were found
       });
+
+      test('params: ({}, 456)', () => { // NOTE: name check takes precedence to facilitate `Aspect.name` identity in our error :-)
+        expect(()=>createAspect({}, 456))
+          .toThrow(/name is required/);
+        // THROW: createAspect() parameter violation: name is required
+      });
+
     });
 
     describe('all methods MUST be functions (when supplied)', () => {
