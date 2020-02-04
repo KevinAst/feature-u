@@ -236,9 +236,10 @@ exposing a new **Aspect API**: `Aspect.getReduxMiddleware()`.
      to be referenced in either {{book.api.createAspect}} or
      {{book.api.createFeature}} respectively.
 
-     This registration should occur in the {{book.guide.genesisMeth}}
-     life cycle method _(i.e. very early)_ to guarantee the new API is
-     available during **feature-u** validation.
+     This registration should occur in the client constructor or
+     the {{book.guide.genesisMeth}} life cycle method _(i.e. very
+     early)_ to guarantee the new API is available during
+     **feature-u** validation.
 
      **SideBar**: **feature-u** keeps track of the agent that owns
      each extension through the owner parameter.  Use any string that
@@ -259,8 +260,8 @@ exposing a new **Aspect API**: `Aspect.getReduxMiddleware()`.
   from the aforementioned {{book.ext.featureRedux}} plugin:
   
   1. Here is how the new API is documented:
-  
-     [feature-redux#inputs](https://github.com/KevinAst/feature-redux/tree/18987a3d7911eb4148e91089309b30bef3c7dbcd#inputs)
+
+     [feature-redux Inputs](https://github.com/KevinAst/feature-redux#inputs)
   
      - **Middleware Integration**:
   
@@ -273,18 +274,17 @@ exposing a new **Aspect API**: `Aspect.getReduxMiddleware()`.
   
   1. Here is the new API registration:
 
-     [feature-redux/src/reducerAspect.js](https://github.com/KevinAst/feature-redux/blob/57858cbcc4052c153471205a8f217bfcc95a0ed2/src/reducerAspect.js#L48-L53)
+     **`createReducerAspect()` constructor** ...
+     [feature-redux/src/reducerAspect.js](https://github.com/KevinAst/feature-redux/blob/7ce84b7f15f0c23872e917745b990c8225236e2d/src/reducerAspect.js#L62-L70)
      ```js
-     /**
-      * Register feature-redux proprietary Aspect APIs (required to pass
-      * feature-u validation).
-      * This must occur early in the life-cycle (i.e. this method) to
-      * guarantee the new API is available during feature-u validation.
-      */
-     function genesis() {
-       extendAspectProperty('getReduxStore', 'feature-redux');      // Aspect.getReduxStore(): store
-       extendAspectProperty('getReduxMiddleware', 'feature-redux'); // Aspect.getReduxMiddleware(): reduxMiddleware
-     }
+
+     // ***
+     // *** Initialization: register feature-redux proprietary Aspect APIs
+     // ***
+
+     extendAspectProperty('getReduxStore', 'feature-redux');      // Aspect.getReduxStore(): store
+     extendAspectProperty('getReduxMiddleware', 'feature-redux'); // Aspect.getReduxMiddleware(): reduxMiddleware
+     extendAspectProperty('getReduxEnhancer', 'feature-redux');   // Aspect.getReduxEnhancer(): StoreEnhancer
      ```
   
   1. Here is the new API usage:
@@ -420,32 +420,46 @@ logs and such)_.
 {{book.api.genesisMeth}} is a Life Cycle Hook invoked one
 time, at the very beginning of the app's start up process.
 
-This hook can perform Aspect related **initialization** and
+**Antiquated Note**:
+
+- The `genesis()` hook is somewhat antiquated, relegated to Aspects
+  that are promoted as singletons.  In this scenario, client-side
+  configuration could be introduced after instantiation _(by adding
+  content to {{book.guide.aspectConfig}})_, while still allowing
+  **initialization** and **validation** to occur early in the startup
+  process _(via this `genesis()` hook)_.
+
+- A better alternative to the `genesis()` hook is to promote your
+  {{book.guide.extending_customAspectPlugins}} as non-singletons,
+  where **initialization** and **validation** can be directly promoted
+  though the plugin constructor.
+
+The `genesis()` hook can perform Aspect related **initialization** and
 **validation**:
 
-- **initialization**: this is where where proprietary Aspect/Feature
-  APIs should be registered (if any) - via
+- **initialization**: It is possible to to register proprietary
+  Aspect/Feature APIs in the `genesis()` hook ... via
   {{book.api.extendAspectProperty}} and
   {{book.api.extendFeatureProperty}} _(please see:
-  {{book.guide.extending_aspectCrossCommunication}})_.
+  {{book.guide.extending_aspectCrossCommunication}} and
+  {{book.guide.crossCom}})_.
+
+  The preferred place to do this initialization is in the plugin
+  constructor _(see **Antiquated Note** above)_.
 
 - **validation**: It is possible to perform Aspect validation in the
-  `genesis()` method ... say for required configuration properties
+  `genesis()` hook ... say for required configuration properties
   injected by the client after instantiation.  This is the reason for
   the optional return string.
 
-  This however is somewhat antiquated to Aspects that are promoted as
-  singletons (where configuration had to occur after instantiation).
-
-  A better technique is to promote an Aspect constructor (that
-  requires configuration parameters), and perform your validation in
-  the constructor.
+  The preferred place to do validation is in the plugin constructor,
+  gathering this information as constructor parameters _(see
+  **Antiquated Note** above)_.
 
 **RETURN**: an error message string when self is in an invalid state
 (falsy when valid).  Because this validation occurs under the control
 of `launchApp()`, any message is prefixed with: `'launchApp() parameter
 violation: '`.
-
 
 
 ### Aspect.validateFeatureContent()
@@ -637,3 +651,60 @@ manages {{book.ext.redux}}, it must promote a technique by which other
 Aspects can register their redux middleware.  This is accomplished
 through the proprietary method: `Aspect.getReduxMiddleware():
 middleware`.
+
+## Custom Aspect Plugins
+
+Typically a Custom Aspect Plugin is promoted through it's own
+constructor that:
+
+1. Accumulates/Validates needed configuration (as constructor
+   parameters).
+
+2. Performs any required initialization, such as registering
+   feature-redux proprietary Feature/Aspect APIs
+   (`extendFeatureProperty()`/`extendAspectProperty()`).
+
+3. Creates/returns the custom Aspect Plugin object
+
+   - a. Seeded with the internal {{book.guide.extending_aspectLifeCycleHooks}} needed to implement this plugin
+
+   - b. Retaining needed configuration to be used/accessed by it's {{book.guide.extending_aspectLifeCycleHooks}}
+     _(using {{book.guide.aspectConfig}} because of it's "open" nature ... no need to pre-register content)_
+
+Here is an example:
+
+```js
+export default function createMyCustomAspect({name='myDefaultName', // ... **1**
+                                              configParam1,
+                                              configParam2=false,
+                                              ...unknownArgs}={}) {
+
+  // validate all client-supplied parameters ... **1**
+  ... snip snip
+
+  // initialize self ... **2**
+  // ... example taken from feature-redux
+  extendAspectProperty('getReduxStore', 'feature-redux');      // Aspect.getReduxStore(): store
+
+  // promote our custom Aspect Plugin object ... **3**
+  return createAspect({
+    name,
+
+    // define the needed Aspect Life Cycle Hooks for self ... **3.a**
+    // ... internal functions (not shown in this example)
+    // ... that become the Aspect methods
+    validateFeatureContent,
+    assembleFeatureContent,
+    injectRootAppElm,
+    ... snip snip
+
+    // retain needed configuration to be used internally ... **3.b**
+    // ... using Aspect.config because of it's "open" nature
+    //     (no need to pre-register content)
+    config: {
+      configParam1,
+      configParam2
+    },
+  });
+}
+```

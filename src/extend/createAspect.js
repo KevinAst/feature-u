@@ -370,26 +370,42 @@ export function extendAspectProperty(name, owner) {
  * A Life Cycle Hook invoked one time, at the very beginning of
  * the app's start up process.
  * 
- * This hook can perform Aspect related **initialization** and
+ * **Antiquated Note**:
+ * 
+ * - The `genesis()` hook is somewhat antiquated, relegated to Aspects
+ *   that are promoted as singletons.  In this scenario, client-side
+ *   configuration could be introduced after instantiation _(by adding
+ *   content to {{book.guide.aspectConfig}})_, while still allowing
+ *   **initialization** and **validation** to occur early in the startup
+ *   process _(via this `genesis()` hook)_.
+ * 
+ * - A better alternative to the `genesis()` hook is to promote your
+ *   {{book.guide.extending_customAspectPlugins}} as non-singletons,
+ *   where **initialization** and **validation** can be directly promoted
+ *   though the plugin constructor.
+ * 
+ * The `genesis()` hook can perform Aspect related **initialization** and
  * **validation**:
  * 
- * - **initialization**: this is where where proprietary Aspect/Feature
- *   APIs should be registered (if any) - via
+ * - **initialization**: It is possible to to register proprietary
+ *   Aspect/Feature APIs in the `genesis()` hook ... via
  *   {{book.api.extendAspectProperty}} and
  *   {{book.api.extendFeatureProperty}} _(please see:
- *   {{book.guide.extending_aspectCrossCommunication}})_.
- *
+ *   {{book.guide.extending_aspectCrossCommunication}} and
+ *   {{book.guide.crossCom}})_.
+ * 
+ *   The preferred place to do this initialization is in the plugin
+ *   constructor _(see **Antiquated Note** above)_.
+ * 
  * - **validation**: It is possible to perform Aspect validation in the
- *   `genesis()` method ... say for required configuration properties
+ *   `genesis()` hook ... say for required configuration properties
  *   injected by the client after instantiation.  This is the reason for
  *   the optional return string.
  * 
- *   This however is somewhat antiquated to Aspects that are promoted as
- *   singletons (where configuration had to occur after instantiation).
+ *   The preferred place to do validation is in the plugin constructor,
+ *   gathering this information as constructor parameters _(see
+ *   **Antiquated Note** above)_.
  * 
- *   A better technique is to promote an Aspect constructor (that
- *   requires configuration parameters), and perform your validation in
- *   the constructor.
  * 
  * **API:** {{book.api.genesisMeth$}}
  *

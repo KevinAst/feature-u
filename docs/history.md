@@ -150,6 +150,10 @@ your usage)_.
 
 6. **Docs**: Documentation improvements include:
 
+   - For Aspect Extension users, a new section was added that
+     highlights how {{book.guide.extending_customAspectPlugins}} are
+     typically promoted _through a constructor_.
+
    - ?? more
 
 

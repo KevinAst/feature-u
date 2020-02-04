@@ -134,6 +134,7 @@
     * [injectParamsInHooks()](extending.md#aspectinjectparamsinhooks)
     * [config](extending.md#aspectconfig)
     * [additionalMethods()](extending.md#aspectadditionalmethods)
+  * [Custom Aspect Plugins](extending.md#custom-aspect-plugins)
   * [Extension API](extensionApi.md)
     * [createAspect()](api.md#createAspect)
     * [extendAspectProperty()](api.md#extendAspectProperty)

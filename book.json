@@ -188,6 +188,8 @@
 
         "aspectConfig":                  "<a href='/extending.html#aspectconfig'><code>Aspect.config</code></a>",
 
+      "extending_customAspectPlugins": "<a href='/extending.html#custom-aspect-plugins'><code>Custom Aspect Plugins</code></a>",
+
       "extensionApi":  "<a href='/extensionApi.html'><code>Extension API</code></a>",
 
       "dist":     "<a href='/dist.html'><code>Distribution</code></a>",
