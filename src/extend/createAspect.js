@@ -134,11 +134,14 @@ export default function createAspect(namedParams={}) {
   check(isPlainObject(namedParams), `only named parameters may be supplied`);
 
   // descturcture our individual namedParams
-  // ... NOTE: We do this here (rather in the function signature) to have access
-  //           to the overall namedParams variable - for validation purposes!
-  //           Access via the JavaScript implicit `arguments[0]` variable is 
-  //           NOT reliable (in this context) exhibiting a number of quirks :-(
-  let {name,   // ... using `let`, because some are reassigned (below)
+  // NOTE 1: We do this here (rather in the function signature) to have access
+  //         to the overall namedParams variable - for validation purposes!
+  //         Access via the JavaScript implicit `arguments[0]` variable is 
+  //         NOT reliable (in this context) exhibiting a number of quirks :-(
+  // NOTE 2: We use `let`, because some are reassigned (see below)
+  //         ... we can't default them here, because we tally
+  //             user-supplied entries (see: totalMethodsSupplied below)
+  let {name,
        genesis,
        validateFeatureContent,
        expandFeatureContent,
@@ -160,8 +163,9 @@ export default function createAspect(namedParams={}) {
   //     NOTE: when defaulting entire struct, arguments.length is 0
   check(arguments.length <= 1, `Aspect.name:${name} ... unrecognized positional parameters (only named parameters can be specified) ... ${arguments.length} positional parameters were found`);
 
-  // ... all method params - when supplied, verify are functions -AND- total how many were supplied
-  // ... verify all method params are functions -AND- keep track of how many were supplied
+  // ... for all method params (when supplied), 
+  //     - verify they are functions -AND-
+  //     - total how many were supplied
   let totalMethodsSupplied = 0;
   ['genesis',
    'validateFeatureContent',
