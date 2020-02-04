@@ -138,20 +138,21 @@ export default function createAspect(namedParams={}) {
   //         to the overall namedParams variable - for validation purposes!
   //         Access via the JavaScript implicit `arguments[0]` variable is 
   //         NOT reliable (in this context) exhibiting a number of quirks :-(
-  // NOTE 2: We use `let`, because some are reassigned (see below)
-  //         ... we can't default them here, because we tally
-  //             user-supplied entries (see: totalMethodsSupplied below)
-  let {name,
-       genesis,
-       validateFeatureContent,
-       expandFeatureContent,
-       assembleFeatureContent,
-       assembleAspectResources,
-       initialRootAppElm,
-       injectRootAppElm,
-       injectParamsInHooks,
-       config={},
-       ...additionalMethods} = namedParams;
+  // NOTE 2: We no-op critical methods that are assumed to exist throughout the code-base.
+  //         ... by NOT requiring these critical methods, we support edge cases where
+  //             aspect content is not needed from the feature set
+  //             (ex: a plugin "adds value" to another plugin).
+  const {name,
+         genesis,
+         validateFeatureContent = noOp,
+         expandFeatureContent,
+         assembleFeatureContent = noOp,
+         assembleAspectResources,
+         initialRootAppElm,
+         injectRootAppElm,
+         injectParamsInHooks,
+         config={},
+         ...additionalMethods} = namedParams;
 
   // ... name (NOTE: name check takes precedence to facilitate `Aspect.name` identity in subsequent errors :-)
   check(name,            'name is required (at minimum for identity purposes)');
@@ -163,39 +164,27 @@ export default function createAspect(namedParams={}) {
   //     NOTE: when defaulting entire struct, arguments.length is 0
   check(arguments.length <= 1, `Aspect.name:${name} ... unrecognized positional parameters (only named parameters can be specified) ... ${arguments.length} positional parameters were found`);
 
-  // ... for all method params (when supplied), 
+  // ... for all method params (when supplied BY client), 
   //     - verify they are functions -AND-
   //     - total how many were supplied
-  let totalMethodsSupplied = 0;
-  ['genesis',
-   'validateFeatureContent',
-   'expandFeatureContent',
-   'assembleFeatureContent',
-   'assembleAspectResources',
-   'initialRootAppElm',
-   'injectRootAppElm',
-   'injectParamsInHooks'].forEach( (paramName) => {
-     const param = namedParams[paramName];
-     if (param) {
-       totalMethodsSupplied++;
-       check(isFunction(param), `Aspect.name:${name} ... ${paramName} (when supplied) must be a function`);
-     }
-   } );
+  const totalMethodsSupplied = 
+    ['genesis',
+     'validateFeatureContent',
+     'expandFeatureContent',
+     'assembleFeatureContent',
+     'assembleAspectResources',
+     'initialRootAppElm',
+     'injectRootAppElm',
+     'injectParamsInHooks'].reduce( (accum, paramName) => {
+       const param = namedParams[paramName]; // get original param supplied by client (does NOT reflect the defaults above)
+       if (param) {
+         check(isFunction(param), `Aspect.name:${name} ... ${paramName} (when supplied) must be a function`);
+         accum++;
+       }
+       return accum;
+     }, 0 );
 
-  // ... inject no-ops for critical methods that are assumed to exist throughout the code-base
-  //     NOTE: By NOT requiring these critical methods, we support edge cases where
-  //           aspect content is not needed from the feature set (ex: a plugin "adds value" to another plugin).
-  function noOp() {}
-  // ... validateFeatureContent
-  if (!validateFeatureContent) {
-    validateFeatureContent = noOp;
-  }
-  // ... assembleFeatureContent
-  if (!assembleFeatureContent) {
-    assembleFeatureContent = noOp;
-  }
-
-  // ... config (NOTE: we default to {} in signature - above)
+  // ... config
   check(config,                 `Aspect.name:${name} ... config is required`);
   check(isPlainObject(config),  `Aspect.name:${name} ... config must be a plain object literal`);
 
@@ -228,6 +217,8 @@ export default function createAspect(namedParams={}) {
 
 }
 
+// no-op method for critical methods that are assumed to exist throughout the code-base
+function noOp() {}
 
 /**
  * Maintain all VALID Aspect properties.
