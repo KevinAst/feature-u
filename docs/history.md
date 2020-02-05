@@ -145,10 +145,7 @@ releases.  _A trivial retrofit of client code may be necessary
 
 4. **Added**: ?? more
 
-5. **Security**: ?? Address potential security vulnerabilities in dependent libs
-   (mostly devDependencies completely unrelated to deployment)!
-
-6. **Docs**: Documentation improvements include:
+5. **Docs**: Documentation improvements include:
 
    - For Aspect Extension users, a new section was added that
      highlights how {{book.guide.extending_customAspectPlugins}} are
