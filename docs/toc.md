@@ -152,7 +152,7 @@
 * [Distribution](dist.md)
 * [Why feature-u?](why.md)
 * [Revision History](history.md)
-  * [v3.0.0 (January, xx, 2020)](history.md#v3_0_0)
+  * [v3.0.0 (February, 5, 2020)](history.md#v3_0_0)
     * [Full Docs](https://feature-u.js.org/3.0.0/)
   * [v2.1.1 (December 9, 2019)](history.md#v2_1_1)
     * [Full Docs](https://feature-u.js.org/2.1.1/)

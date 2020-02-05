@@ -84,7 +84,7 @@ reference the most current release.
 
 Release           | What                                   | *When*
 ------------------|----------------------------------------|------------------
-[v3.0.0](#v3_0_0) | Hooks and Aspect Plugin Changes        | *January, xx, 2020*
+[v3.0.0](#v3_0_0) | Hooks and Aspect Plugin Changes        | *February, 5, 2020*
 [v2.1.1](#v2_1_1) | Playful Features                       | *December 9, 2019*
 [v2.1.0](#v2_1_0) | appInit() Life Cycle Hook              | *July 19, 2019*
 [v2.0.0](#v2_0_0) | React Hooks                            | *May 10, 2019*
@@ -100,7 +100,7 @@ Release           | What                                   | *When*
 <!-- ************************************************************* -->
 <br/><br/><br/>
 <h3 id="v3_0_0" style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
-  v3.0.0 - Hooks and Aspect Plugin Changes <i>(January, xx, 2020)</i>
+  v3.0.0 - Hooks and Aspect Plugin Changes <i>(February, 5, 2020)</i>
 </h3>
 
 [Full Docs](https://feature-u.js.org/3.0.0/)
@@ -143,15 +143,11 @@ releases.  _A trivial retrofit of client code may be necessary
    is Required"** discussion in the
    {{book.guide.extending_aspectLifeCycleMethods}}.
 
-4. **Added**: ?? more
-
-5. **Docs**: Documentation improvements include:
+4. **Docs**: Documentation improvements include:
 
    - For Aspect Extension users, a new section was added that
      highlights how {{book.guide.extending_customAspectPlugins}} are
      typically promoted _through a constructor_.
-
-   - ?? more
 
 
 <!-- ************************************************************* -->
