@@ -111,9 +111,9 @@ Release           | What                                   | *When*
 &bull;
 [Diff](https://github.com/KevinAst/feature-u/compare/v2.1.1-docs...v3.0.0)
 
-**NOTE**: This release contains **breaking changes** from prior
-releases.  _A retrofit of client code may be necessary (depending on
-your usage)_.
+**NOTE**: This release contains **minor breaking changes** from prior
+releases.  _A trivial retrofit of client code may be necessary
+(depending on your usage)_.
 
 1. **Changed**: For redux users, the {{book.guide.appLifeCycles}} that
    promote the redux `appState` parameter, are now being passed the
