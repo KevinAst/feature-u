@@ -2281,6 +2281,11 @@ reference the most current release.</p>
 </thead>
 <tbody>
 <tr>
+  <td><a href="#v3_0_0">v3.0.0</a></td>
+  <td>Hooks and Aspect Plugin Changes</td>
+  <td><em>February, 5, 2020</em></td>
+</tr>
+<tr>
   <td><a href="#v2_1_1">v2.1.1</a></td>
   <td>Playful Features</td>
   <td><em>December 9, 2019</em></td>
@@ -2319,6 +2324,62 @@ reference the most current release.</p>
 </table>
 <p><br><br><br></p>
 <h2 id="details">Details:</h2>
+<!-- ************************************************************* -->
+<p><br><br><br></p>
+<h3 id="v3_0_0" style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
+  v3.0.0 - Hooks and Aspect Plugin Changes <i>(February, 5, 2020)</i>
+</h3>
+
+<p><a href="https://feature-u.js.org/3.0.0/" target="_blank">Full Docs</a>
+&#x2022;
+<a href="https://github.com/KevinAst/feature-u/releases/tag/v3.0.0" target="_blank">GitHub Release</a>
+&#x2022;
+<a href="https://github.com/KevinAst/feature-u/tree/v3.0.0" target="_blank">GitHub Content</a>
+&#x2022;
+<a href="https://github.com/KevinAst/feature-u/compare/v2.1.1-docs...v3.0.0" target="_blank">Diff</a></p>
+<p><strong>NOTE</strong>: This release contains <strong>minor breaking changes</strong> from prior
+releases.  <em>A trivial retrofit of client code may be necessary
+(depending on your usage)</em>.</p>
+<ol>
+<li><p><strong>Changed</strong>: For redux users, the 
+<a href="../3.0.0/appLifeCycle.html"><code>Application Life Cycle Hooks</code></a>
+that promote the redux <code>appState</code> parameter, are now being passed the
+redux <code>getState</code> function. To obtain the <code>appState</code> you merely
+invoke: <code>getState()</code>. This gives async long-running processes
+access to the most current state changes (over time) <strong>... thanks
+<a href="https://github.com/sylvainlg" target="_blank">@sylvainlg</a>!!</strong></p>
+<p><strong>Please Note</strong>: Prior to this release, these parameters were
+promoted directly by <strong>feature-u</strong> <em>(using conditional logic that
+detected the <strong>feature-redux</strong> aspect)</em>.  This coupling has been
+removed.  These parameters are now promoted though the
+<strong>feature-redux</strong> aspect, using the new
+<a href="../3.0.0/extending.html#aspectinjectparamsinhooks"><code>Aspect.injectParamsInHooks()</code></a>
+hook <em>(mentioned below)</em>.  As a result, you must update
+<a href="https://github.com/KevinAst/feature-redux" target="_blank"><code>feature-redux</code></a>
+to <strong>V3</strong> or greater.</p>
+</li>
+<li><p><strong>Added</strong>: For Aspect Extension users, a new
+<a href="../3.0.0/extending.html#aspectinjectparamsinhooks"><code>Aspect.injectParamsInHooks()</code></a>
+<strong>Aspect Life Cycle Method</strong>
+has been added that allows the Aspect to promote <code>namedParams</code> into
+the feature&apos;s <a href="../3.0.0/appLifeCycle.html"><code>Application Life Cycle Hooks</code></a>.</p>
+</li>
+<li><p><strong>Changed</strong>: For Aspect Extension users, Aspect Plugins no longer
+have one specific method that is required.  Rather the requirement
+is to <strong>specify something</strong> <em>(so as to not have an empty plugin
+that does nothing)</em>.  Please refer to the <strong>&quot;No Single Aspect Method
+is Required&quot;</strong> discussion in the
+<a href="../3.0.0/extending.html#aspect-life-cycle-methods"><code>Aspect Life Cycle Methods</code></a>.</p>
+</li>
+<li><p><strong>Docs</strong>: Documentation improvements include:</p>
+<ul>
+<li>For Aspect Extension users, a new section was added that
+highlights how 
+<a href="../3.0.0/extending.html#custom-aspect-plugins"><code>Custom Aspect Plugins</code></a>
+are typically promoted <em>through a constructor</em>.</li>
+</ul>
+</li>
+</ol>
 <!-- ************************************************************* -->
 <p><br><br><br></p>
 <h3 id="v2_1_1" style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
