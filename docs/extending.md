@@ -661,7 +661,7 @@ constructor that:
    parameters).
 
 2. Performs any required initialization, such as registering
-   feature-redux proprietary Feature/Aspect APIs
+   proprietary Feature/Aspect APIs
    (`extendFeatureProperty()`/`extendAspectProperty()`).
 
 3. Creates/returns the custom Aspect Plugin object
