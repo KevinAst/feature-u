@@ -115,8 +115,9 @@ Release           | What                                   | *When*
 releases.  _A trivial retrofit of client code may be necessary
 (depending on your usage)_.
 
-1. **Changed**: For redux users, the {{book.guide.appLifeCycles}} that
-   promote the redux `appState` parameter, are now being passed the
+1. **Changed**: For redux users, the 
+   [`Application Life Cycle Hooks`](../3.0.0/appLifeCycle.html)
+   that promote the redux `appState` parameter, are now being passed the
    redux `getState` function. To obtain the `appState` you merely
    invoke: `getState()`. This gives async long-running processes
    access to the most current state changes (over time) **... thanks
@@ -127,27 +128,31 @@ releases.  _A trivial retrofit of client code may be necessary
    detected the **feature-redux** aspect)_.  This coupling has been
    removed.  These parameters are now promoted though the
    **feature-redux** aspect, using the new
-   {{book.guide.injectParamsInHooksMeth}} hook _(mentioned below)_.
-   As a result, you must update {{book.ext.featureRedux}} to **V3** or
-   greater.
+   [`Aspect.injectParamsInHooks()`](../3.0.0/extending.html#aspectinjectparamsinhooks)
+   hook _(mentioned below)_.  As a result, you must update
+   [`feature-redux`](https://github.com/KevinAst/feature-redux)
+   to **V3** or greater.
 
 2. **Added**: For Aspect Extension users, a new
-   {{book.guide.injectParamsInHooksMeth}} **Aspect Life Cycle Method**
+   [`Aspect.injectParamsInHooks()`](../3.0.0/extending.html#aspectinjectparamsinhooks)
+   **Aspect Life Cycle Method**
    has been added that allows the Aspect to promote `namedParams` into
-   the feature's {{book.guide.appLifeCycles}}.
+   the feature's [`Application Life Cycle Hooks`](../3.0.0/appLifeCycle.html).
 
 3. **Changed**: For Aspect Extension users, Aspect Plugins no longer
    have one specific method that is required.  Rather the requirement
    is to **specify something** _(so as to not have an empty plugin
    that does nothing)_.  Please refer to the **"No Single Aspect Method
    is Required"** discussion in the
-   {{book.guide.extending_aspectLifeCycleMethods}}.
+   [`Aspect Life Cycle Methods`](../3.0.0/extending.html#aspect-life-cycle-methods).
 
 4. **Docs**: Documentation improvements include:
 
    - For Aspect Extension users, a new section was added that
-     highlights how {{book.guide.extending_customAspectPlugins}} are
-     typically promoted _through a constructor_.
+     highlights how 
+     [`Custom Aspect Plugins`](../3.0.0/extending.html#custom-aspect-plugins)
+     are typically promoted _through a constructor_.
+
 
 
 <!-- ************************************************************* -->
