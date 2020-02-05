@@ -1,6 +1,6 @@
 # Table of content 
 
-### feature-u (2.1.1)
+### feature-u (3.0.0)
 * [Getting Started](start.md)
   * [Install](start.md#install)
   * [Access](start.md#access)
@@ -131,8 +131,10 @@
     * [assembleAspectResources()](extending.md#aspectassembleaspectresources)
     * [initialRootAppElm()](extending.md#aspectinitialrootappelm)
     * [injectRootAppElm()](extending.md#aspectinjectrootappelm)
+    * [injectParamsInHooks()](extending.md#aspectinjectparamsinhooks)
     * [config](extending.md#aspectconfig)
     * [additionalMethods()](extending.md#aspectadditionalmethods)
+  * [Custom Aspect Plugins](extending.md#custom-aspect-plugins)
   * [Extension API](extensionApi.md)
     * [createAspect()](api.md#createAspect)
     * [extendAspectProperty()](api.md#extendAspectProperty)
@@ -150,6 +152,8 @@
 * [Distribution](dist.md)
 * [Why feature-u?](why.md)
 * [Revision History](history.md)
+  * [v3.0.0 (February, 5, 2020)](history.md#v3_0_0)
+    * [Full Docs](https://feature-u.js.org/3.0.0/)
   * [v2.1.1 (December 9, 2019)](history.md#v2_1_1)
     * [Full Docs](https://feature-u.js.org/2.1.1/)
   * [v2.1.0 (July 19, 2019)](history.md#v2_1_0)

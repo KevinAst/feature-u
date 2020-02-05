@@ -104,11 +104,11 @@
 
       "appInit":          "<a href='/appLifeCycle.html#appinit'><code>appInit</code></a>",
       "appInitCB":        "<a href='/appLifeCycle.html#appinit'><code>Feature.appInit()</code></a>",
-      "appInitCB$":       "<a href='/appLifeCycle.html#appinit'><code>Feature.appInit({showStatus, fassets, [appState], [dispatch]}): promise | void</code></a>",
+      "appInitCB$":       "<a href='/appLifeCycle.html#appinit'><code>Feature.appInit({showStatus, fassets, [getState], [dispatch], [injectedAspectParams]}): promise | void</code></a>",
 
       "appDidStart":      "<a href='/appLifeCycle.html#appdidstart'><code>appDidStart</code></a>",
       "appDidStartCB":    "<a href='/appLifeCycle.html#appdidstart'><code>Feature.appDidStart()</code></a>",
-      "appDidStartCB$":   "<a href='/appLifeCycle.html#appdidstart'><code>Feature.appDidStart({fassets, [appState], [dispatch]}): void</code></a>",
+      "appDidStartCB$":   "<a href='/appLifeCycle.html#appdidstart'><code>Feature.appDidStart({fassets, [getState], [dispatch], [injectedAspectParams]}): void</code></a>",
 
       "crossCom":                         "<a href='/crossCommunication.html'><code>Cross Feature Communication</code></a>",
         "crossCom_fassetsBasics":         "<a href='/crossCommunication.html#basic-concepts-fassets'><code>Basic Concepts: fassets</code></a>",
@@ -158,6 +158,8 @@
       "extending_aspectLifeCycleMethods":    "<a href='/extending.html#aspect-life-cycle-methods'><code>Aspect Life Cycle Methods</code></a>",
       "extending_aspectLifeCycleHooks":      "<a href='/extending.html#aspect-life-cycle-methods'><code>Aspect Life Cycle Hooks</code></a>",
 
+        "aspectName":    "<a href='/extending.html#aspectname'><code>Aspect.name</code></a>",
+
         "genesisMeth":   "<a href='/extending.html#aspectgenesis'><code>Aspect.genesis()</code></a>",
         "genesisMeth$":  "<a href='/extending.html#aspectgenesis'><code>Aspect.genesis(): string</code></a>",
 
@@ -179,9 +181,14 @@
         "injectRootAppElmMeth":          "<a href='/extending.html#aspectinjectrootappelm'><code>Aspect.injectRootAppElm()</code></a>",
         "injectRootAppElmMeth$":         "<a href='/extending.html#aspectinjectrootappelm'><code>Aspect.injectRootAppElm(fassets, curRootAppElm): rootAppElm</code></a>",
 
+        "injectParamsInHooksMeth":       "<a href='/extending.html#aspectinjectparamsinhooks'><code>Aspect.injectParamsInHooks()</code></a>",
+        "injectParamsInHooksMeth$":      "<a href='/extending.html#aspectinjectparamsinhooks'><code>Aspect.injectParamsInHooks(fassets): namedParams</code></a>",
+
         "additionalMethods":             "<a href='/extending.html#aspectadditionalmethods'><code>Aspect.additionalMethods()</code></a>",
 
         "aspectConfig":                  "<a href='/extending.html#aspectconfig'><code>Aspect.config</code></a>",
+
+      "extending_customAspectPlugins": "<a href='/extending.html#custom-aspect-plugins'><code>Custom Aspect Plugins</code></a>",
 
       "extensionApi":  "<a href='/extensionApi.html'><code>Extension API</code></a>",
 
@@ -213,9 +220,9 @@
           "appWillStartCB":           "<a href='/api.html#appWillStartCB'><code>appWillStart()</code></a>",
           "appWillStartCB$":          "<a href='/api.html#appWillStartCB'><code>appWillStart({fassets, curRootAppElm}): rootAppElm | void</code></a>",
           "appInitCB":                "<a href='/api.html#appInitCB'><code>appInit()</code></a>",
-          "appInitCB$":               "<a href='/api.html#appInitCB'><code>appInit({showStatus, fassets, [appState], [dispatch]}): promise | void</code></a>",
+          "appInitCB$":               "<a href='/api.html#appInitCB'><code>appInit({showStatus, fassets, [getState], [dispatch], [injectedAspectParams]}): promise | void</code></a>",
           "appDidStartCB":            "<a href='/api.html#appDidStartCB'><code>appDidStart()</code></a>",
-          "appDidStartCB$":           "<a href='/api.html#appDidStartCB'><code>appDidStart({fassets, [appState], [dispatch]}): void</code></a>",
+          "appDidStartCB$":           "<a href='/api.html#appDidStartCB'><code>appDidStart({fassets, [getState], [dispatch], [injectedAspectParams]}): void</code></a>",
 
         "expandWithFassets":           "<a href='/api.html#expandWithFassets'><code>expandWithFassets()</code></a>",
         "expandWithFassets$":          "<a href='/api.html#expandWithFassets'><code>expandWithFassets(expandWithFassetsCB): expandWithFassetsCB</code></a>",
@@ -265,6 +272,9 @@
           "injectRootAppElmMeth":          "<a href='/api.html#injectRootAppElmMeth'><code>injectRootAppElm()</code></a>",
           "injectRootAppElmMeth$":         "<a href='/api.html#injectRootAppElmMeth'><code>injectRootAppElm(fassets, curRootAppElm): rootAppElm</code></a>",
 
+          "injectParamsInHooksMeth":       "<a href='/api.html#injectParamsInHooksMeth'><code>injectParamsInHooks()</code></a>",
+          "injectParamsInHooksMeth$":      "<a href='/api.html#injectParamsInHooksMeth'><code>injectParamsInHooks(fassets): namedParams</code></a>",
+
         "extendAspectProperty":            "<a href='/api.html#extendAspectProperty'><code>extendAspectProperty()</code></a>",
         "extendAspectProperty$":           "<a href='/api.html#extendAspectProperty'><code>extendAspectProperty(name, owner): void</code></a>",
 
@@ -284,6 +294,7 @@
       "expo":               "<a href='https://expo.io/'><code>expo</code></a>",
       "featureRedux":       "<a href='https://github.com/KevinAst/feature-redux'><code>feature-redux</code></a>",
       "featureReduxLogic":  "<a href='https://github.com/KevinAst/feature-redux-logic'><code>feature-redux-logic</code></a>",
+      "featureReduxPersist":"<a href='https://github.com/sylvainlg/feature-redux-persist'><code>feature-redux-persist</code></a>",
       "featureRouter":      "<a href='https://github.com/KevinAst/feature-router'><code>feature-router</code></a>",
       "react":              "<a href='https://reactjs.org/'><code>react</code></a>",
       "reactHook":          "<a href='https://reactjs.org/docs/hooks-intro.html'><code>React Hook</code></a>",

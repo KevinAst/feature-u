@@ -84,6 +84,7 @@ reference the most current release.
 
 Release           | What                                   | *When*
 ------------------|----------------------------------------|------------------
+[v3.0.0](#v3_0_0) | Hooks and Aspect Plugin Changes        | *February, 5, 2020*
 [v2.1.1](#v2_1_1) | Playful Features                       | *December 9, 2019*
 [v2.1.0](#v2_1_0) | appInit() Life Cycle Hook              | *July 19, 2019*
 [v2.0.0](#v2_0_0) | React Hooks                            | *May 10, 2019*
@@ -95,6 +96,62 @@ Release           | What                                   | *When*
 
 <br/><br/><br/>
 ## Details:
+
+<!-- ************************************************************* -->
+<br/><br/><br/>
+<h3 id="v3_0_0" style="margin: 10px 0px; border-width: 5px 0px; padding: 5px; border-style: solid;">
+  v3.0.0 - Hooks and Aspect Plugin Changes <i>(February, 5, 2020)</i>
+</h3>
+
+[Full Docs](https://feature-u.js.org/3.0.0/)
+&bull;
+[GitHub Release](https://github.com/KevinAst/feature-u/releases/tag/v3.0.0)
+&bull;
+[GitHub Content](https://github.com/KevinAst/feature-u/tree/v3.0.0)
+&bull;
+[Diff](https://github.com/KevinAst/feature-u/compare/v2.1.1-docs...v3.0.0)
+
+**NOTE**: This release contains **minor breaking changes** from prior
+releases.  _A trivial retrofit of client code may be necessary
+(depending on your usage)_.
+
+1. **Changed**: For redux users, the 
+   [`Application Life Cycle Hooks`](../3.0.0/appLifeCycle.html)
+   that promote the redux `appState` parameter, are now being passed the
+   redux `getState` function. To obtain the `appState` you merely
+   invoke: `getState()`. This gives async long-running processes
+   access to the most current state changes (over time) **... thanks
+   [@sylvainlg](https://github.com/sylvainlg)!!**
+
+   **Please Note**: Prior to this release, these parameters were
+   promoted directly by **feature-u** _(using conditional logic that
+   detected the **feature-redux** aspect)_.  This coupling has been
+   removed.  These parameters are now promoted though the
+   **feature-redux** aspect, using the new
+   [`Aspect.injectParamsInHooks()`](../3.0.0/extending.html#aspectinjectparamsinhooks)
+   hook _(mentioned below)_.  As a result, you must update
+   [`feature-redux`](https://github.com/KevinAst/feature-redux)
+   to **V3** or greater.
+
+2. **Added**: For Aspect Extension users, a new
+   [`Aspect.injectParamsInHooks()`](../3.0.0/extending.html#aspectinjectparamsinhooks)
+   **Aspect Life Cycle Method**
+   has been added that allows the Aspect to promote `namedParams` into
+   the feature's [`Application Life Cycle Hooks`](../3.0.0/appLifeCycle.html).
+
+3. **Changed**: For Aspect Extension users, Aspect Plugins no longer
+   have one specific method that is required.  Rather the requirement
+   is to **specify something** _(so as to not have an empty plugin
+   that does nothing)_.  Please refer to the **"No Single Aspect Method
+   is Required"** discussion in the
+   [`Aspect Life Cycle Methods`](../3.0.0/extending.html#aspect-life-cycle-methods).
+
+4. **Docs**: Documentation improvements include:
+
+   - For Aspect Extension users, a new section was added that
+     highlights how 
+     [`Custom Aspect Plugins`](../3.0.0/extending.html#custom-aspect-plugins)
+     are typically promoted _through a constructor_.
 
 
 
