@@ -110,7 +110,7 @@
     "npm-run-all": "^4.0.2",
     "react": ">=0.14.0",
     "rimraf": "^2.6.1",
-    "webpack": "^2.4.1"
+    "webpack": "^5.75.0"
   },
   "dependencies": {
     "create-react-context": "^0.2.2",
