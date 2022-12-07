@@ -101,7 +101,7 @@
     "eslint": "^3.19.0",
     "eslint-loader": "^1.7.1",
     "eslint-plugin-react": "^7.10.0",
-    "gh-pages": "^0.12.0",
+    "gh-pages": "^4.0.0",
     "gitbook-cli": "^2.3.2",
     "gitbook-plugin-folding-menu": "^1.0.1",
     "gitbook-plugin-toolbar": "^0.6.0",
